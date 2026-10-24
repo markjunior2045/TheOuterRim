@@ -1,0 +1,50 @@
+# Raw source material lives outside the repository; guard against accidental copies
+/RawGameFiles/
+/Other/
+/raw/
+
+# .NET
+bin/
+obj/
+/artifacts/
+*.user
+*.suo
+TestResults/
+
+# Unity (project lives in unity/)
+/unity/[Ll]ibrary/
+/unity/[Tt]emp/
+/unity/[Oo]bj/
+/unity/[Bb]uild/
+/unity/[Bb]uilds/
+/unity/[Ll]ogs/
+/unity/[Uu]ser[Ss]ettings/
+/unity/[Mm]emoryCaptures/
+/unity/.vs/
+/unity/.vscode/
+/unity/.idea/
+/unity/*.csproj
+/unity/*.sln
+/unity/*.slnx
+/unity/*.pidb
+/unity/*.booproj
+/unity/*.svd
+/unity/*.pdb
+/unity/*.mdb
+/unity/*.opendb
+/unity/*.VC.db
+/unity/*.apk
+/unity/*.aab
+/unity/*.unitypackage
+/unity/crashlytics-build.session
+
+# IDEs
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

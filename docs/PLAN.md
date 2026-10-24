@@ -25,7 +25,7 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 ### T0.1 — Manuals → RULES.md · `DONE`
 - **Delivered:** `RULES.md` (English, rule IDs, icon placeholders, divergence notes, gap list in §27).
 
-### T0.2 — Repository scaffold · `TODO`
+### T0.2 — Repository scaffold · `REVIEW`
 - **Does:**
   - `git init` (plain Git); `.gitignore` covering Unity, .NET and the raw-images folder;
   - folders: `docs/` (manuals, `RULES.md`, `DECISIONS.md`, `PLAN.md`), `tools/`, `data/`, and the core assembly;
