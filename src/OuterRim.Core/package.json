@@ -1,0 +1,7 @@
+{
+  "name": "com.outerrim.core",
+  "version": "0.1.0",
+  "displayName": "Outer Rim Core",
+  "description": "Rules core for the Outer Rim digital game. No UnityEngine references.",
+  "unity": "6000.0"
+}

@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/OuterRim.Core.Tests/OuterRim.Core.Tests.csproj" />
+  </Folder>
+</Solution>

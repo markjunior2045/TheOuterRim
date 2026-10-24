@@ -1,0 +1,10 @@
+<Project>
+  <!-- Build output goes to <repo>/artifacts, never into src/ or unity/ (folders Unity imports). -->
+  <PropertyGroup>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <ArtifactsPath>$(MSBuildThisFileDirectory)..\artifacts</ArtifactsPath>
+    <!-- Core code must also compile under Unity (C# 9). -->
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
