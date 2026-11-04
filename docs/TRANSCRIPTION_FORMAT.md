@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.1
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.2
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.1",
+  "format": "outer-rim-transcription/0.2",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -22,6 +22,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 - Text is copied as printed: same wording, punctuation and capitals. Curly quotes and apostrophes are kept.
 - Icons become the `RULES.md` placeholders: `{CREDITS}`, `{HIT}`, `{CRIT}`, `{FOCUS}`, `{DROID}`, `{HYPERDRIVE}`, `{REP_POS}`, `{REP_NEU}`, `{REP_NEG}`, `{DECK_JOB}` and so on. A new icon gets a new placeholder added to `RULES.md` first.
 - Printed labels that have a field of their own (`Destination:`, `Reward:`, `Encounter:` on jobs) become that field, without the label. Labels inside free text (`Action:`, `Encounter:` in a secret) stay in the text.
+- Bold text inside a paragraph (for example a reputation loss the player must not miss) is written between `**` `**`. Labelled fields carry no label and no bold. Bold small caps traits stay in `traits`.
 - Traits (bold small caps above the text, R-14.19) go in `traits`, lower case.
 - Errata: the printed text is kept; the section gets `"errata": "R-24.x"`. The correction is applied when mapping effects.
 - `image` is the extracted file name without extension; it links the transcription to the art.
@@ -39,7 +40,10 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 | `abilities` | labelled abilities such as `Action: …` |
 | `skills` | crew: list of skills printed in the bottom boxes, lower case. Job: `[{ "skill", "certain" }]`, `[]` when `NONE` is printed |
 | `flavor`, `encounter` | job only: italic flavor text; text of the `Encounter:` label |
-| `bottom` | `deck_icon`; `patrol` = `{ "faction", "distance" }` or `null` (R-11.15); `reveal_contact` = player range or `null` (R-16.26) |
+| `class` | bounty: `{ "color", "pips" }`; the portrait frame color and the pips agree: white 1, green 2, yellow 3, orange 4 [UB] (R-12.3, R-15.48) |
+| `combat` | bounty: `{ "value", "type" }`; `type` is `{GROUND_COMBAT}` or `{SHIP_COMBAT}` (R-15.51) |
+| `elimination_reward`, `capture_reward` | bounty: text after the printed label |
+| `bottom` | printed at the top of the card on jobs and bounties, at the bottom on other cards; `deck_icon`; `patrol` = `{ "faction", "distance" }` or `null` (R-11.15); `reveal_contact` = player range or `null` (R-16.26) |
 
 ## Encounter cards
 

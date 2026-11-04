@@ -1,0 +1,320 @@
+{
+  "format": "outer-rim-transcription/0.2",
+  "pack": "base",
+  "deck": "bounty",
+  "source": "[Mod 01] sorted/base/market/bounty",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "The bounty deck contains 9 bounty cards and 2 'Wanted' job cards (images 09 and 10, same text, different flavor and patrol).",
+    "Bounty class: color and pips agree (white 1, green 2, yellow 3, orange 4 [UB]); class is shown by the portrait frame and the pips under it.",
+    "Bold text inside a paragraph is written between ** **; labelled fields have no label."
+  ],
+  "cards": [
+    {
+      "image": "base-market-bounty-00",
+      "name": "Saw Gerrera",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "combat": {
+        "value": 6,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}8,000 and 2 fame.",
+      "capture_reward": "Deliver Saw Gerrera's token to Lothal to gain {CREDITS}17,000, 2 fame, and 1 Imperial reputation.",
+      "text": [
+        "After you gain a reward from this card, remove it from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-01",
+      "name": "Chewbacca",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "combat": {
+        "value": 6,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}8,000 and 2 fame.",
+      "capture_reward": "Deliver Chewbacca's token to the Ring of Kafrene to gain {CREDITS}18,000 and 2 fame.",
+      "text": [
+        "After you gain a reward from this card, remove it from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-02",
+      "name": "Hera Syndulla",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "combat": {
+        "value": 5,
+        "type": "{SHIP_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}6,000 and 2 fame.",
+      "capture_reward": "Deliver Hera Syndulla's token to Lothal to gain {CREDITS}15,000, 2 fame, and 1 Imperial reputation.",
+      "text": [
+        "After you gain a reward from this card, **lose 1 Rebel reputation** and remove this card from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-03",
+      "name": "Ziton Moj",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "combat": {
+        "value": 5,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}6,000 and 2 fame.",
+      "capture_reward": "Deliver Ziton Moj's token to the Ring of Kafrene to gain {CREDITS}16,000 and 2 fame.",
+      "text": [
+        "After you gain a reward from this card, **lose 1 Syndicate reputation** and remove this card from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-04",
+      "name": "Maz Kanata",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "combat": {
+        "value": 5,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}5,000 and 2 fame.",
+      "capture_reward": "Deliver Maz Kanata's token to Naboo to gain {CREDITS}15,000 and 2 fame.",
+      "text": [
+        "After you gain a reward from this card, remove it from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-05",
+      "name": "Garindan",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "combat": {
+        "value": 3,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}6,000 and 1 fame.",
+      "capture_reward": "Deliver Garindan's token to Kessel to gain {CREDITS}7,000, 2 fame, and 1 Rebel reputation.",
+      "text": [
+        "After you gain a reward from this card, **lose 1 Imperial reputation** and remove this card from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-06",
+      "name": "BoShek",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "combat": {
+        "value": 3,
+        "type": "{SHIP_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}6,000 and 1 fame.",
+      "capture_reward": "Deliver BoShek's token to Nal Hutta to gain {CREDITS}8,000 and 2 fame.",
+      "text": [
+        "After you gain a reward from this card, remove it from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-07",
+      "name": "Greedo",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "combat": {
+        "value": 4,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}8,000 and 1 fame.",
+      "capture_reward": "Deliver Greedo's token to Ord Mantell to gain {CREDITS}9,000, 2 fame, and 1 Syndicate reputation.",
+      "text": [
+        "After you gain a reward from this card, **lose 1 Hutt reputation** and remove this card from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-08",
+      "name": "4-LOM",
+      "card_type": "bounty",
+      "cost": 0,
+      "traits": [],
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "combat": {
+        "value": 4,
+        "type": "{GROUND_COMBAT}"
+      },
+      "elimination_reward": "Gain {CREDITS}8,000 and 1 fame.",
+      "capture_reward": "Deliver 4-LOM's token to Tatooine to gain {CREDITS}10,000 and 2 fame.",
+      "text": [
+        "After you gain a reward from this card, remove it from the game."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-09",
+      "name": "Wanted",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "You see a familiar name on the bounty board. It seems that they have crossed the wrong people.",
+      "skills": [
+        {
+          "skill": "ground or ship combat",
+          "certain": true
+        }
+      ],
+      "text": [],
+      "destination": "A space containing another player that has at least 1 {REP_NEG} reputation.",
+      "encounter": "Resolve a combat against that player. If you win, claim this reward.",
+      "reward": "If you won combat against a player who has more fame than you, gain {CREDITS}5,000 and 2 fame. Otherwise, gain {CREDITS}5,000 and 1 fame. Then discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-bounty-10",
+      "name": "Wanted",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "You see a familiar name on the bounty board. Their misfortune could literally be your fortune.",
+      "skills": [
+        {
+          "skill": "ground or ship combat",
+          "certain": true
+        }
+      ],
+      "text": [],
+      "destination": "A space containing another player that has at least 1 {REP_NEG} reputation.",
+      "encounter": "Resolve a combat against that player. If you win, claim this reward.",
+      "reward": "If you won combat against a player who has more fame than you, gain {CREDITS}5,000 and 2 fame. Otherwise, gain {CREDITS}5,000 and 1 fame. Then discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_BOUNTY}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    }
+  ]
+}
