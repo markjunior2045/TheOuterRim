@@ -28,7 +28,7 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 ### T0.2 — Repository scaffold · `DONE`
 - **Delivered:** plain Git repository, `.gitignore`, `CLAUDE.md`, core at `src/OuterRim.Core/` (local Unity package, `noEngineReferences: true`), xUnit project at `tests/OuterRim.Core.Tests/` compiling the same sources, build output in `artifacts/`. `dotnet test` green.
 
-### T0.6 — Extraction tooling and transcription in the repository · `TODO`
+### T0.6 — Extraction tooling and transcription in the repository · `DONE`
 - **Does:**
   - `tools/`: `tts_extract.py` (v1), `sort_outer_rim.py` (v2), `prepare_transcription_images.py` (reading copies for T2.8), `requirements.txt` (`pillow`, `numpy`, `opencv-python`);
   - `.claude/commands/transcribe.md`: the `/transcribe <deck> [range]` command used for every T2.8 batch;
