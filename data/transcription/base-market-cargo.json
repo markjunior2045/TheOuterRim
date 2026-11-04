@@ -1,0 +1,135 @@
+{
+  "format": "outer-rim-transcription/0.1",
+  "pack": "base",
+  "deck": "cargo",
+  "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Icons use the RULES.md placeholders. Labels such as 'Destination:' and 'Reward:' become fields; everything else stays in 'text' as printed.",
+    "bottom.deck_icon is the deck's own icon printed on every card of the deck; bottom.patrol is the patrol movement icon (R-11.15)."
+  ],
+  "cards": [
+    {
+      "image": "base-market-cargo-00",
+      "name": "Salvage",
+      "card_type": "cargo",
+      "cost": 1000,
+      "traits": [],
+      "text": ["Cannot buy on Mon Calamari."],
+      "destination": "Mon Calamari",
+      "reward": "Gain {CREDITS}5,000 and 1 Rebel reputation.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "rebel", "distance": 4 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-01",
+      "name": "Stolen Supplies",
+      "card_type": "cargo",
+      "cost": 2000,
+      "traits": ["illegal"],
+      "text": ["Cannot buy on Kessel.", "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."],
+      "destination": "Kessel",
+      "reward": "Gain {CREDITS}7,000 and 1 fame.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "syndicate", "distance": 3 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-02",
+      "name": "Stolen Prototype",
+      "card_type": "cargo",
+      "cost": 2000,
+      "traits": ["illegal"],
+      "text": ["Cannot buy on Cantonica.", "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."],
+      "destination": "Cantonica",
+      "reward": "Gain {CREDITS}7,000 and 1 fame.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": null, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-03",
+      "name": "Droid Parts",
+      "card_type": "cargo",
+      "cost": 1000,
+      "traits": [],
+      "text": ["Cannot buy on Ord Mantell."],
+      "destination": "Ord Mantell",
+      "reward": "Gain {CREDITS}5,000 and 1 Syndicate reputation.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "syndicate", "distance": 4 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-04",
+      "name": "Coaxium Crystal",
+      "card_type": "cargo",
+      "cost": 1000,
+      "traits": [],
+      "text": ["Cannot buy on Ryloth."],
+      "destination": "Ryloth",
+      "reward": "Gain {CREDITS}5,000 and 1 Imperial reputation.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "imperial", "distance": 4 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-05",
+      "name": "Food Supplies",
+      "card_type": "cargo",
+      "cost": 1000,
+      "traits": [],
+      "text": ["Cannot buy on Nal Hutta."],
+      "destination": "Nal Hutta",
+      "reward": "Gain {CREDITS}5,000 and 1 Hutt reputation.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "hutt", "distance": 4 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-06",
+      "name": "Stolen Hyperfuel",
+      "card_type": "cargo",
+      "cost": 3000,
+      "traits": ["illegal"],
+      "text": ["Cannot buy on the Ring of Kafrene.", "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."],
+      "destination": "The Ring of Kafrene",
+      "reward": "Gain {CREDITS}9,000 and 1 fame.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "rebel", "distance": 3 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-07",
+      "name": "Bacta Supplies",
+      "card_type": "cargo",
+      "cost": 1000,
+      "traits": [],
+      "text": ["Cannot buy on Takodana."],
+      "destination": "Takodana",
+      "reward": "Gain {CREDITS}6,000.",
+      "abilities": ["Action: If you are not a droid ({DROID}), discard this card to recover all damage from your character."],
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "hutt", "distance": 3 }, "reveal_contact": null },
+      "verify": []
+    },
+    {
+      "image": "base-market-cargo-08",
+      "name": "Smuggling Compartment",
+      "card_type": "mod",
+      "cost": 2000,
+      "traits": [],
+      "text": [
+        "Place this card in a cargo slot or mod slot. You can also have 1 cargo in this slot.",
+        "When you are rolling a die to deliver ILLEGAL cargo, you may turn a blank result to a {HIT}."
+      ],
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": null, "reveal_contact": null },
+      "verify": ["Mod card shuffled into the cargo deck (red frame). Confirm against the physical deck."]
+    },
+    {
+      "image": "base-market-cargo-09",
+      "name": "Stolen Weapons",
+      "card_type": "cargo",
+      "cost": 2000,
+      "traits": ["illegal"],
+      "text": ["Cannot buy on Tatooine.", "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."],
+      "destination": "Tatooine",
+      "reward": "Gain {CREDITS}7,000 and 1 fame.",
+      "bottom": { "deck_icon": "{DECK_CARGO}", "patrol": { "faction": "imperial", "distance": 3 }, "reveal_contact": null },
+      "verify": []
+    }
+  ]
+}

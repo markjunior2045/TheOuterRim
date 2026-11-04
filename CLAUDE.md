@@ -37,6 +37,10 @@ Run from the repository root.
 - Run all tests: `dotnet test`
 - Build only: `dotnet build`
 - Unity and Unity CLI commands: to be added in T0.4.
+- Install the Python tool dependencies: `pip install -r tools/requirements.txt`
+- Prepare reading copies of card images for a transcription batch (written to the git-ignored `artifacts/transcription-work/`; the source folder is never modified):
+  `python tools/prepare_transcription_images.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted --deck base/market/gear [--only 0-4]`
+- Transcribe a batch of cards into `data/transcription/` (format in `docs/TRANSCRIPTION_FORMAT.md`): Claude Code command `/transcribe <deck> [range]`, for example `/transcribe base/market/gear 0-9`.
 
 ## Architecture rules
 

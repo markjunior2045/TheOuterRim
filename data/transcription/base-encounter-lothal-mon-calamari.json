@@ -1,0 +1,219 @@
+{
+  "format": "outer-rim-transcription/0.1",
+  "pack": "base",
+  "deck": "encounter-lothal-mon-calamari",
+  "source": "[Mod 01] sheet 51, sorted/base/encounters/lothal-mon-calamari",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is the reverse of the printed number (file 00 = card 5/10).",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text.",
+    "errata: printed text is kept as is; the RULES.md errata entry is referenced and applied when mapping effects (RULES.md does not give the exact corrected wording).",
+    "Job skills: a skill printed in italics is mandatory to avoid failing the job (R-15.32)."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-lothal-mon-calamari-04",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Rebel reputation:",
+              "flavor": "A Mon Calamari by the name of Raddus probes you about your loyalties.",
+              "text": "If you are not the most famous player, you may spend {CREDITS}7,000 to gain 1 fame. Otherwise, you may spend {CREDITS}15,000 to gain 1 fame."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Rebel reputation:",
+              "flavor": "A one-eyed Quarren leans close to you and whispers, “I heard you’re looking for a job.”",
+              "text": "Reveal the top 3 cards of the {DECK_JOB} market deck. You may buy 1 of these cards. Then shuffle the deck."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Will you help root out traitors?",
+              "text": "Action: Choose another player who has {REP_POS} Rebel reputation or a Rebel crew. That player loses 1 Imperial reputation and you gain {CREDITS}2,000 and 1 Imperial reputation."
+            }
+          ],
+          "errata": "R-24.2"
+        }
+      ],
+      "asset": null,
+      "verify": [
+        "Deck icon in the Mon Calamari text identified as {DECK_JOB} by comparing with the market deck backs."
+      ]
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-03",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A cargo hauler offers to transport you and your ship across the galaxy.",
+              "text": "Action: Spend {CREDITS}3,000 to move directly to any space. If you have {REP_POS} Rebel reputation, you may do this for free."
+            }
+          ],
+          "errata": "R-24.3"
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Imperial reputation:",
+              "flavor": "You have an opportunity to make a donation to the Academy for Young Imperials. Make it large enough, and they might even name a building after you.",
+              "text": "If you are not the most famous player, you may spend {CREDITS}7,000 to gain 1 fame. Otherwise, you may spend {CREDITS}15,000 to gain 1 fame."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Imperial reputation:",
+              "flavor": "The Academy for Young Imperials is looking for funds to bolster their flight training program.",
+              "text": "You may spend {CREDITS}2,000 to gain 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-02",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A Mon Calamari cruiser is embarking to meet up with a Rebel cell. You could probably hitch a ride.",
+              "text": "If you have {REP_POS} or {REP_NEU} Rebel reputation, you may move directly to the Rebel patrol’s space. If you do not move, you may gain 1 Rebel reputation. If you gain the reputation, lose 1 Imperial reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Imperials are offering a good price for taking down Rebel agents.",
+              "text": "Encounter: Discard this card to fight a combat against a player in your space who has either {REP_POS} Rebel reputation or {REP_NEG} Imperial reputation. If you win, gain 1 fame and 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-01",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The engineer offers to modify your hyperdrive with some military grade tech.",
+              "text": "You may spend {CREDITS}1,000 to gain the mod below."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Governor Pryce asks for help chasing down a Rebel ship.",
+              "text": "When you win a combat against a Rebel patrol, you may discard this card to gain 1 fame and 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Hyperdrive Modification",
+        "card_type": "mod",
+        "traits": [],
+        "text": [
+          "You may discard this card during your planning step to gain +4 {HYPERDRIVE} until the end of the turn."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-00",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“We’ve tracked a ship carrying Wookiee slaves to Kessel,” the Rebel operative tells you. “Are you up for a rescue mission?”",
+              "text": "You may gain the job below."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“The Empire looks after its citizens,” the Imperial officer says as he assesses the damage.",
+              "text": "Recover all damage from your character and ship. If your character and ship did not have any damage, you instead gain {CREDITS}2,000."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Wookiee Slave Trade",
+        "card_type": "job",
+        "skills": [
+          {
+            "skill": "stealth",
+            "mandatory": false
+          },
+          {
+            "skill": "knowledge",
+            "mandatory": false
+          },
+          {
+            "skill": "tech",
+            "mandatory": true
+          }
+        ],
+        "destination": "Kessel",
+        "encounter": "Resolve card #53.",
+        "reward": "Gain {CREDITS}5,000, 1 fame, and 1 Rebel reputation. Then remove this card from the game."
+      },
+      "verify": []
+    }
+  ]
+}
