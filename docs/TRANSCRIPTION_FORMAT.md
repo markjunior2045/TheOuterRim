@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.7
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.8
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.7",
+  "format": "outer-rim-transcription/0.8",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -104,6 +104,18 @@ One entry per sheet, with both sides. Files: `ship-sheets/{pack}-ship-sheets.jso
 | `sides[].stats` | `{ "hyperdrive", "ship_combat", "hull" }` |
 | `sides[].traits` | e.g. `["starter ship"]` |
 | `sides[].ability_name`, `text` | title of the ability (`null` if none) and the paragraphs of the white box; the Ship Goal side keeps `Ship Goal:` in the text |
+
+## AI cards
+
+One entry per card (`AI Player Turn`); one image each. Files: `ai/{pack}-ai-{deck}.json`.
+
+| Field | Content |
+|---|---|
+| `image` | image name without extension |
+| `number` | number printed at the bottom right (not the file order) |
+| `title` | `AI Player Turn` |
+| `steps[]` | `{ step, name, rule, items[] }`; `rule` is the opening sentence (`Do the first that applies:` or `Do all that apply:`), `null` on the Special step |
+| `steps[].items[]` | `{ label, text }`; `label` is `a`, `b`, `c`... or `null` for a bullet |
 
 ## Pending for later decks
 

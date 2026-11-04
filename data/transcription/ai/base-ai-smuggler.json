@@ -1,0 +1,655 @@
+{
+  "format": "outer-rim-transcription/0.8",
+  "pack": "base",
+  "deck": "ai-smuggler",
+  "source": "[Mod 01] sorted/base/ai/smuggler",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "AI cards have one image each. number is the card number printed at the bottom right and is not the file order.",
+    "steps[].rule is the opening sentence of a step ('Do the first that applies:' or 'Do all that apply:'), null on the Special step. items[].label is the letter of an a./b./c. item, null for a bullet; bullets are used where all items apply.",
+    "Line breaks inside an item are joined into one sentence.",
+    "Deck icons follow the legend: hand with bars = {DECK_JOB}, plug = {DECK_GEAR}, square with circle = {DECK_CARGO}, ship = {DECK_SHIP}, curl = {DECK_BOUNTY}, gem = {DECK_LUXURY}.",
+    "Smuggler-0 was first read as {DECK_SHIP} and corrected to {DECK_JOB} by the owner."
+  ],
+  "cards": [
+    {
+      "image": "base-ai-smuggler-09",
+      "number": 1,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, ship suffers 2 damage."
+            },
+            {
+              "label": null,
+              "text": "If all cargo slots full, buy {DECK_JOB}. Otherwise buy {DECK_CARGO}. Then place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            },
+            {
+              "label": "d",
+              "text": "Gain 1 reputation with this planet’s faction (if any)."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-02",
+      "number": 2,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "Recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, ship suffers 2 damage."
+            },
+            {
+              "label": null,
+              "text": "If all job slots full, buy {DECK_CARGO}. Otherwise buy {DECK_JOB}. Then place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Reveal the facedown contact token of the lowest class on this planet and gain the crew on its card for free."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-00",
+      "number": 3,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, character suffers 2 damage."
+            },
+            {
+              "label": null,
+              "text": "Buy {DECK_JOB} and place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}4,000. Then lose 1 reputation with the nearest patrol’s faction."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-08",
+      "number": 4,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it."
+            },
+            {
+              "label": null,
+              "text": "Buy {DECK_CARGO} and place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Reveal the facedown contact token of the lowest class on this planet and gain the crew on its card for free."
+            },
+            {
+              "label": "d",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-07",
+      "number": 5,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, ship suffers 3 damage."
+            },
+            {
+              "label": null,
+              "text": "Buy {DECK_JOB} and place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            },
+            {
+              "label": "c",
+              "text": "Reveal the facedown contact token of the lowest class on this planet and gain the crew on its card for free."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-04",
+      "number": 6,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "Recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, character suffers 2 damage."
+            },
+            {
+              "label": null,
+              "text": "Buy {DECK_JOB} and place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-01",
+      "number": 7,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, lose 1 reputation with this planet’s faction (if any)."
+            },
+            {
+              "label": null,
+              "text": "If all cargo slots full, buy {DECK_GEAR}. Otherwise, buy {DECK_CARGO} and place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-06",
+      "number": 8,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it."
+            },
+            {
+              "label": null,
+              "text": "Buy {DECK_GEAR}."
+            },
+            {
+              "label": null,
+              "text": "Reveal the facedown contact token of the lowest class on this planet"
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            },
+            {
+              "label": "d",
+              "text": "Gain 1 reputation with the nearest patrol’s faction."
+            }
+          ]
+        }
+      ],
+      "verify": [
+        "Step 2, third bullet: the printed text ends without a period ('...on this planet'); kept as printed."
+      ]
+    },
+    {
+      "image": "base-ai-smuggler-05",
+      "number": 9,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it. If cargo is ILLEGAL, character suffers 3 damage."
+            },
+            {
+              "label": null,
+              "text": "Buy a {DECK_SHIP}."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}4,000. Then lose 1 reputation with this planet’s faction (if any)."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-ai-smuggler-03",
+      "number": 10,
+      "title": "AI Player Turn",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Planning Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If defeated, recover all damage."
+            },
+            {
+              "label": "b",
+              "text": "Move toward closest goal."
+            },
+            {
+              "label": "c",
+              "text": "Gain {CREDITS}2,000."
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Action Step",
+          "rule": "Do all that apply:",
+          "items": [
+            {
+              "label": null,
+              "text": "If at cargo destination, deliver it."
+            },
+            {
+              "label": null,
+              "text": "Buy {DECK_CARGO} and place a goal token on card’s destination."
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Encounter Step",
+          "rule": "Do the first that applies:",
+          "items": [
+            {
+              "label": "a",
+              "text": "If {REP_NEG} reputation matching a patrol in this space, encounter that patrol."
+            },
+            {
+              "label": "b",
+              "text": "If at job destination, complete it."
+            },
+            {
+              "label": "c",
+              "text": "Spend {CREDITS}8,000 to gain 1 fame."
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "name": "Special",
+          "rule": null,
+          "items": [
+            {
+              "label": null,
+              "text": "Discard the top card of the {DECK_BOUNTY} and {DECK_LUXURY} market decks. Then shuffle this AI card back into the AI deck."
+            }
+          ]
+        }
+      ],
+      "verify": []
+    }
+  ]
+}

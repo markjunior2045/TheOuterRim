@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-transcription/0.7",
+  "format": "outer-rim-transcription/0.8",
   "pack": "base",
   "deck": "encounter-tatooine-nal-hutta",
   "source": "[Mod 01] sorted/base/encounters/tatooine-nal-hutta",
@@ -422,13 +422,15 @@
             {
               "condition": "If you have {REP_NEG} or {REP_NEU} Hutt reputation:",
               "flavor": "A Hutt gangster is looking for someone to cook up a new scheme.",
-              "text": "Test Tactics. If you pass, gain 1 Hutt reputation and you may buy the top card of the {DECK_SHIP} market deck."
+              "text": "Test Tactics. If you pass, gain 1 Hutt reputation and you may buy the top card of the {DECK_JOB} market deck."
             }
           ]
         }
       ],
       "asset": null,
-      "verify": []
+      "verify": [
+        "Nal Hutta {REP_NEG}/{REP_NEU} variant: the deck icon in 'buy the top card of the [icon] market deck' looks like the job icon (hand with bars), changed from {DECK_SHIP} to {DECK_JOB}; confirm."
+      ]
     }
   ]
 }
