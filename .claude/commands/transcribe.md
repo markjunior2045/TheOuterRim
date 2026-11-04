@@ -17,7 +17,8 @@ Talk to the owner in Brazilian Portuguese. Everything written to files is Englis
 ## Icon legend
 
 - Credits: the hexagon with a stylised symbol before a number → `{CREDITS}`.
-- Die results: single starburst → `{HIT}` (confirmed in the pilot). `{CRIT}` and `{FOCUS}` have not been seen yet: the first time one appears, add a `verify` entry describing it, and update this legend once the owner confirms.
+- Die results (confirmed by the owner): plain starburst → `{HIT}`, spiky starburst → `{CRIT}`, eye → `{FOCUS}`.
+- Stat icons (confirmed by the owner): circle with arrow → `{GROUND_COMBAT}`, ship with shot trails → `{SHIP_COMBAT}`, ship with speed trails → `{HYPERDRIVE}`, hexagonal ring → `{HULL}`, target/crosshair (armor) → `{HEALTH}`.
 - Reputation: hexagon with `+` → `{REP_POS}`, empty hexagon → `{REP_NEU}`, hexagon with `−` → `{REP_NEG}`.
 - Patrol movement icon (bottom of market cards): yellow number = distance; inner icon = faction. Rebel = red crest, Imperial = blue cog, Hutt = green, Syndicate = gold.
 - Market deck icons: see the legend image.

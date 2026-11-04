@@ -29,9 +29,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-01",
@@ -53,10 +51,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon.",
-        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-02",
@@ -77,9 +72,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-03",
@@ -122,9 +115,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-05",
@@ -146,10 +137,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon.",
-        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-06",
@@ -169,9 +157,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-07",
@@ -209,9 +195,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Ship '+1' icon read as {SHIP_COMBAT}; confirm."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-09",
@@ -254,9 +238,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-11",
@@ -272,9 +254,7 @@
         "patrol": null,
         "reveal_contact": null
       },
-      "verify": [
-        "Hyperdrive icon read as {HYPERDRIVE}; confirm. No patrol icon printed."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-12",
@@ -291,9 +271,7 @@
         "patrol": null,
         "reveal_contact": null
       },
-      "verify": [
-        "Hexagonal ring icon read as {HULL}; confirm. No patrol icon printed."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-13",
@@ -312,9 +290,7 @@
         "patrol": null,
         "reveal_contact": null
       },
-      "verify": [
-        "Hexagonal ring icon read as {HULL}; confirm. No patrol icon printed."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-14",
@@ -334,9 +310,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
-      ]
+      "verify": []
     }
   ]
 }
