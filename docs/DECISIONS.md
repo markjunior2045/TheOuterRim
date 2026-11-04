@@ -1,6 +1,6 @@
 # DECISIONS.md — Outer Rim digital
 
-Last updated: 2026-10-24
+Last updated: 2026-11-04
 
 Personal, non-commercial project: a digital version of the *Star Wars: Outer Rim* board game, built in Unity with Claude Code, to play with friends on PC.
 
@@ -39,18 +39,39 @@ Details (full card lists, animations, screens) live in their own documents as th
 
 ## 3. Content and art (Decided)
 
-- From Tabletop Simulator, **only the image files** of the *Outer Rim* mods are used (cards, map, tokens), as a source of good-resolution scans. More than one mod may be used. Credits go in `CREDITS.md`.
+- From Tabletop Simulator, **only the image files** of the *Outer Rim* mods are used (cards, map, tokens), as a source of good-resolution scans. Credits go in `CREDITS.md`.
 - **Extraction feasibility is validated first**, on a pilot set, before the Unity project is built. Without usable images there is no project.
 - Interactive objects are built in Unity. Each card type (Job, Contact, Encounter and so on) has **one template** filled from data: title, art, text, icons and values come from data files.
 - Only the cropped art is taken from a scan. Frame and text are recreated so they can be translated.
 - Languages: English and Portuguese first; Spanish later. Player-facing text lives in localization files, separate from code.
-- *Suggested:* raw source images stay outside the repository (or in a git-ignored folder); only processed assets are committed.
+- **Card text** is transcribed from the mod images (pilot of 2026-11-04: all text legible); photos of the physical cards only settle doubts. Raw printed text is stored first, format `outer-rim-transcription/0.1`, and mapped to effects later (`PLAN.md` T2.8, T2.1).
+- Raw source images stay outside the repository, in `C:\TheOuterRimProject\RawGameFiles`; only processed assets are committed.
+
+### 3.1 Image sources
+
+- Two mods are used, referred to in conversation and documents as:
+  - **[Mod 01]** — Workshop `1790581987`, "Star Wars: Outer Rim + Unfinished Business [scripted]". **Primary source.**
+  - **(Mod 02)** — Workshop `2820783326`, "Star Wars Outer Rim: Unfinished Business (Scripted)". **Secondary source.**
+  - The bracket style mirrors each mod's own title. Folder and file names use `mod01` / `mod02` instead, because brackets act as wildcards in PowerShell paths.
+- Source per component (from the extraction pilot, 2026-11-04):
+  - **Map tiles:** [Mod 01]. (Mod 02)'s map is a fan-made layout based on the board game, not the original.
+  - **Cards, ship sheets, patrols, characters, standees:** [Mod 01]. It has equal or higher resolution in every category, and (Mod 02) is missing 12 patrol and 6 ship images from its cache.
+  - **Ambition sheets:** (Mod 02). [Mod 01] has only 4 of 8; the other 4 links are dead in the mod itself.
+  - **Names and categories** (deck names, contact classes, patrol and ship names): (Mod 02), used as an index and matched to [Mod 01] images.
+- [Mod 01] keeps base game and expansion in separate decks, which is used to split content into the two packs.
 
 ## 4. Visual and audio (Decided)
 
 - Mixed 2D and 3D: a map with some 3D elements, nearly all art in 2D.
 - Simple animations. The known ones are dice rolling and the ship moving from its start space to its end space. Other simple animations will be defined as development goes.
 - Some sound effects and background music, in the final phase.
+
+### 4.1 Encounter cards in the interface (Decided, 2026-11-04)
+
+- The core keeps **one encounter deck per pair of spaces**, as in the board game (`RULES.md` R-15.73, R-15.79). A card kept by one planet's player (secret or asset, R-15.84) also leaves the other planet's section out of the deck.
+- The interface shows the player **only the section for their space**; the other planet's section is not shown. This is a display choice, not a rule change.
+- Reputation subsections: the player **cannot choose** one. The subsection that applies to their game state when the card is drawn is resolved (`RULES.md` R-15.77; Living Rules, "Encounter Cards"). The interface shows every subsection of the player's section, with only the applicable one active and the others dimmed, so the player sees what their reputation gained or cost them.
+- A split deck per planet would be a house rule; it is not planned.
 
 ## 5. Engine, tools and conventions (Decided)
 
@@ -61,6 +82,10 @@ Details (full card lists, animations, screens) live in their own documents as th
 - UI technology (UI Toolkit, uGUI, or plain 3D objects) is chosen when the first UI objects are built. Changing it later is acceptable.
 - Version control: **plain Git, no LFS**. One branch per task. `CLAUDE.md` at the repository root.
 - **Language:** all project documents, code and identifiers are written in English, and all file names are in English. Other languages exist only as in-game translations. Conversations with the assistant are in Brazilian Portuguese.
+- **Folder layout:**
+  - `C:\TheOuterRimProject\TheOuterRim` — the repository (game and `docs/`).
+  - `C:\TheOuterRimProject\RawGameFiles` — raw game files (`tts\`, `sliced\`, `photos\`); never versioned.
+  - `C:\TheOuterRimProject\Other` — reference material not used in the build (UI screenshots, PDF rule extraction).
 
 ## 6. Multiplayer and games (Decided)
 
@@ -81,6 +106,11 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Networking sits behind a simple interface (send command, receive event), so the connection type can change without touching the rules.
 - Before V1, define the **full inventory** of card types, effect types and components of the base game; implement one slice at a time.
 
+### 7.1 Image extraction tooling (Adopted)
+
+- **v1 — `tts_extract.py`** (done): generic extractor for any TTS mod. Lists local mods, inventories referenced images against the TTS cache, slices card sheets by the grid declared in the mod, writes a manifest and report. Used for the pilot.
+- **v2** (planned): specific to this project, not generic. A fixed mapping says what each sheet of each mod contains (component type, deck, pack, front/back); it picks the source per component (section 3.1), writes into folders by pack and deck, names every image with a stable ID that becomes the card ID, matches names from (Mod 02) by visual similarity, and generates the manifest and `CREDITS.md`. Built after a visual review of the pilot output.
+
 ## 8. V1
 
 Decided:
@@ -100,8 +130,7 @@ Suggested (not confirmed):
 ## 9. Open
 
 - Inventory of effect, condition and target types (`PLAN.md` T2.1).
-- List of Tabletop Simulator mods used as image sources (needed for `PLAN.md` T0.3).
-- Source of card text: transcription from mod images or from photos of the physical cards. The extraction pilot will inform this.
+- **Expansion card images:** [Mod 01]'s expansion scans have the highest resolution but look washed out with white speckles. Options: use (Mod 02)'s expansion cards where they look better despite lower resolution, or clean up [Mod 01]'s art (levels and denoise). Decide after a side-by-side review.
 - Render pipeline: URP by default *(Suggested)*.
 - Distribution: zip by link, with a version check when joining a room *(Suggested)*.
 - Offer/accept flow for credit trades between players (`RULES.md` R-9.6, R-9.7).
@@ -112,6 +141,7 @@ Resolved by `RULES.md`: skill tests and the character's role (R-6), movement (R-
 
 - Time estimates.
 - Unofficial packs (Mandalorian).
+- Unofficial extras in (Mod 02) (5-player support, extra factions).
 - Spanish.
 - Music and sound effects.
 - Bot difficulty levels and advanced bot strategy.

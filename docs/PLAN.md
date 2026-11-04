@@ -23,32 +23,27 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 ## Phase 0 — Foundation
 
 ### T0.1 — Manuals → RULES.md · `DONE`
-- **Delivered:** `RULES.md` (English, rule IDs, icon placeholders, divergence notes, gap list in §27).
+- **Delivered:** `RULES.md` (English, rule IDs, icon placeholders, divergence notes, gap list in §27). Reviewed by the owner on 2026-11-04.
 
 ### T0.2 — Repository scaffold · `DONE`
-- **Does:**
-  - `git init` (plain Git); `.gitignore` covering Unity, .NET and the raw-images folder;
-  - folders: `docs/` (manuals, `RULES.md`, `DECISIONS.md`, `PLAN.md`), `tools/`, `data/`, and the core assembly;
-  - core assembly: source folder with an assembly definition set to **no engine references**, laid out so the future Unity project can consume it;
-  - a .NET test project (xUnit) that compiles the **same** core source files; no build output written inside folders Unity will import;
-  - `CLAUDE.md` with build/test commands and the conventions above.
-- **Done when:** `dotnet test` is green on a placeholder test.
+- **Delivered:** plain Git repository, `.gitignore`, `CLAUDE.md`, core at `src/OuterRim.Core/` (local Unity package, `noEngineReferences: true`), xUnit project at `tests/OuterRim.Core.Tests/` compiling the same sources, build output in `artifacts/`. `dotnet test` green.
 
-### T0.3 — Extraction pilot (feasibility) · `BLOCKED` (needs the mod list)
-Validates that usable images can be extracted. The project depends on this answer, so it comes before the Unity project.
-- **Pilot set:** all map tiles and endcaps (base and Core Worlds), the character cards, the ship sheets, a sample of market cards, a sample of encounter cards.
+### T0.6 — Extraction tooling and transcription in the repository · `TODO`
 - **Does:**
-  - read the mod files (Tabletop Simulator saves mods as JSON; images are referenced by URL and usually also cached locally by the game, which covers dead links);
-  - fetch or copy the images; slice card sheets into individual cards using the grid size declared in the mod;
-  - name every image by a stable ID; write a manifest (source mod, URL, dimensions, hash); generate a first `CREDITS.md`;
-  - try cropping the art area on one card type.
-- **Done when** a short report in `docs/` answers, with sample images:
-  1. Is the resolution good enough at the size cards will be shown in game?
-  2. Does the art crop work for the sampled card types?
-  3. Is the printed text legible enough to transcribe from the images, or are photos of the physical cards needed?
-  4. Which items are missing or poor, and what is the fallback for each?
-- **Tests:** manifest schema; re-running the script changes nothing.
-- **Needs from the owner:** the mods' names or Workshop IDs, or the local mod files.
+  - `tools/`: `tts_extract.py` (v1), `sort_outer_rim.py` (v2), `prepare_transcription_images.py` (reading copies for T2.8), `requirements.txt` (`pillow`, `numpy`, `opencv-python`);
+  - `.claude/commands/transcribe.md`: the `/transcribe <deck> [range]` command used for every T2.8 batch;
+  - `docs/TRANSCRIPTION_FORMAT.md` (format `outer-rim-transcription/0.1`);
+  - `data/transcription/`: the pilot files.
+- **Done when:** the scripts run from `tools/` against `RawGameFiles` with the same output as before, and the transcription files parse.
+
+### T0.3 — Extraction pilot (feasibility) · `DONE`
+- **Delivered (2026-11-04):** `tts_extract.py` (v1, generic) and `sort_outer_rim.py` (v2, project specific). Output copied to `RawGameFiles`.
+- **Answers:**
+  1. Resolution is ample (cards 875–1340 px wide).
+  2. The art crop works with a fixed rectangle per card type.
+  3. Printed text is legible; transcription from the images works (see T2.8 pilot). Photos of the physical cards are only needed to settle doubts.
+  4. Missing: [Mod 01] ambition sheets 91–94 (dead links), dice and player boards (`.rawt`). Fallback: (Mod 02) for all of them.
+- Image sources per component: `DECISIONS.md` §3.1.
 
 ### T0.4 — Unity project and CLI wiring · `TODO` (T0.2)
 - **Does:** create the Unity 6.6 project (URP by default); consume the core assembly (one copy of the source); install the Unity CLI and `com.unity.pipeline`; document the commands in `CLAUDE.md`.
@@ -109,7 +104,7 @@ Fictional content, verified with `dotnet test`.
 ### T2.1 — Effect inventory · `TODO`
 - Classify every card's effect, condition and target types, plus card and component types, into `docs/EFFECTS.md`.
 - **Done when:** every card maps to a known effect type or is listed as a custom exception.
-- Classification, not transcription: it sets the card data format.
+- Classification, not transcription: it sets the card data format. Works from the T2.8 transcriptions.
 
 ### T2.2 — Data schema and validator · `TODO` (T2.1, T1.9)
 - JSON schema for cards, effects, characters, ships and **content packs** (id, version, dependencies); validator; stable IDs.
@@ -126,13 +121,26 @@ Fictional content, verified with `dotnet test`.
 
 ### T2.6 — Encounters, contacts, databank, secrets · `TODO` (T2.3)
 - R-12, R-13, R-15.72 to R-15.91, including the Core Worlds announcement (R-15.80).
+- One deck per pair of spaces; the interface shows only the player's section (`DECISIONS.md` §4.1).
 
-### T2.7 — Full image extraction · `TODO` (T0.3)
-- Extend the pilot tooling to every component.
+### T2.7 — Full image extraction · `DONE`
+- Done by `sort_outer_rim.py` (v2): 1,040 files sorted by pack and deck, with manifest, report and `CREDITS.md`.
+- **Follow-up · `TODO`:** name encounter images by their printed card number (n/10). Today the file order is the reverse of the printed number (file `00` = card 5/10). Re-run and check that every encounter deck still has its 10 (or 11) files.
 
-### T2.8 — Card transcription in batches · `TODO` (T2.2, T2.7; runs in parallel)
-- Batches by card type, each reviewed against the image or physical card before merging. English first; Portuguese through the localization files.
-- **Done per batch when:** the validator passes and the batch is reviewed.
+### T2.8 — Card transcription in batches · `TODO` (priority: before T0.4, by owner decision 2026-11-04)
+- Transcription comes first because the card patterns found here drive the core design (T2.1). Phase 0 resumes with T0.4 after the base game is transcribed and inventoried.
+- Raw printed text into JSON, format `outer-rim-transcription/0.1` (`docs/TRANSCRIPTION_FORMAT.md`). Mapping text to effects happens later, in T2.1/T2.2.
+- Each batch starts with an icon legend (market deck backs, reputation icons, die faces) and ends with the owner reviewing the cards listed under `verify`.
+- English first; Portuguese through the localization files.
+- **Pilot · `DONE` (2026-11-04):** 10 base cargo cards and 5 Lothal/Mon Calamari encounters; format validated; about 850 image tokens per market card and 1,700 per encounter.
+- **Batches (base game):**
+  - [x] Market: cargo
+  - [ ] Market: bounty, gear, job, luxury, ship
+  - [ ] Databank (53)
+  - [ ] Encounters: lothal-mon-calamari (5 of 10 done), the other six decks
+  - [ ] Characters (8), ship sheets, contacts, patrols, AI smuggler deck
+- **Batches (Unfinished Business):** after the base game, same split; decide first which image version to read from (`DECISIONS.md` §9).
+- **Done per batch when:** the JSON parses, every card in the deck is present, and the batch is reviewed. Validation against the data schema comes once T2.2 exists.
 
 ---
 
@@ -150,6 +158,7 @@ Fictional content, verified with `dotnet test`.
 
 ### T3.4 — Unity: remaining V1 interface · `TODO` (T3.2, T3.3)
 - Ship choice, one character, one card of each type, one contact, one encounter (`DECISIONS.md` §8).
+- Encounter cards show every subsection of the player's section, with only the applicable one active (`DECISIONS.md` §4.1).
 
 ### T3.5 — V1 · `TODO` (T3.4)
 - Done when the decided V1 items in `DECISIONS.md` §8 are met.
@@ -166,7 +175,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Decision | Decide at |
 |---|---|
-| Source of card text (images or photos) | after T0.3 |
+| Expansion card images: [Mod 01] or (Mod 02) | before the first Unfinished Business transcription batch |
 | UI technology for cards | T3.3 |
 | UI technology for panels and menus | first screen UI task |
 | Unity MCP server | only if the CLI proves insufficient |
@@ -178,5 +187,6 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-04 | T0.3 and T2.7 done (v1 and v2 extraction). T2.8 pilot done; batches listed. Source of card text settled (images; photos only for doubts). T2.7 follow-up for encounter numbering. New T0.6 to bring the tools and the transcription format into the repository (T0.2 was already done). Encounter display notes in T2.6 and T3.4. Transcription (T2.8) and effect inventory (T2.1) moved ahead of T0.4. |
 | 2026-10-24 | Extraction pilot moved before the Unity project (T0.3 ↔ T0.4). Git LFS dropped. Plan stated as a guide. Full extraction split from transcription (T2.7, T2.8). |
 | 2026-10-24 | Initial plan. Unity spike dropped; its useful checks folded into the Unity setup task. |
