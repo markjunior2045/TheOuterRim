@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.4
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.5
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.4",
+  "format": "outer-rim-transcription/0.5",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -74,6 +74,19 @@ One entry per character; the card has two sides, so the file lists both images. 
 | `front`, `back` | `{ "upper", "lower" }`: paragraphs above and below the divider line. The front's lower part holds the Personal Goal; the back's lower part holds the ability gained when the card is flipped |
 | `setup` | the `Setup:` line without the label |
 
+## Contact tokens
+
+One entry per token, from the face image only (the back differs just in class color and pips). Files: `contacts/{pack}-contacts.json`.
+
+| Field | Content |
+|---|---|
+| `image` | face image name without extension, e.g. `base-contact-02-4-lom` |
+| `name` | as printed |
+| `databank_card` | the number printed on the face: the databank card to resolve when encountering the contact (R-12.2, R-12.15) |
+| `class` | `{ "color", "pips" }` from the frame color: white 1, green 2, yellow 3, orange 4 [UB] (R-12.3) |
+| `faction` | faction icon printed on the face (`rebel`, `imperial`, `hutt`, `syndicate`) or `null` |
+| `droid` | `true` when the `{DROID}` icon is printed (R-12.13) |
+
 ## Pending for later decks
 
-Databank cards (numbered steps, tests, branches), ship sheets, contacts and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.
+Databank cards (numbered steps, tests, branches), ship sheets and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.

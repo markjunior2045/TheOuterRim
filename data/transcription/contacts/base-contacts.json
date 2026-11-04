@@ -1,0 +1,278 @@
+{
+  "format": "outer-rim-transcription/0.5",
+  "pack": "base",
+  "deck": "contacts",
+  "source": "[Mod 01] sorted/base/contacts",
+  "notes": [
+    "Contact tokens. databank_card is the number printed on the face: the databank card to resolve when encountering the contact (R-12.2, R-12.15).",
+    "class is read from the frame color of the face (white 1 pip, green 2, yellow 3, orange 4 [UB]). The back of every token is identical except for the class color and pips, so it is not transcribed.",
+    "faction is the faction icon printed on the face (null if none); droid is true when the {DROID} icon is printed. Both can be present (IG-RM Droid, K-2SO).",
+    "image names start at 02 in the sorted folder; the databank number matches it."
+  ],
+  "cards": [
+    {
+      "image": "base-contact-02-4-lom",
+      "name": "4-LOM",
+      "databank_card": 2,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": null,
+      "droid": true,
+      "verify": []
+    },
+    {
+      "image": "base-contact-03-bib-fortuna",
+      "name": "Bib Fortuna",
+      "databank_card": 3,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": "hutt",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-04-black-krrsantan",
+      "name": "Black Krrsantan",
+      "databank_card": 4,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": "hutt",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-05-black-sun-agent",
+      "name": "Black Sun Agent",
+      "databank_card": 5,
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "faction": "syndicate",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-06-boshek",
+      "name": "BoShek",
+      "databank_card": 6,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-07-chewbacca",
+      "name": "Chewbacca",
+      "databank_card": 7,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-08-dengar",
+      "name": "Dengar",
+      "databank_card": 8,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-09-doctor-evazan",
+      "name": "Doctor Evazan",
+      "databank_card": 9,
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-10-garindan",
+      "name": "Garindan",
+      "databank_card": 10,
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "faction": "imperial",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-11-grand-admiral-thrawn",
+      "name": "Grand Admiral Thrawn",
+      "databank_card": 11,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": "imperial",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-12-greedo",
+      "name": "Greedo",
+      "databank_card": 12,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": "hutt",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-13-hera-syndulla",
+      "name": "Hera Syndulla",
+      "databank_card": 13,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": "rebel",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-14-hondo-ohnaka",
+      "name": "Hondo Ohnaka",
+      "databank_card": 14,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-15-ig-rm-droid",
+      "name": "IG-RM Droid",
+      "databank_card": 15,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": "syndicate",
+      "droid": true,
+      "verify": []
+    },
+    {
+      "image": "base-contact-16-k-2so",
+      "name": "K-2SO",
+      "databank_card": 16,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": "imperial",
+      "droid": true,
+      "verify": []
+    },
+    {
+      "image": "base-contact-17-leia-organa",
+      "name": "Leia Organa",
+      "databank_card": 17,
+      "class": {
+        "color": "green",
+        "pips": 2
+      },
+      "faction": "rebel",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-18-lobot",
+      "name": "Lobot",
+      "databank_card": 18,
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-19-maz-kanata",
+      "name": "Maz Kanata",
+      "databank_card": 19,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-20-ponda-baba",
+      "name": "Ponda Baba",
+      "databank_card": 20,
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "faction": null,
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-21-saw-gerrera",
+      "name": "Saw Gerrera",
+      "databank_card": 21,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": "rebel",
+      "droid": false,
+      "verify": []
+    },
+    {
+      "image": "base-contact-22-w1-le",
+      "name": "W1-LE",
+      "databank_card": 22,
+      "class": {
+        "color": "white",
+        "pips": 1
+      },
+      "faction": null,
+      "droid": true,
+      "verify": []
+    },
+    {
+      "image": "base-contact-23-ziton-moj",
+      "name": "Ziton Moj",
+      "databank_card": 23,
+      "class": {
+        "color": "yellow",
+        "pips": 3
+      },
+      "faction": "syndicate",
+      "droid": false,
+      "verify": []
+    }
+  ]
+}
