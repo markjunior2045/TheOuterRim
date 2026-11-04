@@ -486,7 +486,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-13.8** [UB] **Every job** now has **two** resolution cards in the databank, even where some show only one pip. When a job card calls for a specific card, the player finds both, shuffles them and draws one at random.
 - **R-13.9** [UB] There are now four starting cargo cards (#91) and four starting job cards (#92).
 
-> Implementation: the databank is a dictionary of `number → list of cards`, with a uniform draw within the list. It is not a stack.
+> Implementation: the databank is a dictionary of `number → list of cards`, with a uniform draw within the list. It is not a stack. The list for a number combines the cards of every active content pack: a game without the expansion draws only from the base game cards of that number, a game with it draws from both. The pips on the card back are not used to decide how many versions exist (see R-13.4); the card data is.
 
 ---
 
@@ -1150,5 +1150,6 @@ Until that data exists, the core can be built and tested with fictional content.
 
 | Date | Change |
 |---|---|
+| 2026-11-04 | Section 13 implementation note: databank lists combine all active content packs; version count comes from card data, not pips. |
 | 2026-10-24 | Rewritten in English, per the project convention that all documentation is authored in English. No rule content changed. |
 | 2026-10-23 | Initial version, consolidated from Living Rules 1.1, the *Unfinished Business* rulebook and the base game Learn to Play book. |
