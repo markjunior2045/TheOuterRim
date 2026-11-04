@@ -35,7 +35,12 @@ def transcribed_images():
     done = set()
     for f in OUT.rglob("*.json"):
         data = json.loads(f.read_text(encoding="utf-8"))
-        done.update(c["image"] for c in data.get("cards", []))
+        for c in data.get("cards", []):
+            if "image" in c:
+                done.add(c["image"])
+            for side in c.get("sides", []):
+                if "image" in side:
+                    done.add(side["image"])
     return done
 
 

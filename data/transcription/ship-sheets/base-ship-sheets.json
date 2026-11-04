@@ -1,0 +1,643 @@
+{
+  "format": "outer-rim-transcription/0.7",
+  "pack": "base",
+  "deck": "ship-sheets",
+  "source": "[Mod 01] sorted/base/ship-sheets",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Each sheet has two sides. The image file without '-back' is NOT always the same side: 'role' says which side it is (ship_goal, flipped or starter). In the Aggressor-Class sheet the file without '-back' is the flipped side (IG-2000).",
+    "slots lists the sockets in printed order; 'MOD X2' is count 2; 'crew or bounty' and 'cargo or mod' are single mixed sockets.",
+    "stats are the green {HYPERDRIVE}, red {SHIP_COMBAT} and yellow {HULL} values printed on the side.",
+    "Italic ship names (the flipped names, and the first word of 'Aggressor-Class' / 'Lancer-Class') are stored without markup.",
+    "The G9 Rigger and G-1A Starfighter sheets are starter ships (STARTER SHIP printed, no ability).",
+    "White marks, dots and corner symbols on the art are decorative and not transcribed."
+  ],
+  "cards": [
+    {
+      "name": "Aggressor-Class Assault Fighter",
+      "sides": [
+        {
+          "image": "base-ship-aggressor-class-assault-fighter-back",
+          "role": "ship_goal",
+          "name": "Aggressor-Class Assault Fighter",
+          "cost": 15000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal: Win 2 combats against patrols to gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-aggressor-class-assault-fighter",
+          "role": "flipped",
+          "name": "IG-2000",
+          "cost": 15000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            },
+            {
+              "type": "bounty",
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": "Long Range Ion Cannon",
+          "text": [
+            "When you win a combat against a patrol, do not lose reputation with that patrol’s faction."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "Firespray-31 Patrol Craft",
+      "sides": [
+        {
+          "image": "base-ship-firespray-31-patrol-craft",
+          "role": "ship_goal",
+          "name": "Firespray-31 Patrol Craft",
+          "cost": 20000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 6
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal – Encounter: Fight a ship combat against a player in your space (even if on a planet) who has more fame than you. If you win, gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-firespray-31-patrol-craft-back",
+          "role": "flipped",
+          "name": "Slave I",
+          "cost": 20000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 2
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 6
+          },
+          "traits": [],
+          "ability_name": "Stealth Device",
+          "text": [
+            "When you move into a patrol’s space, you may test Stealth. If you pass, you do not have to end your movement in that space."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "G9 Rigger",
+      "sides": [
+        {
+          "image": "base-ship-g9-rigger",
+          "role": "starter",
+          "name": "G9 Rigger",
+          "cost": 0,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 2,
+            "hull": 3
+          },
+          "traits": [
+            "starter ship"
+          ],
+          "ability_name": null,
+          "text": []
+        },
+        {
+          "image": "base-ship-g9-rigger-back",
+          "role": "starter",
+          "name": "G-1A Starfighter",
+          "cost": 0,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 5,
+            "ship_combat": 3,
+            "hull": 4
+          },
+          "traits": [
+            "starter ship"
+          ],
+          "ability_name": null,
+          "text": []
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "GX1 Short Hauler",
+      "sides": [
+        {
+          "image": "base-ship-gx1-short-hauler",
+          "role": "ship_goal",
+          "name": "GX1 Short Hauler",
+          "cost": 5000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 2,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal: Gain a crew while you have 2 crew to gain 1 fame and flip this sheet (keep all 3 crew)."
+          ]
+        },
+        {
+          "image": "base-ship-gx1-short-hauler-back",
+          "role": "flipped",
+          "name": "Valorous",
+          "cost": 5000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 2,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": "Diplomatic Mission",
+          "text": [
+            "During your encounter step, you are not forced to encounter patrols that you have {REP_NEG} reputation with."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "Heavy-Duty Lifter",
+      "sides": [
+        {
+          "image": "base-ship-heavy-duty-lifter",
+          "role": "ship_goal",
+          "name": "Heavy-Duty Lifter",
+          "cost": 10000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal: If you have at least 1 cargo, complete a job to gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-heavy-duty-lifter-back",
+          "role": "flipped",
+          "name": "Ark Angel",
+          "cost": 10000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 2
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": "Secret Mission",
+          "text": [
+            "Gain +1 {HYPERDRIVE} for each job you have."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "HWK-290 Freighter",
+      "sides": [
+        {
+          "image": "base-ship-hwk-290-freighter",
+          "role": "ship_goal",
+          "name": "HWK-290 Freighter",
+          "cost": 5000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 4
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal – Action: If you have a mod, spend {CREDITS}7,000 to gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-hwk-290-freighter-back",
+          "role": "flipped",
+          "name": "Moldy Crow",
+          "cost": 5000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 2
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 4
+          },
+          "traits": [],
+          "ability_name": "Anti-Personnel Blaster Turret",
+          "text": [
+            "Gain +1 {GROUND_COMBAT}."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "Lancer-Class Pursuit Craft",
+      "sides": [
+        {
+          "image": "base-ship-lancer-class-pursuit-craft",
+          "role": "ship_goal",
+          "name": "Lancer-Class Pursuit Craft",
+          "cost": 10000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal: Deliver a contact on 1 of your bounty cards to gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-lancer-class-pursuit-craft-back",
+          "role": "flipped",
+          "name": "Shadow Caster",
+          "cost": 10000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 2
+            },
+            {
+              "type": "crew or bounty",
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": "Tractor Beam",
+          "text": [
+            "When another player moves into your space, you may force them to end their movement."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "Modified YT-1300 Light Freighter",
+      "sides": [
+        {
+          "image": "base-ship-modified-yt-1300-light-freighter",
+          "role": "ship_goal",
+          "name": "Modified YT-1300 Light Freighter",
+          "cost": 20000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal: If you have either 2 mods or 1 mod and the “Chewbacca” crew, deliver 1 cargo to gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-modified-yt-1300-light-freighter-back",
+          "role": "flipped",
+          "name": "Millennium Falcon",
+          "cost": 20000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 1
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 5,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": "Special Modifications",
+          "text": [
+            "When you are rolling a die to deliver ILLEGAL cargo, you may turn a {FOCUS} or {CRIT} result to a {HIT}."
+          ]
+        }
+      ],
+      "verify": []
+    },
+    {
+      "name": "YV-666 Light Freighter",
+      "sides": [
+        {
+          "image": "base-ship-yv-666-light-freighter",
+          "role": "ship_goal",
+          "name": "YV-666 Light Freighter",
+          "cost": 15000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 2
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 3,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": null,
+          "text": [
+            "Ship Goal: When you recover at least 1 damage from this ship, spend {CREDITS}7,000 to gain 1 fame and flip this sheet."
+          ]
+        },
+        {
+          "image": "base-ship-yv-666-light-freighter-back",
+          "role": "flipped",
+          "name": "Hound’s Tooth",
+          "cost": 15000,
+          "slots": [
+            {
+              "type": "cargo",
+              "count": 2
+            },
+            {
+              "type": "cargo or mod",
+              "count": 1
+            },
+            {
+              "type": "crew",
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "ability_name": "Nashtah Pup",
+          "text": [
+            "When you would become defeated during a ship combat, roll a die. On a {FOCUS} or {HIT} result, recover 2 damage from your ship instead."
+          ]
+        }
+      ],
+      "verify": []
+    }
+  ]
+}

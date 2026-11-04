@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.6
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.7
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.6",
+  "format": "outer-rim-transcription/0.7",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -90,6 +90,21 @@ One entry per token, from the face image only (the back differs just in class co
 | `faction` | faction icon printed on the face (`rebel`, `imperial`, `hutt`, `syndicate`) or `null` |
 | `droid` | `true` when the `{DROID}` icon is printed (R-12.13) |
 
+## Ship sheets
+
+One entry per sheet, with both sides. Files: `ship-sheets/{pack}-ship-sheets.json`.
+
+| Field | Content |
+|---|---|
+| `name` | name of the sheet (the Ship Goal side, or the first side for starter ships) |
+| `sides[]` | the two printed sides |
+| `sides[].image`, `role` | image name without extension; `ship_goal`, `flipped` or `starter`. The file without `-back` is not always the same side, `role` is authoritative |
+| `sides[].name`, `cost` | printed name and cost (0 on starter ships) |
+| `sides[].slots` | `[{ "type", "count" }]` in printed order: `cargo`, `cargo or mod`, `mod`, `crew`, `crew or bounty`, `bounty`; `MOD X2` is `count: 2` |
+| `sides[].stats` | `{ "hyperdrive", "ship_combat", "hull" }` |
+| `sides[].traits` | e.g. `["starter ship"]` |
+| `sides[].ability_name`, `text` | title of the ability (`null` if none) and the paragraphs of the white box; the Ship Goal side keeps `Ship Goal:` in the text |
+
 ## Pending for later decks
 
-Databank cards (numbered steps, tests, branches), ship sheets and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.
+Databank cards (numbered steps, tests, branches) and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.
