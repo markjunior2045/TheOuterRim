@@ -130,7 +130,7 @@ One entry per card image. Files: `databank/{pack}-databank.json`. The back of ev
 | `starting_planet` | `starting_asset` only: text after `STARTING PLANET:`; otherwise `null` |
 | `intro` | paragraphs before the sections, or `[]` |
 | `sections[]` | `{ marker, heading, flavor, text[] }`. `marker` is `null`, `{ "type": "die", "value": "{CRIT}" \| "{FOCUS}" \| "BLANK" }`, `{ "type": "step", "value": n }` or `{ "type": "faction", "value": "hutt" }`; `heading` only on favor cards (`HUTT FAVOR`) |
-| `asset` | embedded asset or `null`. `crew`: `name`, `skills`, `faction`, `droid`, `text[]`. `job`: `name`, `skills` (`{ skill, certain }`), `destination`, `encounter`, `reward`. `bounty`: `name`, `combat`, `elimination_reward`, `capture_reward`, `text[]`. `cargo`: `name`, `destination`, `reward`. Each carries `card_type` |
+| `asset` | embedded asset or `null`. `crew`: `name`, `skills`, `faction`, `droid`, `text[]`. `job`: `name`, optional `flavor`, `skills` (`{ skill, certain }`), `destination`, `encounter`, `reward`. `bounty`: `name`, `combat`, `elimination_reward`, `capture_reward`, `text[]`. `cargo`: `name`, `destination`, `reward`. Each carries `card_type` |
 
 Branches such as "skip to step 3" or "repeat this step" stay as printed text.
 

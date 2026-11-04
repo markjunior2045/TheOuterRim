@@ -5,13 +5,16 @@
   "source": "[Mod 01] sorted/base/databank",
   "notes": [
     "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
-    "Batch 1: numbers 1 to 23 (cargo checks and contacts). Numbers 40 to 53 and 90 to 92 come in batch 2.",
     "kind: cargo_check (blue frame, number 1), contact (black title bar, numbers 2-23), job (green, 40-53), starting_asset (90-92). The back of every card only repeats the number and the version pips, so it is not transcribed.",
     "sections[].marker: null, {type: die, value: {CRIT}|{FOCUS}|BLANK}, {type: step, value: n} or {type: faction, value: ...}. heading is only used by favor cards.",
     "Cargo check markers: outlined spiky starburst = {CRIT}, eye = {FOCUS}, BLANK printed in a rounded tag. Confirmed by zooming on the icons; consistent with the cargo rule (on a {HIT} deliver, otherwise resolve card #1).",
     "Contact cards: one section with the flavor and the printed paragraphs; asset is the embedded crew or job (null on cards 3, 8 and 23). faction/droid on a crew asset are the icons printed in its name bar.",
     "Skills printed in italics on an embedded job are certain: true (R-15.32).",
-    "Ellipses are printed as three periods ('please...the')."
+    "Ellipses are printed as three periods ('please...the').",
+    "Batch 2: numbers 40 to 53 (job resolution cards) and 90 to 92 (starting assets).",
+    "Starting assets (90-92) are the cards the characters' Setup line refers to (Card #90, #91, #92). The bounty assets print no class pips; combat is the red value 2 with the {GROUND_COMBAT} icon.",
+    "On starting_asset job cards every printed skill is in italics (certain: true); 'STRENGTH OR PILOTING' is one skill entry. Their flavor is stored in asset.flavor; line breaks inside Encounter are joined into one paragraph.",
+    "Job steps: the step flavor is the italic text, text[] the rules paragraphs. Favor cards (41a, 41b) use faction markers with the heading printed above each section; the faction icon is the marker."
   ],
   "cards": [
     {
@@ -919,6 +922,1197 @@
         }
       ],
       "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-040a",
+      "number": 40,
+      "variant": "a",
+      "kind": "job",
+      "title": "An Epic Game of Sabacc",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "This is it: the hand you’ve waited your whole life for. It’s time to up the stakes.",
+          "text": [
+            "You may place any amount of your credits on this card. If you do not, skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "Will your opponent fold?",
+          "text": [
+            "Your opponent may place the same amount of their credits on this card (or all of their credits if they do not have enough). If they do not, you gain the reward and any credits on this card."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "All that remains is to play out the hand.",
+          "text": [
+            "You choose to test either Knowledge or Tactics. Then, your opponent chooses to test either Knowledge or Tactics.",
+            "If only 1 player passes, that player gains the reward and all credits on this card.",
+            "If both players pass or both players fail, repeat this step."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-040b",
+      "number": 40,
+      "variant": "b",
+      "kind": "job",
+      "title": "A Friendly Game of Sabacc",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You are dealt a bad hand. Hilariously bad. Perhaps you can bluff your way to victory.",
+          "text": [
+            "You test Influence. If you pass, skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "With your weakness exposed, your opponent has an opportunity to finish the game quickly.",
+          "text": [
+            "The other player tests Tactics. If they pass, they gain the reward."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You’re back in the game and putting it all on the table. The winner will be decided by this hand.",
+          "text": [
+            "You test Tactics. If you pass, you gain the reward. If you fail, the other player gains the reward."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-040c",
+      "number": 40,
+      "variant": "c",
+      "kind": "job",
+      "title": "A Cutthroat Game of Sabacc",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You’ve barely started playing and you’re already about to lose. Maybe it’s time to cheat.",
+          "text": [
+            "You can choose to cheat. If you do, skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "Your opponent calls, and you’re left with two options. Either take your losses or open fire.",
+          "text": [
+            "You choose to either fight a ground combat against your opponent or let your opponent gain the reward.",
+            "If you fight a combat, the winner gains the reward."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You pull a card from your sleeve and hope that your opponent doesn’t notice.",
+          "text": [
+            "You test Stealth. If you pass, you gain the reward. If you fail, the other player chooses to either proceed to step 2 or test Influence.",
+            "If they test Influence and pass, they gain the reward. If they fail, you gain the reward."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-041a",
+      "number": 41,
+      "variant": "a",
+      "kind": "job",
+      "title": "Tenuous Alliance",
+      "starting_planet": null,
+      "intro": [
+        "Resolve the section below that matches the job you are resolving."
+      ],
+      "sections": [
+        {
+          "marker": {
+            "type": "faction",
+            "value": "hutt"
+          },
+          "heading": "HUTT FAVOR",
+          "flavor": "The Hutt wonders if you work for his rivals.",
+          "text": [
+            "If you have {REP_POS} Syndicate reputation, discard this job."
+          ]
+        },
+        {
+          "marker": {
+            "type": "faction",
+            "value": "imperial"
+          },
+          "heading": "IMPERIAL FAVOR",
+          "flavor": "You are accused of being a Rebel sympathizer.",
+          "text": [
+            "If you have {REP_POS} Rebel reputation, discard this job."
+          ]
+        },
+        {
+          "marker": {
+            "type": "faction",
+            "value": "rebel"
+          },
+          "heading": "REBEL FAVOR",
+          "flavor": "The Rebels probe your loyalty.",
+          "text": [
+            "If you have {REP_POS} Imperial reputation, discard this job."
+          ]
+        },
+        {
+          "marker": {
+            "type": "faction",
+            "value": "syndicate"
+          },
+          "heading": "SYNDICATE FAVOR",
+          "flavor": "The boss fears that you may be allied with her enemies.",
+          "text": [
+            "If you have {REP_POS} Hutt reputation, discard this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-041b",
+      "number": 41,
+      "variant": "b",
+      "kind": "job",
+      "title": "Lost Faith",
+      "starting_planet": null,
+      "intro": [
+        "Resolve the section below that matches the job you are resolving."
+      ],
+      "sections": [
+        {
+          "marker": {
+            "type": "faction",
+            "value": "hutt"
+          },
+          "heading": "HUTT FAVOR",
+          "flavor": "The Hutts are not forgiving of failure.",
+          "text": [
+            "Test Influence. If you fail, lose 1 Hutt reputation."
+          ]
+        },
+        {
+          "marker": {
+            "type": "faction",
+            "value": "imperial"
+          },
+          "heading": "IMPERIAL FAVOR",
+          "flavor": "The Empire does not accept failure.",
+          "text": [
+            "Test Influence. If you fail, lose 1 Imperial reputation."
+          ]
+        },
+        {
+          "marker": {
+            "type": "faction",
+            "value": "rebel"
+          },
+          "heading": "REBEL FAVOR",
+          "flavor": "Your recklessness has almost exposed the Rebellion. You claim that it was not your fault.",
+          "text": [
+            "Test Influence. If you fail, lose 1 Rebel reputation."
+          ]
+        },
+        {
+          "marker": {
+            "type": "faction",
+            "value": "syndicate"
+          },
+          "heading": "SYNDICATE FAVOR",
+          "flavor": "Your failure is a sign of weakness.",
+          "text": [
+            "Test Influence. If you fail, lose 1 Syndicate reputation."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-042",
+      "number": 42,
+      "variant": null,
+      "kind": "job",
+      "title": "The Casino Heist",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "The first part of the plan involves distracting the security guard with small talk.",
+          "text": [
+            "Test Influence. If you fail, the job fails (keep the job card)."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You try to slice into their system and add some credits to your account.",
+          "text": [
+            "Test Tech. If you fail, your character suffers 1 damage and skip to step 4."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "Just as you’re finishing up, a patrolling officer notices you. You’ll need to quickly subdue him.",
+          "text": [
+            "Test Strength. If you pass, complete this job."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "An alarm is raised and security storms the room!",
+          "text": [
+            "Fight a ground combat against the local security ({GROUND_COMBAT} 3). If you win and you are not defeated, complete this job. If you lose, repeat this step."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-043",
+      "number": 43,
+      "variant": null,
+      "kind": "job",
+      "title": "Jabba’s Hidden Stash",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "The first step of the plan involves taking an airspeeder through treacherous bluffs to a hidden cave.",
+          "text": [
+            "Test Piloting. If you fail, your character suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You slip into the cave and see many guards blocking the entrance. There are too many of them, so you’ll need to sneak by.",
+          "text": [
+            "Test Stealth. If you fail, your character suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You find a back passageway, but the way through is treacherous. Is there another way in?",
+          "text": [
+            "Test Knowledge. If you fail, your character suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "The vault is booby-trapped. You try to disable it.",
+          "text": [
+            "Test Tech. If you fail, your character suffers 2 damage. If you are not defeated, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-044",
+      "number": 44,
+      "variant": null,
+      "kind": "job",
+      "title": "Hijacking a Freighter",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You try to dock with the freighter without attracting attention.",
+          "text": [
+            "Test Piloting. If you fail, your ship suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "Once on the ship, you need to pull open a sealed compartment so you can slice the computer.",
+          "text": [
+            "Test Strength and then test Tech.",
+            "If you pass both of them, skip to step 4. If you fail at least 1 of them, your ship suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "The slicing fails, and you instead try to blow up the docking clamps.",
+          "text": [
+            "Test Tactics. If you fail, your ship suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "A swarm of Black Sun fighters are in hot pursuit. You try to draw them off.",
+          "text": [
+            "Fight a ship combat against Black Sun fighters ({SHIP_COMBAT} 3). If you win, prevent 1 damage from this combat. If you are not defeated, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-045",
+      "number": 45,
+      "variant": null,
+      "kind": "job",
+      "title": "The Jewel of Yavin",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You’ll need to find a safe path through the most dangerous part of the city.",
+          "text": [
+            "Test Knowledge. If you fail, your character suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You run afoul of some local criminals.",
+          "text": [
+            "Test Tactics. If you fail, your character suffers 1 damage unless you lose {CREDITS}3,000."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You must talk your way past security.",
+          "text": [
+            "Test Influence. If you fail, your character suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "Now to avoid the automated defense system.",
+          "text": [
+            "Test Stealth. If you fail, your character suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 5
+          },
+          "heading": null,
+          "flavor": "The jewel sits before you. Just don’t trip the alarm.",
+          "text": [
+            "Test Tech. If you pass, complete this job. If you fail, fight a ground combat against local security ({GROUND_COMBAT} 4). If you win, prevent 2 damage from this combat. Win or lose, if you are not defeated, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-046",
+      "number": 46,
+      "variant": null,
+      "kind": "job",
+      "title": "The Kessel Run",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You claim to be a crime lord looking to invest money in the spice trade.",
+          "text": [
+            "Test Influence. If you fail, the job fails (keep the job card)."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You find the hyperfuel, but you can hardly lift it.",
+          "text": [
+            "Test Strength. If you fail, the job fails (keep the job card)."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "The auto-turrets open fire. Take them out!",
+          "text": [
+            "Test Tactics. If you fail, your ship suffers 2 damage"
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "You stow the dangerous cargo as safely as you can.",
+          "text": [
+            "Test Knowledge. If you fail, your ship suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 5
+          },
+          "heading": null,
+          "flavor": "A Star Destroyer appears, and you plunge into the Maelstrom.",
+          "text": [
+            "Move to the Maelstrom then test Piloting. If you fail, your ship suffers 1 damage and repeat this step. If you pass, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": [
+        "Step 3 prints no final period ('suffers 2 damage'); kept as printed."
+      ]
+    },
+    {
+      "image": "base-databank-047",
+      "number": 47,
+      "variant": null,
+      "kind": "job",
+      "title": "Rebel Prison Break",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You identify the Imperial ship and attempt to approach undetected.",
+          "text": [
+            "Test Stealth. If you pass, skip to step 4."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You’ve been spotted and a squadron of TIE fighters moves to intercept you.",
+          "text": [
+            "Fight a ship combat against TIE fighters ({SHIP_COMBAT} 3). If you win, skip to step 4."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "One of the TIEs is still tailing you, so you fly dangerously close to the larger ship.",
+          "text": [
+            "Test Piloting. If you fail, your ship suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "You dock with the Imperial ship and find your way to the cell block. That’s when the Stormtroopers arrive.",
+          "text": [
+            "Fight a ground combat against Stormtroopers ({GROUND_COMBAT} 3). If you win and you are not defeated, complete this job. If you lose, repeat this step."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-048",
+      "number": 48,
+      "variant": null,
+      "kind": "job",
+      "title": "Rebellion on Lothal",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You feign interest in the Rebel cause hoping to gain access to their facilities.",
+          "text": [
+            "Test Influence. If you pass, skip to step 3. If you fail you may lose 1 Rebel reputation to skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "They see through your deception and attempt to subdue you.",
+          "text": [
+            "Fight a ground combat against Rebel guards ({GROUND_COMBAT} 4). If you win, skip to step 4."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You attempt to steal several heavy crates of unstable explosives.",
+          "text": [
+            "Test Strength. If you fail, your character suffers 2 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "You set some charges in the Rebel facility and attempt to escape before it explodes.",
+          "text": [
+            "Test Tactics. If you fail, your character suffers 3 damage. If you are not defeated, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-049",
+      "number": 49,
+      "variant": null,
+      "kind": "job",
+      "title": "Relic of the Past",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You need to decipher your map to find the entrance to the temple.",
+          "text": [
+            "Test Knowledge. If you fail, the job fails (keep the job)."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You enter the temple but your first step triggers a trap. Proceed with caution!",
+          "text": [
+            "Test Stealth. If you fail, your character suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You pluck the priceless relic off the pedestal, but the room starts to fill with water. A large boulder crashes down from the ceiling, blocking your only escape route.",
+          "text": [
+            "Test Tactics. If you fail, your character suffers 1 damage and repeat this step. If you pass, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-050",
+      "number": 50,
+      "variant": null,
+      "kind": "job",
+      "title": "Rescue from the Mines",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "There’s a back door to the mines...somewhere.",
+          "text": [
+            "Test Knowledge. If you fail, skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You enter through a grate in the floor and make your way to the slave quarters.",
+          "text": [
+            "Test Stealth. If you pass, skip to step 5."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "The guards draw their blasters.",
+          "text": [
+            "Fight a ground combat against Pyke sentinels ({GROUND_COMBAT} 4). If you win, skip to step 5."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "The last sentinel brandishes a stun spear.",
+          "text": [
+            "Test Strength. If you fail, your character suffers 1 damage and repeat this step."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 5
+          },
+          "heading": null,
+          "flavor": "The door to the prisoner’s cell is locked, but so corroded with rust that one good kick should open it.",
+          "text": [
+            "Test Strength. If you pass, complete this job. If you fail, your character suffers 1 damage and repeat this step."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-051",
+      "number": 51,
+      "variant": null,
+      "kind": "job",
+      "title": "Rooting Out Spies",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You ask an information broker about the presence of Imperial spies.",
+          "text": [
+            "Test Influence. If you pass, skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "The broker betrays you, and her minions try to punish you for poking around.",
+          "text": [
+            "Fight a ground combat against minions ({GROUND_COMBAT} 3). If you win, prevent 1 damage from this combat."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "The spies are getting away, but you think you know a shortcut through the basement.",
+          "text": [
+            "Test Knowledge. If you fail, your character suffers 1 damage and repeat this step."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "You locate the spies, but they are about to leave on their ship. You open fire from a distance, hoping to hit your target.",
+          "text": [
+            "Test Tactics. If you fail, your character suffers 1 damage and repeat this step. If you pass, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-052",
+      "number": 52,
+      "variant": null,
+      "kind": "job",
+      "title": "Steal a Fathier",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "You intend to steal the fathier favored to win tomorrow’s race. You’ll need to find a hole in the stable’s security first.",
+          "text": [
+            "Test Knowledge. If you fail, the job fails (keep the job card)."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "You discover there is a late-night shift change for the stable guards that should give you an opening.",
+          "text": [
+            "Test Stealth. If you pass, skip to step 4."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "The guards spot you and open fire!",
+          "text": [
+            "Fight a ground combat against guards ({GROUND_COMBAT} 3). If you win, prevent 1 damage from this combat."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "Now to tranquilize the beast and haul it back to your ship.",
+          "text": [
+            "Test Strength. If you fail, return to step 3. If you pass, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-053",
+      "number": 53,
+      "variant": null,
+      "kind": "job",
+      "title": "Wookiee Slave Trade",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": {
+            "type": "step",
+            "value": 1
+          },
+          "heading": null,
+          "flavor": "The slaver’s ship has landed on the planet surface, and a few Trandoshan guards stand watch.",
+          "text": [
+            "Test Stealth. If you pass, skip to step 3."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 2
+          },
+          "heading": null,
+          "flavor": "The guards see you coming and draw their weapons.",
+          "text": [
+            "Fight a ground combat against Trandoshan guards ({GROUND_COMBAT} 3). If you win, prevent 1 damage from this combat."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 3
+          },
+          "heading": null,
+          "flavor": "You board the ship and see the slaves locked in a peculiar cell. Hopefully there are no booby traps.",
+          "text": [
+            "Test Knowledge. If you fail, your character suffers 1 damage."
+          ]
+        },
+        {
+          "marker": {
+            "type": "step",
+            "value": 4
+          },
+          "heading": null,
+          "flavor": "You try to take control of the ship so the Wookiees can fly their way back home.",
+          "text": [
+            "Test Tech. If you fail, your character suffers 1 damage and repeat this step. If you pass, complete this job."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-090a",
+      "number": 90,
+      "variant": "a",
+      "kind": "starting_asset",
+      "title": "Lobot",
+      "starting_planet": "Ryloth",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "bounty",
+        "name": "Lobot",
+        "combat": {
+          "value": 2,
+          "type": "{GROUND_COMBAT}"
+        },
+        "elimination_reward": "Gain {CREDITS}5,000 and 1 fame.",
+        "capture_reward": "Deliver Lobot’s token to Cantonica to gain {CREDITS}10,000 and 1 fame.",
+        "text": [
+          "After you gain a reward from this card, remove it from the game."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-090b",
+      "number": 90,
+      "variant": "b",
+      "kind": "starting_asset",
+      "title": "Ponda Baba",
+      "starting_planet": "Mon Calamari",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "bounty",
+        "name": "Ponda Baba",
+        "combat": {
+          "value": 2,
+          "type": "{GROUND_COMBAT}"
+        },
+        "elimination_reward": "Gain {CREDITS}5,000 and 1 fame.",
+        "capture_reward": "Deliver Ponda Baba’s token to Takodana to gain {CREDITS}10,000 and 1 fame.",
+        "text": [
+          "After you gain a reward from this card, remove it from the game."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-090c",
+      "number": 90,
+      "variant": "c",
+      "kind": "starting_asset",
+      "title": "Doctor Evazan",
+      "starting_planet": "Takodana",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "bounty",
+        "name": "Doctor Evazan",
+        "combat": {
+          "value": 2,
+          "type": "{GROUND_COMBAT}"
+        },
+        "elimination_reward": "Gain {CREDITS}5,000 and 1 fame.",
+        "capture_reward": "Deliver Doctor Evazan’s token to Mon Calamari to gain {CREDITS}10,000 and 1 fame.",
+        "text": [
+          "After you gain a reward from this card, remove it from the game."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-090d",
+      "number": 90,
+      "variant": "d",
+      "kind": "starting_asset",
+      "title": "Black Sun Agent",
+      "starting_planet": "Cantonica",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "bounty",
+        "name": "Black Sun Agent",
+        "combat": {
+          "value": 2,
+          "type": "{GROUND_COMBAT}"
+        },
+        "elimination_reward": "Gain {CREDITS}5,000 and 1 fame.",
+        "capture_reward": "Deliver Black Sun Agent’s token to Ryloth to gain {CREDITS}10,000 and 1 fame.",
+        "text": [
+          "After you gain a reward from this card, remove it from the game."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-091a",
+      "number": 91,
+      "variant": "a",
+      "kind": "starting_asset",
+      "title": "Vehicle Parts",
+      "starting_planet": "Nal Hutta",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "cargo",
+        "name": "Vehicle Parts",
+        "destination": "The Ring of Kafrene",
+        "reward": "Gain {CREDITS}5,000."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-091b",
+      "number": 91,
+      "variant": "b",
+      "kind": "starting_asset",
+      "title": "Luxury Wares",
+      "starting_planet": "The Ring of Kafrene",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "cargo",
+        "name": "Luxury Wares",
+        "destination": "Nal Hutta",
+        "reward": "Gain {CREDITS}5,000."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-091c",
+      "number": 91,
+      "variant": "c",
+      "kind": "starting_asset",
+      "title": "Moisture Vaporators",
+      "starting_planet": "Lothal",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "cargo",
+        "name": "Moisture Vaporators",
+        "destination": "Tatooine",
+        "reward": "Gain {CREDITS}5,000."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-092a",
+      "number": 92,
+      "variant": "a",
+      "kind": "starting_asset",
+      "title": "Pirate Trouble",
+      "starting_planet": "Ord Mantell",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "job",
+        "name": "Pirate Trouble",
+        "flavor": "A band of pirates have stolen a precious heirloom from a local crime lord. You’ve been hired to retrieve it.",
+        "skills": [
+          {
+            "skill": "piloting",
+            "certain": true
+          }
+        ],
+        "destination": "Nal Hutta",
+        "encounter": "Test Piloting. If you pass, complete this job. If you fail, your ship suffers 1 damage.",
+        "reward": "Gain {CREDITS}4,000 and 1 fame. Then remove this card from the game."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-092b",
+      "number": 92,
+      "variant": "b",
+      "kind": "starting_asset",
+      "title": "Heavy Hitters",
+      "starting_planet": "Tatooine",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "job",
+        "name": "Heavy Hitters",
+        "flavor": "An up-and-coming crime boss is looking for a security escort to his meeting with some unsavory folk.",
+        "skills": [
+          {
+            "skill": "strength",
+            "certain": true
+          }
+        ],
+        "destination": "Takodana",
+        "encounter": "Test Strength. If you pass, complete this job. If you fail, your character suffers 1 damage.",
+        "reward": "Gain {CREDITS}4,000 and 1 fame. Then remove this card from the game."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-092c",
+      "number": 92,
+      "variant": "c",
+      "kind": "starting_asset",
+      "title": "Safe Passage",
+      "starting_planet": "Kessel",
+      "intro": [],
+      "sections": [],
+      "asset": {
+        "card_type": "job",
+        "name": "Safe Passage",
+        "flavor": "A Pyke capo is looking for someone to escort him through a dangerous sector of space.",
+        "skills": [
+          {
+            "skill": "strength or piloting",
+            "certain": true
+          }
+        ],
+        "destination": "Ord Mantell",
+        "encounter": "Test Strength or Piloting. If you pass, complete this job. If you fail, your character and ship both suffer 1 damage.",
+        "reward": "Gain {CREDITS}5,000 and 1 fame. Then remove this card from the game."
+      },
       "verify": []
     }
   ]
