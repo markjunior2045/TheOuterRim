@@ -5,7 +5,7 @@
   "source": "[Mod 01] sorted/base/market/job",
   "notes": [
     "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
-    "Job cost is the printed {CREDITS}0, stored as 0. Job skills printed in italics are mandatory (R-15.32).",
+    "Job cost is the printed {CREDITS}0, stored as 0. Job skills printed in italics will certainly be tested (`certain: true`, R-15.32).",
     "The job deck contains two identical 'Hired Help' crew cards (images 06 and 09).",
     "'FAVOR' is printed in small caps at the top of the text box and is stored as a trait.",
     "Patrol icon of jobs is printed at the top of the card."
@@ -21,15 +21,15 @@
       "skills": [
         {
           "skill": "knowledge",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "stealth",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "strength",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [
@@ -58,15 +58,15 @@
       "skills": [
         {
           "skill": "influence",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "knowledge",
-          "mandatory": true
+          "certain": true
         },
         {
           "skill": "tactics",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [
@@ -95,15 +95,15 @@
       "skills": [
         {
           "skill": "influence",
-          "mandatory": true
+          "certain": true
         },
         {
           "skill": "tech",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "strength",
-          "mandatory": false
+          "certain": false
         }
       ],
       "text": [
@@ -132,23 +132,23 @@
       "skills": [
         {
           "skill": "influence",
-          "mandatory": true
+          "certain": true
         },
         {
           "skill": "strength",
-          "mandatory": true
+          "certain": true
         },
         {
           "skill": "tactics",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "knowledge",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "piloting",
-          "mandatory": false
+          "certain": false
         }
       ],
       "text": [
@@ -179,23 +179,23 @@
       "skills": [
         {
           "skill": "knowledge",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tactics",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "influence",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "stealth",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tech",
-          "mandatory": false
+          "certain": false
         }
       ],
       "text": [
@@ -226,7 +226,7 @@
       "skills": [
         {
           "skill": "influence",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [],
@@ -270,15 +270,15 @@
       "skills": [
         {
           "skill": "knowledge",
-          "mandatory": true
+          "certain": true
         },
         {
           "skill": "stealth",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tactics",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [
@@ -309,7 +309,7 @@
       "skills": [
         {
           "skill": "knowledge",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [],
@@ -355,7 +355,7 @@
       "skills": [
         {
           "skill": "tactics",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [],
@@ -384,7 +384,7 @@
       "skills": [
         {
           "skill": "knowledge",
-          "mandatory": true
+          "certain": true
         }
       ],
       "text": [],
@@ -411,23 +411,23 @@
       "skills": [
         {
           "skill": "piloting",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "strength",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tech",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tactics",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "ship combat",
-          "mandatory": false
+          "certain": false
         }
       ],
       "text": [
@@ -456,19 +456,19 @@
       "skills": [
         {
           "skill": "piloting",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "stealth",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "knowledge",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tech",
-          "mandatory": false
+          "certain": false
         }
       ],
       "text": [

@@ -9,7 +9,7 @@
     "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
     "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text.",
     "errata: printed text is kept as is; the RULES.md errata entry is referenced and applied when mapping effects (RULES.md does not give the exact corrected wording).",
-    "Job skills: a skill printed in italics is mandatory to avoid failing the job (R-15.32)."
+    "Job skills: a skill printed in italics will certainly be tested (`certain: true`); the others may be tested (R-15.32)."
   ],
   "cards": [
     {
@@ -198,15 +198,15 @@
         "skills": [
           {
             "skill": "stealth",
-            "mandatory": false
+            "certain": false
           },
           {
             "skill": "knowledge",
-            "mandatory": false
+            "certain": false
           },
           {
             "skill": "tech",
-            "mandatory": true
+            "certain": true
           }
         ],
         "destination": "Kessel",

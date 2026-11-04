@@ -165,19 +165,19 @@
       "skills": [
         {
           "skill": "influence",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "knowledge",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "stealth",
-          "mandatory": false
+          "certain": false
         },
         {
           "skill": "tactics",
-          "mandatory": false
+          "certain": false
         }
       ],
       "destination": "Another player's space.",
