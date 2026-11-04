@@ -1,0 +1,491 @@
+{
+  "format": "outer-rim-transcription/0.1",
+  "pack": "base",
+  "deck": "job",
+  "source": "[Mod 01] sorted/base/market/job",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Job cost is the printed {CREDITS}0, stored as 0. Job skills printed in italics are mandatory (R-15.32).",
+    "The job deck contains two identical 'Hired Help' crew cards (images 06 and 09).",
+    "'FAVOR' is printed in small caps at the top of the text box and is stored as a trait.",
+    "Patrol icon of jobs is printed at the top of the card."
+  ],
+  "cards": [
+    {
+      "image": "base-market-job-00",
+      "name": "Rescue from the Mines",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "A local governor's son fell in with an unsavory crowd and landed himself in the spice mines of Kessel. His mother will pay a generous fee to anyone gutsy enough to break him out.",
+      "skills": [
+        {
+          "skill": "knowledge",
+          "mandatory": false
+        },
+        {
+          "skill": "stealth",
+          "mandatory": false
+        },
+        {
+          "skill": "strength",
+          "mandatory": true
+        }
+      ],
+      "text": [
+        "Cannot buy on Kessel."
+      ],
+      "destination": "Kessel",
+      "encounter": "Resolve card #50.",
+      "reward": "Lose 1 Syndicate reputation and gain {CREDITS}8,000 and 1 fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-01",
+      "name": "Rooting Out Spies",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "Maz senses that there are Imperial agents in her midst, and she has asked for help rooting out the spies.",
+      "skills": [
+        {
+          "skill": "influence",
+          "mandatory": false
+        },
+        {
+          "skill": "knowledge",
+          "mandatory": true
+        },
+        {
+          "skill": "tactics",
+          "mandatory": true
+        }
+      ],
+      "text": [
+        "Cannot buy on Takodana."
+      ],
+      "destination": "Takodana",
+      "encounter": "Resolve card #51.",
+      "reward": "Gain {CREDITS}5,000 and 1 fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-02",
+      "name": "The Casino Heist",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "The casino has more credits than they know what to do with. No one will notice if you skim a little off the top, right?",
+      "skills": [
+        {
+          "skill": "influence",
+          "mandatory": true
+        },
+        {
+          "skill": "tech",
+          "mandatory": false
+        },
+        {
+          "skill": "strength",
+          "mandatory": false
+        }
+      ],
+      "text": [
+        "Cannot buy on Cantonica."
+      ],
+      "destination": "Cantonica",
+      "encounter": "Resolve card #42.",
+      "reward": "Gain {CREDITS}15,000. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-03",
+      "name": "The Kessel Run",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "Deep under the surface of Kessel is a rich vein of coaxium ore. You've been hired to steal some.",
+      "skills": [
+        {
+          "skill": "influence",
+          "mandatory": true
+        },
+        {
+          "skill": "strength",
+          "mandatory": true
+        },
+        {
+          "skill": "tactics",
+          "mandatory": false
+        },
+        {
+          "skill": "knowledge",
+          "mandatory": false
+        },
+        {
+          "skill": "piloting",
+          "mandatory": false
+        }
+      ],
+      "text": [
+        "Cannot buy on Kessel."
+      ],
+      "destination": "Kessel",
+      "encounter": "Resolve card #46.",
+      "reward": "Gain {CREDITS}10,000 and 2 fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Italic (mandatory) skills read as influence and strength; the line is small and cramped, confirm which of the five are italic."
+      ]
+    },
+    {
+      "image": "base-market-job-04",
+      "name": "The Jewel of Yavin",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "The galaxy's elite gather at Naboo to bid on the dazzling corusca gem, the Jewel of Yavin. It has already been stolen once, so you expect security to be tight.",
+      "skills": [
+        {
+          "skill": "knowledge",
+          "mandatory": false
+        },
+        {
+          "skill": "tactics",
+          "mandatory": false
+        },
+        {
+          "skill": "influence",
+          "mandatory": false
+        },
+        {
+          "skill": "stealth",
+          "mandatory": false
+        },
+        {
+          "skill": "tech",
+          "mandatory": false
+        }
+      ],
+      "text": [
+        "Cannot buy on Naboo."
+      ],
+      "destination": "Naboo",
+      "encounter": "Resolve card #45.",
+      "reward": "Gain {CREDITS}15,000 and 1 fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-05",
+      "name": "Hutt Favor",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "flavor": "An influential Hutt is angry that someone is encroaching on her territory and wants you to find out who is responsible.",
+      "skills": [
+        {
+          "skill": "influence",
+          "mandatory": true
+        }
+      ],
+      "text": [],
+      "destination": "Ord Mantell",
+      "encounter": "Test Influence. If you pass, complete this job. If you fail, resolve card #41.",
+      "reward": "Gain {CREDITS}5,000 and 1 Hutt reputation. If you already had {REP_POS} Hutt reputation, you also lose 1 Syndicate reputation and gain 1 fame. Then discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-06",
+      "name": "Hired Help",
+      "card_type": "crew",
+      "cost": 1000,
+      "traits": [],
+      "skills": [],
+      "text": [
+        "Before you perform a skill test, you may gain a skill of your choice for that test. If you pass the test, discard this crew."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-07",
+      "name": "Relic of the Past",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "You have uncovered information about an underwater temple on Mon Calamari. Surely there is something of worth there.",
+      "skills": [
+        {
+          "skill": "knowledge",
+          "mandatory": true
+        },
+        {
+          "skill": "stealth",
+          "mandatory": false
+        },
+        {
+          "skill": "tactics",
+          "mandatory": true
+        }
+      ],
+      "text": [
+        "Cannot buy on Mon Calamari."
+      ],
+      "destination": "Mon Calamari",
+      "encounter": "Resolve card #49.",
+      "reward": "Gain {CREDITS}5,000 and 1 fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-08",
+      "name": "Rebel Favor",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "flavor": "The Rebel alliance is looking for someone who knows their way around Imperial installations.",
+      "skills": [
+        {
+          "skill": "knowledge",
+          "mandatory": true
+        }
+      ],
+      "text": [],
+      "destination": "Lothal",
+      "encounter": "Test Knowledge. If you pass, complete this job. If you fail, resolve card #41.",
+      "reward": "Gain {CREDITS}5,000 and 1 Rebel reputation. If you already had {REP_POS} Rebel reputation, you also lose 1 Imperial reputation and gain 1 fame. Then discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-09",
+      "name": "Hired Help",
+      "card_type": "crew",
+      "cost": 1000,
+      "traits": [],
+      "skills": [],
+      "text": [
+        "Before you perform a skill test, you may gain a skill of your choice for that test. If you pass the test, discard this crew."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-10",
+      "name": "Imperial Favor",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "flavor": "The Empire wants you to prevent an arms dealer from meeting Rebel operatives on Ryloth.",
+      "skills": [
+        {
+          "skill": "tactics",
+          "mandatory": true
+        }
+      ],
+      "text": [],
+      "destination": "Ryloth",
+      "encounter": "Test Tactics. If you pass, complete this job. If you fail, resolve card #41.",
+      "reward": "Gain {CREDITS}5,000 and 1 Imperial reputation. If you already had {REP_POS} Imperial reputation, you also lose 1 Rebel reputation and gain 1 fame. Then discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-11",
+      "name": "Syndicate Favor",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "flavor": "A crime syndicate is looking for someone who understands many languages to infiltrate the Hutt Grand Council.",
+      "skills": [
+        {
+          "skill": "knowledge",
+          "mandatory": true
+        }
+      ],
+      "text": [],
+      "destination": "Nal Hutta",
+      "encounter": "Test Knowledge. If you pass, complete this job. If you fail, resolve card #41.",
+      "reward": "Gain {CREDITS}5,000 and 1 Syndicate reputation. If you already had {REP_POS} Syndicate reputation, you also lose 1 Hutt reputation and gain 1 fame. Then discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-12",
+      "name": "Hijacking a Freighter",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "The Hutt grumbles at you, and his protocol droid translates, “My master is looking for a team to hijack a freighter.”",
+      "skills": [
+        {
+          "skill": "piloting",
+          "mandatory": false
+        },
+        {
+          "skill": "strength",
+          "mandatory": false
+        },
+        {
+          "skill": "tech",
+          "mandatory": false
+        },
+        {
+          "skill": "tactics",
+          "mandatory": false
+        },
+        {
+          "skill": "ship combat",
+          "mandatory": false
+        }
+      ],
+      "text": [
+        "Cannot buy on the Ring of Kafrene."
+      ],
+      "destination": "The Ring of Kafrene",
+      "encounter": "Resolve card #44.",
+      "reward": "Gain {CREDITS}5,000, 2 fame, and 1 Hutt reputation. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-job-13",
+      "name": "Jabba's Hidden Stash",
+      "card_type": "job",
+      "cost": 0,
+      "traits": [],
+      "flavor": "\"Jabba's got so many credits, he won't even notice a few missing,\" the Twi'lek says. \"The plan's foolproof. You in?\"",
+      "skills": [
+        {
+          "skill": "piloting",
+          "mandatory": false
+        },
+        {
+          "skill": "stealth",
+          "mandatory": false
+        },
+        {
+          "skill": "knowledge",
+          "mandatory": false
+        },
+        {
+          "skill": "tech",
+          "mandatory": false
+        }
+      ],
+      "text": [
+        "Cannot buy on Tatooine."
+      ],
+      "destination": "Tatooine",
+      "encounter": "Resolve card #43.",
+      "reward": "Lose 1 Hutt reputation and gain {CREDITS}10,000 and 1 fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_JOB}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    }
+  ]
+}
