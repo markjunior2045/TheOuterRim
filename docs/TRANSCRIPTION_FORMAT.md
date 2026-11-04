@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.8
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.9
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.8",
+  "format": "outer-rim-transcription/0.9",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -117,6 +117,23 @@ One entry per card (`AI Player Turn`); one image each. Files: `ai/{pack}-ai-{dec
 | `steps[]` | `{ step, name, rule, items[] }`; `rule` is the opening sentence (`Do the first that applies:` or `Do all that apply:`), `null` on the Special step |
 | `steps[].items[]` | `{ label, text }`; `label` is `a`, `b`, `c`... or `null` for a bullet |
 
+## Databank cards
+
+One entry per card image. Files: `databank/{pack}-databank.json`. The back of every card only repeats the number and the version pips and is not transcribed.
+
+| Field | Content |
+|---|---|
+| `image` | image name without extension, e.g. `base-databank-001a` |
+| `number`, `variant` | number printed at the bottom right; letter of the version from the file name, or `null` |
+| `kind` | `cargo_check` (number 1), `contact` (2-23), `job` (40-53) or `starting_asset` (90-92) |
+| `title` | printed title; on `starting_asset` the name of the asset |
+| `starting_planet` | `starting_asset` only: text after `STARTING PLANET:`; otherwise `null` |
+| `intro` | paragraphs before the sections, or `[]` |
+| `sections[]` | `{ marker, heading, flavor, text[] }`. `marker` is `null`, `{ "type": "die", "value": "{CRIT}" \| "{FOCUS}" \| "BLANK" }`, `{ "type": "step", "value": n }` or `{ "type": "faction", "value": "hutt" }`; `heading` only on favor cards (`HUTT FAVOR`) |
+| `asset` | embedded asset or `null`. `crew`: `name`, `skills`, `faction`, `droid`, `text[]`. `job`: `name`, `skills` (`{ skill, certain }`), `destination`, `encounter`, `reward`. `bounty`: `name`, `combat`, `elimination_reward`, `capture_reward`, `text[]`. `cargo`: `name`, `destination`, `reward`. Each carries `card_type` |
+
+Branches such as "skip to step 3" or "repeat this step" stay as printed text.
+
 ## Pending for later decks
 
-Databank cards (numbered steps, tests, branches) and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.
+Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.

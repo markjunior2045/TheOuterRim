@@ -1,0 +1,925 @@
+{
+  "format": "outer-rim-transcription/0.9",
+  "pack": "base",
+  "deck": "databank",
+  "source": "[Mod 01] sorted/base/databank",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Batch 1: numbers 1 to 23 (cargo checks and contacts). Numbers 40 to 53 and 90 to 92 come in batch 2.",
+    "kind: cargo_check (blue frame, number 1), contact (black title bar, numbers 2-23), job (green, 40-53), starting_asset (90-92). The back of every card only repeats the number and the version pips, so it is not transcribed.",
+    "sections[].marker: null, {type: die, value: {CRIT}|{FOCUS}|BLANK}, {type: step, value: n} or {type: faction, value: ...}. heading is only used by favor cards.",
+    "Cargo check markers: outlined spiky starburst = {CRIT}, eye = {FOCUS}, BLANK printed in a rounded tag. Confirmed by zooming on the icons; consistent with the cargo rule (on a {HIT} deliver, otherwise resolve card #1).",
+    "Contact cards: one section with the flavor and the printed paragraphs; asset is the embedded crew or job (null on cards 3, 8 and 23). faction/droid on a crew asset are the icons printed in its name bar.",
+    "Skills printed in italics on an embedded job are certain: true (R-15.32).",
+    "Ellipses are printed as three periods ('please...the')."
+  ],
+  "cards": [
+    {
+      "image": "base-databank-001a",
+      "number": 1,
+      "variant": "a",
+      "kind": "cargo_check",
+      "title": "Imperial Presence",
+      "starting_planet": null,
+      "intro": [
+        "If you have {REP_NEG} reputation with a patrol in your space, end your action step. Otherwise, resolve the section below that matches the result rolled for the cargo."
+      ],
+      "sections": [
+        {
+          "marker": {
+            "type": "die",
+            "value": "{CRIT}"
+          },
+          "heading": null,
+          "flavor": "“Attention unknown vessel. Cut thrust and prepare to be boarded or you will be fired upon.”",
+          "text": [
+            "Fight a ship combat against TIE fighters ({SHIP_COMBAT} 3). If you win and you are not defeated, deliver this cargo and end your turn. Otherwise, end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "{FOCUS}"
+          },
+          "heading": null,
+          "flavor": "“Nothing in these crates but foodstuffs, officer.”",
+          "text": [
+            "Test Influence. If you pass, deliver this cargo and end your turn. If you fail, lose 1 Imperial reputation and end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "BLANK"
+          },
+          "heading": null,
+          "flavor": "“Try to avoid any Imperial entanglements.”",
+          "text": [
+            "If you have {REP_NEG} or {REP_NEU} Imperial reputation, test Stealth. If you pass or have {REP_POS} Imperial reputation, deliver this cargo and end your turn. If you fail, lose 1 Imperial reputation and end your turn."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-001b",
+      "number": 1,
+      "variant": "b",
+      "kind": "cargo_check",
+      "title": "Unwanted Attention",
+      "starting_planet": null,
+      "intro": [
+        "If you have {REP_NEG} reputation with a patrol in your space, end your action step. Otherwise, resolve the section below that matches the result rolled for the cargo."
+      ],
+      "sections": [
+        {
+          "marker": {
+            "type": "die",
+            "value": "{CRIT}"
+          },
+          "heading": null,
+          "flavor": "“I beg your pardon. I am afraid that cargo is the property of my master, Sutha the Hutt.”",
+          "text": [
+            "You may lose 1 Hutt reputation to deliver this cargo and end your turn. Otherwise, end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "{FOCUS}"
+          },
+          "heading": null,
+          "flavor": "“The Rebellion needs this cargo more than you.”",
+          "text": [
+            "You may lose 1 Rebel reputation to deliver this cargo and end your turn. Otherwise, end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "BLANK"
+          },
+          "heading": null,
+          "flavor": "“As you can see from our credentials, we are legitimate customs officials.”",
+          "text": [
+            "You may lose 1 Syndicate reputation to deliver this cargo and end your turn. Otherwise, end your turn."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-001c",
+      "number": 1,
+      "variant": "c",
+      "kind": "cargo_check",
+      "title": "Local Security",
+      "starting_planet": null,
+      "intro": [
+        "If you have {REP_NEG} reputation with a patrol in your space, end your action step. Otherwise, resolve the section below that matches the result rolled for the cargo."
+      ],
+      "sections": [
+        {
+          "marker": {
+            "type": "die",
+            "value": "{CRIT}"
+          },
+          "heading": null,
+          "flavor": "“The boss wants what’s in the box.”",
+          "text": [
+            "Either discard this cargo or fight a ground combat against crooks ({GROUND_COMBAT} 3). If you win and you are not defeated, deliver this cargo and end your turn. Otherwise, end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "{FOCUS}"
+          },
+          "heading": null,
+          "flavor": "“You’ll never get past the checkpoint without being seen.”",
+          "text": [
+            "Test Stealth. If you pass, deliver this cargo and end your turn. If you fail, lose 1 reputation with your planet’s faction and end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "BLANK"
+          },
+          "heading": null,
+          "flavor": "“I don’t know, fly casual!”",
+          "text": [
+            "Test Piloting. If you pass, deliver this cargo and end your turn. If you fail, lose 1 reputation with your planet’s faction and end your turn."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-001d",
+      "number": 1,
+      "variant": "d",
+      "kind": "cargo_check",
+      "title": "Special Interest Groups",
+      "starting_planet": null,
+      "intro": [
+        "If you have {REP_NEG} reputation with a patrol in your space, end your action step. Otherwise, resolve the section below that matches the result rolled for the cargo."
+      ],
+      "sections": [
+        {
+          "marker": {
+            "type": "die",
+            "value": "{CRIT}"
+          },
+          "heading": null,
+          "flavor": "“Sure, you can move your cargo here. Just as long as my boss gets her cut.”",
+          "text": [
+            "Deliver this cargo. Lose 1 Syndicate reputation unless you spend {CREDITS}6,000. Then end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "{FOCUS}"
+          },
+          "heading": null,
+          "flavor": "“Now there is the matter of your docking fee. And the refueling fee. And the gratuity.”",
+          "text": [
+            "Deliver this cargo. Lose 1 Hutt reputation unless you spend {CREDITS}6,000. Then end your turn."
+          ]
+        },
+        {
+          "marker": {
+            "type": "die",
+            "value": "BLANK"
+          },
+          "heading": null,
+          "flavor": "“We want the cargo, but please...the Rebellion can’t afford your price.”",
+          "text": [
+            "Deliver this cargo. Lose 1 Rebel reputation unless you spend {CREDITS}6,000. Then end your turn."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-002",
+      "number": 2,
+      "variant": null,
+      "kind": "contact",
+      "title": "4-LOM",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Logic glitches turned a protocol droid into a bounty hunter, eager for new opportunities.",
+          "text": [
+            "You may spend {CREDITS}3,000 to gain the crew below and discard 4-LOM’s token. Reduce this by {CREDITS}1,000 for each bounty you have."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "4-LOM",
+        "skills": [
+          "tactics"
+        ],
+        "faction": null,
+        "droid": true,
+        "text": [
+          "Gain +1 {GROUND_COMBAT}."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-003",
+      "number": 3,
+      "variant": null,
+      "kind": "contact",
+      "title": "Bib Fortuna",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“Day wanna wonga?” he asks as he steps from the shadows. This is your chance to gain the ear of Jabba the Hutt.",
+          "text": [
+            "You may spend {CREDITS}2,000 to choose a player. Make that player gain or lose 1 Hutt reputation.",
+            "After resolving this card, move Bib Fortuna’s token to an empty contact space on Tatooine. If there is not an empty contact space, exchange this token with a contact on Tatooine."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-004",
+      "number": 4,
+      "variant": null,
+      "kind": "contact",
+      "title": "Black Krrsantan",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "The infamous Wookiee bounty hunter could be a valuable ally...or a dangerous enemy.",
+          "text": [
+            "If you have a bounty or job, you may spend {CREDITS}1,000 to gain the crew below and discard Black Krrsantan’s token.",
+            "If you do not gain the crew, and you have at least 1 {REP_NEG} reputation, fight a ground combat ({GROUND_COMBAT} 4). If you win, discard Black Krrsantan’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Black Krrsantan",
+        "skills": [
+          "strength"
+        ],
+        "faction": "hutt",
+        "droid": false,
+        "text": [
+          "At the start of ground combat, you may spend {CREDITS}2,000 to gain +2 {GROUND_COMBAT} for that combat."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-005",
+      "number": 5,
+      "variant": null,
+      "kind": "contact",
+      "title": "Black Sun Agent",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Black Sun has agents everywhere. Their network of connections is the syndicate’s greatest strength.",
+          "text": [
+            "If you have {REP_NEG} Syndicate reputation, test Stealth. If you fail, your character suffers 2 damage.",
+            "If you have {REP_POS} or {REP_NEU} Syndicate reputation, you may test Influence. If you pass, gain the crew below and discard Black Sun Agent’s token. If you would fail, you may spend {CREDITS}2,000 to pass this test instead."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Black Sun Agent",
+        "skills": [
+          "stealth"
+        ],
+        "faction": "syndicate",
+        "droid": false,
+        "text": [
+          "Increase the reward for each of your jobs by {CREDITS}2,000."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-006",
+      "number": 6,
+      "variant": null,
+      "kind": "contact",
+      "title": "BoShek",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“Don’t say ‘smuggler,’” says the Corellian. “I prefer ‘freelance pilot for hire.’ Speaking of, are you hiring?”",
+          "text": [
+            "You may spend {CREDITS}2,000 to gain the crew below and discard BoShek’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "BoShek",
+        "skills": [
+          "piloting"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "If you do not roll a {HIT} when delivering ILLEGAL cargo, you may reroll your die."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-007",
+      "number": 7,
+      "variant": null,
+      "kind": "contact",
+      "title": "Chewbacca",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "In his long life, Chewbacca has learned many useful skills. You couldn’t ask for a better ally.",
+          "text": [
+            "If you are Han Solo, you may gain the crew below and discard Chewbacca’s token.",
+            "Otherwise, you may spend {CREDITS}4,000 to gain the crew below and discard Chewbacca’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Chewbacca",
+        "skills": [
+          "piloting",
+          "strength"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "Gain +1 {HEALTH} and +2 {HULL}."
+        ]
+      },
+      "verify": [
+        "Chewbacca crew text: the first icon (crosshair) is read as {HEALTH} and the second (hexagonal ring) as {HULL}; confirm."
+      ]
+    },
+    {
+      "image": "base-databank-008",
+      "number": 8,
+      "variant": null,
+      "kind": "contact",
+      "title": "Dengar",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Dengar has a fearsome reputation and decades of experience. You can only hope that you’re not the bounty he’s after.",
+          "text": [
+            "If you have at least 1 {REP_NEG} reputation, fight a ground combat against Dengar ({GROUND_COMBAT} 5). If you win, gain 1 fame and discard Dengar’s token.",
+            "If you lose or have no {REP_NEG} reputation, place Dengar’s token facedown on his contact space or an empty contact space."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-databank-009",
+      "number": 9,
+      "variant": null,
+      "kind": "contact",
+      "title": "Doctor Evazan",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“I don’t like you either.”",
+          "text": [
+            "Test Strength. If you fail, your character suffers 2 damage. Pass or fail, you may spend {CREDITS}2,000 to gain the crew below and discard Doctor Evazan’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Doctor Evazan",
+        "skills": [
+          "tech"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "At the start of ground combat, choose a die result. During the combat, both players may turn up to 2 of their blank dice to the chosen result."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-010",
+      "number": 10,
+      "variant": null,
+      "kind": "contact",
+      "title": "Garindan",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "This Kubaz spy regularly sells information to the Empire, but he’ll work for you if the price is right.",
+          "text": [
+            "If you have {REP_NEG} Imperial reputation or {REP_POS} Rebel reputation, test Stealth. If you fail, move the Imperial patrol directly to your space and encounter it.",
+            "If you pass or did not perform the test, you may spend {CREDITS}2,000 to gain the crew below and discard Garindan’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Garindan",
+        "skills": [
+          "knowledge"
+        ],
+        "faction": "imperial",
+        "droid": false,
+        "text": [
+          "Action: Spend {CREDITS}1,000 to secretly look at a contact token on any planet."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-011",
+      "number": 11,
+      "variant": null,
+      "kind": "contact",
+      "title": "Grand Admiral Thrawn",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "The Grand Admiral is looking for someone to sabotage a Rebel cell. You get the feeling that you’re only one part of a larger plan.",
+          "text": [
+            "If you have {REP_POS} or {REP_NEU} Imperial reputation, you may discard Grand Admiral Thrawn’s token and gain the job below.",
+            "If you have {REP_NEG} Imperial reputation, fight a ground combat against Deathtroopers ({GROUND_COMBAT} 4). If you win, prevent 2 damage from this combat."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "job",
+        "name": "Rebellion on Lothal",
+        "skills": [
+          {
+            "skill": "influence",
+            "certain": false
+          },
+          {
+            "skill": "strength",
+            "certain": false
+          },
+          {
+            "skill": "tactics",
+            "certain": false
+          }
+        ],
+        "destination": "Lothal",
+        "encounter": "Resolve card #48.",
+        "reward": "Lose 1 Rebel reputation and gain {CREDITS}7,000, 1 fame, and 1 Imperial reputation. Then remove this card from the game."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-012",
+      "number": 12,
+      "variant": null,
+      "kind": "contact",
+      "title": "Greedo",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Greedo has been hired by Jabba the Hutt to hunt down those who have wronged him.",
+          "text": [
+            "If you have {REP_NEG} Hutt reputation, test Stealth. If you fail, your character suffers 2 damage.",
+            "If you have {REP_POS} or {REP_NEU} Hutt reputation, you may test Influence. If you pass, gain the crew below and discard Greedo’s token. If you would fail, you may spend {CREDITS}2,000 to pass this test instead."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Greedo",
+        "skills": [
+          "stealth"
+        ],
+        "faction": "hutt",
+        "droid": false,
+        "text": [
+          "After you roll dice during ground combat, you may spend {CREDITS}1,000 to add 1 {HIT}."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-013",
+      "number": 13,
+      "variant": null,
+      "kind": "contact",
+      "title": "Hera Syndulla",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“There’s enough darkness in the galaxy right now. Let me know if you want to spread a little light.”",
+          "text": [
+            "If you have {REP_NEG} Imperial reputation or {REP_POS} Rebel reputation, you may spend {CREDITS}2,000 to gain the crew below and discard Hera Syndulla’s token.",
+            "If you do not gain the crew, you may spend {CREDITS}2,000 to gain 1 Rebel reputation."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Hera Syndulla",
+        "skills": [
+          "piloting"
+        ],
+        "faction": "rebel",
+        "droid": false,
+        "text": [
+          "Action: If you are not at the Maelstrom, test Tech. If you pass, move 1 space. If you fail, your ship suffers 1 damage."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-014",
+      "number": 14,
+      "variant": null,
+      "kind": "contact",
+      "title": "Hondo Ohnaka",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“Haha, my friend! With my brains and your...ahem...capital...why, we will both be rich!”",
+          "text": [
+            "You may spend {CREDITS}3,000 to gain the crew below and discard Hondo Ohnaka’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Hondo Ohnaka",
+        "skills": [
+          "influence"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "Increase the reward on each of your cargo by {CREDITS}2,000."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-015",
+      "number": 15,
+      "variant": null,
+      "kind": "contact",
+      "title": "IG-RM Droid",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "This bodyguard and enforcer droid works for Cikatro Vizago...but with a little reprogramming, it could work for you.",
+          "text": [
+            "If you have {REP_NEG} Syndicate reputation, test Stealth. If you fail, your character suffers 2 damage.",
+            "If you have {REP_POS} or {REP_NEU} Syndicate reputation, you may test Tech. If you pass, gain the crew below and discard IG-RM Droid’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "IG-RM Droid",
+        "skills": [
+          "strength"
+        ],
+        "faction": "syndicate",
+        "droid": true,
+        "text": [
+          "Gain +2 {HEALTH}."
+        ]
+      },
+      "verify": [
+        "IG-RM Droid crew text: the crosshair icon is read as {HEALTH}; confirm."
+      ]
+    },
+    {
+      "image": "base-databank-016",
+      "number": 16,
+      "variant": null,
+      "kind": "contact",
+      "title": "K-2SO",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "He thinks you might be a Rebel spy, so you’ll need a creative way of convincing him otherwise.",
+          "text": [
+            "You may test Tech. If you pass, gain the crew below and discard K-2SO’s token. If you fail and you have either {REP_POS} Rebel reputation or {REP_NEG} Imperial reputation, your character suffers 3 damage."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "K-2SO",
+        "skills": [
+          "strength"
+        ],
+        "faction": "imperial",
+        "droid": true,
+        "text": [
+          "During ground combat, each of your opponent’s {CRIT} results count as 1 damage instead of 2."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-017",
+      "number": 17,
+      "variant": null,
+      "kind": "contact",
+      "title": "Leia Organa",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“In a time of fear, we have only one weapon left: hope. Fortunately, that is all that we require.”",
+          "text": [
+            "If you have {REP_POS} or {REP_NEU} Rebel reputation, you may discard Leia Organa’s token and gain the job below.",
+            "If you do not gain the job, you may spend {CREDITS}2,000 to gain 1 Rebel reputation."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "job",
+        "name": "Rebel Prison Break",
+        "skills": [
+          {
+            "skill": "stealth",
+            "certain": false
+          },
+          {
+            "skill": "ship combat",
+            "certain": false
+          },
+          {
+            "skill": "piloting",
+            "certain": false
+          },
+          {
+            "skill": "ground combat",
+            "certain": true
+          }
+        ],
+        "destination": "The Imperial patrol’s space",
+        "encounter": "Resolve card #47. If you have {REP_NEG} Imperial reputation you may resolve this card instead of encountering the Imperial patrol.",
+        "reward": "Lose 1 Imperial reputation and gain 2 fame and 1 Rebel reputation. Then remove this card from the game."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-018",
+      "number": 18,
+      "variant": null,
+      "kind": "contact",
+      "title": "Lobot",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Lobot’s brain-enhancing device allows him direct contact with complex computer systems. Surely you can find a use for such skills.",
+          "text": [
+            "If you are Lando Calrissian, you may gain the crew below and discard Lobot’s token.",
+            "Otherwise, you may spend {CREDITS}2,000 to gain the crew below and discard Lobot’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Lobot",
+        "skills": [
+          "tech"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "When you choose to gain credits during the planning phase, gain an additional {CREDITS}1,000 for each {REP_POS} reputation you have."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-019",
+      "number": 19,
+      "variant": null,
+      "kind": "contact",
+      "title": "Maz Kanata",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "They call her the smuggler queen of Takodana. It seems there’s nothing Maz does not know.",
+          "text": [
+            "If you have {REP_NEG} or {REP_NEU} Imperial reputation, you may spend {CREDITS}4,000 to gain the crew below and discard Maz Kanata’s token.",
+            "If you do not gain this crew, move Maz Kanata’s token to an empty contact space on Takodana. If there is not an empty contact space, exchange this token with a contact on Takodana."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Maz Kanata",
+        "skills": [
+          "influence",
+          "knowledge"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "Once per turn, after you roll dice for a skill test, you may reroll 1 of your dice."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-020",
+      "number": 20,
+      "variant": null,
+      "kind": "contact",
+      "title": "Ponda Baba",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "He doesn’t like you, but a few credits may change his mind.",
+          "text": [
+            "Test Strength. If you fail, your character suffers 2 damage. Pass or fail, you may spend {CREDITS}3,000 to gain the crew below and discard Ponda Baba’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Ponda Baba",
+        "skills": [
+          "strength"
+        ],
+        "faction": null,
+        "droid": false,
+        "text": [
+          "During ground combat, if you have at least 2 {FOCUS} results, you win the combat regardless of your opponent’s results."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-021",
+      "number": 21,
+      "variant": null,
+      "kind": "contact",
+      "title": "Saw Gerrera",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Even the Rebel Alliance finds Saw Gerrera too extreme.",
+          "text": [
+            "If you are Jyn Erso, you may gain the crew below and discard Saw Gerrera’s token.",
+            "If you are not Jyn Erso and you have {REP_NEG} Rebel reputation or {REP_POS} Imperial reputation, test Stealth. If you fail, your character suffers 2 damage.",
+            "If you did not test Stealth, you may test Influence. If you pass, gain the crew below and discard Saw Gerrera’s token."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "Saw Gerrera",
+        "skills": [
+          "tactics"
+        ],
+        "faction": "rebel",
+        "droid": false,
+        "text": [
+          "Action: Choose another character or ship in your space; it suffers 2 damage. If that player has {REP_POS} Imperial reputation, it suffers 1 additional damage."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-022",
+      "number": 22,
+      "variant": null,
+      "kind": "contact",
+      "title": "W1-LE",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "Most droids are rather high-strung, so W1-LE’s laid-back demeanor and easy charm are a pleasant surprise.",
+          "text": [
+            "If you are Lando Calrissian, you may gain the crew below and discard W1-LE’s token.",
+            "Otherwise, you may test Tech. If you pass, gain the crew below and discard W1-LE’s token. If you would fail, you may spend {CREDITS}3,000 to pass this test instead."
+          ]
+        }
+      ],
+      "asset": {
+        "card_type": "crew",
+        "name": "W1-LE",
+        "skills": [
+          "influence"
+        ],
+        "faction": null,
+        "droid": true,
+        "text": [
+          "Encounter: Perform a market action, even if you are at a navpoint or performed this action during your action step."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-databank-023",
+      "number": 23,
+      "variant": null,
+      "kind": "contact",
+      "title": "Ziton Moj",
+      "starting_planet": null,
+      "intro": [],
+      "sections": [
+        {
+          "marker": null,
+          "heading": null,
+          "flavor": "“This opportunity benefits us both. But there will be a cost.”",
+          "text": [
+            "You may lose 1 Syndicate reputation to either gain {CREDITS}5,000 or take up to {CREDITS}5,000 from a player that has more fame than you."
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    }
+  ]
+}
