@@ -9,7 +9,7 @@ Talk to the owner in Brazilian Portuguese. Everything written to files is Englis
 
 ## Before you start
 
-1. Read `docs/TRANSCRIPTION_FORMAT.md` and one existing file in `data/transcription/` of the same kind (market or encounter) as an example. Read only the parts of `docs/RULES.md` you need (the icon table at the top, and rules cited below).
+1. Read `docs/TRANSCRIPTION_FORMAT.md` and one existing file in `data/transcription/<category>/` of the same kind (market or encounter) as an example. Read only the parts of `docs/RULES.md` you need (the icon table at the top, and rules cited below).
 2. Prepare the reading copies (never read the full-size PNGs, and never write into `RawGameFiles`):
    `python tools/prepare_transcription_images.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted --deck <deck> [--only <range>]`
 3. Look at `artifacts/transcription-work/_legend-market-decks.jpg` once. It maps each market deck icon to its placeholder.
@@ -26,7 +26,7 @@ Talk to the owner in Brazilian Portuguese. Everything written to files is Englis
 
 ## Transcribe
 
-- One output file per deck: `data/transcription/<pack>-<category>-<deck>.json` (for example `base-market-gear.json`, `base-encounter-navpoint.json`, `base-databank.json`). If the file exists, add or replace only the cards of this batch, keyed by `image`.
+- One output file per deck: `data/transcription/<category>/<pack>-<category>-<deck>.json` (for example `market/base-market-gear.json`, `encounter/base-encounter-navpoint.json`, `databank/base-databank.json`; create the category folder if it does not exist). If the file exists, add or replace only the cards of this batch, keyed by `image`.
 - Copy the printed text exactly. Do not fix, summarise or interpret it. Do not invent rules.
 - Errata: keep the printed text and add `"errata": "R-24.x"` when `RULES.md` §24 lists an erratum for that card.
 - Uncertain word, number or icon → keep your best reading and add a `verify` entry. Never leave a card out silently.

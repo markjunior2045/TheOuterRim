@@ -4,7 +4,7 @@ Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8).
 
 ## Files
 
-One file per deck: `data/transcription/{pack}-{category}-{deck}.json`, for example `base-market-cargo.json` or `base-encounter-lothal-mon-calamari.json`.
+One file per deck, grouped in one folder per category: `data/transcription/{category}/{pack}-{category}-{deck}.json`, for example `market/base-market-cargo.json` or `encounter/base-encounter-lothal-mon-calamari.json`. The folder is the category (`market`, `encounter`, `databank`, `characters`, `contacts`, `ship-sheets`, `ai`, `ambitions`). `PROGRESS.md` stays at the root of `data/transcription/`.
 
 ```json
 {

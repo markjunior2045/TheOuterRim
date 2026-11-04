@@ -33,7 +33,7 @@ def scan_decks(sorted_dir):
 
 def transcribed_images():
     done = set()
-    for f in OUT.glob("*.json"):
+    for f in OUT.rglob("*.json"):
         data = json.loads(f.read_text(encoding="utf-8"))
         done.update(c["image"] for c in data.get("cards", []))
     return done
