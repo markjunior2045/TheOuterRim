@@ -428,9 +428,7 @@
         }
       ],
       "asset": null,
-      "verify": [
-        "Nal Hutta {REP_NEG}/{REP_NEU} variant: the deck icon in 'buy the top card of the [icon] market deck' looks like the job icon (hand with bars), changed from {DECK_SHIP} to {DECK_JOB}; confirm."
-      ]
+      "verify": []
     }
   ]
 }
