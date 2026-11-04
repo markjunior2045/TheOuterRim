@@ -1,0 +1,259 @@
+{
+  "format": "outer-rim-transcription/0.1",
+  "pack": "base",
+  "deck": "luxury",
+  "source": "[Mod 01] sorted/base/market/luxury",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "The luxury deck mixes card types (gear, mod, cargo, crew, job); card_type is the printed type.",
+    "Crew 'skills' are the skill boxes at the bottom of the card. Job skills are the skill line under 'Job'; 'NONE' is printed on Attend Statue Dedication (skills: []). No job skill is printed in italics here.",
+    "Cards with no patrol icon printed have bottom.patrol = null."
+  ],
+  "cards": [
+    {
+      "image": "base-market-luxury-00",
+      "name": "Extravagant Wardrobe",
+      "card_type": "gear",
+      "cost": 15000,
+      "traits": [],
+      "text": [
+        "While you have 2 or 3 {REP_POS} reputations, you have 1 additional fame.",
+        "While you have 4 {REP_POS} reputations, you have 2 additional fame."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-01",
+      "name": "Chromium Hull",
+      "card_type": "mod",
+      "cost": 20000,
+      "traits": [],
+      "text": [
+        "When you gain fame, gain 1 additional fame. When you lose a ship combat, discard this card.",
+        "A player in your space can fight a ship combat against you as their encounter."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-02",
+      "name": "Gift for Jabba",
+      "card_type": "cargo",
+      "cost": 20000,
+      "traits": [],
+      "text": [
+        "Cannot buy on Tatooine.",
+        "When you become defeated, discard 1 of your crew."
+      ],
+      "destination": "Tatooine",
+      "reward": "Gain 2 fame and 1 Hutt reputation.",
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-03",
+      "name": "Stolen Jewels",
+      "card_type": "cargo",
+      "cost": 10000,
+      "traits": [],
+      "text": [],
+      "abilities": [
+        "Action: Choose another player in your space and discard this card. You both gain {CREDITS}7,000 and 1 fame."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-04",
+      "name": "Sy Snootles",
+      "card_type": "crew",
+      "cost": 10000,
+      "traits": [],
+      "text": [
+        "When you complete a job, you may reduce the job's credit reward to {CREDITS}0 to gain 1 additional fame."
+      ],
+      "skills": [
+        "influence",
+        "tactics"
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-05",
+      "name": "Proton Torpedoes",
+      "card_type": "mod",
+      "cost": 15000,
+      "traits": [],
+      "text": [
+        "Gain +1 {SHIP_COMBAT}.",
+        "When you win a combat against a patrol that has a fame reward, gain 1 additional fame."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-06",
+      "name": "Attend Statue Dedication",
+      "card_type": "job",
+      "cost": 10000,
+      "traits": [],
+      "text": [],
+      "flavor": "Your biggest fans would like to erect a statue in your honor on their world. They have asked you to help fund the statue and to attend its dedication.",
+      "skills": [],
+      "destination": "Any planet where you have {REP_POS} reputation with the planet's faction.",
+      "encounter": "Complete this job.",
+      "reward": "Gain 1 fame. You may spend {CREDITS}10,000 to gain 1 additional fame. Then remove this card from the game.",
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-07",
+      "name": "Legendary Game of Sabacc",
+      "card_type": "job",
+      "cost": 10000,
+      "traits": [],
+      "text": [],
+      "flavor": "Your skill at sabacc is well known throughout the galaxy, but another win could make you legendary. Especially if the odds are stacked against you.",
+      "skills": [
+        {
+          "skill": "influence",
+          "mandatory": false
+        },
+        {
+          "skill": "knowledge",
+          "mandatory": false
+        },
+        {
+          "skill": "stealth",
+          "mandatory": false
+        },
+        {
+          "skill": "tactics",
+          "mandatory": false
+        }
+      ],
+      "destination": "Another player's space.",
+      "encounter": "Choose another player in your space, and you resolve card #40.",
+      "reward": "Gain {CREDITS}10,000. If the active player claims this reward, they also gain 1 fame and discard this card.",
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-08",
+      "name": "Undercover Agent",
+      "card_type": "crew",
+      "cost": 10000,
+      "traits": [],
+      "text": [],
+      "skills": [
+        "stealth"
+      ],
+      "abilities": [
+        "Action: If a player in your space has more fame than you, discard this card to gain 1 fame and make that player lose 1 reputation of your choice."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-09",
+      "name": "Mandalorian Armor",
+      "card_type": "gear",
+      "cost": 10000,
+      "traits": [
+        "armor"
+      ],
+      "text": [
+        "Gain +3 {HEALTH}.",
+        "When you gain the reward from a bounty, you may reduce the bounty's credit reward to {CREDITS}0 to gain 1 additional fame.",
+        "Limit 1 ARMOR per character."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-luxury-10",
+      "name": "Dejarik Holotable",
+      "card_type": "cargo",
+      "cost": 10000,
+      "traits": [],
+      "text": [
+        "While you have 2 or more crew, you have 1 additional fame."
+      ],
+      "abilities": [
+        "Action: If you are at a navpoint, roll 1 die for each crew you have. For each {HIT} or {FOCUS} result, gain {CREDITS}1,000."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_LUXURY}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": []
+    }
+  ]
+}

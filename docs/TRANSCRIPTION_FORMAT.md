@@ -37,6 +37,8 @@ One file per deck: `data/transcription/{pack}-{category}-{deck}.json`, for examp
 | `text` | list of printed paragraphs that are not a labelled field |
 | `destination`, `reward` | when printed |
 | `abilities` | labelled abilities such as `Action: …` |
+| `skills` | crew: list of skills printed in the bottom boxes, lower case. Job: `[{ "skill", "mandatory" }]`, `[]` when `NONE` is printed |
+| `flavor`, `encounter` | job only: italic flavor text; text of the `Encounter:` label |
 | `bottom` | `deck_icon`; `patrol` = `{ "faction", "distance" }` or `null` (R-11.15); `reveal_contact` = player range or `null` (R-16.26) |
 
 ## Encounter cards
