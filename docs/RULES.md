@@ -88,7 +88,7 @@ Translations of these terms into other languages belong in the localization file
 
 | Component | Count |
 |---|---|
-| Ship sheets | 12 |
+| Ship sheets | 12 (8 buyable ships + 4 copies of the double-sided starter sheet; 9 unique sheets in the data) |
 | Player boards | 4 (with 4 plastic fame markers) |
 | Reputation tokens | 16 (4 per faction) |
 | Patrol tokens | 16 (4 per faction) |
@@ -448,7 +448,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 
 - **R-12.1** Contact tokens begin the game facedown on the map.
 - **R-12.2** Each token has a number on its face corresponding to a databank card.
-- **R-12.3** Each token has a **class**, shown as colored pips, matching the class of its bounty card and of several contact spaces on the map. Classes: white, green, yellow and orange [UB].
+- **R-12.3** Each token has a **class**, shown as colored pips, matching the class of its bounty card and of several contact spaces on the map. Classes: white, green, yellow and orange [UB]. The color and the number of pips always agree: white 1, green 2, yellow 3, orange 4 (owner confirmation, checked against the transcribed tokens and bounties).
 - **R-12.4** During setup, contacts go on contact spaces of matching class. Orange contacts [UB] go on planet spaces themselves, excluding the Core Worlds.
 - **R-12.5** Class does **not** indicate a contact's strength. It serves setup and helps bounty hunters narrow their search. Orange contacts tend to be more expensive to recruit as crew.
 - **R-12.6** If an effect places or moves a contact token onto a planet, it may go in any contact space on that planet, with **no** need to match class. The token stays on its current side (faceup or facedown) unless the card says otherwise.
@@ -521,7 +521,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 
 ### 14.4 Traits
 
-- **R-14.19** An asset may carry one or more traits, printed in bold smallcaps at the top of its text box (for example **illegal**, **weapon**, **armor**).
+- **R-14.19** An asset may carry one or more traits, printed in bold smallcaps at the top of its text box (for example **illegal**, **weapon**, **armor**, **favor**). Ship market cards carry **ship**, and the starter sheet sides carry **starter ship**.
 - **R-14.20** A trait has no inherent effect but may be referenced by other effects.
 
 ---
@@ -1063,7 +1063,7 @@ Official corrections to printed components. Cards printed after the correction m
 - **R-24.4 Takodana encounter #9.** In the secret, an instruction to **discard the card** was added at the end.
 - **R-24.5 Ryloth encounter #10.** The second sentence was corrected by inserting a negation: the condition becomes **not** replacing the ship sheet, and only then may the player lose 1 Imperial reputation to gain 4,000 credits. The printed version stated the opposite.
 
-> Implementation: enter these five cards in their corrected form and flag the record with `errata: true` for auditing.
+> Implementation: the transcription (`data/transcription/`) keeps the **printed** text of these five cards and marks the affected section with `"errata": "R-24.x"`. The correction is applied when the card is mapped to effects (T2.1/T2.2), and the effect record keeps the errata reference for auditing. All five were found in the base game transcription.
 
 ---
 
@@ -1142,8 +1142,9 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 9. **AI cards** (10 + 21): the content of each card, which is the AI's actual behavior.
 10. **Map geometry**: the list of spaces, the paths between them and the positions of the contact spaces on each tile. The rules describe how the map works, never what the map is.
 11. **Which patrols start on which navpoints** in the standard layout, by space name.
+12. **Player board**: its slots (gear, job or bounty, and any others) and tracks. The rules name the slots but never say how many there are.
 
-Until that data exists, the core can be built and tested with fictional content. Map geometry (item 10) is the first real blocker for V1.
+**Status (2026-11-04):** items 1 to 5, 7 and 9 are transcribed for the base game in `data/transcription/` (format in `TRANSCRIPTION_FORMAT.md`); the expansion half of each is still to do. Items 6 (patrol tokens) and 12 (player board) are not cards and were not transcribed: their values are read from the token and board images when the small data sets are built (`PLAN.md` T2.4). Items 8 (ambitions) and the expansion parts are pending. Items 10 and 11 (map) are the first real blocker for a playable prototype (`PLAN.md` T0.5).
 
 ---
 
@@ -1151,6 +1152,7 @@ Until that data exists, the core can be built and tested with fictional content.
 
 | Date | Change |
 |---|---|
+| 2026-11-04 | Review after the base game transcription: R-12.3 pip counts per class; R-14.19 trait examples; R-24 implementation note aligned with the transcription format (printed text kept, errata applied at mapping); ship sheet count explained in §2.1; §27 gains the player board and a status line. Earlier the same day: R-15.32 reworded (italic job skills are certainly tested; owner clarification) and R-15.92 added ("Wanted" jobs hunt players). |
 | 2026-11-04 | Section 13 implementation note: databank lists combine all active content packs; version count comes from card data, not pips. |
 | 2026-10-24 | Rewritten in English, per the project convention that all documentation is authored in English. No rule content changed. |
 | 2026-10-23 | Initial version, consolidated from Living Rules 1.1, the *Unfinished Business* rulebook and the base game Learn to Play book. |

@@ -1,6 +1,6 @@
 # DECISIONS.md — Outer Rim digital
 
-Last updated: 2026-11-04
+Last updated: 2026-11-04 (review after the base game transcription)
 
 Personal, non-commercial project: a digital version of the *Star Wars: Outer Rim* board game, built in Unity with Claude Code, to play with friends on PC.
 
@@ -32,7 +32,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 ## 2. Rules (Decided)
 
 - 1:1 fidelity with the original rulebooks, including errata.
-- Single source of truth: `RULES.md`, consolidated from the Learn to Play book, the *Unfinished Business* rulebook and the Living Rules Reference 1.1 (authoritative). Written; owner review pending.
+- Single source of truth: `RULES.md`, consolidated from the Learn to Play book, the *Unfinished Business* rulebook and the Living Rules Reference 1.1 (authoritative). Reviewed by the owner on 2026-11-04.
 - The owner has the physical base game and expansion.
 - The character is part of V1 (skill tests depend on it).
 - Everything the expansion changes is tagged `[UB]` in `RULES.md`, which also defines the core's extension points.
@@ -44,7 +44,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Interactive objects are built in Unity. Each card type (Job, Contact, Encounter and so on) has **one template** filled from data: title, art, text, icons and values come from data files.
 - Only the cropped art is taken from a scan. Frame and text are recreated so they can be translated.
 - Languages: English and Portuguese first; Spanish later. Player-facing text lives in localization files, separate from code.
-- **Card text** is transcribed from the mod images (pilot of 2026-11-04: all text legible); photos of the physical cards only settle doubts. Raw printed text is stored first, format `outer-rim-transcription/0.1`, and mapped to effects later (`PLAN.md` T2.8, T2.1).
+- **Card text** is transcribed from the mod images (pilot of 2026-11-04: all text legible); photos of the physical cards only settle doubts. Raw printed text is stored first (format in `docs/TRANSCRIPTION_FORMAT.md`) and mapped to effects later (`PLAN.md` T2.8, T2.1). The base game is fully transcribed (2026-11-04). Errata are applied at mapping time, not in the transcription (`RULES.md` §24).
 - Raw source images stay outside the repository, in `C:\TheOuterRimProject\RawGameFiles`; only processed assets are committed.
 
 ### 3.1 Image sources
@@ -109,7 +109,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 ### 7.1 Image extraction tooling (Adopted)
 
 - **v1 — `tts_extract.py`** (done): generic extractor for any TTS mod. Lists local mods, inventories referenced images against the TTS cache, slices card sheets by the grid declared in the mod, writes a manifest and report. Used for the pilot.
-- **v2** (planned): specific to this project, not generic. A fixed mapping says what each sheet of each mod contains (component type, deck, pack, front/back); it picks the source per component (section 3.1), writes into folders by pack and deck, names every image with a stable ID that becomes the card ID, matches names from (Mod 02) by visual similarity, and generates the manifest and `CREDITS.md`. Built after a visual review of the pilot output.
+- **v2 — `sort_outer_rim.py`** (done): specific to this project, not generic. A fixed mapping says what each sheet of each mod contains (component type, deck, pack, front/back); it picks the source per component (section 3.1), writes into folders by pack and deck, names every image with a stable ID that becomes the card ID, matches names from (Mod 02) by visual similarity, and generates the manifest and `CREDITS.md`. Built after a visual review of the pilot output.
 
 ## 8. V1
 
