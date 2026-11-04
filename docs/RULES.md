@@ -573,7 +573,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-15.29** On the planet named as the job's "Destination", the player may attempt the job by resolving its ability.
 - **R-15.30** Some jobs require choosing another player in the same space. Without such a player, the job cannot be attempted.
 - **R-15.31** Many jobs instruct the player to resolve a databank card, which typically calls for a series of tests.
-- **R-15.32** Above each job's name is a list of the skills that will be tested. A skill in **italics** means passing that test is mandatory to avoid failing the job.
+- **R-15.32** Above each job's name is a list of the skills that may be tested while resolving the job. A skill in **italics** will certainly be tested at some point; a skill not in italics may or may not be tested, depending on how the databank card resolves. The italics say nothing about the player's skills: a player does **not** need to have a listed skill to attempt the job (owner clarification; the Living Rules wording "passing that test is mandatory" is ambiguous).
 - **R-15.33** A skill marked "(opposed)" means **both players** test that skill. The best outcome for the current player is to pass their test while the opponent fails theirs.
 - **R-15.34** Players may read the sections of the databank card they are resolving, though the rulebook discourages reading ahead.
 - **R-15.35** Where several players are involved in resolving a job's databank card, the **current player** makes all decisions unless stated otherwise.
