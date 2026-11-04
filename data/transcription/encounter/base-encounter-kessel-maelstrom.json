@@ -1,0 +1,384 @@
+{
+  "format": "outer-rim-transcription/0.6",
+  "pack": "base",
+  "deck": "encounter-kessel-maelstrom",
+  "source": "[Mod 01] sorted/base/encounters/kessel-maelstrom",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is not the printed order: cards are listed by printed number.",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text. Several printed paragraphs are one string separated by '\\n'.",
+    "The second section of every card is the Maelstrom (planet: 'The Maelstrom').",
+    "Die icons: solid starburst = {HIT}, outlined spiky starburst = {CRIT}, eye = {FOCUS}.",
+    "Embedded cargo assets keep the printed trait in 'traits' (ILLEGAL -> illegal)."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-kessel-maelstrom-06",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The mines always have plenty of spice. Now you just need to find a buyer.",
+              "text": "You may spend {CREDITS}3,000 to gain the cargo below. If you have {REP_POS} Syndicate reputation, you may gain the cargo by spending {CREDITS}1,000 instead."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You encounter a large scattering of debris.",
+              "text": "Test Piloting. If you pass, take an additional turn. If you fail, move 1 space and your ship suffers 2 damage."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Spice",
+        "card_type": "cargo",
+        "traits": [
+          "illegal"
+        ],
+        "text": [
+          "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."
+        ],
+        "destination": "Naboo",
+        "reward": "Gain {CREDITS}9,000 and 1 fame."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-08",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Syndicate reputation:",
+              "flavor": "While visiting a remote station, you see an opportunity to free some slaves from the mines.",
+              "text": "You may test Stealth. If you pass, gain 1 fame and lose 2 Syndicate reputation. If you fail, your character suffers 4 damage."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Syndicate reputation:",
+              "flavor": "Your new “friends” ask for credits.",
+              "text": "You may spend {CREDITS}2,000 to gain 1 Syndicate reputation."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "An electrical storm knocks out your power systems.",
+              "text": "Your ship suffers 1 damage. Test Tech. If you pass, recover up to 2 damage from your ship and take an additional turn. If you fail, move 1 space."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-09",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Unrefined coaxium is very unstable and is known to spontaneously explode. Is the payout worth it?",
+              "text": "You may lose 1 Syndicate reputation or spend {CREDITS}3,000 to gain the cargo below."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You nearly fly into a giant space-faring beast.",
+              "text": "Test Piloting or Knowledge. If you pass, take an additional turn. If you fail, move 1 space and your ship suffers 3 damage."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Unrefined Coaxium",
+        "card_type": "cargo",
+        "traits": [],
+        "text": [
+          "At the end of your action step, roll a die. On a {CRIT}, discard this card and your ship suffers 4 damage."
+        ],
+        "destination": "Lothal",
+        "reward": "Gain {CREDITS}9,000 and 1 fame."
+      },
+      "verify": [
+        "Unrefined Coaxium: the die icon in 'On a [icon]' is the outlined spiky starburst, read as {CRIT} (the Spice cargo uses the solid one, {HIT})."
+      ]
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-00",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Syndicate reputation:",
+              "flavor": "It seems that someone is selling stolen goods here.",
+              "text": "Reveal the top 3 cards of the {DECK_CARGO} market deck. You may buy 1 revealed ILLEGAL cargo with a discount of {CREDITS}1,000. Then shuffle the deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} Syndicate reputation:",
+              "flavor": "You have the opportunity to influence a Pyke capo.",
+              "text": "You may spend {CREDITS}3,000 to gain 1 Syndicate reputation."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A chunk of debris is flying straight toward you.",
+              "text": "Test Piloting. If you pass, take an additional turn. If you fail, move 1 space and discard 1 of your mods. If you did not have a mod, your ship suffers 3 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-01",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "It seems that everyone has a hand in the local slave trade. Will you stand by or will you act?",
+              "text": "You may lose 2 Hutt, 2 Imperial, or 2 Syndicate reputation to gain 1 fame. (You can only do this if you had {REP_POS} reputation with that faction.)\nIf you do not gain fame, you may discard 1 of your crew to gain {CREDITS}3,000 and 1 Syndicate reputation."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "An Imperial TIE fighter has followed you into the Maelstrom. You’ll need to destroy it before you can escape.",
+              "text": "If you have {REP_NEG} or {REP_NEU} Imperial reputation, fight a ship combat against a TIE fighter ({SHIP_COMBAT} 3). If you lose, move 1 space. If you win or did not resolve a combat, move 1 space and then take an additional turn."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-02",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Syndicate reputation:",
+              "flavor": "The Pyke syndicate wants you to send a message to the Hutts.",
+              "text": "You may take the “Syndicate Favor” job card from another player or the {DECK_JOB} market deck. If you take it from the {DECK_JOB} deck, shuffle that deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Syndicate reputation:",
+              "flavor": "A Pyke capo fears that the workers may be planning a revolt and asks for you to spy on them.",
+              "text": "You may test Stealth. If you pass, gain 1 Syndicate reputation. If you fail, your character suffers 2 damage."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The nebula’s gases render your sensors ineffective.",
+              "text": "Test Piloting or Tech. If you pass, take an additional turn."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-03",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Syndicate reputation:",
+              "flavor": "The Pykes are looking for a trustworthy smuggler.",
+              "text": "Reveal the top 3 cards of the {DECK_CARGO} market deck. You may buy 1 revealed ILLEGAL cargo for free. Then shuffle the deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Syndicate reputation:",
+              "flavor": "No one hauls illegal cargo through this sector without Pyke approval.",
+              "text": "If you do not have any cargo, you may move 1 space. Otherwise, lose {CREDITS}3,000 and gain 1 Syndicate reputation."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A massive tentacle grasps at your ship.",
+              "text": "Fight a ship combat against a creature ({SHIP_COMBAT} 4). If you win, prevent all damage from this combat and take an additional turn. If you lose, move 1 space."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-04",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Criminals may respect a wanted outlaw, but they’ll still turn you in for a reward.",
+              "text": "You may lose 1 reputation from a faction you have {REP_NEU} reputation with.\nGain {CREDITS}3,000 for each faction you have {REP_NEG} reputation with. Then, for each faction you have {REP_NEG} reputation with, move that faction’s patrol 4 spaces toward you."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Maelstrom makes for a good spot for an ambush.",
+              "text": "You may move 1 patrol directly to your space and encounter it. During the combat, you add 1 {CRIT}. After the combat, move 1 space.\nIf you do not fight a combat, test Piloting. If you pass, take an additional turn. If you fail, move 1 space and your ship suffers 3 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": [
+        "Kessel: 'a faction you have [icon] reputation with' in the first sentence is the empty (flat outlined) hexagon, read as {REP_NEU}; the next two are filled, read as {REP_NEG}.",
+        "Maelstrom: 'you add 1 [icon]' is the outlined spiky starburst, read as {CRIT}."
+      ]
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-05",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "In crime, as in any business, it’s more about who you know than what you know.",
+              "text": "You may lose 1 reputation from a faction you have {REP_POS} reputation with to gain {CREDITS}4,000. If you do, you may lose 1 reputation from another faction you have {REP_POS} reputation with to gain 1 fame."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A gravity well is pulling you backward. If you could lose some weight, you might escape unscathed.",
+              "text": "You may discard 1 of your cargo or mods to take an additional turn. If you do not discard a card, move 1 space and your ship suffers 1 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-kessel-maelstrom-07",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "Kessel",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Pykes demand that you prove that you are loyal to them, and them alone.",
+              "text": "You may lose any amount of Hutt, Rebel, and Imperial reputation. Then, if you have {REP_NEG} Hutt, {REP_NEG} Rebel, and {REP_NEG} Imperial reputation, gain 1 fame and 1 Syndicate reputation."
+            }
+          ]
+        },
+        {
+          "planet": "The Maelstrom",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You fly too close to an asteroid and rip your hull open. You’re losing air fast.",
+              "text": "Test Tech. If you pass, take an additional turn. If you fail, move 1 space and discard 1 of your crew. If you did not have a crew, your character suffers 3 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    }
+  ]
+}
