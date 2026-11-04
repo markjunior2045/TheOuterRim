@@ -12,7 +12,7 @@ from pathlib import Path
 
 # Folders under sorted/<pack>/ that hold cards worth transcribing.
 CATEGORIES = {"ai", "ambitions", "characters", "contacts", "databank", "encounters",
-              "market", "patrols", "ship-sheets"}
+              "market", "ship-sheets"}
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "transcription"
