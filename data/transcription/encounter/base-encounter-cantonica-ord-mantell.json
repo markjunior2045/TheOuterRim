@@ -1,0 +1,417 @@
+{
+  "format": "outer-rim-transcription/0.6",
+  "pack": "base",
+  "deck": "encounter-cantonica-ord-mantell",
+  "source": "[Mod 01] sorted/base/encounters/cantonica-ord-mantell",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is not the printed order: cards are listed by printed number.",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text. Several printed paragraphs are one string separated by '\\n'.",
+    "A variant may carry its own 'secret' and 'orientation' when the secret box sits under a reputation condition (Ord Mantell-7).",
+    "Embedded crew assets list their skill in 'skills' (bottom box); gear assets keep the printed trait in 'traits'."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-cantonica-ord-mantell-05",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "In Canto Bight casino, you find a large crowd gathered around a dice game.",
+              "text": "You may spend {CREDITS}2,000 to roll 2 dice. If you roll at least 1 {HIT}, either gain {CREDITS}4,000 or roll 2 dice. If you roll at least 1 {HIT} again, gain {CREDITS}8,000."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“You lookin’ for da big boom?” the shopkeeper asks as he opens a sealed case full of explosives.",
+              "text": "You may spend {CREDITS}1,000 to gain the gear below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Thermal Detonator",
+        "card_type": "gear",
+        "traits": [
+          "weapon"
+        ],
+        "text": [
+          "After you roll dice during ground combat, you may discard this card to add 2 {HIT}."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-06",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You find yourself offered a game of chance in a rundown sector of the city. A Falleen hands you a set of chance cubes. “You paying credits or collateral?” he asks.",
+              "text": "You may spend {CREDITS}2,000 or discard 1 of your cargo to roll 1 die. On a {HIT}, gain {CREDITS}5,000."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“I don’t know many people who are fireproof,” the arms dealer says as he shows you a flame thrower. “You’re not hunting droids, are you?”",
+              "text": "You may spend {CREDITS}5,000 to gain the gear below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Flame Thrower",
+        "card_type": "gear",
+        "traits": [
+          "weapon"
+        ],
+        "text": [
+          "Gain +1 {GROUND_COMBAT}.",
+          "During ground combat against a non-droid({DROID}), you may turn 1 of your {FOCUS} or {HIT} results to {CRIT}."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-07",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You run across a few inebriated casino patrons in a dark alley.",
+              "text": "You may test Strength. If you pass, gain {CREDITS}3,000. If you fail, your character suffers 1 damage."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Syndicate reputation:",
+              "flavor": "The Nikto seems anxious to offload this equipment.",
+              "text": "Reveal the top 3 cards of the {DECK_GEAR} market deck. You may buy 1 revealed gear with a discount of {CREDITS}1,000. Then shuffle the deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Syndicate reputation:",
+              "flavor": "Black Sun is on the lookout for someone who has wronged them.",
+              "text": "Action: If there is another player in your space that has {REP_NEG} Syndicate reputation, discard this card to gain 1 Syndicate reputation and move the Syndicate patrol up to 3 spaces toward you.",
+              "secret": true,
+              "orientation": "inverted"
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-08",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A Duros pickpocket robs you, but not without you noticing. You’re impressed and try to convince him to join your crew.",
+              "text": "Lose {CREDITS}1,000 and test Influence. If you pass, you may gain the crew below."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A local information broker will pay for good intel.",
+              "text": "You may lose 1 reputation from a faction you have {REP_POS} reputation with to gain {CREDITS}4,000."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Thief",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "stealth"
+        ],
+        "text": [
+          "Action: Discard this card to take {CREDITS}5,000 from a player in your space."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-09",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You make a deal with the local establishment to run a high-stakes sabacc tournament. Opponents from across the galaxy come to participate.",
+              "text": "Choose another player that has at least {CREDITS}4,000. That player chooses whether or not to participate. If they do, they move directly to Cantonica. Then, you each lose {CREDITS}4,000, and you resolve card #40.\nReward: Gain {CREDITS}8,000."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Syndicate reputation:",
+              "flavor": "A friend of a friend refers you to a local loan shark.",
+              "text": "You may lose 1 Syndicate reputation to gain {CREDITS}5,000."
+            },
+            {
+              "condition": "If you have {REP_NEG} Syndicate reputation:",
+              "flavor": "The Trandoshan claims that you owe his boss credits.",
+              "text": "Fight a ground combat against a Trandoshan ({GROUND_COMBAT} 4) unless you spend {CREDITS}5,000."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-00",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A down-on-her-luck pilot is looking for a new gig.",
+              "text": "You may spend {CREDITS}1,000 to gain the crew below."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The guards refuse to let anyone into the fortress except loyal members of Black Sun.",
+              "text": "If you have {REP_POS} Syndicate reputation, gain {CREDITS}5,000. If you have {REP_NEG} or {REP_NEU} Syndicate reputation, you may spend {CREDITS}2,000 to gain 1 Syndicate reputation."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Savvy Pilot",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "piloting"
+        ],
+        "text": [
+          "When you would fail a skill test, you may discard this card to pass that test instead."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-01",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You find runaway stable hands stowed away on your ship. They tell you they are trying to make money to buy their freedom. You consider turning them in to the authorities.",
+              "text": "Gain either {CREDITS}2,000 or the crew below."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You discover a Rebel transport, the Freedom Fighter, resupplying on this planet.",
+              "text": "You may lose 1 Rebel reputation to gain {CREDITS}2,000 and 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Runaway Stable Hands",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "knowledge"
+        ],
+        "text": [
+          "Action: If at a Rebel or Imperial planet, spend {CREDITS}6,000 and discard this card to gain 1 fame."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-02",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A bookie asks for your help taking bets on the next big race at the Canto Bight racetrack.",
+              "text": "Choose a die result. Each other player may give you {CREDITS}1,000 to also choose a die result. Then, you roll 1 die. Each player that chose the result rolled gains credits based on their chosen result:\n{CRIT}: {CREDITS}8,000\n{FOCUS}: {CREDITS}5,000\n{HIT}: {CREDITS}3,000"
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A crime lord is running out of patience with one of her bounty hunters, so she is sending another hunter after the bounty.",
+              "text": "Action: Discard this card to take a bounty that matches a contact in your space from a player in any space."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": [
+        "Die icons in the Cantonica list: the first (outlined, spiky) read as {CRIT}, the third (solid) as {HIT}, in the order 8,000 / 5,000 / 3,000."
+      ]
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-03",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The house always wins, unless you cheat.",
+              "text": "You may spend up to {CREDITS}3,000 to test Tactics. If you pass, gain twice the amount you spent. If you fail, your character suffers 2 damage."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Syndicate reputation:",
+              "flavor": "Black Sun is willing to give you funds to help you pursue your bounties.",
+              "text": "Gain {CREDITS}3,000 for each bounty you have. If you have no bounties, you may buy the top bounty card from the {DECK_BOUNTY} market deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Syndicate reputation:",
+              "flavor": "Black Sun is looking for someone brave (or foolish) enough to fight a Mantellian Savrip barehanded.",
+              "text": "You may test Strength. If you pass, gain {CREDITS}3,000 and 1 Syndicate reputation. If you fail, your character suffers 2 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-cantonica-ord-mantell-04",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "Cantonica",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You sit down to a dice game in the Canto Bight casino.",
+              "text": "You may spend {CREDITS}1,000. If you do, name any number and then roll 5 dice. If you roll at least as many {HIT} as the named number, gain credits equal the named number × 2,000."
+            }
+          ]
+        },
+        {
+          "planet": "Ord Mantell",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“You look like someone in a dangerous line of work,” the street vendor says. “You’d do well to have one of these on hand.”",
+              "text": "You may spend {CREDITS}1,000 to gain the gear below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Medpack",
+        "card_type": "gear",
+        "traits": [],
+        "text": [
+          "When you would become defeated during a ground combat, if you are not a droid ({DROID}), you may discard this card to recover all damage on your character instead."
+        ]
+      },
+      "verify": []
+    }
+  ]
+}
