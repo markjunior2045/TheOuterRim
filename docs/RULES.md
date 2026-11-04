@@ -583,6 +583,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-15.39** If the current player is defeated during a job, the job fails.
 - **R-15.40** [UB] **Multi-player jobs:** some jobs require two players. The player must have another player in their space, at the stated destination, to attempt it. If **any** player involved is defeated during the job, the job fails.
 - **R-15.41** [UB] **Opposed jobs:** some jobs let a player try to take credits or assets from another player, using the "(opposed)" mechanic in R-15.33.
+- **R-15.92** **"Wanted" jobs:** the two "Wanted" job cards, found in the `{DECK_BOUNTY}` deck, are for hunting **players**. Their destination is any space containing another player that has at least 1 `{REP_NEG}` reputation with any faction (owner clarification). See also R-25.10.
 
 ### 15.6 Bounties
 
