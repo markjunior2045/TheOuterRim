@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.2
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.3
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.2",
+  "format": "outer-rim-transcription/0.3",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -43,7 +43,10 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 | `class` | bounty: `{ "color", "pips" }`; the portrait frame color and the pips agree: white 1, green 2, yellow 3, orange 4 [UB] (R-12.3, R-15.48) |
 | `combat` | bounty: `{ "value", "type" }`; `type` is `{GROUND_COMBAT}` or `{SHIP_COMBAT}` (R-15.51) |
 | `elimination_reward`, `capture_reward` | bounty: text after the printed label |
-| `bottom` | printed at the top of the card on jobs and bounties, at the bottom on other cards; `deck_icon`; `patrol` = `{ "faction", "distance" }` or `null` (R-11.15); `reveal_contact` = player range or `null` (R-16.26) |
+| `slots` | ship: `[{ "type", "count" }]` in printed order; `type` is `cargo`, `cargo or mod`, `mod` or `crew` |
+| `stats` | ship: `{ "hyperdrive", "ship_combat", "hull" }` (green `{HYPERDRIVE}`, red `{SHIP_COMBAT}`, yellow `{HULL}`) |
+| `cost_label` | when the cost box prints a word instead of a number (for example `Special`): `cost` is `null` and `cost_label` holds the word |
+| `bottom` | `null` on ship cards (nothing printed); printed at the top of the card on jobs and bounties, at the bottom on other cards; `deck_icon`; `patrol` = `{ "faction", "distance" }` or `null` (R-11.15); `reveal_contact` = player range or `null` (R-16.26) |
 
 ## Encounter cards
 

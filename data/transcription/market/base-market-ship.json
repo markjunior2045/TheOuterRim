@@ -1,0 +1,305 @@
+{
+  "format": "outer-rim-transcription/0.3",
+  "pack": "base",
+  "deck": "ship",
+  "source": "[Mod 01] sorted/base/market/ship",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Ship cards have no deck icon or patrol icon printed, so bottom is null.",
+    "Used Ship for Sale (image 04) prints 'Special' instead of a cost: cost is null and cost_label holds the printed word.",
+    "In 'Lancer-Class' and 'Aggressor-Class' the ship name is printed in italics; the name is stored without markup.",
+    "Decorative dots and corner symbols on the card art are not transcribed."
+  ],
+  "cards": [
+    {
+      "image": "base-market-ship-00",
+      "name": "Firespray-31 Patrol Craft",
+      "card_type": "ship",
+      "cost": 20000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "cargo or mod",
+          "count": 1
+        },
+        {
+          "type": "mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 2
+        }
+      ],
+      "stats": {
+        "hyperdrive": 6,
+        "ship_combat": 5,
+        "hull": 6
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-01",
+      "name": "Modified YT-1300 Light Freighter",
+      "card_type": "ship",
+      "cost": 20000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "cargo or mod",
+          "count": 1
+        },
+        {
+          "type": "mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 3
+        }
+      ],
+      "stats": {
+        "hyperdrive": 7,
+        "ship_combat": 4,
+        "hull": 5
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-02",
+      "name": "HWK-290 Freighter",
+      "card_type": "ship",
+      "cost": 5000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 2
+        }
+      ],
+      "stats": {
+        "hyperdrive": 6,
+        "ship_combat": 3,
+        "hull": 4
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-03",
+      "name": "YV-666 Light Freighter",
+      "card_type": "ship",
+      "cost": 15000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 2
+        },
+        {
+          "type": "cargo or mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 3
+        }
+      ],
+      "stats": {
+        "hyperdrive": 7,
+        "ship_combat": 3,
+        "hull": 5
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-04",
+      "name": "Used Ship for Sale",
+      "card_type": "special",
+      "cost": null,
+      "cost_label": "Special",
+      "traits": [],
+      "text": [
+        "Buy any ship sheet from the supply that costs more than your current ship. Place the sheet on its \"Ship Goal\" side as normal, and the ship suffers 3 damage.",
+        "If the ship's card has not been removed from the game, search the {DECK_SHIP} market deck for the ship's card and remove it from the game. Then shuffle this card back into this deck."
+      ],
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-05",
+      "name": "GX1 Short Hauler",
+      "card_type": "ship",
+      "cost": 5000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "cargo or mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 2
+        }
+      ],
+      "stats": {
+        "hyperdrive": 6,
+        "ship_combat": 2,
+        "hull": 5
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-06",
+      "name": "Lancer-Class Pursuit Craft",
+      "card_type": "ship",
+      "cost": 10000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 2
+        }
+      ],
+      "stats": {
+        "hyperdrive": 6,
+        "ship_combat": 4,
+        "hull": 5
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-07",
+      "name": "Heavy-Duty Lifter",
+      "card_type": "ship",
+      "cost": 10000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "cargo or mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 3
+        }
+      ],
+      "stats": {
+        "hyperdrive": 6,
+        "ship_combat": 3,
+        "hull": 5
+      },
+      "bottom": null,
+      "verify": []
+    },
+    {
+      "image": "base-market-ship-08",
+      "name": "Aggressor-Class Assault Fighter",
+      "card_type": "ship",
+      "cost": 15000,
+      "traits": [
+        "ship"
+      ],
+      "text": [
+        "Gain this ship's sheet and remove this card from the game."
+      ],
+      "slots": [
+        {
+          "type": "cargo",
+          "count": 1
+        },
+        {
+          "type": "cargo or mod",
+          "count": 1
+        },
+        {
+          "type": "mod",
+          "count": 1
+        },
+        {
+          "type": "crew",
+          "count": 2
+        }
+      ],
+      "stats": {
+        "hyperdrive": 6,
+        "ship_combat": 5,
+        "hull": 5
+      },
+      "bottom": null,
+      "verify": []
+    }
+  ]
+}
