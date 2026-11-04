@@ -1,0 +1,383 @@
+{
+  "format": "outer-rim-transcription/0.6",
+  "pack": "base",
+  "deck": "encounter-ryloth-naboo",
+  "source": "[Mod 01] sorted/base/encounters/ryloth-naboo",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is not the printed order: cards are listed by printed number.",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text. Several printed paragraphs are one string separated by '\\n'.",
+    "A variant may carry its own 'secret' and 'orientation' when the secret box sits under a reputation condition.",
+    "Die icons: solid starburst = {HIT}, outlined spiky starburst = {CRIT}, eye = {FOCUS}.",
+    "Embedded assets keep the printed trait in 'traits' (ILLEGAL -> illegal).",
+    "Errata: 'errata' sits on the section it refers to; the printed text is kept as is (R-24.5: the printed second sentence is the opposite of the corrected rule).",
+    "STARTER SHIP is printed in bold small caps and kept in capitals."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-ryloth-naboo-08",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The citizens of Ryloth are desperate for supplies.",
+              "text": "You may deliver 1 of your cargo for its reward regardless of its destination. If it is ILLEGAL and you have {REP_POS} Rebel reputation, you can deliver it without rolling a die."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A Naboo farmer has asked you to pick up some rare supplies.",
+              "text": "Action: If on Takodana, gain the cargo above."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Farming Supplies",
+        "card_type": "cargo",
+        "traits": [],
+        "text": [],
+        "destination": "Naboo",
+        "reward": "Gain {CREDITS}7,000."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-07",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Cham Syndulla needs your help retaliating against the Empire.",
+              "text": "When you win a combat against an Imperial patrol, you may discard this card to gain 1 fame and 1 Rebel reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Imperial reputation:",
+              "flavor": "Life on the Emperor’s homeworld is good for loyal Imperial citizens.",
+              "text": "If you are not the most famous player, you may spend {CREDITS}7,000 to gain 1 fame. Otherwise, you may spend {CREDITS}15,000 to gain 1 fame."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Imperial reputation:",
+              "flavor": "You stumble upon a suspicious late-night gathering in an alley near Theed palace.",
+              "text": "Test Knowledge. If you pass, either gain 1 Rebel reputation or gain 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-06",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A local Rebel cell is running dangerously low on supplies.",
+              "text": "You may discard 1 of your cargo, gear, or mods to gain {CREDITS}4,000 and 1 Rebel reputation. If you already had {REP_POS} Rebel reputation, instead of gaining credits gain 1 fame and lose 1 Imperial reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A farmer needs help disarming an unexploded booma from a bygone battle on her farm.",
+              "text": "You may test Tactics. If you pass, gain 1 Imperial reputation. If you already had {REP_POS} Imperial reputation, gain 1 fame instead. If you fail, your character suffers 3 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-05",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Imperials have impounded a smuggler’s ship. You could probably steal it.",
+              "text": "You may lose 1 Imperial reputation to test Tech. If you pass, lose 1 fame to buy the top card of the {DECK_SHIP} market deck for free."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You hear information regarding the whereabouts of some stolen Imperial equipment.",
+              "text": "Action: If on Nal Hutta, gain the cargo above and lose 1 Rebel reputation."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Weapon Cache",
+        "card_type": "cargo",
+        "traits": [
+          "illegal"
+        ],
+        "text": [
+          "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."
+        ],
+        "destination": "Naboo",
+        "reward": "Gain {CREDITS}7,000 and 1 fame."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-04",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "It’s market day in the city of Lessu. That makes it the perfect time to buy and sell wares.",
+              "text": "You may discard 1 of your cargo to gain {CREDITS}3,000. If you do not discard a card, reveal the top 3 cards of the {DECK_GEAR}, {DECK_CARGO}, or {DECK_SHIP} market deck. You may buy 1 of these cards with a discount of {CREDITS}1,000. Then shuffle the deck."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The governor asks you to negotiate with a visiting Hutt trade delegation, who promptly tries to bribe you.",
+              "text": "You may lose 1 Hutt reputation to gain 1 Imperial reputation or you may lose 1 Imperial reputation to gain {CREDITS}4,000 and 1 Hutt reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-03",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Rebel reputation:",
+              "flavor": "A Rebel sympathizer offers to let you purchase a ship from her personal collection.",
+              "text": "You may buy any ship sheet from the supply for its cost. Place the sheet on its “Ship Goal” side as normal. Then remove the ship’s card from the {DECK_SHIP} market deck and reshuffle the deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} Rebel reputation:",
+              "flavor": "You are caught in the middle of a firefight between Free Ryloth forces and a legion of stormtroopers.",
+              "text": "Your character suffers 3 damage. If you are not defeated, gain 1 Rebel reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A Rebel operative is seeding unrest. You consider turning her in to the Empire.",
+              "text": "You may lose 1 Rebel reputation to gain {CREDITS}2,000 and 1 Imperial reputation. You can do this even if you have {REP_NEG} Rebel reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-02",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Rebel reputation:",
+              "flavor": "A Rebel cell is looking to steal some gear from the local Imperial garrison.",
+              "text": "You may test Stealth. If you pass, buy 1 gear of your choice for free from the {DECK_GEAR} market deck. Then shuffle the deck. If you fail, lose 1 Imperial reputation and your character suffers 2 damage."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Rebel reputation:",
+              "flavor": "The Imperial occupation is making it difficult for Ryloth’s inhabitants to get supplies.",
+              "text": "You may discard 1 of your cargo to gain credits equal to its cost and 1 Rebel reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A Theed merchant is selling discount wares that you could sell off-world for a large markup.",
+              "text": "Reveal the top 3 cards of the {DECK_CARGO} market deck. You may buy 1 these cards with a discount of {CREDITS}1,000. Then shuffle the deck."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-01",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A swarm of TIE interceptors appears on your scopes.",
+              "text": "You may fight a ship combat against TIE interceptors ({SHIP_COMBAT} 5). If you win, lose 1 Imperial reputation and gain 1 fame and 1 Rebel reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A nervous Gungan wants you to bring an important dignitary back to Otoh Gunga.",
+              "text": "Action: If on Mon Calamari, gain the cargo above."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Gungan Dignitary",
+        "card_type": "cargo",
+        "traits": [],
+        "text": [],
+        "destination": "Naboo",
+        "reward": "Gain {CREDITS}7,000 and 1 fame."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-00",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A Free Ryloth agent seeks vengeance.",
+              "text": "Action: Discard this card to fight a combat against a player in your space who has {REP_POS} Imperial reputation or {REP_NEG} Rebel reputation. If you win, you gain 1 fame."
+            }
+          ]
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Imperial forces are searching the planet for outlaws, and they are willing to pay for information.",
+              "text": "You may test Knowledge. If you pass, gain 1 Imperial reputation and {CREDITS}4,000. If you fail, lose 1 Imperial reputation; if you already had {REP_NEG} Imperial reputation, lose {CREDITS}4,000."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ryloth-naboo-09",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "Ryloth",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Gobi Glie is looking to purchase a quality ship for a secret mission.",
+              "text": "If your ship is not a STARTER SHIP, you may replace your ship sheet with a STARTER SHIP sheet to gain 1 fame, 1 Rebel reputation, and {CREDITS}5,000.\nIf you do replace your ship sheet, you may lose 1 Imperial reputation to gain {CREDITS}4,000."
+            }
+          ],
+          "errata": "R-24.5"
+        },
+        {
+          "planet": "Naboo",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "At a cantina, you talk to an off-duty Imperial officer.",
+              "text": "You may lose 1 Rebel reputation. Then, if you have {REP_NEG} Rebel reputation, gain 1 Imperial reputation. If you already had {REP_POS} Imperial reputation, reveal the top 3 cards of the {DECK_CARGO} market deck. You may buy 1 revealed cargo for free. Then shuffle the deck."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    }
+  ]
+}

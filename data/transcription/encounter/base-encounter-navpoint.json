@@ -1,0 +1,385 @@
+{
+  "format": "outer-rim-transcription/0.6",
+  "pack": "base",
+  "deck": "encounter-navpoint",
+  "source": "[Mod 01] sorted/base/encounters/navpoint",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is not the printed order: cards are listed by printed number.",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text. Several printed paragraphs are one string separated by '\\n'.",
+    "A variant may carry its own 'secret' and 'orientation' when the secret box sits under a reputation condition.",
+    "Die icons: solid starburst = {HIT}, outlined spiky starburst = {CRIT}, eye = {FOCUS}.",
+    "Embedded assets keep the printed trait in 'traits' (ILLEGAL -> illegal).",
+    "Navpoint encounter cards have two sections: 'No Patrol' and 'Patrol' (the state of the navpoint). Both headers print a navigation icon, not transcribed."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-navpoint-00",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Hutt reputation:",
+              "flavor": "One of your Hutt contacts gave you coordinates to a black market space station in this area.",
+              "text": "Choose a market deck and reveal the top 3 cards of it. You may buy 1 of these cards. Then shuffle the deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} Hutt reputation:",
+              "flavor": "They’ve found you.",
+              "text": "Move the Hutt patrol to your space and encounter it."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You share information with the Hutts about the location of a wanted fugitive.",
+              "text": "Action: Discard this card to move the Hutt patrol directly to the space of your choice."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-09",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Syndicate reputation:",
+              "flavor": "The smuggler grins at you. “You think you’re the better pilot? Why don’t you prove it in that asteroid field?”",
+              "text": "You may test Piloting. If you pass, gain {CREDITS}3,000. If you fail, your ship suffers 3 damage."
+            },
+            {
+              "condition": "If you have {REP_NEG} Syndicate reputation:",
+              "flavor": "There appears to be a bounty hunter on your tail.",
+              "text": "Test Piloting. If you fail, fight a ship combat against a bounty hunter ({SHIP_COMBAT} 4). If you win, prevent 2 damage from this combat."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“We’ve heard rumors of pirate activity in this system. Do you have any leads?”",
+              "text": "You may spend {CREDITS}1,000 to move a patrol in your space directly to any space."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-08",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Imperial reputation:",
+              "flavor": "Imperial data about this part of space suggest there should be a shortcut up ahead.",
+              "text": "Move up to 2 spaces."
+            },
+            {
+              "condition": "If you have {REP_NEG} Imperial reputation:",
+              "flavor": "The Empire is everywhere, and they are hunting you.",
+              "text": "Move the Imperial patrol directly to any space that is adjacent to your space."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The last thing you need is unwanted attention.",
+              "text": "You may test Stealth. If you pass, you may take an additional turn. If you fail, lose 1 reputation with a patrol in your space."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-07",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Rebel reputation:",
+              "flavor": "You experience engine trouble and send out a distress signal.",
+              "text": "Move the Rebel patrol directly to your space. Then recover all damage from your ship."
+            },
+            {
+              "condition": "If you have {REP_NEG} Rebel reputation:",
+              "flavor": "You don’t notice the space mines until you’re almost on top of them. Evasive maneuvers!",
+              "text": "Test Piloting. If you fail, your ship suffers 3 damage."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“To anyone that can hear us, we’ve suffered engine failure and need assistance.”",
+              "text": "Test Tech. If you pass, gain 1 reputation with a patrol in your space; if you already had {REP_POS} reputation with this faction, you may spend {CREDITS}10,000 to gain 1 fame."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-06",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You find a derelict Hutt transport. The crew is missing, but they had a big haul of resources.",
+              "text": "You may gain the cargo below. If you do, lose 1 Hutt reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The patrol is on the lookout for a fugitive.",
+              "text": "You may choose a player who has {REP_NEG} reputation with a patrol in your space. Move that patrol directly to that player’s space, and they must encounter that patrol."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Stolen Cargo",
+        "card_type": "cargo",
+        "traits": [
+          "illegal"
+        ],
+        "text": [
+          "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."
+        ],
+        "destination": "Cantonica",
+        "reward": "Gain {CREDITS}7,000 and 1 fame."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-04",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "In deep space, you intercept a transmission intended for someone else.",
+              "text": "Action: Discard this card and choose another player in your space. That player decides either to have no effect or to have each of you gain 1 fame."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You dock with the ship and offer information as a show of good faith.",
+              "text": "Test Knowledge. If you pass, gain 1 reputation with a patrol in your space; if you already had {REP_POS} reputation with that faction, reveal the top 3 cards of the {DECK_GEAR} market deck. You may buy 1 revealed mod for free. Then shuffle the deck."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-03",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Syndicate reputation:",
+              "flavor": "A mining operation recognizes your loyalty to Crimson Dawn and offers you some Clouzon-36 fuel.",
+              "text": "Move up to 5 spaces."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Syndicate reputation:",
+              "flavor": "You receive a distress call from a ship trapped inside of a giant space slug.",
+              "text": "You may test Tech. If you pass, gain {CREDITS}2,000 and 1 Syndicate reputation. If you fail, your ship suffers 3 damage."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The patrol asks that you cut your engines, and you consider ignoring their request.",
+              "text": "You may test Piloting. If you pass, you may take an additional turn. If you fail, encounter a patrol in your space."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-01",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Rebel reputation:",
+              "flavor": "You catch a distress signal from a civilian ship.",
+              "text": "Test Tech. If you pass, and you are not the most famous player, you may spend {CREDITS}7,000 to gain 1 fame. If you pass and you are the most famous player, you may spend {CREDITS}15,000 to gain 1 fame."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Rebel reputation:",
+              "flavor": "You experience engine trouble and send out a distress signal. Nobody responds.",
+              "text": "Test Tech. If you fail, your ship suffers 2 damage."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "They’re recruiting informants in this sector of space.",
+              "text": "Test Influence. If you pass, gain 1 reputation with a patrol in your space; if you already had {REP_POS} reputation with that faction, gain {CREDITS}4,000."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-05",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Imperial reputation:",
+              "flavor": "The Empire offers you the funds needed to work against the Rebellion.",
+              "text": "You may lose up to 2 Rebel reputation. Then, if you have {REP_NEG} Rebel reputation, gain {CREDITS}5,000."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Imperial reputation:",
+              "flavor": "Here, in the middle of nowhere, you find a makeshift Imperial checkpoint. Better get your bribes ready.",
+              "text": "Test Piloting. If you fail, lose {CREDITS}2,000 unless you discard 1 of your cargo."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You make a deal with the ship’s captain.",
+              "text": "Action: Discard this card to move any patrol directly to your space. Then, choose a player in your space that has {REP_NEG} reputation with that patrol to encounter it."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-navpoint-02",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "No Patrol",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Floating through space, you devise a plan to claim someone else’s deeds as your own.",
+              "text": "Action: Discard this card and choose a player in your space that has more fame than you. You gain 1 fame and that player loses 1 fame. You then lose 1 reputation of that player’s choice."
+            }
+          ]
+        },
+        {
+          "planet": "Patrol",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The ship’s captain demands you pay a tariff for traveling through this sector. You could try to scare them off by faking a reactor leak.",
+              "text": "You may spend {CREDITS}3,000 to gain 1 reputation with a patrol in your space. Then, if you have {REP_NEG} reputation with a patrol in your space, test Tech. If you fail, your ship suffers 2 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    }
+  ]
+}

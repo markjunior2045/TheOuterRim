@@ -1,0 +1,408 @@
+{
+  "format": "outer-rim-transcription/0.6",
+  "pack": "base",
+  "deck": "encounter-ring-of-kafrene-takodana",
+  "source": "[Mod 01] sorted/base/encounters/ring-of-kafrene-takodana",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is not the printed order: cards are listed by printed number.",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text. Several printed paragraphs are one string separated by '\\n'.",
+    "A variant may carry its own 'secret' and 'orientation' when the secret box sits under a reputation condition.",
+    "Die icons: solid starburst = {HIT}, outlined spiky starburst = {CRIT}, eye = {FOCUS}.",
+    "Embedded assets keep the printed trait in 'traits' (ILLEGAL -> illegal).",
+    "The second section of every card is Takodana; the first is The Ring of Kafrene.",
+    "Errata: 'errata' sits on the section it refers to; the printed text is kept as is (R-24.4 adds a discard instruction that the printed card lacks)."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-05",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "An elite member of the Hutt Cartel is looking for investors in his next venture.",
+              "text": "You may spend {CREDITS}12,000 to gain 1 fame and 1 Hutt reputation. If you are not the most famous player, you may barter to pay for this."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“Imperials have been sniffing around the system. You better not have brought them here.”",
+              "text": "You may lose up to 2 Imperial reputation.\nThen, if you have {REP_POS} or {REP_NEU} Imperial reputation, your character suffers 2 damage. If you have {REP_NEG} Imperial reputation, resolve another Takodana encounter card."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-06",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A gang leader is looking for some new weaponry.",
+              "text": "You may discard 1 of your gear or mods to gain credits equal to twice its cost. If you have no gear or mods, you may buy the top card of the {DECK_GEAR} market deck."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Gamorrean snorts as you sit down at his table. It shouldn’t be tough to convince him to help you.",
+              "text": "You may test Influence. If you pass, gain the crew below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Gamorrean Mercenary",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "strength"
+        ],
+        "text": [
+          "During ground combat, your opponent rolls 1 fewer die."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-07",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“Cloaking devices are hard to come by, not to mention expensive.” The salesman smiles.",
+              "text": "You may spend {CREDITS}3,000 to gain the mod below."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "At Maz’s castle, you can find nearly anyone.",
+              "text": "Move a contact from any planet to an empty contact space on your planet. If there are no empty contact spaces, exchange that contact with a contact on your planet."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Cloaking Device",
+        "card_type": "mod",
+        "traits": [],
+        "text": [
+          "After your opponent rolls dice during a ship combat, you may discard this card to cancel all of their {HIT} results."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-08",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You find a Bith musician in the posh part of town. She claims to be famous in this area of the galaxy and offers to write a song detailing your exploits.",
+              "text": "If you are not the most famous player, you may spend {CREDITS}8,000 to gain 1 fame. You may barter to pay for this.\nIf you are the most famous player, you may spend {CREDITS}15,000 to gain 1 fame."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The roar of an engine fills your ears as a new ship lands outside of the castle grounds.",
+              "text": "Move a facedown contact token from any planet to an empty contact space on your planet. If there are no empty contact spaces, exchange that contact with a contact on your planet.\nThen you may encounter a contact on your planet."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-09",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“You want to do WHAT to their ship? Okay, I think I have something that fits the bill.”",
+              "text": "You may spend {CREDITS}1,000 to gain the mod below."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Over drinks at the cantina, you hear personal details of the most infamous characters in the galaxy. Blackmail fodder.",
+              "text": "Action: Discard this card to take 1 crew from a player in your space."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Seismic Charge",
+        "card_type": "mod",
+        "traits": [],
+        "text": [
+          "After you roll dice during ship combat, you may discard this card to add 2 {HIT}."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-00",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“You lookin’ for some special modifications?”",
+              "text": "Reveal the top 3 cards of the {DECK_GEAR} market deck. You may buy 1 revealed mod with a discount of {CREDITS}1,000. Then shuffle the deck."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“Ready to blow something up?” The Dug licks his lips as he snaps a new sight onto his blaster.",
+              "text": "You may spend {CREDITS}2,000 to gain the crew below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Weapon Specialist",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "tactics"
+        ],
+        "text": [
+          "One of your gear slots can hold 2 cards instead of 1."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-01",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A gang of street urchins tries to pick your pockets. Maybe you can help them escape a life of crime.",
+              "text": "Test Stealth. If you fail, lose {CREDITS}1,000.\nIf you pass, you may lose 1 Syndicate reputation and spend {CREDITS}7,000 to gain 1 fame."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The codebreaker claims to be Maz’s friend.",
+              "text": "You may spend {CREDITS}2,000 to gain the crew below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Codebreaker",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "tech"
+        ],
+        "text": [
+          "When you move into a patrol’s space, you do not have to end your movement if you have {REP_NEU} reputation with that patrol."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-02",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A medical facility is raising funds to update its equipment. If you’re generous enough, they’ll name a medical wing after you.",
+              "text": "Recover all damage on your character. Then, if you are not the most famous player, you may spend {CREDITS}8,000 to gain 1 fame. Otherwise, you may spend {CREDITS}16,000 to gain 1 fame."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“Are you a bounty hunter?” ME-8D9 asks. “It doesn’t matter I suppose, but if you need information, I know someone who can help.”",
+              "text": "For each {REP_POS} reputation you have, you may secretly look at 1 contact on a planet of that faction.\nIf you do not have {REP_POS} reputation with any faction, you may spend {CREDITS}3,000 to gain 1 reputation with any faction."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-03",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“You afraid your ship’s gonna blow? You just need an escape plan.”",
+              "text": "You may spend {CREDITS}1,000 to gain the mod below."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You learn the subtle art of manipulation.",
+              "text": "Action: Choose 2 facedown contact tokens on different planets. Secretly look at those tokens, and then you may exchange them."
+            }
+          ],
+          "errata": "R-24.4"
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Escape Pod",
+        "card_type": "mod",
+        "traits": [],
+        "text": [
+          "When you would become defeated during a ship combat, you may discard this card to move directly to the nearest planet and recover 1 damage from your ship instead."
+        ]
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-ring-of-kafrene-takodana-04",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "The Ring of Kafrene",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“You’re a liar!” the Besalisk yells, nearly knocking your drink over with his angry fist. Maybe a few credits will make him believe your claims.",
+              "text": "You may spend {CREDITS}4,000 to complete your personal goal or ship goal (gaining fame as normal)."
+            }
+          ]
+        },
+        {
+          "planet": "Takodana",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“If you’re a friend of Maz, you’re a friend of mine,” the droid says. “What’s the job?”",
+              "text": "If you have the “Maz Kanata” crew, you may gain the crew below. Otherwise, you may spend {CREDITS}1,000 to gain the crew below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "GA-97 {DROID}",
+        "card_type": "crew",
+        "traits": [],
+        "skills": [
+          "influence"
+        ],
+        "text": [
+          "Action: Spend {CREDITS}1,000 to secretly look at the top card of any encounter deck. Then place that card on the top or bottom of that deck."
+        ]
+      },
+      "verify": []
+    }
+  ]
+}

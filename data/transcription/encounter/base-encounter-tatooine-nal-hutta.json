@@ -1,0 +1,434 @@
+{
+  "format": "outer-rim-transcription/0.6",
+  "pack": "base",
+  "deck": "encounter-tatooine-nal-hutta",
+  "source": "[Mod 01] sorted/base/encounters/tatooine-nal-hutta",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "number is the printed card number (n/10). The extracted file order is not the printed order: cards are listed by printed number.",
+    "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
+    "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text. Several printed paragraphs are one string separated by '\\n'.",
+    "A variant may carry its own 'secret' and 'orientation' when the secret box sits under a reputation condition.",
+    "Die icons: solid starburst = {HIT}, outlined spiky starburst = {CRIT}, eye = {FOCUS}.",
+    "Embedded assets keep the printed trait in 'traits' (ILLEGAL -> illegal).",
+    "Errata: 'errata' sits on the variant it refers to; the printed text is kept as is (R-24.1 adds a discard instruction).",
+    "In cards 2 and 3 the Nal Hutta section carries a Bounty card instead of encounter text: the section has no variants (variants: []) and the card is the embedded bounty."
+  ],
+  "cards": [
+    {
+      "image": "base-encounter-tatooine-nal-hutta-05",
+      "number": 1,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Hutt reputation:",
+              "flavor": "Jabba the Hutt receives information from pilots all over the Outer Rim.",
+              "text": "Choose a planet within 3 spaces of the Hutt patrol. You may secretly look at each contact on that planet."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Hutt reputation:",
+              "flavor": "The Hutts are looking for double agents.",
+              "text": "You may lose 1 reputation with any faction to gain 1 Hutt reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "In a seedy cantina, you encounter a group of bounty hunters looking for work.",
+              "text": "You may discard 1 of your bounties or secrets to gain {CREDITS}2,000 and 1 Hutt reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-06",
+      "number": 2,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You share information with the Hutts about the location of a wanted fugitive.",
+              "text": "You may spend {CREDITS}2,000 to move the Hutt patrol to the space of your choice. If you have {REP_POS} Hutt reputation, you may do this for free."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": []
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Hondo Ohnaka",
+        "card_type": "bounty",
+        "traits": [],
+        "class": {
+          "color": "green",
+          "pips": 2
+        },
+        "combat": {
+          "value": 4,
+          "type": "{GROUND_COMBAT}"
+        },
+        "elimination_reward": "Gain {CREDITS}8,000 and 1 fame.",
+        "capture_reward": "Deliver Hondo Ohnaka’s token to Ord Mantell to gain {CREDITS}10,000, 2 fame, and 1 Syndicate reputation.",
+        "text": [
+          "After you gain a reward from this card, remove it from the game."
+        ]
+      },
+      "verify": [
+        "Bounty: the combat icon (red, next to the value 4) read as {GROUND_COMBAT}; class read from the green frame (2 pips)."
+      ]
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-07",
+      "number": 3,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You spend the afternoon smearing reputations at the Mos Eisley Cantina.",
+              "text": "Choose another player. That player loses 1 reputation of your choice."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": []
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "IG-RM Droid",
+        "card_type": "bounty",
+        "traits": [],
+        "class": {
+          "color": "green",
+          "pips": 2
+        },
+        "combat": {
+          "value": 4,
+          "type": "{GROUND_COMBAT}"
+        },
+        "elimination_reward": "Gain {CREDITS}8,000 and 1 fame.",
+        "capture_reward": "Deliver IG-RM Droid’s token to Tatooine to gain {CREDITS}11,000 and 2 fame.",
+        "text": [
+          "After you gain a reward from this card, remove it from the game."
+        ]
+      },
+      "verify": [
+        "Bounty: the combat icon (red, next to the value 4) read as {GROUND_COMBAT}; class read from the green frame (2 pips)."
+      ]
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-08",
+      "number": 4,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Shistavanen growls at you, and his protocol droid translates, “Are you open to a little piracy?”",
+              "text": "Encounter: Discard this card to fight a combat against a player in your space. If you win, take 1 cargo or gear from that player, and you lose 1 reputation of that player’s choice."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} or {REP_NEU} Hutt reputation:",
+              "flavor": "In the city of Bulbousa, loan sharks are willing to give you money for just about anything.",
+              "text": "You may lose 1 Hutt reputation to gain {CREDITS}5,000."
+            },
+            {
+              "condition": "If you have {REP_NEG} Hutt reputation:",
+              "flavor": "The Hutt enforcer grins as he cracks his knuckles.",
+              "text": "Fight a ground combat against enforcers ({GROUND_COMBAT} 4) unless you spend {CREDITS}5,000."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-09",
+      "number": 5,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A shifty Twi’lek at Mos Espa offers you some contraband at a good price.",
+              "text": "You may spend {CREDITS}2,000 to gain the cargo below and secretly look at 1 contact token on Lothal."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "The Hutts have posted new bounties.",
+              "text": "Gain card #90. If there is no card #90 in the databank, you may instead buy the top card of the {DECK_BOUNTY} market deck."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Contraband",
+        "card_type": "cargo",
+        "traits": [
+          "illegal"
+        ],
+        "text": [
+          "To deliver, roll a die. On a {HIT}, deliver this. Otherwise, resolve card #1."
+        ],
+        "destination": "Lothal",
+        "reward": "Gain {CREDITS}7,000 and 1 fame."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-00",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You formulate a plan to pull someone into a high stakes game of sabacc.",
+              "text": "Encounter: If you have at least {CREDITS}6,000, test Influence. If you pass, choose another player in your space, and you resolve card #40.\nReward: Either take {CREDITS}6,000 from the other player or trade ship sheets with the other player. Then discard this card."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You come upon an illicit droid-fighting ring, and you have the opportunity to place a bet.",
+              "text": "You may spend up to {CREDITS}3,000 to roll 1 die for every {CREDITS}1,000 spent. If you do not roll any {HIT} or {CRIT} results, gain triple the amount of credits spent."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-01",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Jabba’s agents know the whereabouts of many important people in the galaxy.",
+              "text": "Secretly look at 1 contact on any planet."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Few mercenaries can avoid the allure of a sabacc game. Surely, you’ll be able to find an opponent.",
+              "text": "You may gain the job below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Low Stakes Game of Sabacc",
+        "card_type": "job",
+        "skills": [
+          {
+            "skill": "influence",
+            "certain": false
+          },
+          {
+            "skill": "knowledge",
+            "certain": false
+          },
+          {
+            "skill": "stealth",
+            "certain": false
+          },
+          {
+            "skill": "tactics",
+            "certain": false
+          }
+        ],
+        "destination": null,
+        "encounter": "Choose a player in your space. You each lose {CREDITS}5,000, and you resolve card #40. You cannot resolve this card if either player has less than {CREDITS}5,000.",
+        "reward": "Gain {CREDITS}10,000. Then discard this card."
+      },
+      "verify": [
+        "Embedded job has no 'Destination:' line printed: destination is null."
+      ]
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-02",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Jabba is looking to add more trophies to his audience chamber.",
+              "text": "Action: If on Tatooine, discard this card to deliver a contact token on 1 of your bounty cards for its capture reward. You may do this regardless of the reward’s specified planet."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Hutt reputation:",
+              "flavor": "You’re the Hutts’ top choice for their latest bounty.",
+              "text": "You may gain 1 bounty of your choice from the {DECK_BOUNTY} market deck. Then shuffle the deck."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Hutt reputation:",
+              "flavor": "Throwing a Boonta Eve party is a great way to ingratiate yourself with the Hutts.",
+              "text": "You may spend {CREDITS}2,000 to gain 1 Hutt reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-03",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Hutt reputation:",
+              "flavor": "Your allies at Jabba’s palace have agreed to help you spread lies about your rivals.",
+              "text": "Action: Choose a player and either a patrol or faceup contact token in their space. That player loses 1 reputation with the chosen token’s faction.",
+              "secret": true,
+              "orientation": "inverted",
+              "errata": "R-24.1"
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Hutt reputation:",
+              "flavor": "Getting into Jabba’s good graces could be beneficial.",
+              "text": "You may spend {CREDITS}2,000 to gain 1 Hutt reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "You recognize a face on a wanted poster.",
+              "text": "If you have no crew, you may secretly look at a contact token on this planet.\nYou may discard 1 of your crew to gain {CREDITS}4,000."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-tatooine-nal-hutta-04",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "Tatooine",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Jabba demands retribution.",
+              "text": "Encounter: Discard this card to fight a combat against a player in your space who has {REP_NEG} Hutt reputation. If you win, you gain 1 fame and 1 Hutt reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Nal Hutta",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Hutt reputation:",
+              "flavor": "An influential Hutt has sponsored a dragonsnake hunt.",
+              "text": "You may fight a ground combat against a dragonsnake ({GROUND_COMBAT} 5). If you win, gain {CREDITS}3,000 and 1 fame."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Hutt reputation:",
+              "flavor": "A Hutt gangster is looking for someone to cook up a new scheme.",
+              "text": "Test Tactics. If you pass, gain 1 Hutt reputation and you may buy the top card of the {DECK_SHIP} market deck."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    }
+  ]
+}
