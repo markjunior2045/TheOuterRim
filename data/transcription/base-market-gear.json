@@ -90,7 +90,7 @@
         "armor"
       ],
       "text": [
-        "Gain +2 {UNKNOWN_ICON}.",
+        "Gain +2 {HEALTH}.",
         "Limit 1 ARMOR per character."
       ],
       "bottom": {
@@ -101,9 +101,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Armor '+2' icon (crosshair/target shape) is not in the RULES.md icon table; written as {UNKNOWN_ICON}."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-04",
@@ -224,7 +222,7 @@
         "armor"
       ],
       "text": [
-        "Gain +2 {UNKNOWN_ICON}.",
+        "Gain +2 {HEALTH}.",
         "During ground combat, if you have Strength, your opponent rolls 1 fewer die.",
         "Limit 1 ARMOR per character."
       ],
@@ -236,9 +234,7 @@
         },
         "reveal_contact": null
       },
-      "verify": [
-        "Armor '+2' icon (crosshair/target shape) is not in the RULES.md icon table; written as {UNKNOWN_ICON}."
-      ]
+      "verify": []
     },
     {
       "image": "base-market-gear-10",
