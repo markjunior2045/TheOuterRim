@@ -36,6 +36,6 @@ Talk to the owner in Brazilian Portuguese. Everything written to files is Englis
 
 1. Validate: the JSON parses, every image in the batch is present exactly once, and `format` is the current version.
 2. Re-open each image and compare it with its entry, line by line (names, numbers, icons, faction and distance).
-3. Report to the owner, in Portuguese: number of cards, the `verify` items, anything new for the format.
+3. Report to the owner, in Portuguese: number of cards, the `verify` items, anything new for the format. Always refer to cards as `Name-num` (image number), for example `Saw Gerrera-0`, `Chewbacca-1`, so the owner can find the original card.
 4. Update the progress file: `python tools/transcription_progress.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted` (rewrites `data/transcription/PROGRESS.md`; never edit it by hand).
 5. Commit on the current task branch: `T2.8: transcribe <deck> [<range>]` (include `PROGRESS.md`).
