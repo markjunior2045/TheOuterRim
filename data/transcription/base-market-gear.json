@@ -1,0 +1,346 @@
+{
+  "format": "outer-rim-transcription/0.1",
+  "pack": "base",
+  "deck": "gear",
+  "source": "[Mod 01] sorted/base/market/gear",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Card type 'mod' cards are part of the gear deck (red frame, printed type 'Mod'); 'gear' cards have a green frame.",
+    "Traits ARMOR/WEAPON are printed bold small caps; 'ARMOR' inside text is kept as printed."
+  ],
+  "cards": [
+    {
+      "image": "base-market-gear-00",
+      "name": "IQA-11 Blaster Rifle",
+      "card_type": "gear",
+      "cost": 5000,
+      "traits": [
+        "weapon"
+      ],
+      "text": [
+        "Gain +1 {GROUND_COMBAT}.",
+        "When you win a ground combat, you suffer a maximum of 2 damage."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon."
+      ]
+    },
+    {
+      "image": "base-market-gear-01",
+      "name": "Vibroknife",
+      "card_type": "gear",
+      "cost": 4000,
+      "traits": [
+        "weapon"
+      ],
+      "text": [
+        "During ground combat, you may turn 1 of your {FOCUS} results to a {HIT}.",
+        "If you have Stealth or Strength, gain +1 {GROUND_COMBAT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon.",
+        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
+      ]
+    },
+    {
+      "image": "base-market-gear-02",
+      "name": "DL-44 Heavy Blaster Pistol",
+      "card_type": "gear",
+      "cost": 3000,
+      "traits": [
+        "weapon"
+      ],
+      "text": [
+        "Gain +1 {GROUND_COMBAT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon."
+      ]
+    },
+    {
+      "image": "base-market-gear-03",
+      "name": "Armored Vest",
+      "card_type": "gear",
+      "cost": 3000,
+      "traits": [
+        "armor"
+      ],
+      "text": [
+        "Gain +2 {UNKNOWN_ICON}.",
+        "Limit 1 ARMOR per character."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Armor '+2' icon (crosshair/target shape) is not in the RULES.md icon table; written as {UNKNOWN_ICON}."
+      ]
+    },
+    {
+      "image": "base-market-gear-04",
+      "name": "MPL-57 Grenade Launcher",
+      "card_type": "gear",
+      "cost": 8000,
+      "traits": [
+        "weapon"
+      ],
+      "text": [
+        "Gain +2 {GROUND_COMBAT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon."
+      ]
+    },
+    {
+      "image": "base-market-gear-05",
+      "name": "Vibro-Ax",
+      "card_type": "gear",
+      "cost": 6000,
+      "traits": [
+        "weapon"
+      ],
+      "text": [
+        "Gain +1 {GROUND_COMBAT}.",
+        "During ground combat, if you have Strength, you may turn 1 of your {FOCUS} results to a {CRIT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Weapon '+1' icon read as {GROUND_COMBAT}; confirm it is the ground combat icon.",
+        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
+      ]
+    },
+    {
+      "image": "base-market-gear-06",
+      "name": "Ion Cannon",
+      "card_type": "mod",
+      "cost": 5000,
+      "traits": [],
+      "text": [
+        "During ship combat, cancel 1 of your opponent's {HIT}.",
+        "If you have Tactics, you may instead cancel 1 {CRIT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
+      ]
+    },
+    {
+      "image": "base-market-gear-07",
+      "name": "Targeting Computer",
+      "card_type": "mod",
+      "cost": 2000,
+      "traits": [],
+      "text": [
+        "Once per ship combat, you may reroll any number of your blank dice."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "rebel",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": []
+    },
+    {
+      "image": "base-market-gear-08",
+      "name": "Quad Laser Cannon",
+      "card_type": "mod",
+      "cost": 2000,
+      "traits": [],
+      "text": [
+        "Gain +1 {SHIP_COMBAT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Ship '+1' icon read as {SHIP_COMBAT}; confirm."
+      ]
+    },
+    {
+      "image": "base-market-gear-09",
+      "name": "Plastoid Armor",
+      "card_type": "gear",
+      "cost": 8000,
+      "traits": [
+        "armor"
+      ],
+      "text": [
+        "Gain +2 {UNKNOWN_ICON}.",
+        "During ground combat, if you have Strength, your opponent rolls 1 fewer die.",
+        "Limit 1 ARMOR per character."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "imperial",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Armor '+2' icon (crosshair/target shape) is not in the RULES.md icon table; written as {UNKNOWN_ICON}."
+      ]
+    },
+    {
+      "image": "base-market-gear-10",
+      "name": "Jetpack",
+      "card_type": "gear",
+      "cost": 6000,
+      "traits": [],
+      "text": [
+        "During ground combat, cancel 1 of your opponent's {HIT}.",
+        "If you have Tactics, you may instead cancel 1 {CRIT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "hutt",
+          "distance": 4
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
+      ]
+    },
+    {
+      "image": "base-market-gear-11",
+      "name": "Improved Nav Computer",
+      "card_type": "mod",
+      "cost": 3000,
+      "traits": [],
+      "text": [
+        "Gain +1 {HYPERDRIVE}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": [
+        "Hyperdrive icon read as {HYPERDRIVE}; confirm. No patrol icon printed."
+      ]
+    },
+    {
+      "image": "base-market-gear-12",
+      "name": "Maneuvering Thrusters",
+      "card_type": "mod",
+      "cost": 5000,
+      "traits": [],
+      "text": [
+        "Gain +1 {HULL}.",
+        "During ship combat, if you have Tactics, your opponent rolls 1 fewer die."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": [
+        "Hexagonal ring icon read as {HULL}; confirm. No patrol icon printed."
+      ]
+    },
+    {
+      "image": "base-market-gear-13",
+      "name": "Shield Upgrade",
+      "card_type": "mod",
+      "cost": 3000,
+      "traits": [],
+      "text": [
+        "Gain +1 {HULL}."
+      ],
+      "abilities": [
+        "Action: Recover 1 damage from your ship."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": null,
+        "reveal_contact": null
+      },
+      "verify": [
+        "Hexagonal ring icon read as {HULL}; confirm. No patrol icon printed."
+      ]
+    },
+    {
+      "image": "base-market-gear-14",
+      "name": "Autoblaster",
+      "card_type": "mod",
+      "cost": 7000,
+      "traits": [],
+      "text": [
+        "During ship combat, turn up to 2 of your {FOCUS} results to {HIT}.",
+        "If you have Tactics, you may instead turn 1 of your {FOCUS} results to a {CRIT}."
+      ],
+      "bottom": {
+        "deck_icon": "{DECK_GEAR}",
+        "patrol": {
+          "faction": "syndicate",
+          "distance": 3
+        },
+        "reveal_contact": null
+      },
+      "verify": [
+        "Eye icon read as {FOCUS}; plain starburst as {HIT}; spiky starburst as {CRIT} (first appearance of {FOCUS}/{CRIT}). Owner to confirm."
+      ]
+    }
+  ]
+}
