@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.5
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.6
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.5",
+  "format": "outer-rim-transcription/0.6",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -58,6 +58,9 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 | `sections[].secret`, `orientation` | `true`/`false`; `upright` or `inverted` (printed upside down) |
 | `sections[].variants[]` | one per reputation subsection: `condition` (printed line, or `null`), `flavor` (italic text), `text` (rules text) |
 | `asset` | embedded asset or `null`: `orientation`, `name`, `card_type`, and the market or job fields that apply |
+| `sections[].variants[].secret`, `orientation` | optional: when the secret box sits under a reputation condition, the variant carries them and the section has `secret: false` |
+| `sections[].variants[].text` | rules text; several printed paragraphs are one string separated by `
+` |
 
 Job skills: `[{ "skill": "stealth", "certain": false }]`; a skill printed in italics will certainly be tested, so `certain: true` (R-15.32). It does not mean the player must have the skill.
 

@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-transcription/0.5",
+  "format": "outer-rim-transcription/0.6",
   "pack": "base",
   "deck": "encounter-lothal-mon-calamari",
   "source": "[Mod 01] sheet 51, sorted/base/encounters/lothal-mon-calamari",
@@ -9,7 +9,9 @@
     "orientation: 'inverted' = printed upside down on the card (secrets, R-15.82, and some assets).",
     "variants: a section without reputation subsections has a single variant with condition null. 'flavor' is the italic text; 'text' is the rules text.",
     "errata: printed text is kept as is; the RULES.md errata entry is referenced and applied when mapping effects (RULES.md does not give the exact corrected wording).",
-    "Job skills: a skill printed in italics will certainly be tested (`certain: true`); the others may be tested (R-15.32)."
+    "Job skills: a skill printed in italics will certainly be tested (`certain: true`); the others may be tested (R-15.32).",
+    "Multi-paragraph rules text inside a variant is one string with paragraphs separated by '\n'.",
+    "A variant may carry its own 'secret' and 'orientation' when the secret box sits under a reputation condition (Mon Calamari-8); the section then has secret false."
   ],
   "cards": [
     {
@@ -213,6 +215,216 @@
         "encounter": "Resolve card #53.",
         "reward": "Gain {CREDITS}5,000, 1 fame, and 1 Rebel reputation. Then remove this card from the game."
       },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-09",
+      "number": 6,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Refugees on many Imperial worlds are seeking a better life elsewhere.",
+              "text": "Action: If you are on an Imperial planet, you may gain the cargo above."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Dozens of refugees are seeking to flee the brutal conditions imposed by the Imperial occupation.",
+              "text": "You may gain the cargo below."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "inverted",
+        "name": "Refugees",
+        "card_type": "cargo",
+        "traits": [],
+        "text": [
+          "When you discard this card, lose 1 Rebel reputation unless you delivered it."
+        ],
+        "destination": "Takodana",
+        "reward": "Gain 1 fame and 1 Rebel reputation."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-08",
+      "number": 7,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A racing enthusiast wants you to take out his favorite fathier’s top competition.",
+              "text": "You may gain the job below."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A local politician asks you to bring a message to the Rebellion. You instead consider turning them in to the authorities.",
+              "text": "You may lose 1 Rebel reputation to gain {CREDITS}4,000."
+            }
+          ]
+        }
+      ],
+      "asset": {
+        "orientation": "upright",
+        "name": "Steal a Fathier",
+        "card_type": "job",
+        "skills": [
+          {
+            "skill": "knowledge",
+            "certain": true
+          },
+          {
+            "skill": "stealth",
+            "certain": false
+          },
+          {
+            "skill": "strength",
+            "certain": true
+          }
+        ],
+        "destination": "Cantonica",
+        "encounter": "Resolve card #52.",
+        "reward": "Gain {CREDITS}10,000 and 1 fame. Then remove this card from the game."
+      },
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-07",
+      "number": 8,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Rebel reputation:",
+              "flavor": "The Rebellion is looking for new recruits.",
+              "text": "Action: Choose another player in your space who has {REP_NEU} Rebel reputation. That player may gain {CREDITS}10,000 and 1 Rebel reputation. If they do, you gain 1 fame and discard this card.",
+              "secret": true,
+              "orientation": "inverted"
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Rebel reputation:",
+              "flavor": "You have a chance to free a Whaladon from captivity.",
+              "text": "You may gain 1 Rebel reputation. If you do, lose 1 Imperial reputation."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "“What do you know of the Rebel Alliance?” the officer asks you, while his stormtroopers stand at the ready.",
+              "text": "Choose a player. That player gains 1 Rebel reputation and their character suffers 2 damage."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": [
+        "Secret under the {REP_POS} condition (printed upside down inside the Mon Calamari section): the reputation icon in 'who has [icon] Rebel reputation' is tiny and inverted; read as {REP_NEU} (empty hexagon)."
+      ]
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-06",
+      "number": 9,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "Someone calling themselves Fulcrum is looking for loyal Rebel agents.",
+              "text": "You may take the “Rebel Favor” job card from another player or the {DECK_JOB} market deck. If you take it from the {DECK_JOB} deck, shuffle that deck."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Imperial reputation:",
+              "flavor": "Imperial customs agents are willing to make exceptions for friends of the Empire.",
+              "text": "You may deliver 1 of your cargo for its reward regardless of its destination. If it is ILLEGAL, you can deliver it without rolling a die.\nIf you do not deliver cargo, you buy the top card of the {DECK_CARGO} market deck for free."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Imperial reputation:",
+              "flavor": "The ISB agent asks you to prove your loyalty.",
+              "text": "You may lose 1 Rebel reputation to gain 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "verify": []
+    },
+    {
+      "image": "base-encounter-lothal-mon-calamari-05",
+      "number": 10,
+      "sections": [
+        {
+          "planet": "Mon Calamari",
+          "secret": true,
+          "orientation": "inverted",
+          "variants": [
+            {
+              "condition": null,
+              "flavor": "A friend of the Rebellion has mapped a shortcut to Kessel.",
+              "text": "When you move into the Maelstrom while you have {REP_POS} Rebel reputation, you may discard this card. If you do, you do not have to end your movement in that space."
+            }
+          ]
+        },
+        {
+          "planet": "Lothal",
+          "secret": false,
+          "orientation": "upright",
+          "variants": [
+            {
+              "condition": "If you have {REP_POS} Imperial reputation:",
+              "flavor": "An Inquisitor is looking for information on the whereabouts of Rebel insurgents.",
+              "text": "Move the Imperial patrol up to 4 spaces in any direction."
+            },
+            {
+              "condition": "If you have {REP_NEG} or {REP_NEU} Imperial reputation:",
+              "flavor": "A military parade is being held in Tarkintown.",
+              "text": "You may gain 1 Imperial reputation."
+            }
+          ]
+        }
+      ],
+      "asset": null,
       "verify": []
     }
   ]
