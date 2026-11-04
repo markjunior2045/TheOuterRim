@@ -11,7 +11,7 @@ Talk to the owner in Brazilian Portuguese. Everything written to files is Englis
 
 1. Read `docs/TRANSCRIPTION_FORMAT.md` and one existing file in `data/transcription/<category>/` of the same kind (market or encounter) as an example. Read only the parts of `docs/RULES.md` you need (the icon table at the top, and rules cited below).
 2. Prepare the reading copies (never read the full-size PNGs, and never write into `RawGameFiles`):
-   `python tools/prepare_transcription_images.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted --deck <deck> [--only <range>]`
+   `python tools/prepare_transcription_images.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted --deck <deck> [--only <range>]` (add `--include-backs` for two-sided cards such as characters and ship sheets, and transcribe both sides)
 3. Look at `artifacts/transcription-work/_legend-market-decks.jpg` once. It maps each market deck icon to its placeholder.
 
 ## Icon legend

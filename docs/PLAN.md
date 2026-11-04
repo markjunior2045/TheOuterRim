@@ -32,7 +32,7 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 - **Does:**
   - `tools/`: `tts_extract.py` (v1), `sort_outer_rim.py` (v2), `prepare_transcription_images.py` (reading copies for T2.8), `requirements.txt` (`pillow`, `numpy`, `opencv-python`);
   - `.claude/commands/transcribe.md`: the `/transcribe <deck> [range]` command used for every T2.8 batch;
-  - `docs/TRANSCRIPTION_FORMAT.md` (format `outer-rim-transcription/0.3`);
+  - `docs/TRANSCRIPTION_FORMAT.md` (format `outer-rim-transcription/0.4`);
   - `data/transcription/`: the pilot files.
 - **Done when:** the scripts run from `tools/` against `RawGameFiles` with the same output as before, and the transcription files parse.
 
@@ -129,7 +129,7 @@ Fictional content, verified with `dotnet test`.
 
 ### T2.8 — Card transcription in batches · `TODO` (priority: before T0.4, by owner decision 2026-11-04)
 - Transcription comes first because the card patterns found here drive the core design (T2.1). Phase 0 resumes with T0.4 after the base game is transcribed and inventoried.
-- Raw printed text into JSON, format `outer-rim-transcription/0.3` (`docs/TRANSCRIPTION_FORMAT.md`). Mapping text to effects happens later, in T2.1/T2.2.
+- Raw printed text into JSON, format `outer-rim-transcription/0.4` (`docs/TRANSCRIPTION_FORMAT.md`). Mapping text to effects happens later, in T2.1/T2.2.
 - Each batch starts with an icon legend (market deck backs, reputation icons, die faces) and ends with the owner reviewing the cards listed under `verify`.
 - English first; Portuguese through the localization files.
 - **Pilot · `DONE` (2026-11-04):** 10 base cargo cards and 5 Lothal/Mon Calamari encounters; format validated; about 850 image tokens per market card and 1,700 per encounter.

@@ -1,4 +1,4 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.3
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.4
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
@@ -8,7 +8,7 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 ```json
 {
-  "format": "outer-rim-transcription/0.3",
+  "format": "outer-rim-transcription/0.4",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -61,6 +61,19 @@ One file per deck, grouped in one folder per category: `data/transcription/{cate
 
 Job skills: `[{ "skill": "stealth", "certain": false }]`; a skill printed in italics will certainly be tested, so `certain: true` (R-15.32). It does not mean the player must have the skill.
 
+## Character cards
+
+One entry per character; the card has two sides, so the file lists both images. Files: `characters/{pack}-characters.json`.
+
+| Field | Content |
+|---|---|
+| `image`, `image_back` | front and back image names without extension (`base-character-00`, `base-character-00-back`) |
+| `name` | as printed; a droid icon after the name is `{DROID}` |
+| `stats` | `{ "ground_combat", "health" }` (red `{GROUND_COMBAT}`, yellow crosshair `{HEALTH}`) |
+| `skills` | skill boxes at the bottom, lower case |
+| `front`, `back` | `{ "upper", "lower" }`: paragraphs above and below the divider line. The front's lower part holds the Personal Goal; the back's lower part holds the ability gained when the card is flipped |
+| `setup` | the `Setup:` line without the label |
+
 ## Pending for later decks
 
-Databank cards (numbered steps, tests, branches), characters, ship sheets, contacts and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.
+Databank cards (numbered steps, tests, branches), ship sheets, contacts and Core Worlds cards will add fields when their first batch is transcribed. Each addition bumps the minor version and is described here.

@@ -1,0 +1,267 @@
+{
+  "format": "outer-rim-transcription/0.4",
+  "pack": "base",
+  "deck": "characters",
+  "source": "[Mod 01] sorted/base/characters",
+  "notes": [
+    "Raw printed text only. Mapping to effects happens later (PLAN T2.1/T2.2).",
+    "Each character has a front (with the Personal Goal) and a back (after the card is flipped, with the new ability). 'upper' and 'lower' are the paragraphs above and below the divider line.",
+    "Jyn Erso-2 back keeps the printed double space in 'a patrol  within' (owner confirmed).",
+    "IG-88 has the droid icon printed after the name: the name is stored as 'IG-88 {DROID}'.",
+    "Setup text is the printed 'Setup:' line without the label. Two red dots and yellow dashes on the card art are decorative and not transcribed."
+  ],
+  "cards": [
+    {
+      "image": "base-character-00",
+      "image_back": "base-character-00-back",
+      "name": "Ketsu Onyo",
+      "stats": {
+        "ground_combat": 3,
+        "health": 4
+      },
+      "skills": [
+        "stealth",
+        "strength"
+      ],
+      "front": {
+        "upper": [
+          "Encounter: Encounter a patrol or contact token that is within 3 spaces of you."
+        ],
+        "lower": [
+          "Personal Goal: Win 3 combats to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Encounter: Encounter a patrol or contact token that is within 3 spaces of you."
+        ],
+        "lower": [
+          "After you win a combat, gain {CREDITS}4,000."
+        ]
+      },
+      "setup": "Card #90, {REP_POS} Syndicate reputation",
+      "verify": []
+    },
+    {
+      "image": "base-character-01",
+      "image_back": "base-character-01-back",
+      "name": "Lando Calrissian",
+      "stats": {
+        "ground_combat": 2,
+        "health": 4
+      },
+      "skills": [
+        "influence",
+        "knowledge",
+        "piloting"
+      ],
+      "front": {
+        "upper": [
+          "After you roll dice (for any reason), you may reroll 1 of your dice."
+        ],
+        "lower": [
+          "Personal Goal: Deliver 2 ILLEGAL cargo to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "After you roll dice (for any reason), you may reroll 1 of your dice."
+        ],
+        "lower": [
+          "Action: If you are on a planet, you may spend {CREDITS}1,000 to test Influence. If you pass, gain 1 reputation with the planet's faction."
+        ]
+      },
+      "setup": "Card #91, {REP_POS} with the faction of your choice",
+      "verify": []
+    },
+    {
+      "image": "base-character-02",
+      "image_back": "base-character-02-back",
+      "name": "Jyn Erso",
+      "stats": {
+        "ground_combat": 3,
+        "health": 4
+      },
+      "skills": [
+        "influence",
+        "tactics"
+      ],
+      "front": {
+        "upper": [
+          "Once per turn, during combat or a skill test, you may turn 1 of your {FOCUS} results to a {CRIT}."
+        ],
+        "lower": [
+          "Action: If you are on an Imperial planet, test Stealth. If you pass, place 1 damage token on your planet.",
+          "Personal Goal: Have a damage token on 2 Imperial planets to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Once per turn, during combat or a skill test, you may turn 1 of your {FOCUS} results to a {CRIT}."
+        ],
+        "lower": [
+          "When a patrol  within 3 spaces of you would move during your market action, you may move the patrol toward another player instead of toward you."
+        ]
+      },
+      "setup": "Card #92, {REP_NEG} Imperial reputation",
+      "verify": []
+    },
+    {
+      "image": "base-character-03",
+      "image_back": "base-character-03-back",
+      "name": "Bossk",
+      "stats": {
+        "ground_combat": 3,
+        "health": 4
+      },
+      "skills": [
+        "strength",
+        "tactics"
+      ],
+      "front": {
+        "upper": [
+          "Action: Recover 2 damage from your character and 2 damage from your ship."
+        ],
+        "lower": [
+          "Personal Goal: Have at least 1 mod and 2 gear with a combined cost of at least {CREDITS}15,000 to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Action: Recover 2 damage from your character and 2 damage from your ship."
+        ],
+        "lower": [
+          "Encounter: Fight a combat against a player in your space who has more fame than you. If you win, gain 1 fame."
+        ]
+      },
+      "setup": "Card #90, {REP_POS} Hutt reputation",
+      "verify": []
+    },
+    {
+      "image": "base-character-04",
+      "image_back": "base-character-04-back",
+      "name": "Han Solo",
+      "stats": {
+        "ground_combat": 3,
+        "health": 4
+      },
+      "skills": [
+        "piloting",
+        "tech"
+      ],
+      "front": {
+        "upper": [
+          "Gain +2 {HYPERDRIVE}."
+        ],
+        "lower": [
+          "Personal Goal: Have a ship with a cost of at least {CREDITS}15,000 to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Gain +2 {HYPERDRIVE}."
+        ],
+        "lower": [
+          "When you move into a patrol’s space, you may test Piloting. If you pass, you do not have to end your movement in that space."
+        ]
+      },
+      "setup": "Card #91, {REP_NEG} Hutt reputation",
+      "verify": []
+    },
+    {
+      "image": "base-character-05",
+      "image_back": "base-character-05-back",
+      "name": "Doctor Aphra",
+      "stats": {
+        "ground_combat": 2,
+        "health": 4
+      },
+      "skills": [
+        "knowledge",
+        "stealth",
+        "tech"
+      ],
+      "front": {
+        "upper": [
+          "Once per turn, before you perform a skill test, you may gain a skill of your choice for that test."
+        ],
+        "lower": [
+          "Personal Goal: Complete 2 jobs to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Once per turn, before you perform a skill test, you may gain a skill of your choice for that test."
+        ],
+        "lower": [
+          "Planning: If you are on a planet or navpoint, perform a market action. This does not prevent you from performing a market action during your action step."
+        ]
+      },
+      "setup": "Card #92, {REP_POS} Imperial reputation",
+      "verify": []
+    },
+    {
+      "image": "base-character-06",
+      "image_back": "base-character-06-back",
+      "name": "Boba Fett",
+      "stats": {
+        "ground_combat": 3,
+        "health": 4
+      },
+      "skills": [
+        "stealth",
+        "tactics"
+      ],
+      "front": {
+        "upper": [
+          "Action: Secretly look at 1 contact on your planet."
+        ],
+        "lower": [
+          "Personal Goal: Gain rewards from 2 bounties to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Action: Secretly look at 1 contact on your planet."
+        ],
+        "lower": [
+          "After you eliminate a contact for a bounty instead of capturing it, gain {CREDITS}5,000."
+        ]
+      },
+      "setup": "Card #90, {REP_POS} Hutt reputation",
+      "verify": []
+    },
+    {
+      "image": "base-character-07",
+      "image_back": "base-character-07-back",
+      "name": "IG-88 {DROID}",
+      "stats": {
+        "ground_combat": 3,
+        "health": 4
+      },
+      "skills": [
+        "strength",
+        "tech"
+      ],
+      "front": {
+        "upper": [
+          "Once per combat, you may reroll any number of your dice."
+        ],
+        "lower": [
+          "Action: Take a droid ({DROID}) crew from another player in your space.",
+          "Personal Goal: Have 2 droid ({DROID}) crew to gain 1 fame and flip this card."
+        ]
+      },
+      "back": {
+        "upper": [
+          "Once per combat, you may reroll any number of your dice."
+        ],
+        "lower": [
+          "When you would become defeated, you may discard 1 of your crew to recover all damage from your character and ship instead. (Place the crew’s contact token on the nearest empty contact space.)"
+        ]
+      },
+      "setup": "Card #90",
+      "verify": []
+    }
+  ]
+}
