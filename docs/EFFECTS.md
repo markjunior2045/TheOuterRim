@@ -21,7 +21,7 @@ This document sets the card data format for T2.2 (schema) and the work list for 
 | Contact space | class, holds 0–1 contact token | R-12.4 |
 | Contact token | id, class, faction icon, droid icon, databank number, faceup/facedown, location (contact space, planet space `[UB]`, bounty card, crew card, removed) | R-12 |
 | Patrol | faction, combat token (level, value, reward), space | R-11 |
-| Planet marker | damage token on a planet (only Jyn Erso-2 so far) | see §9 Q2 |
+| Planet marker | damage token on a planet (only Jyn Erso-2 so far) | R-25.14 |
 | Market deck ×6 | ordered stack, top card faceup | R-16.41 |
 | Encounter deck ×7 (+ Core Worlds `[UB]`) | one deck per pair of spaces; discards go to the bottom | R-15.73, R-22.1 |
 | Databank | `number → list of cards`, random draw within a number, never a stack | R-13 |
@@ -162,8 +162,8 @@ Completing a goal: gain 1 fame and flip the sheet or card (`goal.complete`). Rin
 | Id | Printed pattern | Parameters | Notes |
 |---|---|---|---|
 | `credits.gain` | "gain {CREDITS}X" | amount expression (§7) | |
-| `credits.spend` | "spend X" | amount | a cost: must be paid in full (§9 Q1) |
-| `credits.lose` | "lose X" | amount | an effect: as much as possible (§9 Q1) |
+| `credits.spend` | "spend X" | amount | a cost: must be paid in full (R-9.8) |
+| `credits.lose` | "lose X" | amount | an effect: as much as possible (R-9.8) |
 | `credits.take` | "take X from a player" | player, amount (up to) | Thief (Cantonica-8), Ziton Moj #23 |
 | `credits.stake` | place credits on a card, winner takes them | — | Sabacc #40a |
 | `fame.gain` / `fame.lose` | "gain / lose N fame" | amount; "additional" flag (R-25.12) | |
@@ -346,7 +346,7 @@ Cards whose effect does not fit the primitives without a one-off rule. Each gets
 | `shared_die_result` | Doctor Evazan crew (#9) | both combatants may turn blanks to a result chosen at the start |
 | `chromium_hull` | Chromium Hull-1 | other players may choose you as their encounter |
 | `patrol_redirect` | Jyn Erso-2 back | changes the target of a patrol move made by the market icon |
-| `planet_damage_marker` | Jyn Erso-2 front | new token on planets, counted by her goal |
+| `planet_damage_marker` | Jyn Erso-2 front | new token on planets, counted only by her goal (R-25.14) |
 | `pay_for_goal` | Ring of Kafrene-4 | completes a goal without its condition |
 | `replace_with_starter` | Ryloth-9 | errata R-24.5 applied at mapping |
 | `buy_any_sheet` | Ryloth-3 | buy from the supply, then remove the ship card from the deck |
@@ -356,10 +356,10 @@ Everything else in the base game maps to the primitives in §4 (coverage in Appe
 
 ---
 
-## 9. Open questions for the owner
+## 9. Questions settled with the owner
 
-- **Q1. Spend versus lose.** Reading: "spend X" is a payment and needs the full amount; "lose X" removes what the player has, down to 0 (R-21.5). Same for "unless you lose 3,000" (The Jewel of Yavin #45, step 2): the player can only choose it with 3,000. **[?]**
-- **Q2. Damage tokens on planets (Jyn Erso-2).** Reading: a marker only, counted by her personal goal, stays until the end of the game, and no other rule reads it. **[?]**
+- **Spend versus lose** (2026-11-04): "spend X" needs the full amount, also when offered as "unless you spend / lose X"; "lose X" imposed as an effect removes what the player has, down to 0. Recorded as `RULES.md` R-9.8.
+- **Damage tokens on planets** (2026-11-04): markers for Jyn Erso's personal goal only, kept until the end of the game, no other effect. Recorded as `RULES.md` R-25.14.
 
 ---
 

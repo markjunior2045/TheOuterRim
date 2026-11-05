@@ -383,6 +383,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-9.5** Buying something "free" means gaining the card without spending credits.
 - **R-9.6** Any player may trade credits with the **current player** at any time during the game. Trades need not be equal: a player may give credits and receive less or nothing.
 - **R-9.7** Any agreement that cannot be fulfilled immediately and completely is **non-binding**. Future promises can be broken.
+- **R-9.8** **Spending versus losing** (owner clarification). "Spend X" is a payment: the player must have the full amount, otherwise they cannot choose it. This includes "unless you spend X" and "unless you lose X" offered as a way out of a penalty. "Lose X" imposed as an effect removes as much as the player has, down to 0 (R-21.5). The rulebooks do not state this explicitly; it follows from R-21.4 and R-21.5.
 
 > Implementation: R-9.6 and R-9.7 assume verbal negotiation between people. In a digital game this becomes an explicit credit transfer through the UI, with no enforceable contract. **[?]** Decide whether there is an offer/accept channel or whether transfers are one-sided.
 
@@ -1084,6 +1085,7 @@ Points the Living Rules handles case by case. The implementation of the correspo
 - **R-25.11 "Sy Snootles" and "Attend Statue Dedication":** Sy Snootles' ability reduces a job's credit reward to 0 in exchange for 1 additional fame. If the job has **no** credit reward, the ability cannot be used. The same applies to the "Mandalorian Armor" gear when completing bounties.
 - **R-25.12 "Chromium Hull":** whenever a card uses the phrase "gain X additional fame", that fame is treated as **part of** the fame reward it modifies, not a new instance of gaining fame. So completing "Attend Statue Dedication" and spending 10,000 credits for additional fame yields only **1** additional fame from Chromium Hull, not 2.
 - **R-25.13 Tatooine encounter #6:** when ship sheets are traded via that encounter, each sheet stays on its current side, and all damage and goal tokens stay with their sheet. **Assets tucked under the sheets stay with their original owners** and are not traded along with the ships.
+- **R-25.14 Jyn Erso:** the damage tokens her front-side ability places on planets are markers for her personal goal only. They stay until the end of the game and have no other effect (owner clarification).
 
 ---
 
@@ -1152,6 +1154,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-04 | R-9.8 spending versus losing credits and R-25.14 Jyn Erso's planet markers (owner clarifications from the T2.1 effect inventory). |
 | 2026-11-04 | Review after the base game transcription: R-12.3 pip counts per class; R-14.19 trait examples; R-24 implementation note aligned with the transcription format (printed text kept, errata applied at mapping); ship sheet count explained in §2.1; §27 gains the player board and a status line. Earlier the same day: R-15.32 reworded (italic job skills are certainly tested; owner clarification) and R-15.92 added ("Wanted" jobs hunt players). |
 | 2026-11-04 | Section 13 implementation note: databank lists combine all active content packs; version count comes from card data, not pips. |
 | 2026-10-24 | Rewritten in English, per the project convention that all documentation is authored in English. No rule content changed. |
