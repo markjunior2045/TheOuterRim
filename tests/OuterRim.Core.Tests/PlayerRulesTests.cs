@@ -202,7 +202,7 @@ namespace OuterRim.Core.Tests
             PlayerRules.SufferDamage(C, s, p, CombatType.Ground, 4, new List<GameEvent>());
             Assert.True(p.Defeated);
             var events = new List<GameEvent>();
-            PlayerRules.RecoverDamage(C, p, CombatType.Ground, 1, events);
+            PlayerRules.RecoverDamage(C, s, p, CombatType.Ground, 1, events);
             Assert.False(p.Defeated);
             Assert.Equal(3, p.CharacterDamage);
             Assert.Contains(events, e => e is PlayerRecoveredEvent);

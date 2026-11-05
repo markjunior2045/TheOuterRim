@@ -58,7 +58,9 @@ Status: `Done` · `Next` · `To do` · `Later`.
 - T1.9 assets, slots, ships — Done
 
 ### 7. Effects and content · Next
-- T2.3 effect engine: run the card ability trees (`DATA_FORMAT.md`) in the core, with the timing windows already marked in skill tests and combat — **Next**
+- T2.3a effect interpreter, passive bonuses, step abilities — Done
+- T2.3b triggers, replacements, dice windows — **Next**
+- T2.3c personal and ship goals
 - Character setup from the starting databank cards (#90 to #92), replacing the starting planet given by hand
 - T2.5 market: decks, discard and buy, barter, patrol movement icons, ship cards, Used Ship for Sale — encode bounty, job, luxury and ship decks
 - T2.6 encounters, contacts, databank and secrets: encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank

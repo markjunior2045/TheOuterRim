@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using OuterRim.Core.Content;
+using OuterRim.Core.Effects;
 using OuterRim.Core.Model;
 
 namespace OuterRim.Core.Rules
@@ -87,24 +88,24 @@ namespace OuterRim.Core.Rules
             return content.Map[a.SpaceId].IsPlanet && content.Map[b.SpaceId].IsPlanet ? CombatType.Ground : CombatType.Ship;
         }
 
-        /// <summary>Combat value of a player: ground combat on the character, ship combat on the ship (R-7.10). Card modifiers come with the effect engine (R-7.19).</summary>
-        public static int Value(GameContent content, PlayerState player, CombatType type)
+        /// <summary>Combat value: ground combat on the character, ship combat on the ship (R-7.10), plus passive bonuses (R-7.19).</summary>
+        public static int Value(GameContent content, GameState state, PlayerState player, CombatType type)
         {
             return type == CombatType.Ground
-                ? content.Character(player.CharacterId).GroundCombat
-                : content.ShipSide(player.ShipSideId).ShipCombat;
+                ? content.Character(player.CharacterId).GroundCombat + Modifiers.StatBonus(content, state, player, "ground_combat")
+                : content.ShipSide(player.ShipSideId).ShipCombat + Modifiers.StatBonus(content, state, player, "ship_combat");
         }
 
-        /// <summary>Character health (R-8.2); card modifiers come with the effect engine.</summary>
-        public static int Health(GameContent content, PlayerState player)
+        /// <summary>Character health (R-8.2) plus passive bonuses ("Gain +2 {HEALTH}").</summary>
+        public static int Health(GameContent content, GameState state, PlayerState player)
         {
-            return content.Character(player.CharacterId).Health;
+            return content.Character(player.CharacterId).Health + Modifiers.StatBonus(content, state, player, "health");
         }
 
-        /// <summary>Ship hull (R-8.3); card modifiers come with the effect engine.</summary>
-        public static int Hull(GameContent content, PlayerState player)
+        /// <summary>Ship hull (R-8.3) plus passive bonuses ("Gain +1 {HULL}").</summary>
+        public static int Hull(GameContent content, GameState state, PlayerState player)
         {
-            return content.ShipSide(player.ShipSideId).Hull;
+            return content.ShipSide(player.ShipSideId).Hull + Modifiers.StatBonus(content, state, player, "hull");
         }
 
         /// <summary>
@@ -112,13 +113,15 @@ namespace OuterRim.Core.Rules
         /// (R-8.4); reaching it makes the player defeated (R-8.2, R-8.3). Returns the damage actually placed.
         /// The consequences of becoming defeated (R-8.8) are applied by the caller (PLAN T1.7).
         /// </summary>
-        public static int Suffer(GameContent content, PlayerState player, CombatType target, int amount)
+        public static int Suffer(GameContent content, GameState state, PlayerState player, CombatType target, int amount)
         {
             if (amount <= 0)
             {
                 return 0;
             }
-            int limit = target == CombatType.Ground ? Health(content, player) : Hull(content, player);
+            int health = Health(content, state, player);
+            int hull = Hull(content, state, player);
+            int limit = target == CombatType.Ground ? health : hull;
             int current = target == CombatType.Ground ? player.CharacterDamage : player.ShipDamage;
             int placed = Math.Min(amount, Math.Max(0, limit - current));
             if (target == CombatType.Ground)
@@ -129,7 +132,7 @@ namespace OuterRim.Core.Rules
             {
                 player.ShipDamage += placed;
             }
-            if (player.CharacterDamage >= Health(content, player) || player.ShipDamage >= Hull(content, player))
+            if (player.CharacterDamage >= health || player.ShipDamage >= hull)
             {
                 player.Defeated = true;
             }

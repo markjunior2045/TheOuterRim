@@ -37,9 +37,9 @@ namespace OuterRim.Core.Engine
                         ctx.Return("winner", "none");
                         return StepResult.Done();
                     }
-                    int attackerValue = Combat.Value(content, attacker, type);
+                    int attackerValue = Combat.Value(content, state, attacker, type);
                     string defenderValue = defenderPlayer != null
-                        ? Combat.Value(content, defenderPlayer, type).ToString(CultureInfo.InvariantCulture)
+                        ? Combat.Value(content, state, defenderPlayer, type).ToString(CultureInfo.InvariantCulture)
                         : frame.Get("defender_value");
                     frame.Set("attacker_value", attackerValue);
                     frame.Set("defender_value", defenderValue);
@@ -107,6 +107,13 @@ namespace OuterRim.Core.Engine
                     {
                         // R-7.13, R-8.15: the effect of winning resolves before damage is suffered.
                         var effect = new Frame(outcome);
+                        foreach (var kv in frame.Vars)
+                        {
+                            if (kv.Key.StartsWith("ctx.", System.StringComparison.Ordinal))
+                            {
+                                effect.Set(kv.Key, kv.Value);
+                            }
+                        }
                         effect.Set("winner", winner);
                         effect.Set("attacker", attacker.Id);
                         effect.Set("defender", frame.Get("defender"));
@@ -122,7 +129,7 @@ namespace OuterRim.Core.Engine
                     if (frame.Get("defender_value") == Combat.Infinite)
                     {
                         // R-11.6: enough ship damage to be defeated.
-                        d = Combat.Hull(content, attacker);
+                        d = Combat.Hull(content, state, attacker);
                     }
                     Hurt(ctx, attacker, type, d);
                     if (defenderPlayer != null)

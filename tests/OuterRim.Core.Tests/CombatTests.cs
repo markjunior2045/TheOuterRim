@@ -236,15 +236,17 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R8_2_R8_3_R8_4_DamageIsCapped_AndReachingTheLimitDefeats()
         {
-            var p = Game(7).FindPlayer("p1")!;
-            Assert.Equal(3, Combat.Suffer(C, p, CombatType.Ground, 3));
+            var s = Game(7);
+            var p = s.FindPlayer("p1")!;
+            Assert.Equal(3, Combat.Suffer(C, s, p, CombatType.Ground, 3));
             Assert.False(p.Defeated);
-            Assert.Equal(1, Combat.Suffer(C, p, CombatType.Ground, 5));
+            Assert.Equal(1, Combat.Suffer(C, s, p, CombatType.Ground, 5));
             Assert.Equal(4, p.CharacterDamage);
             Assert.True(p.Defeated);
 
-            var q = Game(7).FindPlayer("p1")!;
-            Assert.Equal(3, Combat.Suffer(C, q, CombatType.Ship, 9));
+            var s2 = Game(7);
+            var q = s2.FindPlayer("p1")!;
+            Assert.Equal(3, Combat.Suffer(C, s2, q, CombatType.Ship, 9));
             Assert.True(q.Defeated);
         }
 

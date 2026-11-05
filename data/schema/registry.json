@@ -748,7 +748,8 @@
       "health": "int",
       "skills": "list:skill",
       "setup": "character_setup",
-      "sides": "list:character_side"
+      "sides": "list:character_side",
+      "droid": "bool?"
     },
     "contact": {
       "class": "contact_class",

@@ -70,13 +70,17 @@ namespace OuterRim.Core.Content
     /// <summary>A character card: the values the rules read (data/packs/*/cards/characters.json).</summary>
     public sealed class CharacterCard
     {
-        public CharacterCard(string id, int groundCombat, int health, IReadOnlyCollection<Skill> skills)
+        public CharacterCard(string id, int groundCombat, int health, IReadOnlyCollection<Skill> skills, bool droid = false)
         {
             Id = id;
             GroundCombat = groundCombat;
             Health = health;
             Skills = new HashSet<Skill>(skills);
+            Droid = droid;
         }
+
+        /// <summary>The character carries the droid icon (IG-88).</summary>
+        public bool Droid { get; }
 
         public string Id { get; }
 
@@ -191,6 +195,49 @@ namespace OuterRim.Core.Content
         }
 
         private readonly Dictionary<string, string> _names = new Dictionary<string, string>(StringComparer.Ordinal);
+        private readonly Dictionary<string, JObject> _cards = new Dictionary<string, JObject>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Loads every card of a card data file (format outer-rim-data/0.1) as data, for the effect engine
+        /// to read abilities from (DATA_FORMAT.md). Typed views (ship sides, characters, patrols) are loaded
+        /// separately.
+        /// </summary>
+        public void AddCards(string json)
+        {
+            var root = JObject.Parse(json);
+            if ((string?)root["format"] != "outer-rim-data/0.1")
+            {
+                throw new FormatException("Unsupported card data format '" + (string?)root["format"] + "'.");
+            }
+            foreach (JObject card in (JArray)root["cards"]!)
+            {
+                _cards[(string)card["id"]!] = card;
+            }
+        }
+
+        public bool HasCard(string id)
+        {
+            return _cards.ContainsKey(id);
+        }
+
+        public JObject Card(string id)
+        {
+            return _cards.TryGetValue(id, out var c) ? c : throw new KeyNotFoundException("Unknown card '" + id + "'.");
+        }
+
+        /// <summary>The other side of the sheet a side belongs to (flipping, R-18.3).</summary>
+        public ShipSide OtherShipSide(string sideId)
+        {
+            var side = ShipSide(sideId);
+            foreach (var s in _shipSides.Values)
+            {
+                if (s.SheetId == side.SheetId && s.Id != side.Id)
+                {
+                    return s;
+                }
+            }
+            throw new KeyNotFoundException("Ship side '" + sideId + "' has no other side.");
+        }
         private readonly Dictionary<string, PatrolToken> _patrols = new Dictionary<string, PatrolToken>(StringComparer.Ordinal);
 
         public void AddPatrols(IEnumerable<PatrolToken> tokens)
@@ -300,7 +347,8 @@ namespace OuterRim.Core.Content
                 {
                     skills.Add(SkillTests.Parse((string)sk!));
                 }
-                result.Add(new CharacterCard((string)card["id"]!, (int)card["ground_combat"]!, (int)card["health"]!, skills));
+                result.Add(new CharacterCard((string)card["id"]!, (int)card["ground_combat"]!, (int)card["health"]!, skills,
+                    (bool?)card["droid"] ?? false));
             }
             return result;
         }

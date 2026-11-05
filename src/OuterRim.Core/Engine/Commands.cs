@@ -76,6 +76,21 @@ namespace OuterRim.Core.Engine
         public string? TargetId { get; }
     }
 
+    /// <summary>Uses a "Planning:", "Action:" or "Encounter:" ability, located by card id and path in the card data.</summary>
+    public sealed class UseAbilityCommand : Command
+    {
+        public UseAbilityCommand(string playerId, string cardId, string path) : base(playerId)
+        {
+            CardId = cardId;
+            Path = path;
+        }
+
+        public string CardId { get; }
+
+        /// <summary>JSON path of the ability inside the card, e.g. "abilities[0]" or "sides[1].abilities[1]".</summary>
+        public string Path { get; }
+    }
+
     /// <summary>Base for answers to a <see cref="PendingDecision"/>.</summary>
     public abstract class AnswerCommand : Command
     {

@@ -49,6 +49,12 @@ namespace OuterRim.Core.Model
         /// <summary>Fame needed to win (R-3.1, R-18.9).</summary>
         public int FameRequirement { get; set; } = 10;
 
+        /// <summary>Damage tokens placed on planets by Jyn Erso's ability; markers only (R-25.14).</summary>
+        public List<PlanetMarker> PlanetMarkers { get; set; } = new List<PlanetMarker>();
+
+        /// <summary>Abilities used this turn, as "step:card#path" (R-4.11: each "Action" ability once per action step).</summary>
+        public List<string> UsedAbilities { get; set; } = new List<string>();
+
         /// <summary>The winner once the game has ended (R-18.8).</summary>
         public string WinnerId { get; set; } = "";
 
@@ -110,6 +116,14 @@ namespace OuterRim.Core.Model
 
         /// <summary>1 to 4 (R-11.3).</summary>
         public int Level { get; set; } = 1;
+
+        public string SpaceId { get; set; } = "";
+    }
+
+    /// <summary>A damage token placed on a planet as a marker (R-25.14).</summary>
+    public sealed class PlanetMarker
+    {
+        public string PlayerId { get; set; } = "";
 
         public string SpaceId { get; set; } = "";
     }

@@ -500,6 +500,57 @@ namespace OuterRim.Core.Engine
         public int PricePaid { get; }
     }
 
+    /// <summary>A step ability was used (EFFECTS.md §3.2).</summary>
+    public sealed class AbilityUsedEvent : GameEvent
+    {
+        public AbilityUsedEvent(string playerId, string cardId, string path, string step)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Path = path;
+            Step = step;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string Path { get; }
+
+        public string Step { get; }
+    }
+
+    /// <summary>A character card or ship sheet was flipped (R-18.3). Side: 0 front, 1 back for characters.</summary>
+    public sealed class SheetFlippedEvent : GameEvent
+    {
+        public SheetFlippedEvent(string playerId, string sheet, int side)
+        {
+            PlayerId = playerId;
+            Sheet = sheet;
+            Side = side;
+        }
+
+        public string PlayerId { get; }
+
+        public string Sheet { get; }
+
+        public int Side { get; }
+    }
+
+    /// <summary>R-25.14: a damage token placed on a planet as a marker.</summary>
+    public sealed class PlanetMarkerPlacedEvent : GameEvent
+    {
+        public PlanetMarkerPlacedEvent(string playerId, string spaceId)
+        {
+            PlayerId = playerId;
+            SpaceId = spaceId;
+        }
+
+        public string PlayerId { get; }
+
+        public string SpaceId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.7",
+  "format": "outer-rim-save/0.8",
   "packs": [
     {
       "id": "base",
@@ -36,6 +36,7 @@
         "shipDamage": 0,
         "defeated": false,
         "characterId": "base-character-00",
+        "characterSide": 0,
         "secrets": [],
         "assets": [],
         "spaceId": "lothal",
@@ -58,6 +59,7 @@
         "shipDamage": 0,
         "defeated": false,
         "characterId": "base-character-01",
+        "characterSide": 0,
         "secrets": [],
         "assets": [],
         "spaceId": "tatooine",
@@ -80,6 +82,7 @@
         "shipDamage": 0,
         "defeated": false,
         "characterId": "base-character-02",
+        "characterSide": 0,
         "secrets": [],
         "assets": [],
         "spaceId": "naboo",
@@ -169,6 +172,8 @@
       }
     ],
     "fameRequirement": 10,
+    "planetMarkers": [],
+    "usedAbilities": [],
     "winnerId": "",
     "turnEndsAfterStep": false,
     "stack": [

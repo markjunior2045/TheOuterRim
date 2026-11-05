@@ -137,7 +137,7 @@ namespace OuterRim.Core.Rules
             List<GameEvent> events)
         {
             bool wasDefeated = player.Defeated;
-            int placed = Combat.Suffer(content, player, target, amount);
+            int placed = Combat.Suffer(content, state, player, target, amount);
             if (amount > 0)
             {
                 events.Add(new DamageSufferedEvent(player.Id, target == CombatType.Ground ? "character" : "ship",
@@ -175,7 +175,7 @@ namespace OuterRim.Core.Rules
         /// Removes damage. R-8.10: once below both health and hull, the player is no longer defeated,
         /// even outside the planning step.
         /// </summary>
-        public static void RecoverDamage(GameContent content, PlayerState player, CombatType target, int amount, List<GameEvent> events)
+        public static void RecoverDamage(GameContent content, GameState state, PlayerState player, CombatType target, int amount, List<GameEvent> events)
         {
             int before = target == CombatType.Ground ? player.CharacterDamage : player.ShipDamage;
             int removed = Math.Min(Math.Max(amount, 0), before);
@@ -192,8 +192,8 @@ namespace OuterRim.Core.Rules
                 events.Add(new DamageRecoveredEvent(player.Id, target == CombatType.Ground ? removed : 0,
                     target == CombatType.Ship ? removed : 0));
             }
-            if (player.Defeated && player.CharacterDamage < Combat.Health(content, player)
-                && player.ShipDamage < Combat.Hull(content, player))
+            if (player.Defeated && player.CharacterDamage < Combat.Health(content, state, player)
+                && player.ShipDamage < Combat.Hull(content, state, player))
             {
                 player.Defeated = false;
                 events.Add(new PlayerRecoveredEvent(player.Id));

@@ -144,8 +144,20 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Sample:** market gear (15) and cargo (10) encoded and valid. The remaining kinds (job, bounty, ship, encounter, databank, character, ship sheet, contact, AI) are added to the registry and encoded deck by deck in T2.4 to T2.6.
 - The C# loader reads the same registry when the effect engine is built (T2.3); the Python validator stays as the data-pipeline check.
 
-### T2.3 — Effect engine · `TODO` (T2.2)
+### T2.3 — Effect engine · in progress (split into three subtasks, 2026-11-05)
 - The effects from the inventory, with hooks for custom exceptions.
+- **Coverage rule:** every effect and condition used by encoded card data is implemented, or listed with the subtask that implements it in `EffectEngineTests.Pending`; the test fails otherwise.
+
+#### T2.3a — Interpreter, passives, step abilities · `DONE` (2026-11-05)
+- Card data loaded into `GameContent`; ability sources of a player (faceup character side, faceup ship side, assets); effect lists run as resolution frames that point into the card data, so a card effect paused for a decision saves and loads; control nodes `if`, `choice`, `may`, `to` (R-21.4), `test`, `combat` (card enemy or a chosen player, win and lose before damage); instant effects for credits, fame, reputation, damage, flipping, discarding the card itself and Jyn's planet markers; conditions on skills, assets, space, reputation, fame, credits, ship, markers.
+- Passive "Gain +X" bonuses read as queries for hyperdrive, ground and ship combat, health and hull (R-5.19, R-7.19), including conditional and scaled ones.
+- `UseAbilityCommand` for "Planning:", "Action:" and "Encounter:" abilities (R-4.7, R-4.8, R-4.11, R-4.16, R-4.17), with condition and credit-cost checks. Characters carry their faceup side; IG-88 is marked as a droid in the data. Save format 0.8. 179 tests.
+
+#### T2.3b — Triggers, replacements, dice windows · `TODO`
+- "When" and "after" triggers, replacement effects ("would be defeated", "would fail", damage caps), dice windows in skill tests, combat and delivery rolls (reroll, turn, add, cancel, fewer dice), effects with a duration, choices of faction and player, rule modifiers and slot changes.
+
+#### T2.3c — Goals · `TODO`
+- Personal and ship goals: event counters with goal tokens, states, events with a condition, step goals; completing and flipping (R-18.1 to R-18.7).
 
 ### T2.4 — Small data sets · base `DONE` (2026-11-05), expansion with its pack
 - Patrols (16), ship sheets (9 + 6 unique), contacts (22 + 11), characters (8 + 8), ambition sheets (8), player boards (4). **Done when:** all load and validate.
@@ -225,6 +237,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.3 split into a, b, c; T2.3a done: effect interpreter, passive bonuses, step abilities; save format 0.8. |
 | 2026-11-05 | T1.9 done: assets and slots, gaining and discarding, ship supply and purchase with barter. Phase 1 (core) complete; save format 0.7. |
 | 2026-11-05 | T1.8 done: patrol stacks, spawning, movement toward the player with the player's choice, real patrol encounters; save format 0.6. |
 | 2026-11-05 | T1.7 done: credits, reputation, fame, defeat procedure, victory with tiebreak; game rolls for enemies with labelled rolls; save format 0.5. |

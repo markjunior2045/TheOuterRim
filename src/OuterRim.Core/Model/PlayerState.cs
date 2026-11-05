@@ -31,6 +31,9 @@ namespace OuterRim.Core.Model
         /// <summary>Character card id (data/packs/*/cards/characters.json); empty until characters are chosen.</summary>
         public string CharacterId { get; set; } = "";
 
+        /// <summary>Faceup side of the character card: 0 front (personal goal), 1 back (after flipping, R-18.3).</summary>
+        public int CharacterSide { get; set; }
+
         /// <summary>Secret encounter cards the player holds facedown (R-15.82); they take no slot (R-15.90).</summary>
         public List<string> Secrets { get; set; } = new List<string>();
 

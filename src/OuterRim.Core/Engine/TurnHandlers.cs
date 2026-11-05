@@ -5,12 +5,15 @@ namespace OuterRim.Core.Engine
     internal static class TurnHandlers
     {
         public const string EncounterStep = "turn.encounter_step";
+        public const string AbilityStep = "turn.ability_step";
         public const string EncounterSpace = "encounter.space";
         public const string EncounterPatrol = Rules.Patrols.EncounterHandler;
 
         public static void Register()
         {
             ResolutionHandlers.Register(new EncounterStepHandler());
+            ResolutionHandlers.Register(new AbilityStepHandler());
+            EffectHandlers.Register();
             ResolutionHandlers.Register(new EncounterSpaceStub());
             ResolutionHandlers.Register(new PatrolEncounterHandler());
             ResolutionHandlers.Register(new PatrolOutcomeHandler());
@@ -20,6 +23,36 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new BuyShipHandler());
             ResolutionHandlers.Register(new SkillTestHandler());
             ResolutionHandlers.Register(new CombatHandler());
+        }
+
+        /// <summary>Runs a step ability, then moves on: a planning ability leads to the action step (R-4.7), an encounter ability ends the turn (R-4.16).</summary>
+        private sealed class AbilityStepHandler : IResolutionHandler
+        {
+            public string Id => AbilityStep;
+
+            public StepResult Step(ResolutionContext context, Frame frame)
+            {
+                if (frame.Step == 0)
+                {
+                    frame.Step = 1;
+                    var use = new Frame(EffectHandlers.Ability);
+                    use.Set("owner", frame.Get("owner"));
+                    use.Set("card", frame.Get("card"));
+                    use.Set("path", frame.Get("path"));
+                    return StepResult.Call(use);
+                }
+                switch (frame.Get("step"))
+                {
+                    case "planning":
+                        GameEngine.StartStep(context.State, Model.TurnStep.Action, context.Events);
+                        break;
+                    case "encounter":
+                        context.Events.Add(new EncounterResolvedEvent(context.State.CurrentPlayerId, "ability", frame.Get("card")));
+                        GameEngine.EndTurn(context.State, context.Events);
+                        break;
+                }
+                return StepResult.Done();
+            }
         }
 
         /// <summary>Runs the chosen encounter, then ends the turn once it has fully resolved.</summary>

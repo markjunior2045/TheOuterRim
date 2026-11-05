@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using OuterRim.Core.Content;
 using OuterRim.Core.Dice;
+using OuterRim.Core.Effects;
 using OuterRim.Core.Model;
 using OuterRim.Core.Random;
 using OuterRim.Core.Rules;
@@ -277,6 +278,8 @@ namespace OuterRim.Core.Engine
                     return EndActionStep(state, player);
                 case EncounterCommand encounter:
                     return Encounter(content, state, player, encounter);
+                case UseAbilityCommand use:
+                    return UseAbility(content, state, player, use);
                 default:
                     return CommandResult.Rejected("Command not supported yet: " + command.GetType().Name + ".");
             }
@@ -444,7 +447,7 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected("R-4.8: a defeated player must recover damage.");
             }
-            int hyperdrive = Hyperdrive(content, player);
+            int hyperdrive = Hyperdrive(content, state, player);
             if (path.Count > hyperdrive)
             {
                 return CommandResult.Rejected("R-5.17: the path has " + path.Count + " spaces; the ship's hyperdrive is " + hyperdrive + ".");
@@ -488,10 +491,10 @@ namespace OuterRim.Core.Engine
             return false;
         }
 
-        /// <summary>The ship's hyperdrive (R-5.17). Card modifiers ("Gain +X", R-5.19) are added with the effect engine.</summary>
-        public static int Hyperdrive(GameContent content, PlayerState player)
+        /// <summary>The ship's hyperdrive (R-5.17) plus passive "Gain +X {HYPERDRIVE}" bonuses, which stack (R-5.19).</summary>
+        public static int Hyperdrive(GameContent content, GameState state, PlayerState player)
         {
-            return content.ShipSide(player.ShipSideId).Hyperdrive;
+            return content.ShipSide(player.ShipSideId).Hyperdrive + Modifiers.StatBonus(content, state, player, "hyperdrive");
         }
 
         /// <summary>
@@ -619,10 +622,95 @@ namespace OuterRim.Core.Engine
             events.Add(new StepStartedEvent(state.CurrentPlayerId, step));
         }
 
+        /// <summary>
+        /// Uses a "Planning:", "Action:" or "Encounter:" ability of the player's character, ship or assets
+        /// (EFFECTS.md §3.2). Planning: instead of the planning options, then the action step (R-4.7, R-4.8).
+        /// Action: each ability once per action step (R-4.11). Encounter: instead of encountering, not when
+        /// a patrol must be encountered, and the turn ends after it (R-4.16, R-4.17). The ability's
+        /// condition must hold and its credit costs must be affordable (R-9.8, R-21.4).
+        /// </summary>
+        private static CommandResult UseAbility(GameContent content, GameState state, PlayerState player, UseAbilityCommand command)
+        {
+            var ability = AbilitySources.Find(content, player, command.CardId, command.Path);
+            if (ability == null || ability.TimingType != "step")
+            {
+                return CommandResult.Rejected("You have no step ability at " + command.CardId + " " + command.Path + ".");
+            }
+            string step = (string)ability.Ability["timing"]!["step"]!;
+            if (step != StepId(state.Step))
+            {
+                return CommandResult.Rejected("R-4.2: this is a " + step + " ability.");
+            }
+            string key = step + ":" + ability.Key;
+            if (step == "planning" && player.Defeated)
+            {
+                return CommandResult.Rejected("R-4.8: a defeated player must recover damage.");
+            }
+            if (step == "action" && state.UsedAbilities.Contains(key))
+            {
+                return CommandResult.Rejected("R-4.11: each Action ability once per action step.");
+            }
+            if (step == "encounter" && MustEncounterPatrol(state, player))
+            {
+                return CommandResult.Rejected("R-4.17: a player who must encounter a patrol cannot use an Encounter ability.");
+            }
+            if (!Conditions.Eval(content, state, player, ability.Ability["condition"]))
+            {
+                return CommandResult.Rejected("The ability's condition does not hold.");
+            }
+            int spend = 0;
+            if (ability.Ability["cost"] is Newtonsoft.Json.Linq.JArray cost)
+            {
+                foreach (Newtonsoft.Json.Linq.JObject c in cost)
+                {
+                    if ((string?)c["op"] == "credits.spend")
+                    {
+                        spend += Selectors.Amount(content, player, c["amount"]!);
+                    }
+                }
+            }
+            if (player.Credits < spend)
+            {
+                return CommandResult.Rejected("R-9.8: the ability costs " + spend + " credits.");
+            }
+            state.UsedAbilities.Add(key);
+            var frame = new Frame(TurnHandlers.AbilityStep);
+            frame.Set("step", step);
+            frame.Set("owner", player.Id);
+            frame.Set("card", ability.CardId);
+            frame.Set("path", ability.Path);
+            var result = StartResolution(content, state, frame);
+            if (result.Accepted)
+            {
+                var events = new List<GameEvent> { new AbilityUsedEvent(player.Id, ability.CardId, ability.Path, step) };
+                events.AddRange(result.Events);
+                return CommandResult.Ok(events);
+            }
+            return result;
+        }
+
+        private static string StepId(TurnStep step)
+        {
+            return step == TurnStep.Planning ? "planning" : step == TurnStep.Action ? "action" : "encounter";
+        }
+
+        private static bool MustEncounterPatrol(GameState state, PlayerState player)
+        {
+            foreach (var p in state.PatrolsIn(player.SpaceId))
+            {
+                if (player.Reputation.Get(p.Faction) == Reputation.Negative)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>R-4.4: the turn ends and the player to the left begins theirs; a new round starts with the first player.</summary>
         internal static void EndTurn(GameState state, List<GameEvent> events)
         {
             state.TurnEndsAfterStep = false;
+            state.UsedAbilities.Clear();
             events.Add(new TurnEndedEvent(state.CurrentPlayerId));
             int next = (state.SeatOf(state.CurrentPlayerId) + 1) % state.Players.Count;
             state.CurrentPlayerId = state.Players[next].Id;

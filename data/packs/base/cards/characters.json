@@ -913,6 +913,7 @@
         "strength",
         "tech"
       ],
+      "droid": true,
       "setup": {
         "databank": 90,
         "reputation": []
