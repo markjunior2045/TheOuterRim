@@ -15,6 +15,7 @@ Repository root: `C:\TheOuterRimProject\TheOuterRim` (this folder).
 | `docs/MAP_FORMAT.md` | Map graph format (`data/map/`). |
 | `docs/DATA_FORMAT.md` | Game data format: packs, cards, abilities (`data/packs/`, `data/schema/registry.json`). |
 | `docs/EFFECTS.md` | Inventory of card objects, timings and effect primitives (T2.1). Sets the card data format. |
+| `docs/REVIEW.md` | Interpretations awaiting the owner's review. Add an item whenever a reading is a judgement call. |
 | `docs/sources/` | Raw text of the rulebooks used to write `RULES.md`. |
 | `src/OuterRim.Core/` | Rules core. The only copy of the core source. |
 | `tests/OuterRim.Core.Tests/` | xUnit project that compiles the core source files directly. |
