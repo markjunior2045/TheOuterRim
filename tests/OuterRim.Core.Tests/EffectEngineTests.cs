@@ -370,7 +370,7 @@ namespace OuterRim.Core.Tests
             // T2.6: encounters and contacts
             ["encounter.patrol"] = "T2.6", ["encounter.contact"] = "T2.6", ["contact.look"] = "T2.6",
             // T2.5: market
-            ["market.extra_action"] = "T2.5", ["fame.extra"] = "T2.5",
+            ["market.extra_action"] = "T2.5",
             // T2.6: jobs and databank procedures
             ["job.complete"] = "T2.6", ["databank.resolve"] = "T2.6",
             ["custom:wanted"] = "T2.6", ["custom:sabacc"] = "T2.6", ["custom:reward_for_fame"] = "T2.6",
@@ -397,7 +397,7 @@ namespace OuterRim.Core.Tests
                 }
             }
             foreach (var file in new[] { "market-gear", "market-cargo", "market-job", "market-bounty", "market-luxury", "market-ship",
-                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting" })
+                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting", "databank-cargo-check" })
             {
                 Walk(JObject.Parse(Repo.Read("data/packs/base/cards/" + file + ".json")));
             }

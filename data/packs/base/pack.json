@@ -17,7 +17,8 @@
     "data/packs/base/cards/contacts.json",
     "data/packs/base/cards/characters.json",
     "data/packs/base/cards/ship-sheets.json",
-    "data/packs/base/cards/databank-starting.json"
+    "data/packs/base/cards/databank-starting.json",
+    "data/packs/base/cards/databank-cargo-check.json"
   ],
   "localization": {
     "en": "data/packs/base/loc/en.json"

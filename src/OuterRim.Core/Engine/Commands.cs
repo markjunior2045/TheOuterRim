@@ -116,6 +116,17 @@ namespace OuterRim.Core.Engine
         public IReadOnlyList<string> Barter { get; }
     }
 
+    /// <summary>The deliver action: cargo delivered one at a time, in this order (R-16.1, R-16.5).</summary>
+    public sealed class DeliverCommand : Command
+    {
+        public DeliverCommand(string playerId, IReadOnlyList<string> cargo) : base(playerId)
+        {
+            Cargo = cargo;
+        }
+
+        public IReadOnlyList<string> Cargo { get; }
+    }
+
     /// <summary>Base for answers to a <see cref="PendingDecision"/>.</summary>
     public abstract class AnswerCommand : Command
     {

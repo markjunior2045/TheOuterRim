@@ -177,5 +177,21 @@ namespace OuterRim.Core.Tests
             Assert.Contains("base-market-ship-04", deck);
             Assert.DoesNotContain("base-market-ship-06", deck); // the Lancer's own card left the game
         }
+
+        [Fact]
+        public void R18_15_ExtravagantWardrobe_AddsFameWhileTheConditionHolds_AndCountsForVictory()
+        {
+            var s = Game();
+            var p = P1(s);
+            p.Assets.Add(new AssetState { CardId = "base-market-luxury-00", Kind = "gear", Cost = 15000 });
+            p.Fame = 9;
+            p.Reputation.Rebel = Reputation.Positive;
+            Assert.Equal(9, PlayerRules.Fame(C, s, p)); // one positive reputation: no bonus
+            p.Reputation.Hutt = Reputation.Positive;
+            Assert.Equal(10, PlayerRules.Fame(C, s, p)); // two: +1
+            Assert.True(GameEngine.Execute(C, s, new EndActionStepCommand("p1")).Accepted);
+            Assert.Equal(GamePhase.Ended, s.Phase); // R-18.8: checked after the command
+            Assert.Equal("p1", s.WinnerId);
+        }
     }
 }

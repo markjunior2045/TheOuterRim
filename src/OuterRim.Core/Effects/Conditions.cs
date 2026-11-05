@@ -96,11 +96,11 @@ namespace OuterRim.Core.Effects
                 case "credits_at_least":
                     return subject.Credits >= (int)c["amount"]!;
                 case "most_famous":
-                    return PlayerRules.IsMostFamous(state, subject);
+                    return PlayerRules.IsMostFamous(content, state, subject);
                 case "more_fame_than":
                     // In a selector: the candidate has more fame than you (Bossk-3, Firespray-31).
                     return candidate != null
-                        ? PlayerRules.Fame(candidate) > PlayerRules.Fame(you)
+                        ? PlayerRules.Fame(content, state, candidate) > PlayerRules.Fame(content, state, you)
                         : false;
                 case "same_space":
                     return candidate != null && candidate.SpaceId == you.SpaceId;

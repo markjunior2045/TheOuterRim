@@ -36,6 +36,35 @@ namespace OuterRim.Core.Effects
             return total;
         }
 
+        /// <summary>"While ..., you have N additional fame" (Extravagant Wardrobe, Dejarik Holotable; R-18.15, R-25.3).</summary>
+        public static int ExtraFame(GameContent content, GameState state, PlayerState player)
+        {
+            int total = 0;
+            foreach (var ability in AbilitySources.Of(content, player))
+            {
+                if (ability.TimingType != "passive" || !Conditions.Eval(content, state, player, ability.Ability["condition"]))
+                {
+                    continue;
+                }
+                foreach (JObject effect in (JArray)ability.Ability["effects"]!)
+                {
+                    if ((string?)effect["op"] == "fame.extra") total += (int)effect["amount"]!;
+                }
+            }
+            return total;
+        }
+
+        /// <summary>Whether a list of payments ("credits.spend") can be paid in full now (R-9.8).</summary>
+        public static bool CanPay(GameContent content, PlayerState player, JArray effects)
+        {
+            int credits = 0;
+            foreach (JObject e in effects)
+            {
+                if ((string?)e["op"] == "credits.spend") credits += Selectors.Amount(content, player, e["amount"]!);
+            }
+            return player.Credits >= credits;
+        }
+
         /// <summary>
         /// Whether a held card changes a core rule for the player (EFFECTS.md §3.1 "rule.modify"):
         /// "no_reputation_loss_on_patrol_win" (IG-2000), "not_forced_to_encounter_negative_patrols" (Valorous).

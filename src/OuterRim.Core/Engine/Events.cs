@@ -691,6 +691,50 @@ namespace OuterRim.Core.Engine
         public string Deck { get; }
     }
 
+    /// <summary>R-16.3: the die rolled before delivering an ILLEGAL cargo (after any changes).</summary>
+    public sealed class DeliveryRolledEvent : GameEvent
+    {
+        public DeliveryRolledEvent(string playerId, string cargoId, DieFace face)
+        {
+            PlayerId = playerId;
+            CargoId = cargoId;
+            Face = face;
+        }
+
+        public string PlayerId { get; }
+
+        public string CargoId { get; }
+
+        public DieFace Face { get; }
+    }
+
+    public sealed class CargoDeliveredEvent : GameEvent
+    {
+        public CargoDeliveredEvent(string playerId, string cargoId)
+        {
+            PlayerId = playerId;
+            CargoId = cargoId;
+        }
+
+        public string PlayerId { get; }
+
+        public string CargoId { get; }
+    }
+
+    /// <summary>A databank card was drawn and resolved (R-13.2, R-13.3).</summary>
+    public sealed class DatabankResolvedEvent : GameEvent
+    {
+        public DatabankResolvedEvent(string playerId, string cardId)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

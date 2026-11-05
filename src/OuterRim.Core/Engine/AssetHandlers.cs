@@ -102,6 +102,7 @@ namespace OuterRim.Core.Engine
 
         private static void Gain(ResolutionContext ctx, PlayerState player, AssetState asset)
         {
+            asset.GainedThisEncounter = ctx.State.Step == TurnStep.Encounter && player.Id == ctx.State.CurrentPlayerId;
             player.Assets.Add(asset);
             ctx.Events.Add(new AssetGainedEvent(player.Id, asset.CardId, asset.Kind));
         }

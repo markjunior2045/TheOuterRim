@@ -98,9 +98,9 @@ namespace OuterRim.Core.Engine
                     {
                         fits |= (string)s! == scope;
                     }
-                    if (timing["filter"] != null && scope != "delivery_roll")
+                    if (fits && timing["filter"] != null)
                     {
-                        fits = false;
+                        fits = Conditions.Eval(ctx.Content, ctx.State, owner, timing["filter"], null, FrameContext.Of(frame));
                     }
                 }
                 else if (type == "trigger" && (string?)timing["event"] == "dice_rolled")

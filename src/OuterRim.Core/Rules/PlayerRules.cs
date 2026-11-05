@@ -106,20 +106,21 @@ namespace OuterRim.Core.Rules
         }
 
         /// <summary>
-        /// Fame that counts for victory and comparisons: printed fame plus "you have X additional fame"
-        /// from assets (R-18.15), which the effect engine adds (PLAN T2.3).
+        /// Fame that counts for victory and comparisons: fame tokens plus "you have X additional fame" from
+        /// held cards while their condition holds (R-18.15: lost when the card or the condition goes).
         /// </summary>
-        public static int Fame(PlayerState player)
+        public static int Fame(GameContent content, GameState state, PlayerState player)
         {
-            return player.Fame;
+            return player.Fame + Effects.Modifiers.ExtraFame(content, state, player);
         }
 
         /// <summary>R-18.17: the player with the most fame; on a tie, every tied player is the most famous.</summary>
-        public static bool IsMostFamous(GameState state, PlayerState player)
+        public static bool IsMostFamous(GameContent content, GameState state, PlayerState player)
         {
+            int mine = Fame(content, state, player);
             foreach (var other in state.Players)
             {
-                if (Fame(other) > Fame(player))
+                if (Fame(content, state, other) > mine)
                 {
                     return false;
                 }
@@ -209,7 +210,7 @@ namespace OuterRim.Core.Rules
         /// resolution step, so players who reach it in the same step reached it simultaneously and the
         /// tiebreak applies (R-18.16). Returns true when the game has ended.
         /// </summary>
-        public static bool Check(GameState state, List<GameEvent> events)
+        public static bool Check(GameContent content, GameState state, List<GameEvent> events)
         {
             if (state.Phase != GamePhase.Playing)
             {
@@ -218,7 +219,7 @@ namespace OuterRim.Core.Rules
             var reached = new List<PlayerState>();
             foreach (var p in state.Players)
             {
-                if (PlayerRules.Fame(p) >= state.FameRequirement)
+                if (PlayerRules.Fame(content, state, p) >= state.FameRequirement)
                 {
                     reached.Add(p);
                 }

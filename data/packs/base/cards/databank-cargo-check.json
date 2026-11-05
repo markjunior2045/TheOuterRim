@@ -1,0 +1,461 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "databank-cargo-check",
+  "source": "data/transcription/databank/base-databank.json",
+  "cards": [
+    {
+      "id": "base-databank-001a",
+      "kind": "cargo_check",
+      "number": 1,
+      "variant": "a",
+      "intro": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "in_patrol_space",
+            "rep": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "step.end"
+            }
+          ]
+        }
+      ],
+      "crit": [
+        {
+          "op": "combat",
+          "type": "ship",
+          "opponent": {
+            "npc": {
+              "value": 3,
+              "name_key": "TIE fighters"
+            }
+          },
+          "after": [
+            {
+              "op": "if",
+              "cond": {
+                "cond": "all",
+                "of": [
+                  {
+                    "cond": "combat",
+                    "result": "won"
+                  },
+                  {
+                    "cond": "not_defeated"
+                  }
+                ]
+              },
+              "then": [
+                {
+                  "op": "cargo.deliver"
+                },
+                {
+                  "op": "turn.end"
+                }
+              ],
+              "else": [
+                {
+                  "op": "turn.end"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "focus": [
+        {
+          "op": "test",
+          "skill": [
+            "influence"
+          ],
+          "pass": [
+            {
+              "op": "cargo.deliver"
+            },
+            {
+              "op": "turn.end"
+            }
+          ],
+          "fail": [
+            {
+              "op": "rep.lose",
+              "faction": "imperial"
+            },
+            {
+              "op": "turn.end"
+            }
+          ]
+        }
+      ],
+      "blank": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "imperial",
+            "in": [
+              "neg",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "test",
+              "skill": [
+                "stealth"
+              ],
+              "pass": [
+                {
+                  "op": "cargo.deliver"
+                },
+                {
+                  "op": "turn.end"
+                }
+              ],
+              "fail": [
+                {
+                  "op": "rep.lose",
+                  "faction": "imperial"
+                },
+                {
+                  "op": "turn.end"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "cargo.deliver"
+            },
+            {
+              "op": "turn.end"
+            }
+          ]
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-001b",
+      "kind": "cargo_check",
+      "number": 1,
+      "variant": "b",
+      "intro": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "in_patrol_space",
+            "rep": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "step.end"
+            }
+          ]
+        }
+      ],
+      "crit": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "rep.lose",
+                  "faction": "hutt"
+                }
+              ],
+              "then": [
+                {
+                  "op": "cargo.deliver"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "turn.end"
+        }
+      ],
+      "focus": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "rep.lose",
+                  "faction": "rebel"
+                }
+              ],
+              "then": [
+                {
+                  "op": "cargo.deliver"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "turn.end"
+        }
+      ],
+      "blank": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "rep.lose",
+                  "faction": "syndicate"
+                }
+              ],
+              "then": [
+                {
+                  "op": "cargo.deliver"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "turn.end"
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-001c",
+      "kind": "cargo_check",
+      "number": 1,
+      "variant": "c",
+      "intro": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "in_patrol_space",
+            "rep": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "step.end"
+            }
+          ]
+        }
+      ],
+      "crit": [
+        {
+          "op": "choice",
+          "options": [
+            [
+              {
+                "op": "cargo.discard"
+              },
+              {
+                "op": "turn.end"
+              }
+            ],
+            [
+              {
+                "op": "combat",
+                "type": "ground",
+                "opponent": {
+                  "npc": {
+                    "value": 3,
+                    "name_key": "crooks"
+                  }
+                },
+                "after": [
+                  {
+                    "op": "if",
+                    "cond": {
+                      "cond": "all",
+                      "of": [
+                        {
+                          "cond": "combat",
+                          "result": "won"
+                        },
+                        {
+                          "cond": "not_defeated"
+                        }
+                      ]
+                    },
+                    "then": [
+                      {
+                        "op": "cargo.deliver"
+                      },
+                      {
+                        "op": "turn.end"
+                      }
+                    ],
+                    "else": [
+                      {
+                        "op": "turn.end"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "focus": [
+        {
+          "op": "test",
+          "skill": [
+            "stealth"
+          ],
+          "pass": [
+            {
+              "op": "cargo.deliver"
+            },
+            {
+              "op": "turn.end"
+            }
+          ],
+          "fail": [
+            {
+              "op": "rep.lose",
+              "faction": "planet"
+            },
+            {
+              "op": "turn.end"
+            }
+          ]
+        }
+      ],
+      "blank": [
+        {
+          "op": "test",
+          "skill": [
+            "piloting"
+          ],
+          "pass": [
+            {
+              "op": "cargo.deliver"
+            },
+            {
+              "op": "turn.end"
+            }
+          ],
+          "fail": [
+            {
+              "op": "rep.lose",
+              "faction": "planet"
+            },
+            {
+              "op": "turn.end"
+            }
+          ]
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-001d",
+      "kind": "cargo_check",
+      "number": 1,
+      "variant": "d",
+      "intro": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "in_patrol_space",
+            "rep": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "step.end"
+            }
+          ]
+        }
+      ],
+      "crit": [
+        {
+          "op": "cargo.deliver"
+        },
+        {
+          "op": "unless",
+          "penalty": [
+            {
+              "op": "rep.lose",
+              "faction": "syndicate"
+            }
+          ],
+          "avoid": [
+            {
+              "op": "credits.spend",
+              "amount": 6000
+            }
+          ]
+        },
+        {
+          "op": "turn.end"
+        }
+      ],
+      "focus": [
+        {
+          "op": "cargo.deliver"
+        },
+        {
+          "op": "unless",
+          "penalty": [
+            {
+              "op": "rep.lose",
+              "faction": "hutt"
+            }
+          ],
+          "avoid": [
+            {
+              "op": "credits.spend",
+              "amount": 6000
+            }
+          ]
+        },
+        {
+          "op": "turn.end"
+        }
+      ],
+      "blank": [
+        {
+          "op": "cargo.deliver"
+        },
+        {
+          "op": "unless",
+          "penalty": [
+            {
+              "op": "rep.lose",
+              "faction": "rebel"
+            }
+          ],
+          "avoid": [
+            {
+              "op": "credits.spend",
+              "amount": 6000
+            }
+          ]
+        },
+        {
+          "op": "turn.end"
+        }
+      ],
+      "abilities": []
+    }
+  ]
+}

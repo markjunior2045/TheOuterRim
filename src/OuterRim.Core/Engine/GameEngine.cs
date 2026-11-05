@@ -307,7 +307,7 @@ namespace OuterRim.Core.Engine
         /// </summary>
         private static void AfterCommand(GameContent content, GameState state, List<GameEvent> events)
         {
-            if (Victory.Check(state, events))
+            if (Victory.Check(content, state, events))
             {
                 return;
             }
@@ -322,7 +322,7 @@ namespace OuterRim.Core.Engine
                 frame.Set("path", goal.Path);
                 state.Stack.Add(frame);
                 Resolver.Run(content, state, events);
-                if (Victory.Check(state, events))
+                if (Victory.Check(content, state, events))
                 {
                     return;
                 }
@@ -377,6 +377,8 @@ namespace OuterRim.Core.Engine
                     return MarketDiscard(content, state, player, discard.Deck);
                 case MarketBuyCommand buy:
                     return MarketBuy(content, state, player, buy);
+                case DeliverCommand deliver:
+                    return Deliver(content, state, player, deliver.Cargo);
                 default:
                     return CommandResult.Rejected("Command not supported yet: " + command.GetType().Name + ".");
             }
@@ -870,6 +872,35 @@ namespace OuterRim.Core.Engine
             return StartResolution(content, state, frame);
         }
 
+        /// <summary>R-16.1 to R-16.7: deliver cargo on its destination planet, during the action step, once per step.</summary>
+        private static CommandResult Deliver(GameContent content, GameState state, PlayerState player, IReadOnlyList<string> cargo)
+        {
+            if (state.Step != TurnStep.Action) return CommandResult.Rejected("R-16.1: delivering is an action.");
+            if (state.UsedAbilities.Contains("action:deliver")) return CommandResult.Rejected("R-4.9: one deliver action per action step.");
+            if (cargo.Count == 0) return CommandResult.Rejected("Name the cargo to deliver.");
+            foreach (var id in cargo)
+            {
+                var asset = Assets.Find(player, id);
+                if (asset == null || asset.Kind != "cargo" || !content.HasCard(id))
+                {
+                    return CommandResult.Rejected("You hold no cargo " + id + ".");
+                }
+                if ((string?)content.Card(id)["destination"] != player.SpaceId)
+                {
+                    return CommandResult.Rejected("R-16.2: cargo is delivered on its destination planet.");
+                }
+                if (asset.GainedThisEncounter)
+                {
+                    return CommandResult.Rejected("R-16.7: cargo gained in this turn's encounter step is delivered on a later turn.");
+                }
+            }
+            state.UsedAbilities.Add("action:deliver");
+            var frame = new Frame(DeliverHandler.HandlerId);
+            frame.Set("player", player.Id);
+            frame.Set("queue", string.Join("|", cargo));
+            return StartResolution(content, state, frame);
+        }
+
         private static string StepId(TurnStep step)
         {
             return step == TurnStep.Planning ? "planning" : step == TurnStep.Action ? "action" : "encounter";
@@ -892,6 +923,10 @@ namespace OuterRim.Core.Engine
         {
             state.TurnEndsAfterStep = false;
             state.UsedAbilities.Clear();
+            foreach (var p in state.Players)
+            {
+                foreach (var a in p.Assets) a.GainedThisEncounter = false;
+            }
             events.Add(new TurnEndedEvent(state.CurrentPlayerId));
             int next = (state.SeatOf(state.CurrentPlayerId) + 1) % state.Players.Count;
             state.CurrentPlayerId = state.Players[next].Id;

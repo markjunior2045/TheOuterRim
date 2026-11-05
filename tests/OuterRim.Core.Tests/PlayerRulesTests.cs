@@ -132,12 +132,12 @@ namespace OuterRim.Core.Tests
         public void R18_17_TiedPlayers_AreAllTheMostFamous()
         {
             var s = Game();
-            Assert.All(s.Players, p => Assert.True(PlayerRules.IsMostFamous(s, p))); // everyone at the start
+            Assert.All(s.Players, p => Assert.True(PlayerRules.IsMostFamous(C, s, p))); // everyone at the start
             s.Players[0].Fame = 3;
             s.Players[1].Fame = 3;
-            Assert.True(PlayerRules.IsMostFamous(s, s.Players[0]));
-            Assert.True(PlayerRules.IsMostFamous(s, s.Players[1]));
-            Assert.False(PlayerRules.IsMostFamous(s, s.Players[2]));
+            Assert.True(PlayerRules.IsMostFamous(C, s, s.Players[0]));
+            Assert.True(PlayerRules.IsMostFamous(C, s, s.Players[1]));
+            Assert.False(PlayerRules.IsMostFamous(C, s, s.Players[2]));
         }
 
         // ---- damage and defeat ---------------------------------------------------------------------

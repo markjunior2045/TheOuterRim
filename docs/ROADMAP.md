@@ -62,8 +62,8 @@ Status: `Done` · `Next` · `To do` · `Later`.
 - T2.3b triggers, replacements, dice windows — Done
 - T2.3c personal and ship goals — Done
 - T2.9 character setup from the starting databank cards (#90 to #92) — Done
-- T2.5 market (**Next**): decks, discard and buy, barter, patrol movement icons, ship cards, Used Ship for Sale — encode bounty, job, luxury and ship decks
-- T2.6 encounters, contacts, databank and secrets: encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank
+- T2.5 market — Done: decks, discard and buy, barter, patrol movement icons, ship cards, Used Ship for Sale — encode bounty, job, luxury and ship decks
+- T2.6 encounters, contacts, databank and secrets (**Next**): encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank
 - Remove the remaining stubs (encountering a space)
 
 ### 8. V0 · To do

@@ -74,6 +74,9 @@ namespace OuterRim.Core.Model
 
         public List<string> Traits { get; set; } = new List<string>();
 
+        /// <summary>R-16.7: gained during this turn's encounter step, so not deliverable until a later turn.</summary>
+        public bool GainedThisEncounter { get; set; }
+
         /// <summary>Rotating assets [UB]: true once rotated to the other end (R-14.10).</summary>
         public bool Rotated { get; set; }
     }

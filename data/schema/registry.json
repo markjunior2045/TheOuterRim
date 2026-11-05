@@ -118,7 +118,8 @@
       "contact",
       "patrol",
       "player_board",
-      "starting_asset"
+      "starting_asset",
+      "cargo_check"
     ],
     "contact_class": [
       "white",
@@ -690,7 +691,8 @@
       "handler": "custom_handler",
       "params": "object?"
     },
-    "move.no_stop": {}
+    "move.no_stop": {},
+    "cargo.discard": {}
   },
   "outcome": {
     "faces": "list:face?",
@@ -831,6 +833,14 @@
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon",
       "cost": "nullable:int"
+    },
+    "cargo_check": {
+      "number": "int",
+      "variant": "string",
+      "intro": "effects",
+      "crit": "effects",
+      "focus": "effects",
+      "blank": "effects"
     }
   },
   "field_types": {

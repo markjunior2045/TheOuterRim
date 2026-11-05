@@ -33,13 +33,13 @@ namespace OuterRim.Core.Engine
             "credits.gain", "credits.spend", "credits.lose", "fame.gain", "fame.lose", "rep.gain", "rep.lose",
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
             "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard", "asset.take",
-            "test.skill_grant", "move.no_stop", "custom",
+            "test.skill_grant", "move.no_stop", "custom", "cargo.deliver", "cargo.discard", "turn.end", "step.end", "unless",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
             "damage.cap",
             // Passive-only ops, read as queries by Modifiers or by the rules that check them.
-            "stat.modify", "dice.opponent_fewer",
+            "stat.modify", "dice.opponent_fewer", "fame.extra",
         };
 
         /// <summary>Custom handlers (EFFECTS.md §8) this engine runs; patrol_redirect runs inside patrol movement.</summary>
@@ -66,10 +66,27 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new AssetDiscardHandler());
             ResolutionHandlers.Register(new AssetTakeHandler());
             ResolutionHandlers.Register(new MoveHandler());
+            ResolutionHandlers.Register(new DeliverHandler());
+            ResolutionHandlers.Register(new DeliverCargoHandler());
+            ResolutionHandlers.Register(new CargoCheckHandler());
+            ResolutionHandlers.Register(new UnlessHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
         public static Frame ListFrame(string owner, string card, string path)
+        {
+            return ListFrame(owner, card, path, null);
+        }
+
+        /// <summary>As above, carrying the context ("ctx.*") of <paramref name="parent"/> for conditions.</summary>
+        public static Frame ListFrame(string owner, string card, string path, Frame? parent)
+        {
+            var frame = NewList(owner, card, path);
+            if (parent != null) FrameContext.Copy(parent, frame);
+            return frame;
+        }
+
+        private static Frame NewList(string owner, string card, string path)
         {
             var f = new Frame(List);
             f.Set("owner", owner);
@@ -176,11 +193,13 @@ namespace OuterRim.Core.Engine
             {
                 case "if":
                 {
-                    bool holds = Conditions.Eval(ctx.Content, ctx.State, owner, node["cond"]);
+                    bool holds = Conditions.Eval(ctx.Content, ctx.State, owner, node["cond"], null, FrameContext.Of(frame));
                     string branch = holds ? "then" : "else";
                     if (node[branch] is JArray)
                     {
-                        return StepResult.Call(EffectHandlers.ListFrame(owner.Id, frame.Get("card"), nodePath + "." + branch));
+                        var child = EffectHandlers.ListFrame(owner.Id, frame.Get("card"), nodePath + "." + branch);
+                        FrameContext.Copy(frame, child);
+                        return StepResult.Call(child);
                     }
                     return StepResult.Continue();
                 }
@@ -218,6 +237,19 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(AssetDiscardHandler.HandlerId, frame, nodePath));
                 case "asset.take":
                     return StepResult.Call(EffectHandlers.Child(AssetTakeHandler.HandlerId, frame, nodePath));
+                case "unless":
+                    return StepResult.Call(EffectHandlers.Child(UnlessHandler.HandlerId, frame, nodePath));
+                case "cargo.deliver":
+                {
+                    // "Deliver this cargo": the cargo being delivered by the deliver action.
+                    var deliver = DeliverHandler.Nearest(ctx.State);
+                    if (deliver == null)
+                    {
+                        frame.Set("failed", "true");
+                        return StepResult.Continue();
+                    }
+                    return StepResult.Call(DeliverCargoHandler.For(owner.Id, deliver.Get("current")));
+                }
                 case "damage.suffer":
                 {
                     // Through the damage frame, so caps and "would be defeated" replacements apply.
@@ -349,6 +381,24 @@ namespace OuterRim.Core.Engine
                         }
                     }
                     return false;
+                case "cargo.discard":
+                {
+                    var deliver = DeliverHandler.Nearest(state);
+                    var asset = deliver == null ? null : Assets.Find(owner, deliver.Get("current"));
+                    if (asset == null) return false;
+                    Assets.Discard(owner, asset, "effect", events);
+                    return true;
+                }
+                case "turn.end":
+                    // R-4.3: the turn ends once what is resolving finishes; no further deliveries (R-16.6).
+                    state.TurnEndsAfterStep = true;
+                    return true;
+                case "step.end":
+                {
+                    var deliver = DeliverHandler.Nearest(state);
+                    deliver?.Set("end_step", "1");
+                    return deliver != null;
+                }
                 case "move.no_stop":
                 {
                     // "You do not have to end your movement in that space" (Han Solo, Slave I).
@@ -611,7 +661,11 @@ namespace OuterRim.Core.Engine
                     frame.Step = 3;
                     if (node["after"] is JArray)
                     {
-                        return StepResult.Call(EffectHandlers.ListFrame(owner.Id, frame.Get("card"), frame.Get("path") + ".after"));
+                        // "If you win and you are not defeated, ..." (cargo check, jobs).
+                        var after = EffectHandlers.ListFrame(owner.Id, frame.Get("card"), frame.Get("path") + ".after");
+                        after.Set("ctx.combat_type", frame.Get("ret.winner") == "none" ? "none" : (string)node["type"]!);
+                        after.Set("ctx.combat_result", frame.Get("ret.winner") == "attacker" ? "won" : "lost");
+                        return StepResult.Call(after);
                     }
                     return StepResult.Continue();
                 default:

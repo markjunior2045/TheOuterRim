@@ -11,7 +11,7 @@ namespace OuterRim.Core.Tests
 {
     public class SaveSerializerTests
     {
-        private const string GoldenName = "save-0.10.json";
+        private const string GoldenName = "save-0.11.json";
 
         private static GameState GoldenGame()
         {

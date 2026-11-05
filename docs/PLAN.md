@@ -169,8 +169,20 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered (base):** `data/packs/base/cards/` `patrols.json` (16), `player-boards.json` (4), `contacts.json` (22), `characters.json` (8, both sides with abilities and goals), `ship-sheets.json` (9, both sides). The validator also checks that contacts per class match the map's contact spaces and that each faction has patrol levels 1 to 4. 25 validator tests.
 - Expansion parts (6 sheets, 11 contacts, 8 characters, 8 ambition sheets) come with the expansion transcription (T2.8).
 
-### T2.5 — Market · `TODO` (T2.3, T2.4)
+### T2.5 — Market · `DONE` (2026-11-05; some luxury cards pending, see below)
 - Discard, buy, barter, icons, ship purchase, "Used Ship for Sale" (R-16).
+- **Delivered:**
+  - Data: the job, bounty, luxury and ship decks encoded (registry kinds job, bounty, ship, special); databank card #1 (cargo check, four versions).
+  - Market decks in the state, shuffled at setup (R-3.16.a); market action on a planet once per action step: up to two discards from one deck with no icons, then one purchase with barter; "cannot buy on"; ship cards replace the sheet and leave the game; Used Ship for Sale; the new top card's patrol icon moves that patrol toward the buyer (R-11.13, R-16.17 to R-16.43).
+  - Deliver action: cargo in the player's order, rewards, cargo back to its deck; ILLEGAL cargo rolls a die with a dice window (Smuggling Compartment, Millennium Falcon), and anything but a hit resolves a random databank card #1: deliver, discard, end the turn (no further deliveries) or the action step, "unless you spend" (R-16.1 to R-16.7). Delivering fires "cargo delivered" for goals (Lando, YT-1300).
+  - Extra fame from held cards counts for victory and "most famous" (R-18.15).
+  - Save format 0.11. 246 tests.
+- **Pending, listed in the coverage test:**
+  - extra market actions: Doctor Aphra's back and W1-LE, for T2.6;
+  - luxury cards: Stolen Jewels, Undercover Agent, Dejarik Holotable's action, Chromium Hull's encounter rule, Sy Snootles and Mandalorian Armor's reward trade;
+  - effects aimed at a chosen player;
+  - the "reveal contact" icon `[UB]`;
+  - delivering a captured bounty, with the contacts in T2.6.
 
 ### T2.6 — Encounters, contacts, databank, secrets · `TODO` (T2.3)
 - R-12, R-13, R-15.72 to R-15.91, including the Core Worlds announcement (R-15.80).
@@ -246,6 +258,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.5 done: market decks and action, deliver action with databank #1, extra fame; four decks encoded; save format 0.11. |
 | 2026-11-05 | T2.9 added and done: character setup from the starting databank cards (R-3.15). |
 | 2026-11-05 | T2.3c done: personal and ship goals; T2.3 complete; save format 0.9. |
 | 2026-11-05 | T2.3b done: dice windows, damage replacements, triggers, step-by-step movement, asset and rule effects. |
