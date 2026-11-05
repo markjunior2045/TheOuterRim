@@ -66,12 +66,11 @@ The phases below group tasks by subject; this is the order they are worked in:
   - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode tests and get a pass/fail exit code, and query the scene.
 - **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue.
 
-### T0.5 — Map geometry · `REVIEW` (2026-11-05, owner visual check pending)
+### T0.5 — Map geometry · `DONE` (2026-11-05, overlays checked by the owner)
 - **Does:** JSON for spaces, paths and contact spaces (with class) for each map tile and endcap; the standard layout (R-3.2) and the Core Worlds variant `[UB]`; format and validator.
 - **Delivered:** `data/map/base-map.json`, `data/map/expansion-map.json` (format `docs/MAP_FORMAT.md`), `tools/validate_map.py` (checks, plus overlays of the graph on the art in `artifacts/map-review/`).
 - **Result:** standard layout 11 planets, 34 navpoints, the Maelstrom, 53 edges, 22 contact spaces (6 white, 7 green, 9 yellow, matching the 22 base contacts); Core Worlds layout adds 2 Core Worlds spaces and 4 navpoints. Every tile order is connected (R-3.3); Core Worlds not adjacent (R-5.4).
 - **Done when:** the validator passes and graph tests hold. Graph tests in C# come with T1.3.
-- **Needs from the owner:** a visual check of the overlays against the board.
 
 ---
 

@@ -2,7 +2,7 @@
   "format": "outer-rim-map/0.1",
   "pack": "base",
   "notes": [
-    "Read from the [Mod 01] map images (T0.5). Owner visual check pending.",
+    "Read from the [Mod 01] map images (T0.5). Overlays checked by the owner on 2026-11-05.",
     "pos: approximate centre, normalised to the piece image (x / width, y / height).",
     "Ports: L1 = left upper, L2 = left lower, R1 = right upper, R2 = right lower. Placing piece B to the right of piece A joins A.R1 to B.L1 and A.R2 to B.L2 (R-5.2). An edge to a port continues on the neighbouring piece; a port with no neighbour is a dead end.",
     "patrol_stacks are where facedown patrol tokens wait (R-3.7); they are not spaces. The space a stack connects to is where its patrols spawn (R-5.3, R-11.10) and where the level-1 patrol starts (R-3.5, R-3.6).",

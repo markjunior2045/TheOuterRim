@@ -1146,7 +1146,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 11. **Which patrols start on which navpoints** in the standard layout, by space name.
 12. **Player board**: its slots (gear, job or bounty, and any others) and tracks. The rules name the slots but never say how many there are.
 
-**Status (2026-11-05):** items 1 to 7, 9 and 12 are transcribed for the base game in `data/transcription/` (format in `TRANSCRIPTION_FORMAT.md`); the expansion half of each is still to do. The player board has 2 `GEAR` slots and 2 dual `JOB OR BOUNTY` slots. Items 8 (ambitions) and the expansion parts are pending. Items 10 and 11 (map) are read into `data/map/` (format `MAP_FORMAT.md`, `PLAN.md` T0.5), pending the owner's visual check.
+**Status (2026-11-05):** items 1 to 7, 9 and 12 are transcribed for the base game in `data/transcription/` (format in `TRANSCRIPTION_FORMAT.md`); the expansion half of each is still to do. The player board has 2 `GEAR` slots and 2 dual `JOB OR BOUNTY` slots. Items 8 (ambitions) and the expansion parts are pending. Items 10 and 11 (map) are read into `data/map/` (format `MAP_FORMAT.md`, `PLAN.md` T0.5), checked by the owner.
 
 ---
 
