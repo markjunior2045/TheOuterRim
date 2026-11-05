@@ -370,7 +370,12 @@ namespace OuterRim.Core.Tests
             // T2.6: encounters and contacts
             ["encounter.patrol"] = "T2.6", ["encounter.contact"] = "T2.6", ["contact.look"] = "T2.6",
             // T2.5: market
-            ["market.extra_action"] = "T2.5",
+            ["market.extra_action"] = "T2.5", ["fame.extra"] = "T2.5",
+            // T2.6: jobs and databank procedures
+            ["job.complete"] = "T2.6", ["databank.resolve"] = "T2.6",
+            ["custom:wanted"] = "T2.6", ["custom:sabacc"] = "T2.6", ["custom:reward_for_fame"] = "T2.6",
+            ["custom:stolen_jewels"] = "T2.5", ["custom:undercover_agent"] = "T2.5", ["custom:dejarik"] = "T2.5",
+            ["custom:chromium_hull"] = "T2.5", ["custom:used_ship_for_sale"] = "T2.5",
         };
 
         [Fact]
@@ -382,6 +387,7 @@ namespace OuterRim.Core.Tests
                 if (t is JObject o)
                 {
                     if (o["op"]?.Type == JTokenType.String) used.Add((string)o["op"]!);
+                    if ((string?)o["op"] == "custom") used.Add("custom:" + (string)o["handler"]!);
                     if (o["cond"]?.Type == JTokenType.String) used.Add("cond:" + (string)o["cond"]!);
                     foreach (var p in o.Properties()) Walk(p.Value);
                 }
@@ -390,13 +396,15 @@ namespace OuterRim.Core.Tests
                     foreach (var x in a) Walk(x);
                 }
             }
-            foreach (var file in new[] { "market-gear", "market-cargo", "characters", "ship-sheets", "patrols", "contacts", "player-boards" })
+            foreach (var file in new[] { "market-gear", "market-cargo", "market-job", "market-bounty", "market-luxury", "market-ship",
+                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting" })
             {
                 Walk(JObject.Parse(Repo.Read("data/packs/base/cards/" + file + ".json")));
             }
-            var missing = used.Where(u => u.StartsWith("cond:")
-                    ? !Conditions.Implemented.Contains(u.Substring(5)) && !Pending.ContainsKey(u)
-                    : !EffectHandlers.Implemented.Contains(u) && !Pending.ContainsKey(u))
+            var missing = used.Where(u => Pending.ContainsKey(u) ? false
+                    : u.StartsWith("cond:") ? !Conditions.Implemented.Contains(u.Substring(5))
+                    : u.StartsWith("custom:") ? !EffectHandlers.CustomImplemented.Contains(u.Substring(7))
+                    : !EffectHandlers.Implemented.Contains(u))
                 .ToList();
             Assert.True(missing.Count == 0, "Not implemented and not planned: " + string.Join(", ", missing));
         }

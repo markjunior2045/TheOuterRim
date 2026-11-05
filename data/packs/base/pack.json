@@ -8,6 +8,10 @@
   "cards": [
     "data/packs/base/cards/market-gear.json",
     "data/packs/base/cards/market-cargo.json",
+    "data/packs/base/cards/market-job.json",
+    "data/packs/base/cards/market-bounty.json",
+    "data/packs/base/cards/market-luxury.json",
+    "data/packs/base/cards/market-ship.json",
     "data/packs/base/cards/patrols.json",
     "data/packs/base/cards/player-boards.json",
     "data/packs/base/cards/contacts.json",

@@ -1,0 +1,126 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "market-ship",
+  "source": "data/transcription/market/base-market-ship.json",
+  "cards": [
+    {
+      "id": "base-market-ship-00",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 20000,
+      "sheet": "base-ship-firespray-31-patrol-craft",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-01",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 20000,
+      "sheet": "base-ship-modified-yt-1300-light-freighter",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-02",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 5000,
+      "sheet": "base-ship-hwk-290-freighter",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-03",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 15000,
+      "sheet": "base-ship-yv-666-light-freighter",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-04",
+      "deck": "ship",
+      "traits": [],
+      "patrol_icon": null,
+      "kind": "special",
+      "cost": null,
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "used_ship_for_sale"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-ship-05",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 5000,
+      "sheet": "base-ship-gx1-short-hauler",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-06",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 10000,
+      "sheet": "base-ship-lancer-class-pursuit-craft",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-07",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 10000,
+      "sheet": "base-ship-heavy-duty-lifter",
+      "abilities": []
+    },
+    {
+      "id": "base-market-ship-08",
+      "deck": "ship",
+      "traits": [
+        "ship"
+      ],
+      "patrol_icon": null,
+      "kind": "ship",
+      "cost": 15000,
+      "sheet": "base-ship-aggressor-class-assault-fighter",
+      "abilities": []
+    }
+  ]
+}

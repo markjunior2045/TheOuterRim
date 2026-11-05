@@ -42,6 +42,12 @@ namespace OuterRim.Core.Engine
             "stat.modify", "dice.opponent_fewer",
         };
 
+        /// <summary>Custom handlers (EFFECTS.md §8) this engine runs; patrol_redirect runs inside patrol movement.</summary>
+        public static readonly HashSet<string> CustomImplemented = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "tractor_beam", "patrol_redirect",
+        };
+
         public static void Register()
         {
             ResolutionHandlers.Register(new AbilityHandler());
@@ -250,6 +256,11 @@ namespace OuterRim.Core.Engine
             var state = ctx.State;
             var events = ctx.Events;
             string op = (string)node["op"]!;
+            if (node["player"] != null && node["player"]!.Type != JTokenType.String)
+            {
+                // Effects aimed at another player ("you both gain ...") are not built yet; never apply them to the owner.
+                throw new NotSupportedException("Effect '" + op + "' on a chosen player is not implemented yet.");
+            }
             switch (op)
             {
                 case "credits.gain":

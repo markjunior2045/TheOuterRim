@@ -1,0 +1,864 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "market-job",
+  "source": "data/transcription/market/base-market-job.json",
+  "cards": [
+    {
+      "id": "base-market-job-00",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "kessel"
+        }
+      },
+      "cannot_buy_on": "kessel",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 50
+        }
+      ],
+      "reward": [
+        {
+          "op": "rep.lose",
+          "faction": "syndicate"
+        },
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-01",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": true
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "takodana"
+        }
+      },
+      "cannot_buy_on": "takodana",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 51
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-02",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": true
+        },
+        {
+          "options": [
+            "tech"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "cantonica"
+        }
+      },
+      "cannot_buy_on": "cantonica",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 42
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 15000
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-03",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": true
+        },
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": true
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "piloting"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "kessel"
+        }
+      },
+      "cannot_buy_on": "kessel",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 46
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-04",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tech"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "naboo"
+        }
+      },
+      "cannot_buy_on": "naboo",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 45
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 15000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-05",
+      "deck": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 4
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "ord-mantell"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "influence"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "databank.resolve",
+              "number": 41
+            }
+          ]
+        }
+      ],
+      "reward": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "hutt",
+            "in": [
+              "pos"
+            ]
+          },
+          "then": [
+            {
+              "op": "rep.lose",
+              "faction": "syndicate"
+            },
+            {
+              "op": "fame.gain",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "rep.gain",
+          "faction": "hutt"
+        }
+      ],
+      "end": "discard",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-06",
+      "deck": "job",
+      "cost": 1000,
+      "traits": [],
+      "patrol_icon": null,
+      "kind": "crew",
+      "skills": [],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "test_before"
+          },
+          "optional": true,
+          "effects": [
+            {
+              "op": "test.skill_grant",
+              "skill": "choice",
+              "duration": "this_test",
+              "discard_on_pass": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-job-07",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": true
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "mon-calamari"
+        }
+      },
+      "cannot_buy_on": "mon-calamari",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 49
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-08",
+      "deck": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 4
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "lothal"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "knowledge"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "databank.resolve",
+              "number": 41
+            }
+          ]
+        }
+      ],
+      "reward": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "rebel",
+            "in": [
+              "pos"
+            ]
+          },
+          "then": [
+            {
+              "op": "rep.lose",
+              "faction": "imperial"
+            },
+            {
+              "op": "fame.gain",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "rep.gain",
+          "faction": "rebel"
+        }
+      ],
+      "end": "discard",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-09",
+      "deck": "job",
+      "cost": 1000,
+      "traits": [],
+      "patrol_icon": null,
+      "kind": "crew",
+      "skills": [],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "test_before"
+          },
+          "optional": true,
+          "effects": [
+            {
+              "op": "test.skill_grant",
+              "skill": "choice",
+              "duration": "this_test",
+              "discard_on_pass": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-job-10",
+      "deck": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 4
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "ryloth"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "tactics"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "databank.resolve",
+              "number": 41
+            }
+          ]
+        }
+      ],
+      "reward": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "imperial",
+            "in": [
+              "pos"
+            ]
+          },
+          "then": [
+            {
+              "op": "rep.lose",
+              "faction": "rebel"
+            },
+            {
+              "op": "fame.gain",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "rep.gain",
+          "faction": "imperial"
+        }
+      ],
+      "end": "discard",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-11",
+      "deck": "job",
+      "cost": 0,
+      "traits": [
+        "favor"
+      ],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 4
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "nal-hutta"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "knowledge"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "databank.resolve",
+              "number": 41
+            }
+          ]
+        }
+      ],
+      "reward": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "syndicate",
+            "in": [
+              "pos"
+            ]
+          },
+          "then": [
+            {
+              "op": "rep.lose",
+              "faction": "hutt"
+            },
+            {
+              "op": "fame.gain",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "rep.gain",
+          "faction": "syndicate"
+        }
+      ],
+      "end": "discard",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-12",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "piloting"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tech"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "ship_combat"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "ring-of-kafrene"
+        }
+      },
+      "cannot_buy_on": "ring-of-kafrene",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 44
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "hutt"
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-job-13",
+      "deck": "job",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "piloting"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tech"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "tatooine"
+        }
+      },
+      "cannot_buy_on": "tatooine",
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 43
+        }
+      ],
+      "reward": [
+        {
+          "op": "rep.lose",
+          "faction": "hutt"
+        },
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    }
+  ]
+}

@@ -1,0 +1,543 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "market-luxury",
+  "source": "data/transcription/market/base-market-luxury.json",
+  "cards": [
+    {
+      "id": "base-market-luxury-00",
+      "kind": "gear",
+      "deck": "luxury",
+      "cost": 15000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 4
+      },
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "condition": {
+            "cond": "rep_count",
+            "state": "pos",
+            "min": 2,
+            "max": 3
+          },
+          "effects": [
+            {
+              "op": "fame.extra",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "text": "text.1",
+          "timing": {
+            "type": "passive"
+          },
+          "condition": {
+            "cond": "rep_count",
+            "state": "pos",
+            "min": 4
+          },
+          "effects": [
+            {
+              "op": "fame.extra",
+              "amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-01",
+      "kind": "mod",
+      "deck": "luxury",
+      "cost": 20000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 4
+      },
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "fame_gained"
+          },
+          "effects": [
+            {
+              "op": "fame.gain",
+              "amount": 1,
+              "additional": true
+            }
+          ]
+        },
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "combat_lost",
+            "filter": {
+              "cond": "combat",
+              "type": "ship"
+            }
+          },
+          "effects": [
+            {
+              "op": "card.discard_self"
+            }
+          ]
+        },
+        {
+          "text": "text.1",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "chromium_hull"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-02",
+      "kind": "cargo",
+      "deck": "luxury",
+      "cost": 20000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 4
+      },
+      "cannot_buy_on": "tatooine",
+      "destination": "tatooine",
+      "delivery_check": null,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "hutt"
+        }
+      ],
+      "abilities": [
+        {
+          "text": "text.1",
+          "timing": {
+            "type": "trigger",
+            "event": "defeated"
+          },
+          "effects": [
+            {
+              "op": "asset.discard",
+              "filter": {
+                "asset": {
+                  "type": [
+                    "crew"
+                  ]
+                }
+              },
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-03",
+      "kind": "cargo",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 3
+      },
+      "cannot_buy_on": null,
+      "destination": null,
+      "delivery_check": null,
+      "reward": [],
+      "abilities": [
+        {
+          "text": "abilities.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "other_player_in_space"
+          },
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "stolen_jewels"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-04",
+      "kind": "crew",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [],
+      "patrol_icon": null,
+      "skills": [
+        "influence",
+        "tactics"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "job_completed"
+          },
+          "optional": true,
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "reward_for_fame",
+              "params": {
+                "reward": "job"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-05",
+      "kind": "mod",
+      "deck": "luxury",
+      "cost": 15000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 4
+      },
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "ship_combat",
+              "by": 1
+            }
+          ]
+        },
+        {
+          "text": "text.1",
+          "timing": {
+            "type": "trigger",
+            "event": "combat_won",
+            "filter": {
+              "cond": "combat",
+              "opponent": "patrol",
+              "patrol_fame_reward": true
+            }
+          },
+          "effects": [
+            {
+              "op": "fame.gain",
+              "amount": 1,
+              "additional": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-06",
+      "kind": "job",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 3
+      },
+      "skills": [],
+      "cannot_buy_on": null,
+      "destination": {
+        "planet_where": {
+          "cond": {
+            "cond": "rep",
+            "faction": "planet",
+            "in": [
+              "pos"
+            ]
+          }
+        }
+      },
+      "encounter": [
+        {
+          "op": "job.complete"
+        }
+      ],
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        },
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 10000
+                }
+              ],
+              "then": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1,
+                  "additional": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-luxury-07",
+      "kind": "job",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 3
+      },
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": false
+        }
+      ],
+      "cannot_buy_on": null,
+      "destination": {
+        "player_space": {
+          "player": {
+            "choose": {
+              "who": "other"
+            }
+          }
+        }
+      },
+      "encounter": [
+        {
+          "op": "custom",
+          "handler": "sabacc",
+          "params": {
+            "credits": 10000,
+            "active_player_fame": 1
+          }
+        }
+      ],
+      "reward": [],
+      "end": "discard",
+      "abilities": []
+    },
+    {
+      "id": "base-market-luxury-08",
+      "kind": "crew",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [],
+      "patrol_icon": null,
+      "skills": [
+        "stealth"
+      ],
+      "abilities": [
+        {
+          "text": "abilities.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "other_player_in_space",
+            "where": {
+              "cond": "more_fame_than",
+              "player": "self"
+            }
+          },
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "fame.gain",
+              "amount": 1
+            },
+            {
+              "op": "custom",
+              "handler": "undercover_agent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-09",
+      "kind": "gear",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [
+        "armor"
+      ],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 3
+      },
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "health",
+              "by": 3
+            }
+          ]
+        },
+        {
+          "text": "text.1",
+          "timing": {
+            "type": "trigger",
+            "event": "bounty_reward"
+          },
+          "optional": true,
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "reward_for_fame",
+              "params": {
+                "reward": "bounty"
+              }
+            }
+          ]
+        },
+        {
+          "text": "text.2",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "limit.trait",
+              "trait": "armor",
+              "max": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-market-luxury-10",
+      "kind": "cargo",
+      "deck": "luxury",
+      "cost": 10000,
+      "traits": [],
+      "patrol_icon": null,
+      "cannot_buy_on": null,
+      "destination": null,
+      "delivery_check": null,
+      "reward": [],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "condition": {
+            "cond": "has_asset",
+            "filter": {
+              "asset": {
+                "type": [
+                  "crew"
+                ]
+              }
+            },
+            "min": 2
+          },
+          "effects": [
+            {
+              "op": "fame.extra",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "text": "abilities.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "on_space",
+            "type": "navpoint"
+          },
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "dejarik"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

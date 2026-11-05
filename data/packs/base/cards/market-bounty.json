@@ -1,0 +1,495 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "market-bounty",
+  "source": "data/transcription/market/base-market-bounty.json",
+  "cards": [
+    {
+      "id": "base-market-bounty-00",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 4
+      },
+      "kind": "bounty",
+      "class": "yellow",
+      "target": "base-contact-21-saw-gerrera",
+      "combat": {
+        "type": "ground",
+        "value": 6
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "capture_destination": "lothal",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 17000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "imperial"
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-01",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": null,
+      "kind": "bounty",
+      "class": "yellow",
+      "target": "base-contact-07-chewbacca",
+      "combat": {
+        "type": "ground",
+        "value": 6
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "capture_destination": "ring-of-kafrene",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 18000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-02",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "rebel",
+        "distance": 3
+      },
+      "kind": "bounty",
+      "class": "yellow",
+      "target": "base-contact-13-hera-syndulla",
+      "combat": {
+        "type": "ship",
+        "value": 5
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 6000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.lose",
+          "faction": "rebel"
+        }
+      ],
+      "capture_destination": "lothal",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 15000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "imperial"
+        },
+        {
+          "op": "rep.lose",
+          "faction": "rebel"
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-03",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 4
+      },
+      "kind": "bounty",
+      "class": "yellow",
+      "target": "base-contact-23-ziton-moj",
+      "combat": {
+        "type": "ground",
+        "value": 5
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 6000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.lose",
+          "faction": "syndicate"
+        }
+      ],
+      "capture_destination": "ring-of-kafrene",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 16000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.lose",
+          "faction": "syndicate"
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-04",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": null,
+      "kind": "bounty",
+      "class": "yellow",
+      "target": "base-contact-19-maz-kanata",
+      "combat": {
+        "type": "ground",
+        "value": 5
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "capture_destination": "naboo",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 15000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-05",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 4
+      },
+      "kind": "bounty",
+      "class": "white",
+      "target": "base-contact-10-garindan",
+      "combat": {
+        "type": "ground",
+        "value": 3
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 6000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        },
+        {
+          "op": "rep.lose",
+          "faction": "imperial"
+        }
+      ],
+      "capture_destination": "kessel",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "rebel"
+        },
+        {
+          "op": "rep.lose",
+          "faction": "imperial"
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-06",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": null,
+      "kind": "bounty",
+      "class": "green",
+      "target": "base-contact-06-boshek",
+      "combat": {
+        "type": "ship",
+        "value": 3
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 6000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "nal-hutta",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-07",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 4
+      },
+      "kind": "bounty",
+      "class": "green",
+      "target": "base-contact-12-greedo",
+      "combat": {
+        "type": "ground",
+        "value": 4
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        },
+        {
+          "op": "rep.lose",
+          "faction": "hutt"
+        }
+      ],
+      "capture_destination": "ord-mantell",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 9000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "syndicate"
+        },
+        {
+          "op": "rep.lose",
+          "faction": "hutt"
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-08",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "imperial",
+        "distance": 3
+      },
+      "kind": "bounty",
+      "class": "green",
+      "target": "base-contact-02-4-lom",
+      "combat": {
+        "type": "ground",
+        "value": 4
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "tatooine",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "end": "remove",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-09",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "syndicate",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "ground_combat",
+            "ship_combat"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "player_space": {
+          "player": {
+            "choose": {
+              "who": "other",
+              "where": {
+                "cond": "rep_count",
+                "state": "neg",
+                "min": 1
+              }
+            }
+          }
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "custom",
+          "handler": "wanted"
+        }
+      ],
+      "reward": [],
+      "end": "discard",
+      "abilities": []
+    },
+    {
+      "id": "base-market-bounty-10",
+      "deck": "bounty",
+      "cost": 0,
+      "traits": [],
+      "patrol_icon": {
+        "faction": "hutt",
+        "distance": 3
+      },
+      "kind": "job",
+      "skills": [
+        {
+          "options": [
+            "ground_combat",
+            "ship_combat"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "player_space": {
+          "player": {
+            "choose": {
+              "who": "other",
+              "where": {
+                "cond": "rep_count",
+                "state": "neg",
+                "min": 1
+              }
+            }
+          }
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "custom",
+          "handler": "wanted"
+        }
+      ],
+      "reward": [],
+      "end": "discard",
+      "abilities": []
+    }
+  ]
+}

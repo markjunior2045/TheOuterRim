@@ -134,6 +134,17 @@
     "card_side": [
       "front",
       "back"
+    ],
+    "job_skill": [
+      "influence",
+      "knowledge",
+      "piloting",
+      "stealth",
+      "strength",
+      "tactics",
+      "tech",
+      "ground_combat",
+      "ship_combat"
     ]
   },
   "types": {
@@ -530,7 +541,8 @@
     "test.pass": {},
     "test.skill_grant": {
       "skill": "enum:choice",
-      "duration": "duration"
+      "duration": "duration",
+      "discard_on_pass": "bool?"
     },
     "dice.reroll": {
       "count": "amount",
@@ -698,7 +710,12 @@
     "pay_for_goal",
     "replace_with_starter",
     "buy_any_sheet",
-    "tractor_beam"
+    "tractor_beam",
+    "wanted",
+    "reward_for_fame",
+    "stolen_jewels",
+    "undercover_agent",
+    "dejarik"
   ],
   "card_fields": {
     "id": "string",
@@ -776,6 +793,44 @@
       "asset_kind": "enum:cargo|job|bounty",
       "destination": "nullable:space_id",
       "reward": "effects"
+    },
+    "job": {
+      "deck": "deck",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "cost": "int",
+      "skills": "list:job_skill_entry",
+      "destination": "space_sel",
+      "cannot_buy_on": "nullable:space_id",
+      "encounter": "effects",
+      "reward": "effects",
+      "end": "enum:remove|discard"
+    },
+    "bounty": {
+      "deck": "deck",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "cost": "int",
+      "class": "contact_class",
+      "target": "string",
+      "combat": "bounty_combat",
+      "elimination_reward": "effects",
+      "capture_destination": "space_id",
+      "capture_reward": "effects",
+      "end": "enum:remove|discard"
+    },
+    "ship": {
+      "deck": "deck",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "cost": "int",
+      "sheet": "string"
+    },
+    "special": {
+      "deck": "deck",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "cost": "nullable:int"
     }
   },
   "field_types": {
@@ -821,6 +876,14 @@
     "fame_track": {
       "min": "int",
       "max": "int"
+    },
+    "job_skill_entry": {
+      "options": "list:job_skill",
+      "certain": "bool"
+    },
+    "bounty_combat": {
+      "type": "enum:ground|ship",
+      "value": "int"
     }
   },
   "ability_fields": {
