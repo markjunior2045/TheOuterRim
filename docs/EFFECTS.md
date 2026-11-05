@@ -1,8 +1,8 @@
 # EFFECTS.md — Effect inventory (T2.1)
 
-Status: **draft, awaiting owner review** (2026-11-04).
+Status: **draft, awaiting owner review** (2026-11-04; objects completed with the player board, patrol tokens and map on 2026-11-05).
 
-Inventory of the objects, ability shapes, effect primitives, conditions, targets and timings found on the **242 base game cards** (`data/transcription/`, format 0.9), plus the extension points the *Unfinished Business* rules (`[UB]` in `RULES.md`) require. Expansion cards are not transcribed yet: their structural mechanics come from the rules, and card-specific effects are added when they are transcribed (`PLAN.md` T2.8).
+Inventory of the objects, ability shapes, effect primitives, conditions, targets and timings found on the **242 base game cards** (`data/transcription/`, format 0.10), the player boards, patrol tokens and map (`data/map/`), plus the extension points the *Unfinished Business* rules (`[UB]` in `RULES.md`) require. Expansion cards are not transcribed yet: their structural mechanics come from the rules, and card-specific effects are added when they are transcribed (`PLAN.md` T2.8).
 
 This document sets the card data format for T2.2 (schema) and the work list for T2.3 (effect engine). It classifies; it does not change rules. Rules stay in `RULES.md`.
 
@@ -16,11 +16,12 @@ This document sets the card data format for T2.2 (schema) and the work list for 
 
 | Object | Holds | Rules |
 |---|---|---|
-| Player | character (side), ship sheet (side), player board, credits, fame, reputation ×4, character damage, ship damage, assets in slots, secrets, goal tokens, defeated flag, "once per" usage counters | R-8, R-9, R-10, R-14, R-18 |
-| Space | type (planet, navpoint, Maelstrom, Core Worlds `[UB]`), faction (planets), adjacency, contact spaces with class, occupants | R-5 |
+| Player | colour (player board and debt token `[UB]`, R-20.12), character (side), ship sheet (side), player board, credits, fame, reputation ×4, character damage, ship damage, assets in slots, secrets, goal tokens, defeated flag, "once per" usage counters | R-8, R-9, R-10, R-14, R-18 |
+| Space | type (planet, navpoint, Maelstrom, Core Worlds `[UB]`), faction (planets), adjacency, contact spaces with class, occupants; static data in `data/map/` (§1.2) | R-5 |
 | Contact space | class, holds 0–1 contact token | R-12.4 |
 | Contact token | id, class, faction icon, droid icon, databank number, faceup/facedown, location (contact space, planet space `[UB]`, bounty card, crew card, removed) | R-12 |
-| Patrol | faction, combat token (level, value, reward), space | R-11 |
+| Patrol | faction, token (level, `{SHIP_COMBAT}` value, reward), space | R-11 |
+| Patrol stack | per faction, facedown tokens by level (2 on top, 4 at the bottom), its spawn space | R-3.7, R-5.3, R-11.10 |
 | Planet marker | damage token on a planet (only Jyn Erso-2 so far) | R-25.14 |
 | Market deck ×6 | ordered stack, top card faceup | R-16.41 |
 | Encounter deck ×7 (+ Core Worlds `[UB]`) | one deck per pair of spaces; discards go to the bottom | R-15.73, R-22.1 |
@@ -28,7 +29,17 @@ This document sets the card data format for T2.2 (schema) and the work list for 
 | AI deck | ordered stack per AI type `[SOLO]` | R-23 |
 | Supplies | ship sheets, credit tokens, damage tokens, goal tokens, debt tokens `[UB]` | R-22.4, R-22.6 |
 
-### 1.2 Card kinds and their static fields
+### 1.2 Board components (static data)
+
+| Component | Data | Facts the core relies on |
+|---|---|---|
+| Player board ×4 | `data/transcription/player-boards/` | identical apart from colour: 2 `GEAR` slots, 2 dual `JOB OR BOUNTY` slots, fame track 0–12 (marker under 10, R-18.9), reputation tracks with three states (R-10.4) |
+| Patrol token ×16 | `data/transcription/patrols/` | same values for every faction: level 1 `{SHIP_COMBAT}` 3 and 5,000 credits; level 2 value 5 and 1 fame; level 3 value 6 and 1 fame; level 4 "–" (always wins, no dice, R-11.6) and no reward |
+| Map pieces | `data/map/` (`docs/MAP_FORMAT.md`) | 6 tiles and 2 endcaps (+2 Core Worlds endcaps `[UB]`); a graph of spaces, contact spaces with class, patrol stacks and paths; tiles join side to side along an outer and an inner lane; any tile order is valid (R-3.3) |
+
+Map-based selectors used by cards (§6.2) are queries on this graph: adjacent, within N spaces, nearest (R-5.29 to R-5.33), empty contact space on a planet, a patrol's space, the spawn space of a faction.
+
+### 1.3 Card kinds and their static fields
 
 | Kind | Static fields (beyond name, image, pack, traits) | Abilities live in |
 |---|---|---|
@@ -394,7 +405,7 @@ The "treated as having" reputation of favors (R-10.9) needs a reputation overrid
 
 ## 11. Consequences for T2.2 and T2.3
 
-- Card data = static fields (§1.2) + `abilities[]` (§2), each ability a small tree of primitives (§4) with connectors (§5.1), conditions (§6) and amounts (§7). Text stays as localization keys; errata are applied in the tree and recorded in `source`.
+- Card data = static fields (§1.3) + `abilities[]` (§2), each ability a small tree of primitives (§4) with connectors (§5.1), conditions (§6) and amounts (§7). Text stays as localization keys; errata are applied in the tree and recorded in `source`.
 - The core reads stats, reputation, fame and slot capacity through **queries** that apply passive modifiers and overrides (§3.1, §10). Nothing caches a modified value.
 - Triggers (§3.3) are named events emitted by the core; replacement triggers (`would_be_defeated`, `test_would_fail`, `damage.cap`) run before the event resolves.
 - Dice modification happens in windows inside tests and combats; each window asks every holder with a matching ability (`RULES.md` §26.2).
