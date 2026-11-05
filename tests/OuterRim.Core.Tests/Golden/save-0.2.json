@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.1",
+  "format": "outer-rim-save/0.2",
   "packs": [
     {
       "id": "base",
@@ -73,6 +73,44 @@
     "round": 1,
     "currentPlayerId": "p3",
     "step": "action",
-    "fameRequirement": 10
+    "fameRequirement": 10,
+    "stack": [
+      {
+        "handler": "test.tie_parent",
+        "step": 1,
+        "vars": {
+          "candidates": "p1,p2,p3"
+        }
+      },
+      {
+        "handler": "test.tie_child",
+        "step": 1,
+        "vars": {
+          "candidates": "p1,p2,p3"
+        }
+      }
+    ],
+    "pending": {
+      "id": 1,
+      "kind": "resolveTie",
+      "playerId": "p3",
+      "prompt": "test.nearest",
+      "options": [
+        {
+          "id": "p1",
+          "label": "p1"
+        },
+        {
+          "id": "p2",
+          "label": "p2"
+        },
+        {
+          "id": "p3",
+          "label": "p3"
+        }
+      ],
+      "resultVar": "winner"
+    },
+    "nextDecisionId": 2
   }
 }

@@ -79,6 +79,35 @@ namespace OuterRim.Core.Engine
         public TurnStep Step { get; }
     }
 
+    /// <summary>The engine paused and waits for a player's answer.</summary>
+    public sealed class DecisionRequestedEvent : GameEvent
+    {
+        public DecisionRequestedEvent(PendingDecision decision)
+        {
+            Decision = decision;
+        }
+
+        public PendingDecision Decision { get; }
+    }
+
+    /// <summary>A pending decision was answered; resolution resumes.</summary>
+    public sealed class DecisionAnsweredEvent : GameEvent
+    {
+        public DecisionAnsweredEvent(int decisionId, string playerId, string answer)
+        {
+            DecisionId = decisionId;
+            PlayerId = playerId;
+            Answer = answer;
+        }
+
+        public int DecisionId { get; }
+
+        public string PlayerId { get; }
+
+        /// <summary>The chosen option id, or option ids joined by ',' for an order.</summary>
+        public string Answer { get; }
+    }
+
     /// <summary>Outcome of a command: accepted with events, or rejected with a reason and no state change.</summary>
     public sealed class CommandResult
     {

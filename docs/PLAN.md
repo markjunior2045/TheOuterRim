@@ -86,9 +86,10 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered:** `GameRandom` (PCG32, pinned to the reference values; state saved as hex); `GameState`, `PlayerState`, `ReputationTrack`; `GameEngine.NewGame` (first player by dice R-3.11, neutral reputation, credits by turn order R-3.11.g) and `Execute` with the first commands (planning: gain credits, recover damage; R-4.5, R-4.6, R-4.8); `DiceRoller` (R-6.1); `SaveSerializer` (format `outer-rim-save/0.1`, packs, rejects unknown formats and fields); golden save `tests/OuterRim.Core.Tests/Golden/save-0.1.json`. 26 tests.
 - JSON via Newtonsoft.Json (`DECISIONS.md` §7).
 
-### T1.2 — Pending decisions and ties · `TODO` (T1.1)
+### T1.2 — Pending decisions and ties · `DONE` (2026-11-05)
 - **Does:** pausing the engine to ask a player for a choice mid-effect (`RULES.md` §26.2), including `ChooseOption` and `ResolveTie` (R-5.30, R-21.10, R-21.13).
 - **Done when:** a scripted effect can pause, wait, resume, and survive a save/load while paused.
+- **Delivered:** resolution stack in the state (`Frame`: handler id, step, ordinal-sorted variables), `IResolutionHandler` and its registry, `GameEngine.StartResolution`; `PendingDecision` with three kinds (choose option, resolve tie, choose order) and their answer commands; checks for the right player (R-15.35, R-21.13), decision id, option and full order (R-21.10); no new resolution while one runs (R-21.12). Save format `outer-rim-save/0.2`; the golden save is paused mid-effect. 37 tests.
 
 ### T1.3 — Map graph · `TODO` (T0.5, T1.1)
 - Adjacency, shortest distance, "nearest" with ties, no counting through the Core Worlds (R-5.2, R-5.29 to R-5.33).
@@ -211,6 +212,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.2 done: resolution stack, pending decisions (option, tie, order), save while paused; save format 0.2. |
 | 2026-11-05 | T1.1 done: state, commands, events, seeded RNG, dice, save/load with golden file. |
 | 2026-11-05 | T2.4 base done: patrols, player boards, contacts, characters and ship sheets encoded and validated; cross-set consistency checks. |
 | 2026-11-05 | T2.2 done (owner approved the format). |

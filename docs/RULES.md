@@ -1103,7 +1103,7 @@ Derived from the rules above. To be confirmed once the effect inventory is compl
 | Planning | `Move(path)`, `GainCredits`, `RecoverDamage`, `UsePlanningAbility(id)` |
 | Action | `Deliver(assetIds)`, `MarketDiscard(deck)`, `MarketBuy(deck, barterAssetIds)`, `Trade(playerId, offer)`, `UseActionAbility(id)` |
 | Encounter | `EncounterSpace`, `EncounterPatrol(patrolId)`, `EncounterContact(tokenId)`, `FightBounty(bountyId, targetRef)`, `UseEncounterAbility(id)` |
-| Cross-cutting | `TransferCredits(playerId, amount)`, `RequestFavor(type)`, `GrantFavor(playerId)`, `ChooseOption(promptId, optionId)`, `ResolveTie(promptId, choice)`, `RearrangeAssets(layout)` |
+| Cross-cutting | `TransferCredits(playerId, amount)`, `RequestFavor(type)`, `GrantFavor(playerId)`, `ChooseOption(decisionId, optionId)`, `ResolveTie(decisionId, optionId)`, `ChooseOrder(decisionId, order)`, `RearrangeAssets(layout)` |
 
 ### 26.2 Points requiring a mid-effect player decision
 
@@ -1157,6 +1157,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | §26.1: decision commands as built in T1.2 (`ChooseOption`, `ResolveTie`, `ChooseOrder`, keyed by decision id). |
 | 2026-11-05 | R-25.15 to R-25.17: Bossk, GX1 Short Hauler and YV-666 goals (owner clarifications from T2.4). |
 | 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded; map geometry read into `data/map/`. |
 | 2026-11-04 | R-9.8 spending versus losing credits and R-25.14 Jyn Erso's planet markers (owner clarifications from the T2.1 effect inventory). |

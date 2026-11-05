@@ -17,11 +17,17 @@ namespace OuterRim.Core.Persistence
     public static class SaveSerializer
     {
         /// <summary>Save file format. Bump it when a saved field changes meaning or is removed.</summary>
-        public const string Format = "outer-rim-save/0.1";
+        public const string Format = "outer-rim-save/0.2";
 
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            // Property names in camelCase; dictionary keys (frame variables) are kept exactly as written.
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy { ProcessDictionaryKeys = false },
+            },
+            // Collections created by constructors (ordinal-sorted frame variables) are filled, not replaced.
+            ObjectCreationHandling = ObjectCreationHandling.Auto,
             Converters = { new StringEnumConverter(new CamelCaseNamingStrategy()), new GameRandomConverter() },
             Formatting = Formatting.Indented,
             MissingMemberHandling = MissingMemberHandling.Error,

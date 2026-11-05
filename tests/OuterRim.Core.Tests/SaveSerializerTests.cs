@@ -11,7 +11,7 @@ namespace OuterRim.Core.Tests
 {
     public class SaveSerializerTests
     {
-        private const string GoldenName = "save-0.1.json";
+        private const string GoldenName = "save-0.2.json";
 
         private static GameState GoldenGame()
         {
@@ -22,6 +22,12 @@ namespace OuterRim.Core.Tests
             someone.CharacterDamage = 2;
             someone.Reputation.Set(Faction.Hutt, Reputation.Negative);
             someone.Reputation.Set(Faction.Rebel, Reputation.Positive);
+
+            // Paused mid-effect (T1.2): two frames on the stack and a tie-break waiting for the current player.
+            TestHandlers.Register();
+            var frame = new Frame("test.tie_parent");
+            frame.Set("candidates", "p1,p2,p3");
+            GameEngine.StartResolution(state, frame);
             return state;
         }
 

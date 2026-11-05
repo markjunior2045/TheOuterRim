@@ -158,6 +158,16 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected("Unknown player " + command.PlayerId + ".");
             }
+            if (state.Pending != null)
+            {
+                return command is AnswerCommand answer
+                    ? Answer(state, answer)
+                    : CommandResult.Rejected("Waiting for decision " + state.Pending.Id + " from " + state.Pending.PlayerId + ".");
+            }
+            if (command is AnswerCommand)
+            {
+                return CommandResult.Rejected("No decision is pending.");
+            }
             if (player.Id != state.CurrentPlayerId)
             {
                 return CommandResult.Rejected("R-4.5: only the current player acts during their turn.");
@@ -172,6 +182,98 @@ namespace OuterRim.Core.Engine
                 default:
                     return CommandResult.Rejected("Command not supported yet: " + command.GetType().Name + ".");
             }
+        }
+
+        /// <summary>
+        /// Starts rules logic as a frame on the resolution stack and runs it until it finishes or
+        /// pauses for a decision. Card effects, combats and jobs enter the engine through here.
+        /// </summary>
+        public static CommandResult StartResolution(GameState state, Frame frame)
+        {
+            if (state.Pending != null || state.Stack.Count > 0)
+            {
+                return CommandResult.Rejected("R-21.12: another resolution is in progress.");
+            }
+            ResolutionHandlers.Get(frame.Handler);
+            var events = new List<GameEvent>();
+            state.Stack.Add(frame);
+            Resolver.Run(state, events);
+            return CommandResult.Ok(events);
+        }
+
+        /// <summary>Checks an answer against the pending decision, stores it in the waiting frame and resumes.</summary>
+        private static CommandResult Answer(GameState state, AnswerCommand command)
+        {
+            var d = state.Pending!;
+            if (command.DecisionId != d.Id)
+            {
+                return CommandResult.Rejected("Decision " + command.DecisionId + " is not the pending one (" + d.Id + ").");
+            }
+            if (command.PlayerId != d.PlayerId)
+            {
+                return CommandResult.Rejected("Decision " + d.Id + " is for " + d.PlayerId + " (R-15.35, R-21.13).");
+            }
+            string answer;
+            switch (command)
+            {
+                case ChooseOptionCommand c when d.Kind == DecisionKind.ChooseOption:
+                    answer = c.OptionId;
+                    break;
+                case ResolveTieCommand t when d.Kind == DecisionKind.ResolveTie:
+                    answer = t.OptionId;
+                    break;
+                case ChooseOrderCommand o when d.Kind == DecisionKind.ChooseOrder:
+                    if (!IsPermutation(o.Order, d.Options))
+                    {
+                        return CommandResult.Rejected("R-21.10: the order must list every option exactly once.");
+                    }
+                    answer = string.Join(",", o.Order);
+                    break;
+                default:
+                    return CommandResult.Rejected("Decision " + d.Id + " needs a " + d.Kind + " answer.");
+            }
+            if (d.Kind != DecisionKind.ChooseOrder && !HasOption(d, answer))
+            {
+                return CommandResult.Rejected("'" + answer + "' is not an option of decision " + d.Id + ".");
+            }
+            state.Stack[state.Stack.Count - 1].Set(d.ResultVar, answer);
+            state.Pending = null;
+            var events = new List<GameEvent> { new DecisionAnsweredEvent(d.Id, command.PlayerId, answer) };
+            Resolver.Run(state, events);
+            return CommandResult.Ok(events);
+        }
+
+        private static bool HasOption(PendingDecision d, string id)
+        {
+            foreach (var o in d.Options)
+            {
+                if (o.Id == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool IsPermutation(IReadOnlyList<string> order, List<DecisionOption> options)
+        {
+            if (order.Count != options.Count)
+            {
+                return false;
+            }
+            var remaining = new HashSet<string>();
+            foreach (var o in options)
+            {
+                remaining.Add(o.Id);
+            }
+            foreach (var id in order)
+            {
+                if (!remaining.Remove(id))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>R-4.6 planning option "gain 2,000 credits"; not allowed while defeated (R-4.8).</summary>

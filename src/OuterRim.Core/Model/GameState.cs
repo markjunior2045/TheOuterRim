@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using OuterRim.Core.Engine;
 using OuterRim.Core.Random;
 
 namespace OuterRim.Core.Model
@@ -35,6 +36,15 @@ namespace OuterRim.Core.Model
 
         /// <summary>Fame needed to win (R-3.1, R-18.9).</summary>
         public int FameRequirement { get; set; } = 10;
+
+        /// <summary>Rules logic in progress, innermost last. Empty between commands unless a decision is pending.</summary>
+        public List<Frame> Stack { get; set; } = new List<Frame>();
+
+        /// <summary>The question the engine is waiting on, if any (RULES §26.2).</summary>
+        public PendingDecision? Pending { get; set; }
+
+        /// <summary>Id for the next decision; ids never repeat within a game.</summary>
+        public int NextDecisionId { get; set; } = 1;
 
         public PlayerState? FindPlayer(string id)
         {
