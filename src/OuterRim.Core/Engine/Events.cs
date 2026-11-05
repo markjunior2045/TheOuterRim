@@ -594,6 +594,29 @@ namespace OuterRim.Core.Engine
         public IReadOnlyList<DieFace> Faces { get; }
     }
 
+    /// <summary>R-18.5: a goal token placed toward a goal.</summary>
+    public sealed class GoalProgressEvent : GameEvent
+    {
+        public GoalProgressEvent(string playerId, string cardId, string path, int count, int needed)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Path = path;
+            Count = count;
+            Needed = needed;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string Path { get; }
+
+        public int Count { get; }
+
+        public int Needed { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

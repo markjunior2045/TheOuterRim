@@ -367,8 +367,6 @@ namespace OuterRim.Core.Tests
         /// <summary>Effects and conditions the encoded cards use that are built in later subtasks.</summary>
         private static readonly Dictionary<string, string> Pending = new Dictionary<string, string>
         {
-            // T2.3c: goals
-            ["cond:gained"] = "T2.3c", ["cond:recovered"] = "T2.3c",
             // T2.6: encounters and contacts
             ["encounter.patrol"] = "T2.6", ["encounter.contact"] = "T2.6", ["contact.look"] = "T2.6",
             // T2.5: market

@@ -34,6 +34,9 @@ namespace OuterRim.Core.Model
         /// <summary>Faceup side of the character card: 0 front (personal goal), 1 back (after flipping, R-18.3).</summary>
         public int CharacterSide { get; set; }
 
+        /// <summary>Goal tokens on the character card and ship sheet, per goal (R-18.5).</summary>
+        public List<GoalToken> GoalTokens { get; set; } = new List<GoalToken>();
+
         /// <summary>Secret encounter cards the player holds facedown (R-15.82); they take no slot (R-15.90).</summary>
         public List<string> Secrets { get; set; } = new List<string>();
 
@@ -48,6 +51,14 @@ namespace OuterRim.Core.Model
 
         /// <summary>The faceup side of the ship sheet (its image id); the rules read its values.</summary>
         public string ShipSideId { get; set; } = "";
+    }
+
+    /// <summary>Goal tokens toward one goal: "card#path" of the goal ability and how many (R-18.5).</summary>
+    public sealed class GoalToken
+    {
+        public string Key { get; set; } = "";
+
+        public int Count { get; set; }
     }
 
     /// <summary>An asset held by a player. Kind and cost are copied from the card when it is gained.</summary>

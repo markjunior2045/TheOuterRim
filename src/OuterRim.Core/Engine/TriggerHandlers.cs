@@ -102,6 +102,27 @@ namespace OuterRim.Core.Engine
                     foreach (var a in AbilitySources.Of(ctx.Content, player))
                     {
                         var timing = a.Ability["timing"]!;
+                        var progress = Goals.Progress(a);
+                        if (progress != null)
+                        {
+                            // Goals (R-18.1 to R-18.5): a counted event adds a goal token; enough tokens, or the
+                            // event of an "on_event" goal, completes it.
+                            if (progress["count"] is JObject count && (string?)count["event"] == frame.Get("event")
+                                && Conditions.Eval(ctx.Content, ctx.State, player, count["filter"], null, context))
+                            {
+                                int n = Goals.AddToken(player, a.Key);
+                                ctx.Events.Add(new GoalProgressEvent(player.Id, a.CardId, a.Path, n, (int)count["times"]!));
+                                if (n >= (int)count["times"]!) keys.Add(a.Key);
+                            }
+                            else if (progress["on_event"] is JObject on && (string?)on["event"] == frame.Get("event")
+                                && Conditions.Eval(ctx.Content, ctx.State, player, on["filter"], null, context)
+                                && Conditions.Eval(ctx.Content, ctx.State, player, a.Ability["condition"], null, context)
+                                && FrameContext.CostPayable(ctx.Content, player, a.Ability))
+                            {
+                                keys.Add(a.Key);
+                            }
+                            continue;
+                        }
                         if ((string?)timing["type"] != "trigger" || (string?)timing["event"] != frame.Get("event")) continue;
                         if (!Conditions.Eval(ctx.Content, ctx.State, player, timing["filter"], null, context)) continue;
                         if (!Conditions.Eval(ctx.Content, ctx.State, player, a.Ability["condition"], null, context)) continue;

@@ -32,10 +32,12 @@ namespace OuterRim.Core.Engine
             {
                 case 0:
                 {
-                    if (Assets.Valid(ctx.Content, player, Assets.With(player.Assets, asset)))
+                    if (Assets.Valid(ctx.Content, player, Assets.With(player.Assets, asset)) || GoalMakesRoom(ctx, player, asset))
                     {
                         Gain(ctx, player, asset);
-                        return StepResult.Done();
+                        frame.Step = 2;
+                        return StepResult.Call(TriggersHandler.For("asset_gained", player.Id,
+                            new Dictionary<string, string> { ["gained_type"] = asset.Kind }));
                     }
                     var options = new List<DecisionOption>();
                     foreach (var a in player.Assets)
@@ -58,6 +60,8 @@ namespace OuterRim.Core.Engine
                     }
                     return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, player.Id, "rules.no_free_slot", options, "choice"));
                 }
+                case 2:
+                    return StepResult.Done();
                 default:
                 {
                     var choice = frame.Get("choice");
@@ -71,6 +75,29 @@ namespace OuterRim.Core.Engine
                     return StepResult.Done();
                 }
             }
+        }
+
+        /// <summary>
+        /// GX1 Short Hauler (R-25.16): "Gain a crew while you have 2 crew ... (keep all 3 crew)": gaining the
+        /// asset completes a ship goal whose flipped side has room for it, so no slot is needed now.
+        /// </summary>
+        private static bool GoalMakesRoom(ResolutionContext ctx, PlayerState player, AssetState asset)
+        {
+            var context = new Dictionary<string, string> { ["gained_type"] = asset.Kind };
+            foreach (var a in Effects.AbilitySources.Of(ctx.Content, player))
+            {
+                if (!(Goals.Progress(a)?["on_event"] is Newtonsoft.Json.Linq.JObject on) || (string?)on["event"] != "asset_gained") continue;
+                if (a.CardId != player.ShipSheetId) continue;
+                player.Assets.Add(asset);
+                bool met = Effects.Conditions.Eval(ctx.Content, ctx.State, player, on["filter"], null, context);
+                var side = player.ShipSideId;
+                player.ShipSideId = ctx.Content.OtherShipSide(side).Id;
+                bool fits = Assets.Valid(ctx.Content, player, player.Assets);
+                player.ShipSideId = side;
+                player.Assets.Remove(asset);
+                if (met && fits) return true;
+            }
+            return false;
         }
 
         private static void Gain(ResolutionContext ctx, PlayerState player, AssetState asset)
@@ -144,6 +171,7 @@ namespace OuterRim.Core.Engine
             }
             ctx.State.ShipSupply.Remove(sheet);
             ctx.State.ShipSupply.Add(player.ShipSheetId);
+            Goals.ClearTokens(player, player.ShipSheetId); // R-18.2: progress does not carry to another ship
             var oldSheet = player.ShipSheetId;
             player.ShipSheetId = sheet;
             player.ShipSideId = goalSide.Id;

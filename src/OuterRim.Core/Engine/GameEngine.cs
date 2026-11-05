@@ -218,7 +218,7 @@ namespace OuterRim.Core.Engine
             if (result.Accepted)
             {
                 var events = new List<GameEvent>(result.Events);
-                AfterCommand(state, events);
+                AfterCommand(content, state, events);
                 return CommandResult.Ok(events);
             }
             return result;
@@ -228,11 +228,27 @@ namespace OuterRim.Core.Engine
         /// Checks that run once a command has fully resolved: victory (R-18.8), and the end of the turn of a
         /// current player defeated during it, once the action or step in progress is over (R-8.8.4).
         /// </summary>
-        private static void AfterCommand(GameState state, List<GameEvent> events)
+        private static void AfterCommand(GameContent content, GameState state, List<GameEvent> events)
         {
             if (Victory.Check(state, events))
             {
                 return;
+            }
+            // "Have X" goals (Han Solo, Bossk, IG-88, Jyn Erso) complete as soon as their state holds.
+            int guard = 0;
+            while (state.Stack.Count == 0 && state.Pending == null && guard++ < 16
+                && Goals.FindStateGoal(content, state, out var owner, out var goal))
+            {
+                var frame = new Frame(EffectHandlers.Ability);
+                frame.Set("owner", owner!.Id);
+                frame.Set("card", goal!.CardId);
+                frame.Set("path", goal.Path);
+                state.Stack.Add(frame);
+                Resolver.Run(content, state, events);
+                if (Victory.Check(state, events))
+                {
+                    return;
+                }
             }
             if (state.TurnEndsAfterStep && state.Stack.Count == 0 && state.Pending == null)
             {
@@ -271,7 +287,7 @@ namespace OuterRim.Core.Engine
                 case GainCreditsCommand _:
                     return GainCredits(state, player);
                 case RecoverDamageCommand _:
-                    return RecoverDamage(state, player);
+                    return RecoverDamage(content, state, player);
                 case MoveCommand move:
                     return Move(content, state, player, move.Path);
                 case EndActionStepCommand _:
@@ -303,7 +319,7 @@ namespace OuterRim.Core.Engine
             var events = new List<GameEvent>();
             state.Stack.Add(frame);
             Resolver.Run(content, state, events);
-            AfterCommand(state, events);
+            AfterCommand(content, state, events);
             return CommandResult.Ok(events);
         }
 
@@ -412,7 +428,7 @@ namespace OuterRim.Core.Engine
         }
 
         /// <summary>R-4.6 planning option "recover damage": remove all damage from character and ship.</summary>
-        private static CommandResult RecoverDamage(GameState state, PlayerState player)
+        private static CommandResult RecoverDamage(GameContent content, GameState state, PlayerState player)
         {
             var check = CheckPlanningOption(state, player, "recovering damage");
             if (!check.Accepted)
@@ -423,10 +439,17 @@ namespace OuterRim.Core.Engine
             {
                 new DamageRecoveredEvent(player.Id, player.CharacterDamage, player.ShipDamage),
             };
+            string? recovered = EffectHandlers.Recovered(player.CharacterDamage, player.ShipDamage);
             player.CharacterDamage = 0;
             player.ShipDamage = 0;
             player.Defeated = false;
             StartStep(state, TurnStep.Action, events);
+            if (recovered != null)
+            {
+                // "When you recover at least 1 damage from this ship" (YV-666 ship goal).
+                state.Stack.Add(TriggersHandler.For("damage_recovered", player.Id, new Dictionary<string, string> { ["recovered"] = recovered }));
+                Resolver.Run(content, state, events);
+            }
             return CommandResult.Ok(events);
         }
 
@@ -636,11 +659,13 @@ namespace OuterRim.Core.Engine
         private static CommandResult UseAbility(GameContent content, GameState state, PlayerState player, UseAbilityCommand command)
         {
             var ability = AbilitySources.Find(content, player, command.CardId, command.Path);
-            if (ability == null || ability.TimingType != "step")
+            string? step = ability == null ? null
+                : ability.TimingType == "step" ? (string)ability.Ability["timing"]!["step"]!
+                : Goals.StepOf(ability); // "Ship Goal – Action:" and "Ship Goal – Encounter:" (R-18.3)
+            if (ability == null || step == null)
             {
                 return CommandResult.Rejected("You have no step ability at " + command.CardId + " " + command.Path + ".");
             }
-            string step = (string)ability.Ability["timing"]!["step"]!;
             if (step != StepId(state.Step))
             {
                 return CommandResult.Rejected("R-4.2: this is a " + step + " ability.");

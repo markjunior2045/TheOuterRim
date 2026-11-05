@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.8",
+  "format": "outer-rim-save/0.9",
   "packs": [
     {
       "id": "base",
@@ -37,6 +37,7 @@
         "defeated": false,
         "characterId": "base-character-00",
         "characterSide": 0,
+        "goalTokens": [],
         "secrets": [],
         "assets": [],
         "spaceId": "lothal",
@@ -60,6 +61,7 @@
         "defeated": false,
         "characterId": "base-character-01",
         "characterSide": 0,
+        "goalTokens": [],
         "secrets": [],
         "assets": [],
         "spaceId": "tatooine",
@@ -83,6 +85,7 @@
         "defeated": false,
         "characterId": "base-character-02",
         "characterSide": 0,
+        "goalTokens": [],
         "secrets": [],
         "assets": [],
         "spaceId": "naboo",

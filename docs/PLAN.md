@@ -144,7 +144,7 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Sample:** market gear (15) and cargo (10) encoded and valid. The remaining kinds (job, bounty, ship, encounter, databank, character, ship sheet, contact, AI) are added to the registry and encoded deck by deck in T2.4 to T2.6.
 - The C# loader reads the same registry when the effect engine is built (T2.3); the Python validator stays as the data-pipeline check.
 
-### T2.3 — Effect engine · in progress (split into three subtasks, 2026-11-05)
+### T2.3 — Effect engine · `DONE` (2026-11-05, in three subtasks)
 - The effects from the inventory, with hooks for custom exceptions.
 - **Coverage rule:** every effect and condition used by encoded card data is implemented, or listed with the subtask that implements it in `EffectEngineTests.Pending`; the test fails otherwise.
 
@@ -160,8 +160,9 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Movement one space at a time,** so those abilities can act; a patrol not let through still ends the movement (R-5.20).
 - **Other effects:** taking an asset from another player (IG-88), discarding a chosen asset, rolling dice with outcomes, trait limits (one ARMOR), assets that name their slot types and add capacity (Smuggling Compartment), rule changes (IG-2000, Valorous), redirecting a patrol (Jyn Erso back). 213 tests.
 
-#### T2.3c — Goals · `TODO`
-- Personal and ship goals: event counters with goal tokens, states, events with a condition, step goals; completing and flipping (R-18.1 to R-18.7).
+#### T2.3c — Goals · `DONE` (2026-11-05)
+- Goal tokens per goal in the player state (R-18.5, save format 0.9); counted goals advance on the same events as triggers ("Win 3 combats", Aggressor "against patrols"); "on event" goals complete when their condition holds, with optional costs (YV-666: may spend 7,000 when recovering ship damage, R-25.17); "have X" goals complete as soon as their state holds after a command (Han Solo, Bossk, IG-88, Jyn Erso); step goals are used like step abilities (HWK-290 Action, Firespray Encounter). Completing gives the fame and flips the card; flipping discards the card's tokens (R-18.5) and a new ship starts without progress (R-18.2). GX1 keeps the third crew because the flipped side has room (R-25.16). Recovering damage, gaining an asset and winning a combat fire their events. 221 tests.
+- Events still to be fired by later tasks: cargo delivered (T2.5), job completed, bounty reward, contact delivered and contact eliminated (T2.6).
 
 ### T2.4 — Small data sets · base `DONE` (2026-11-05), expansion with its pack
 - Patrols (16), ship sheets (9 + 6 unique), contacts (22 + 11), characters (8 + 8), ambition sheets (8), player boards (4). **Done when:** all load and validate.
@@ -241,6 +242,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.3c done: personal and ship goals; T2.3 complete; save format 0.9. |
 | 2026-11-05 | T2.3b done: dice windows, damage replacements, triggers, step-by-step movement, asset and rule effects. |
 | 2026-11-05 | T2.3 split into a, b, c; T2.3a done: effect interpreter, passive bonuses, step abilities; save format 0.8. |
 | 2026-11-05 | T1.9 done: assets and slots, gaining and discarding, ship supply and purchase with barter. Phase 1 (core) complete; save format 0.7. |

@@ -60,8 +60,8 @@ Status: `Done` · `Next` · `To do` · `Later`.
 ### 7. Effects and content · Next
 - T2.3a effect interpreter, passive bonuses, step abilities — Done
 - T2.3b triggers, replacements, dice windows — Done
-- T2.3c personal and ship goals — **Next**
-- Character setup from the starting databank cards (#90 to #92), replacing the starting planet given by hand
+- T2.3c personal and ship goals — Done
+- Character setup from the starting databank cards (#90 to #92), replacing the starting planet given by hand — **Next**
 - T2.5 market: decks, discard and buy, barter, patrol movement icons, ship cards, Used Ship for Sale — encode bounty, job, luxury and ship decks
 - T2.6 encounters, contacts, databank and secrets: encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank
 - Remove the remaining stubs (encountering a space)

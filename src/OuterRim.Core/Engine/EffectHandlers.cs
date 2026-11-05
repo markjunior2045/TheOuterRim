@@ -88,6 +88,15 @@ namespace OuterRim.Core.Engine
             return f;
         }
 
+        /// <summary>"character", "ship" or "both" for what lost damage tokens, or null if nothing did.</summary>
+        internal static string? Recovered(int character, int ship)
+        {
+            if (character > 0 && ship > 0) return "both";
+            if (ship > 0) return "ship";
+            if (character > 0) return "character";
+            return null;
+        }
+
         internal static void MarkFailedFromChild(Frame frame)
         {
             if (frame.Vars.TryGetValue("ret.failed", out var f) && f == "true")
@@ -186,6 +195,19 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(DiceOpHandler.HandlerId, frame, nodePath));
                 case "dice.roll":
                     return StepResult.Call(EffectHandlers.Child(EffectDiceRollHandler.HandlerId, frame, nodePath));
+                case "damage.recover":
+                {
+                    // Recover, then "when you recover damage" (YV-666 ship goal).
+                    int ship = owner.ShipDamage, character = owner.CharacterDamage;
+                    Instant.Apply(ctx, owner, frame.Get("card"), node);
+                    string? recovered = EffectHandlers.Recovered(character - owner.CharacterDamage, ship - owner.ShipDamage);
+                    if (recovered != null)
+                    {
+                        return StepResult.Call(TriggersHandler.For("damage_recovered", owner.Id,
+                            new Dictionary<string, string> { ["recovered"] = recovered }));
+                    }
+                    return StepResult.Continue();
+                }
                 case "asset.discard":
                     return StepResult.Call(EffectHandlers.Child(AssetDiscardHandler.HandlerId, frame, nodePath));
                 case "asset.take":
@@ -292,11 +314,13 @@ namespace OuterRim.Core.Engine
                 case "sheet.flip":
                     if ((string)node["sheet"]! == "character")
                     {
+                        Goals.ClearTokens(owner, owner.CharacterId); // R-18.5
                         owner.CharacterSide = 1 - owner.CharacterSide;
                         events.Add(new SheetFlippedEvent(owner.Id, "character", owner.CharacterSide));
                     }
                     else
                     {
+                        Goals.ClearTokens(owner, owner.ShipSheetId); // R-18.5
                         var other = content.OtherShipSide(owner.ShipSideId);
                         owner.ShipSideId = other.Id;
                         events.Add(new SheetFlippedEvent(owner.Id, "ship", 0));

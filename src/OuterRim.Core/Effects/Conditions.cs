@@ -22,7 +22,7 @@ namespace OuterRim.Core.Effects
             "all", "any", "not", "has_skill", "has_asset", "on_space", "is_droid", "is_character", "rep", "rep_count",
             "credits_at_least", "most_famous", "more_fame_than", "same_space", "other_player_in_space", "in_patrol_space",
             "ship_cost_at_least", "ship_trait", "planet_markers", "not_defeated", "no_damage", "player_count",
-            "combat", "delivering", "moving_into",
+            "combat", "delivering", "moving_into", "gained", "recovered",
         };
 
         /// <param name="context">What is happening, for conditions about it: "combat_type" (ground, ship),
@@ -151,6 +151,21 @@ namespace OuterRim.Core.Effects
                 {
                     if (context == null || !context.TryGetValue("delivering_traits", out var traits)) return false;
                     return c["trait"] == null || Array.IndexOf(traits.Split(','), (string)c["trait"]!) >= 0;
+                }
+                case "gained":
+                {
+                    if (context == null || !context.TryGetValue("gained_type", out var gained)) return false;
+                    foreach (var t in (JArray)c["type"]!)
+                    {
+                        if ((string)t! == gained) return true;
+                    }
+                    return false;
+                }
+                case "recovered":
+                {
+                    if (context == null || !context.TryGetValue("recovered", out var rec)) return false;
+                    var wanted = (string)c["target"]!;
+                    return wanted == "both" ? rec == "both" : rec == wanted || rec == "both";
                 }
                 case "moving_into":
                     return context != null && context.TryGetValue("moving_into", out var into) && into == (string)c["what"]!;
