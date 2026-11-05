@@ -1,0 +1,1179 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-ring-of-kafrene-takodana",
+  "source": "data/transcription/encounter/base-encounter-ring-of-kafrene-takodana.json",
+  "cards": [
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-05",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "most_famous"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 12000,
+                              "barter": true
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            },
+                            {
+                              "op": "rep.gain",
+                              "faction": "hutt"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 12000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            },
+                            {
+                              "op": "rep.gain",
+                              "faction": "hutt"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "rep.lose",
+                  "faction": "imperial",
+                  "amount": {
+                    "up_to": {
+                      "max": 2
+                    }
+                  }
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "imperial",
+                    "in": [
+                      "pos",
+                      "neu"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "damage.suffer",
+                      "target": "character",
+                      "amount": 2
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "encounter.space",
+                      "deck": "ring-of-kafrene-takodana"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 1,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-06",
+      "asset": "base-encounter-ring-of-kafrene-takodana-06-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "has_asset",
+                    "filter": {
+                      "asset": {
+                        "type": [
+                          "gear",
+                          "mod"
+                        ]
+                      }
+                    },
+                    "min": 1
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "asset.discard",
+                              "filter": {
+                                "asset": {
+                                  "type": [
+                                    "gear",
+                                    "mod"
+                                  ]
+                                }
+                              },
+                              "count": 1
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "credits.gain",
+                              "amount": {
+                                "times": {
+                                  "factor": 2,
+                                  "of": "cost"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "gear"
+                          ],
+                          "source": "top"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "influence"
+                      ],
+                      "pass": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 2,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-07",
+      "asset": "base-encounter-ring-of-kafrene-takodana-07-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 3000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "contact.move"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 3,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-08",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "most_famous"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 8000,
+                              "barter": true
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 15000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "contact.move",
+                  "facedown_only": true
+                },
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "encounter.contact",
+                      "where": "your_space"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 4,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-09",
+      "asset": "base-encounter-ring-of-kafrene-takodana-09-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "asset.take",
+                      "filter": {
+                        "asset": {
+                          "type": [
+                            "crew"
+                          ]
+                        }
+                      },
+                      "from": {
+                        "choose": {
+                          "who": "other",
+                          "where": {
+                            "cond": "same_space"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 5,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-00",
+      "asset": "base-encounter-ring-of-kafrene-takodana-00-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "gear"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3,
+                  "discount": 1000,
+                  "filter": {
+                    "asset": {
+                      "type": [
+                        "mod"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 6,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-01",
+      "asset": "base-encounter-ring-of-kafrene-takodana-01-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "stealth"
+                  ],
+                  "pass": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "rep.lose",
+                              "faction": "syndicate"
+                            },
+                            {
+                              "op": "credits.spend",
+                              "amount": 7000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "fail": [
+                    {
+                      "op": "credits.lose",
+                      "amount": 1000
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 7,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-02",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "damage.recover",
+                  "target": "character",
+                  "amount": {
+                    "all": {}
+                  }
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "most_famous"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 8000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 16000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep_count",
+                    "state": "pos",
+                    "min": 1
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "contact.look",
+                          "where": {
+                            "planet_where": {
+                              "cond": {
+                                "cond": "rep",
+                                "faction": "planet",
+                                "in": [
+                                  "pos"
+                                ]
+                              }
+                            }
+                          },
+                          "count": {
+                            "per": {
+                              "each": 1,
+                              "counter": "rep_pos"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 3000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "rep.gain",
+                              "faction": "choice"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 8,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-03",
+      "asset": "base-encounter-ring-of-kafrene-takodana-03-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "custom",
+                      "handler": "look_and_exchange",
+                      "params": {
+                        "count": 2,
+                        "facedown": true,
+                        "different_planets": true
+                      }
+                    }
+                  ]
+                }
+              ],
+              "errata": "R-24.4"
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 9,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-04",
+      "asset": "base-encounter-ring-of-kafrene-takodana-04-asset",
+      "sections": [
+        {
+          "space": "ring-of-kafrene",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 4000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "custom",
+                          "handler": "pay_for_goal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "takodana",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "has_asset",
+                    "filter": {
+                      "asset": {
+                        "type": [
+                          "crew"
+                        ],
+                        "name": "Maz Kanata"
+                      }
+                    },
+                    "min": 1
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 1000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "asset.gain_embedded"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ring-of-kafrene-takodana",
+      "number": 10,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-06-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-06",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "strength"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "dice.opponent_fewer",
+              "count": 1,
+              "combat": "ground"
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-07-asset",
+      "kind": "mod",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-07",
+      "cost": 0,
+      "patrol_icon": null,
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "ship_combat"
+            ]
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "dice.cancel",
+              "face": [
+                "hit"
+              ],
+              "count": {
+                "all": {}
+              }
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-09-asset",
+      "kind": "mod",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-09",
+      "cost": 0,
+      "patrol_icon": null,
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "ship_combat"
+            ]
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "dice.add",
+              "face": "hit",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-00-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-00",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "tactics"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "slot.modify",
+              "slot": "gear",
+              "capacity": 1
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-01-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-01",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "tech"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "move_into",
+            "filter": {
+              "cond": "all",
+              "of": [
+                {
+                  "cond": "moving_into",
+                  "what": "patrol"
+                },
+                {
+                  "cond": "rep",
+                  "faction": "patrol_in_space",
+                  "in": [
+                    "neu"
+                  ]
+                }
+              ]
+            }
+          },
+          "effects": [
+            {
+              "op": "move.no_stop"
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-03-asset",
+      "kind": "mod",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-03",
+      "cost": 0,
+      "patrol_icon": null,
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "replacement",
+            "event": "would_be_defeated",
+            "filter": {
+              "cond": "combat",
+              "type": "ship"
+            }
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "move.player_direct",
+              "to": "nearest_planet"
+            },
+            {
+              "op": "damage.recover",
+              "target": "ship",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-ring-of-kafrene-takodana-04-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-ring-of-kafrene-takodana-04",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "influence"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "cost": [
+            {
+              "op": "credits.spend",
+              "amount": 1000
+            }
+          ],
+          "effects": [
+            {
+              "op": "encounter_deck.peek"
+            }
+          ]
+        }
+      ],
+      "traits": [],
+      "droid": true
+    }
+  ]
+}

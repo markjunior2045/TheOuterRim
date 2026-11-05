@@ -367,15 +367,21 @@ namespace OuterRim.Core.Tests
         /// <summary>Effects and conditions the encoded cards use that are built in later subtasks.</summary>
         private static readonly Dictionary<string, string> Pending = new Dictionary<string, string>
         {
-            // T2.6: encounters and contacts
+            // T2.6: encounters, contacts, jobs and databank procedures
             ["encounter.patrol"] = "T2.6", ["encounter.contact"] = "T2.6", ["contact.look"] = "T2.6",
-            // T2.5: market
-            ["market.extra_action"] = "T2.5",
-            // T2.6: jobs and databank procedures
             ["job.complete"] = "T2.6", ["databank.resolve"] = "T2.6",
             ["custom:wanted"] = "T2.6", ["custom:sabacc"] = "T2.6", ["custom:reward_for_fame"] = "T2.6",
-            ["custom:stolen_jewels"] = "T2.5", ["custom:undercover_agent"] = "T2.5", ["custom:dejarik"] = "T2.5",
-            ["custom:chromium_hull"] = "T2.5", 
+            // Left over from T2.5 (market), built with T2.6
+            ["market.extra_action"] = "T2.6", ["custom:stolen_jewels"] = "T2.6", ["custom:undercover_agent"] = "T2.6",
+            ["custom:dejarik"] = "T2.6", ["custom:chromium_hull"] = "T2.6",
+            // T2.6: encounter card sections and their embedded assets
+            ["asset.gain_databank"] = "T2.6", ["asset.gain_embedded"] = "T2.6", ["bounty.deliver"] = "T2.6", ["cond:within_patrol"] = "T2.6",
+            ["contact.move"] = "T2.6", ["credits.take"] = "T2.6", ["custom:buy_any_sheet"] = "T2.6", ["custom:dice_gamble"] = "T2.6",
+            ["custom:double_or_nothing"] = "T2.6", ["custom:look_and_exchange"] = "T2.6", ["custom:lose_any_reputation"] = "T2.6", ["custom:name_a_number"] = "T2.6",
+            ["custom:patrol_hunt"] = "T2.6", ["custom:pay_for_goal"] = "T2.6", ["custom:replace_with_starter"] = "T2.6", ["custom:side_bets"] = "T2.6",
+            ["damage.prevent"] = "T2.6", ["encounter_deck.peek"] = "T2.6", ["encounter.space"] = "T2.6", ["market.buy"] = "T2.6",
+            ["market.take"] = "T2.6", ["move.patrol"] = "T2.6", ["move.patrol_direct"] = "T2.6", ["move.player"] = "T2.6",
+            ["move.player_direct"] = "T2.6", ["player.choose"] = "T2.6", ["test.pass"] = "T2.6", ["turn.additional"] = "T2.6",
         };
 
         [Fact]
@@ -397,7 +403,8 @@ namespace OuterRim.Core.Tests
                 }
             }
             foreach (var file in new[] { "market-gear", "market-cargo", "market-job", "market-bounty", "market-luxury", "market-ship",
-                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting", "databank-cargo-check" })
+                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting", "databank-cargo-check",
+                "encounter-cantonica-ord-mantell", "encounter-kessel-maelstrom", "encounter-lothal-mon-calamari", "encounter-navpoint", "encounter-ring-of-kafrene-takodana", "encounter-ryloth-naboo", "encounter-tatooine-nal-hutta" })
             {
                 Walk(JObject.Parse(Repo.Read("data/packs/base/cards/" + file + ".json")));
             }

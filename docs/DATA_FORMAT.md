@@ -48,12 +48,21 @@ Every card has `id`, `kind`, `abilities`, and the fields of its kind in `registr
 | patrol | `faction`, `level`, `combat` (`null` for level 4, R-11.6), `reward` (effects) |
 | player_board | `color`, `slots`, `fame_track` (`min`, `max`) |
 | starting_asset | databank cards #90 to #92: `number`, `variant`, `starting_planet`, `asset_kind` (cargo, job, bounty), `destination`, `reward` (R-3.15) |
+| job | `deck`, `cost`, `traits`, `patrol_icon`, `skills` (each `{ options, certain }`, R-15.32), `destination` (a space selector), `cannot_buy_on`, `encounter` and `reward` (effects), `end` (`remove` or `discard`) |
+| bounty | `deck`, `cost`, `traits`, `patrol_icon`, `class`, `target` (contact id), `combat` (`{ type, value }`), `elimination_reward`, `capture_destination`, `capture_reward`, `end` |
+| ship / special | ship market cards: `sheet`; Used Ship for Sale is `special` |
+| cargo_check | databank card #1: `number`, `variant`, `intro`, and one effect list per die result (`crit`, `focus`, `blank`) |
+| encounter | `deck` (encounter deck id), `number` (printed n/10), `sections`, `asset` (id of the embedded asset card, or `null`) |
 
 A slot is `{ "types": ["job", "bounty"], "count": 2 }`: `types` lists the asset types the slot accepts ("job or bounty"), `count` how many cards of those types fit. `count` is the number of printed boxes with that label: "CREW" printed three times is `{ "types": ["crew"], "count": 3 }`. A box printed "X2" holds two cards (R-14.14) and counts as 2; in the base game only Slave I (the flipped Firespray-31 Patrol Craft) prints one, "MOD X2" (checked against the physical sheet, 2026-11-05). Since placement is free (R-14.17), separate boxes and an "X2" box behave the same. Two-sided cards keep their abilities on each side; their text keys start with the side (`"front.upper.0"`, `"sides.1.text.0"`). Goals are abilities with a `goal` timing whose `progress` is a count of events, a state, an event with a condition, or a step ability (`EFFECTS.md` §3.5).
 
 The validator also checks consistency between sets: contact tokens per class match the contact spaces on the map (R-12.4), and each faction has one patrol token of each level (R-11.3).
 
-Further kinds (job, bounty, ship, encounter, databank, AI) are added to the registry as their decks are encoded.
+An encounter section is `{ "space", "patrol"?, "variants" }`: `space` is a space id, or `"navpoint"` with `patrol` true or false for the two navpoint sections (R-15.75). A variant is `{ "condition", "effects" }`, where `condition` is the reputation subsection (`null` when there is none) checked when the card is drawn (R-15.77). A secret variant has `"secret": true` and `abilities` instead of `effects`: the player keeps the card and holds those abilities (R-15.82); their text keys are relative to the encounter card (`"sections.0.variants.0.text"`). A variant may carry `errata` (R-24).
+
+An asset printed on an encounter (or databank) card is a separate card record with id `"<card id>-asset"`, the fields of its kind, `cost` 0 (R-15.78), `patrol_icon` `null`, no `deck`, and `embedded_in` naming the card it is printed on. `build_loc.py` writes its strings under the same `"<card id>-asset"` prefix.
+
+Further kinds (databank, AI) are added to the registry as their decks are encoded.
 
 Player-facing text never appears in card data (`DECISIONS.md` §3). An ability's `text` is a key relative to the card: `"text.0"` resolves to `"<card id>.text.0"` in the pack's localization file. Icons stay as `{PLACEHOLDERS}`.
 

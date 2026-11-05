@@ -232,7 +232,7 @@ namespace OuterRim.Core.Content
             {
                 foreach (var kv in _cards)
                 {
-                    if ((int?)kv.Value["number"] == number && kv.Value["kind"] != null)
+                    if ((int?)kv.Value["number"] == number && kv.Value["kind"] != null && (string?)kv.Value["kind"] != "encounter")
                     {
                         ids.Add(kv.Key);
                     }

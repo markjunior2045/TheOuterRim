@@ -56,7 +56,8 @@
       "job",
       "bounty",
       "ship",
-      "special"
+      "special",
+      "secret"
     ],
     "trait": [
       "illegal",
@@ -119,7 +120,8 @@
       "patrol",
       "player_board",
       "starting_asset",
-      "cargo_check"
+      "cargo_check",
+      "encounter"
     ],
     "contact_class": [
       "white",
@@ -146,6 +148,15 @@
       "tech",
       "ground_combat",
       "ship_combat"
+    ],
+    "encounter_deck": [
+      "cantonica-ord-mantell",
+      "kessel-maelstrom",
+      "lothal-mon-calamari",
+      "navpoint",
+      "ring-of-kafrene-takodana",
+      "ryloth-naboo",
+      "tatooine-nal-hutta"
     ]
   },
   "types": {
@@ -176,7 +187,8 @@
       "enum": "faction",
       "objects": {
         "choose": {
-          "from_rep": "list:rep_state?"
+          "from_rep": "list:rep_state?",
+          "other": "bool?"
         },
         "each_with_rep": {
           "state": "rep_state"
@@ -221,6 +233,9 @@
       "objects": {
         "within": {
           "distance": "int"
+        },
+        "each_with_rep": {
+          "state": "rep_state"
         }
       }
     },
@@ -246,7 +261,9 @@
           "trait": "trait?",
           "droid": "bool?",
           "name": "string?",
-          "self": "bool?"
+          "self": "bool?",
+          "matches_contact_here": "bool?",
+          "faction": "faction?"
         }
       }
     },
@@ -441,6 +458,10 @@
     },
     "recovered": {
       "target": "damage_target"
+    },
+    "within_patrol": {
+      "faction": "faction",
+      "distance": "int"
     }
   },
   "effects": {
@@ -454,7 +475,8 @@
       "chooser": "player_sel?"
     },
     "may": {
-      "effects": "effects"
+      "effects": "effects",
+      "else": "effects?"
     },
     "to": {
       "cost": "effects",
@@ -611,7 +633,8 @@
     "market.extra_action": {},
     "encounter.patrol": {
       "patrol": "patrol_sel",
-      "who": "player_sel?"
+      "who": "player_sel?",
+      "bonus": "effects?"
     },
     "encounter.contact": {
       "where": "space_sel?"
@@ -692,7 +715,12 @@
       "params": "object?"
     },
     "move.no_stop": {},
-    "cargo.discard": {}
+    "cargo.discard": {},
+    "player.choose": {
+      "who": "enum:other|any",
+      "where": "cond?",
+      "effects": "effects"
+    }
   },
   "outcome": {
     "faces": "list:face?",
@@ -717,31 +745,36 @@
     "reward_for_fame",
     "stolen_jewels",
     "undercover_agent",
-    "dejarik"
+    "dejarik",
+    "dice_gamble",
+    "lose_any_reputation",
+    "patrol_hunt",
+    "look_and_exchange"
   ],
   "card_fields": {
     "id": "string",
     "kind": "card_kind",
     "abilities": "list:ability?",
     "errata": "string?",
-    "notes": "list:string?"
+    "notes": "list:string?",
+    "embedded_in": "string?"
   },
   "card_kinds": {
     "gear": {
-      "deck": "deck",
+      "deck": "deck?",
       "cost": "int",
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon"
     },
     "mod": {
-      "deck": "deck",
+      "deck": "deck?",
       "cost": "int",
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon",
       "slot": "list:card_type?"
     },
     "crew": {
-      "deck": "deck",
+      "deck": "deck?",
       "cost": "int",
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon",
@@ -750,7 +783,7 @@
       "droid": "bool?"
     },
     "cargo": {
-      "deck": "deck",
+      "deck": "deck?",
       "cost": "int",
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon",
@@ -797,7 +830,7 @@
       "reward": "effects"
     },
     "job": {
-      "deck": "deck",
+      "deck": "deck?",
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon",
       "cost": "int",
@@ -809,7 +842,7 @@
       "end": "enum:remove|discard"
     },
     "bounty": {
-      "deck": "deck",
+      "deck": "deck?",
       "traits": "list:trait",
       "patrol_icon": "nullable:patrol_icon",
       "cost": "int",
@@ -841,6 +874,12 @@
       "crit": "effects",
       "focus": "effects",
       "blank": "effects"
+    },
+    "encounter": {
+      "deck": "encounter_deck",
+      "number": "int",
+      "sections": "list:encounter_section",
+      "asset": "nullable:string"
     }
   },
   "field_types": {
@@ -894,6 +933,18 @@
     "bounty_combat": {
       "type": "enum:ground|ship",
       "value": "int"
+    },
+    "encounter_section": {
+      "space": "string",
+      "patrol": "bool?",
+      "variants": "list:encounter_variant"
+    },
+    "encounter_variant": {
+      "condition": "nullable:cond",
+      "secret": "bool?",
+      "effects": "effects?",
+      "abilities": "list:ability?",
+      "errata": "string?"
     }
   },
   "ability_fields": {

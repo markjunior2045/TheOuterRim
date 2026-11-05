@@ -1,0 +1,1319 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-kessel-maelstrom",
+  "source": "data/transcription/encounter/base-encounter-kessel-maelstrom.json",
+  "cards": [
+    {
+      "id": "base-encounter-kessel-maelstrom-06",
+      "asset": "base-encounter-kessel-maelstrom-06-asset",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "syndicate",
+                    "in": [
+                      "pos"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "choice",
+                          "options": [
+                            [
+                              {
+                                "op": "credits.spend",
+                                "amount": 1000
+                              },
+                              {
+                                "op": "asset.gain_embedded"
+                              }
+                            ],
+                            [
+                              {
+                                "op": "credits.spend",
+                                "amount": 3000
+                              },
+                              {
+                                "op": "asset.gain_embedded"
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 3000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "asset.gain_embedded"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting"
+                  ],
+                  "pass": [
+                    {
+                      "op": "turn.additional"
+                    }
+                  ],
+                  "fail": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    },
+                    {
+                      "op": "damage.suffer",
+                      "target": "ship",
+                      "amount": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 1,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-08",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "stealth"
+                      ],
+                      "pass": [
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        },
+                        {
+                          "op": "rep.lose",
+                          "faction": "syndicate",
+                          "amount": 2
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 4
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "syndicate"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "damage.suffer",
+                  "target": "ship",
+                  "amount": 1
+                },
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "damage.recover",
+                      "target": "ship",
+                      "amount": {
+                        "up_to": {
+                          "max": 2
+                        }
+                      }
+                    },
+                    {
+                      "op": "turn.additional"
+                    }
+                  ],
+                  "fail": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 2,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-09",
+      "asset": "base-encounter-kessel-maelstrom-09-asset",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "choice",
+                      "options": [
+                        [
+                          {
+                            "op": "rep.lose",
+                            "faction": "syndicate"
+                          }
+                        ],
+                        [
+                          {
+                            "op": "credits.spend",
+                            "amount": 3000
+                          }
+                        ]
+                      ]
+                    },
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting",
+                    "knowledge"
+                  ],
+                  "pass": [
+                    {
+                      "op": "turn.additional"
+                    }
+                  ],
+                  "fail": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    },
+                    {
+                      "op": "damage.suffer",
+                      "target": "ship",
+                      "amount": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 3,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-00",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "cargo"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3,
+                  "discount": 1000,
+                  "filter": {
+                    "asset": {
+                      "trait": "illegal"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 3000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "syndicate"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting"
+                  ],
+                  "pass": [
+                    {
+                      "op": "turn.additional"
+                    }
+                  ],
+                  "fail": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    },
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "has_asset",
+                        "filter": {
+                          "asset": {
+                            "type": [
+                              "mod"
+                            ]
+                          }
+                        },
+                        "min": 1
+                      },
+                      "then": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "mod"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "ship",
+                          "amount": 3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 4,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-01",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "choice",
+                      "options": [
+                        [
+                          {
+                            "op": "if",
+                            "cond": {
+                              "cond": "rep",
+                              "faction": "hutt",
+                              "in": [
+                                "pos"
+                              ]
+                            },
+                            "then": [
+                              {
+                                "op": "rep.lose",
+                                "faction": "hutt",
+                                "amount": 2
+                              },
+                              {
+                                "op": "fame.gain",
+                                "amount": 1
+                              }
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "op": "if",
+                            "cond": {
+                              "cond": "rep",
+                              "faction": "imperial",
+                              "in": [
+                                "pos"
+                              ]
+                            },
+                            "then": [
+                              {
+                                "op": "rep.lose",
+                                "faction": "imperial",
+                                "amount": 2
+                              },
+                              {
+                                "op": "fame.gain",
+                                "amount": 1
+                              }
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "op": "if",
+                            "cond": {
+                              "cond": "rep",
+                              "faction": "syndicate",
+                              "in": [
+                                "pos"
+                              ]
+                            },
+                            "then": [
+                              {
+                                "op": "rep.lose",
+                                "faction": "syndicate",
+                                "amount": 2
+                              },
+                              {
+                                "op": "fame.gain",
+                                "amount": 1
+                              }
+                            ]
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "asset.discard",
+                              "filter": {
+                                "asset": {
+                                  "type": [
+                                    "crew"
+                                  ]
+                                }
+                              },
+                              "count": 1
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "credits.gain",
+                              "amount": 3000
+                            },
+                            {
+                              "op": "rep.gain",
+                              "faction": "syndicate"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "imperial",
+                    "in": [
+                      "neg",
+                      "neu"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "combat",
+                      "type": "ship",
+                      "opponent": {
+                        "npc": {
+                          "value": 3,
+                          "name_key": "TIE fighter"
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "move.player",
+                          "distance": 1
+                        },
+                        {
+                          "op": "turn.additional"
+                        }
+                      ],
+                      "lose": [
+                        {
+                          "op": "move.player",
+                          "distance": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    },
+                    {
+                      "op": "turn.additional"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 5,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-02",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "market.take",
+                      "name": "base-market-job-11",
+                      "from": "deck_or_player"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "stealth"
+                      ],
+                      "pass": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "syndicate"
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting",
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "turn.additional"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 6,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-03",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "cargo"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3,
+                  "free": true,
+                  "filter": {
+                    "asset": {
+                      "trait": "illegal"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "has_asset",
+                    "filter": {
+                      "asset": {
+                        "type": [
+                          "cargo"
+                        ]
+                      }
+                    },
+                    "max": 0
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "move.player",
+                          "distance": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "credits.lose",
+                      "amount": 3000
+                    },
+                    {
+                      "op": "rep.gain",
+                      "faction": "syndicate"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "combat",
+                  "type": "ship",
+                  "opponent": {
+                    "npc": {
+                      "value": 4,
+                      "name_key": "creature"
+                    }
+                  },
+                  "win": [
+                    {
+                      "op": "damage.prevent",
+                      "amount": {
+                        "all": {}
+                      }
+                    },
+                    {
+                      "op": "turn.additional"
+                    }
+                  ],
+                  "lose": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 7,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-04",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "rep.lose",
+                      "faction": {
+                        "choose": {
+                          "from_rep": [
+                            "neu"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "credits.gain",
+                  "amount": {
+                    "per": {
+                      "each": 3000,
+                      "counter": "rep_neg"
+                    }
+                  }
+                },
+                {
+                  "op": "move.patrol",
+                  "patrol": {
+                    "each_with_rep": {
+                      "state": "neg"
+                    }
+                  },
+                  "distance": 4,
+                  "toward": "you"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "move.patrol_direct",
+                      "patrol": "any",
+                      "to": "your_space"
+                    },
+                    {
+                      "op": "encounter.patrol",
+                      "patrol": "in_your_space",
+                      "bonus": [
+                        {
+                          "op": "dice.add",
+                          "face": "crit",
+                          "count": 1
+                        }
+                      ]
+                    },
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "piloting"
+                      ],
+                      "pass": [
+                        {
+                          "op": "turn.additional"
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "move.player",
+                          "distance": 1
+                        },
+                        {
+                          "op": "damage.suffer",
+                          "target": "ship",
+                          "amount": 3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 8,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-05",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": {
+                            "choose": {
+                              "from_rep": [
+                                "pos"
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 4000
+                        },
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "rep.lose",
+                                  "faction": {
+                                    "choose": {
+                                      "from_rep": [
+                                        "pos"
+                                      ],
+                                      "other": true
+                                    }
+                                  }
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "fame.gain",
+                                  "amount": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "cargo",
+                                "mod"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "turn.additional"
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    },
+                    {
+                      "op": "damage.suffer",
+                      "target": "ship",
+                      "amount": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 9,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-07",
+      "sections": [
+        {
+          "space": "kessel",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "custom",
+                      "handler": "lose_any_reputation",
+                      "params": {
+                        "factions": [
+                          "hutt",
+                          "rebel",
+                          "imperial"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "all",
+                    "of": [
+                      {
+                        "cond": "rep",
+                        "faction": "hutt",
+                        "in": [
+                          "neg"
+                        ]
+                      },
+                      {
+                        "cond": "rep",
+                        "faction": "rebel",
+                        "in": [
+                          "neg"
+                        ]
+                      },
+                      {
+                        "cond": "rep",
+                        "faction": "imperial",
+                        "in": [
+                          "neg"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "fame.gain",
+                      "amount": 1
+                    },
+                    {
+                      "op": "rep.gain",
+                      "faction": "syndicate"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "maelstrom",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "turn.additional"
+                    }
+                  ],
+                  "fail": [
+                    {
+                      "op": "move.player",
+                      "distance": 1
+                    },
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "has_asset",
+                        "filter": {
+                          "asset": {
+                            "type": [
+                              "crew"
+                            ]
+                          }
+                        },
+                        "min": 1
+                      },
+                      "then": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "crew"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "kessel-maelstrom",
+      "number": 10,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-06-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-kessel-maelstrom-06",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [
+        "illegal"
+      ],
+      "destination": "naboo",
+      "cannot_buy_on": null,
+      "delivery_check": {
+        "success": [
+          "hit"
+        ],
+        "else_databank": 1
+      },
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 9000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-kessel-maelstrom-09-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-kessel-maelstrom-09",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [],
+      "destination": "lothal",
+      "cannot_buy_on": null,
+      "delivery_check": null,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 9000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "action_step_end"
+          },
+          "effects": [
+            {
+              "op": "dice.roll",
+              "count": 1,
+              "outcomes": [
+                {
+                  "faces": [
+                    "crit"
+                  ],
+                  "effects": [
+                    {
+                      "op": "card.discard_self"
+                    },
+                    {
+                      "op": "damage.suffer",
+                      "target": "ship",
+                      "amount": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

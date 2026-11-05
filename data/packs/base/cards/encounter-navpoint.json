@@ -1,0 +1,1166 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-navpoint",
+  "source": "data/transcription/encounter/base-encounter-navpoint.json",
+  "cards": [
+    {
+      "id": "base-encounter-navpoint-00",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "bounty",
+                    "cargo",
+                    "gear",
+                    "job",
+                    "luxury",
+                    "ship"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "move.patrol_direct",
+                  "patrol": "hutt",
+                  "to": "your_space"
+                },
+                {
+                  "op": "encounter.patrol",
+                  "patrol": "hutt"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "move.patrol_direct",
+                      "patrol": "hutt",
+                      "to": "any_space"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 1,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-09",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "piloting"
+                      ],
+                      "pass": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 3000
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "ship",
+                          "amount": 3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting"
+                  ],
+                  "fail": [
+                    {
+                      "op": "combat",
+                      "type": "ship",
+                      "opponent": {
+                        "npc": {
+                          "value": 4,
+                          "name_key": "bounty hunter"
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "damage.prevent",
+                          "amount": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "move.patrol_direct",
+                          "patrol": "chosen_in_your_space",
+                          "to": "any_space"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 2,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-08",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "move.player",
+                  "distance": {
+                    "up_to": {
+                      "max": 2
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "move.patrol_direct",
+                  "patrol": "imperial",
+                  "to": "adjacent"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "stealth"
+                      ],
+                      "pass": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "turn.additional"
+                            }
+                          ]
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "patrol_in_space"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 3,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-07",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "move.patrol_direct",
+                  "patrol": "rebel",
+                  "to": "your_space"
+                },
+                {
+                  "op": "damage.recover",
+                  "target": "ship",
+                  "amount": {
+                    "all": {}
+                  }
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting"
+                  ],
+                  "fail": [
+                    {
+                      "op": "damage.suffer",
+                      "target": "ship",
+                      "amount": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "patrol_in_space",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "credits.spend",
+                                  "amount": 10000
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "fame.gain",
+                                  "amount": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "patrol_in_space"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 4,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-06",
+      "asset": "base-encounter-navpoint-06-asset",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "rep.lose",
+                      "faction": "hutt"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "custom",
+                      "handler": "patrol_hunt",
+                      "params": {
+                        "patrol": "in_your_space",
+                        "target": "negative_anywhere",
+                        "move_patrol": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 5,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-04",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "player.choose",
+                      "who": "other",
+                      "where": {
+                        "cond": "same_space"
+                      },
+                      "effects": [
+                        {
+                          "op": "choice",
+                          "chooser": "participant",
+                          "options": [
+                            [],
+                            [
+                              {
+                                "op": "fame.gain",
+                                "amount": 1
+                              },
+                              {
+                                "op": "fame.gain",
+                                "amount": 1,
+                                "player": "participant"
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "knowledge"
+                  ],
+                  "pass": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "patrol_in_space",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "gear"
+                          ],
+                          "source": "reveal",
+                          "reveal": 3,
+                          "free": true,
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "mod"
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "patrol_in_space"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 6,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-03",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "move.player",
+                  "distance": {
+                    "up_to": {
+                      "max": 5
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "tech"
+                      ],
+                      "pass": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 2000
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "syndicate"
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "ship",
+                          "amount": 3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "piloting"
+                      ],
+                      "pass": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "turn.additional"
+                            }
+                          ]
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "encounter.patrol",
+                          "patrol": "chosen_in_your_space"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 7,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-01",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "not",
+                        "of": {
+                          "cond": "most_famous"
+                        }
+                      },
+                      "then": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "credits.spend",
+                                  "amount": 7000
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "fame.gain",
+                                  "amount": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "credits.spend",
+                                  "amount": 15000
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "fame.gain",
+                                  "amount": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "fail": [
+                    {
+                      "op": "damage.suffer",
+                      "target": "ship",
+                      "amount": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "influence"
+                  ],
+                  "pass": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "patrol_in_space",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 4000
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "patrol_in_space"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 8,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-05",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "rep.lose",
+                  "faction": "rebel",
+                  "amount": {
+                    "up_to": {
+                      "max": 2
+                    }
+                  }
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "rebel",
+                    "in": [
+                      "neg"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "credits.gain",
+                      "amount": 5000
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting"
+                  ],
+                  "fail": [
+                    {
+                      "op": "unless",
+                      "penalty": [
+                        {
+                          "op": "credits.lose",
+                          "amount": 2000
+                        }
+                      ],
+                      "avoid": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "cargo"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "move.patrol_direct",
+                      "patrol": "any",
+                      "to": "your_space"
+                    },
+                    {
+                      "op": "custom",
+                      "handler": "patrol_hunt",
+                      "params": {
+                        "patrol": "moved",
+                        "target": "negative_in_your_space"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 9,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-02",
+      "sections": [
+        {
+          "space": "navpoint",
+          "patrol": false,
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "more_fame_than",
+                      "player": "self"
+                    }
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "player.choose",
+                      "who": "other",
+                      "where": {
+                        "cond": "all",
+                        "of": [
+                          {
+                            "cond": "same_space"
+                          },
+                          {
+                            "cond": "more_fame_than",
+                            "player": "self"
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        },
+                        {
+                          "op": "fame.lose",
+                          "amount": 1,
+                          "player": "participant"
+                        },
+                        {
+                          "op": "rep.lose",
+                          "faction": "other_player_choice"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "navpoint",
+          "patrol": true,
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 3000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "patrol_in_space"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "patrol_in_space",
+                    "in": [
+                      "neg"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "tech"
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "ship",
+                          "amount": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "navpoint",
+      "number": 10,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-navpoint-06-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-navpoint-06",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [
+        "illegal"
+      ],
+      "destination": "cantonica",
+      "cannot_buy_on": null,
+      "delivery_check": {
+        "success": [
+          "hit"
+        ],
+        "else_databank": 1
+      },
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    }
+  ]
+}

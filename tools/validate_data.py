@@ -183,6 +183,11 @@ def iter_abilities(card: dict, path: str):
     for s, side in enumerate(card.get("sides") or []):
         for i, ab in enumerate(side.get("abilities") or [] if isinstance(side, dict) else []):
             yield f"{path}.sides[{s}].abilities[{i}]", ab
+    # Encounter cards: secrets are abilities held by the player (R-15.82).
+    for s, sec in enumerate(card.get("sections") or []):
+        for v, var in enumerate(sec.get("variants") or [] if isinstance(sec, dict) else []):
+            for i, ab in enumerate(var.get("abilities") or [] if isinstance(var, dict) else []):
+                yield f"{path}.sections[{s}].variants[{v}].abilities[{i}]", ab
 
 
 def load_json(path: Path, v: Validator):

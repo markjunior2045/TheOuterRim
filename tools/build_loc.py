@@ -62,8 +62,11 @@ def main(argv=None) -> int:
             if not cid:
                 print(f"skip: card without image in {f.name}", file=sys.stderr)
                 continue
-            body = {k: v for k, v in card.items() if k not in ("image",)}
+            body = {k: v for k, v in card.items() if k not in ("image", "asset")}
             flatten(body, cid, out)
+            # An asset printed on an encounter or databank card is its own card, "<id>-asset".
+            if isinstance(card.get("asset"), dict):
+                flatten(card["asset"], cid + "-asset", out)
     dest = ROOT / "data" / "packs" / a.pack / "loc" / "en.json"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps({"format": FORMAT, "pack": a.pack, "language": "en", "strings": out},

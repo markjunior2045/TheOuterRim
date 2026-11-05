@@ -18,7 +18,14 @@
     "data/packs/base/cards/characters.json",
     "data/packs/base/cards/ship-sheets.json",
     "data/packs/base/cards/databank-starting.json",
-    "data/packs/base/cards/databank-cargo-check.json"
+    "data/packs/base/cards/databank-cargo-check.json",
+    "data/packs/base/cards/encounter-tatooine-nal-hutta.json",
+    "data/packs/base/cards/encounter-cantonica-ord-mantell.json",
+    "data/packs/base/cards/encounter-kessel-maelstrom.json",
+    "data/packs/base/cards/encounter-lothal-mon-calamari.json",
+    "data/packs/base/cards/encounter-navpoint.json",
+    "data/packs/base/cards/encounter-ring-of-kafrene-takodana.json",
+    "data/packs/base/cards/encounter-ryloth-naboo.json"
   ],
   "localization": {
     "en": "data/packs/base/loc/en.json"

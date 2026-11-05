@@ -1,0 +1,1195 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-cantonica-ord-mantell",
+  "source": "data/transcription/encounter/base-encounter-cantonica-ord-mantell.json",
+  "cards": [
+    {
+      "id": "base-encounter-cantonica-ord-mantell-05",
+      "asset": "base-encounter-cantonica-ord-mantell-05-asset",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "custom",
+                          "handler": "double_or_nothing",
+                          "params": {
+                            "dice": 2,
+                            "first": 4000,
+                            "second": 8000
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 1,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-06",
+      "asset": "base-encounter-cantonica-ord-mantell-06-asset",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "choice",
+                      "options": [
+                        [
+                          {
+                            "op": "credits.spend",
+                            "amount": 2000
+                          }
+                        ],
+                        [
+                          {
+                            "op": "asset.discard",
+                            "filter": {
+                              "asset": {
+                                "type": [
+                                  "cargo"
+                                ]
+                              }
+                            },
+                            "count": 1
+                          }
+                        ]
+                      ]
+                    },
+                    {
+                      "op": "dice.roll",
+                      "count": 1,
+                      "outcomes": [
+                        {
+                          "faces": [
+                            "hit"
+                          ],
+                          "effects": [
+                            {
+                              "op": "credits.gain",
+                              "amount": 5000
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 5000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 2,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-07",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "strength"
+                      ],
+                      "pass": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 3000
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "gear"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3,
+                  "discount": 1000
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.1.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "rep",
+                      "faction": "syndicate",
+                      "in": [
+                        "neg"
+                      ]
+                    }
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "syndicate"
+                    },
+                    {
+                      "op": "move.patrol",
+                      "patrol": "syndicate",
+                      "distance": {
+                        "up_to": {
+                          "max": 3
+                        }
+                      },
+                      "toward": "you"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 3,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-08",
+      "asset": "base-encounter-cantonica-ord-mantell-08-asset",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "credits.lose",
+                  "amount": 1000
+                },
+                {
+                  "op": "test",
+                  "skill": [
+                    "influence"
+                  ],
+                  "pass": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": {
+                            "choose": {
+                              "from_rep": [
+                                "pos"
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 4000
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 4,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-09",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "custom",
+                  "handler": "sabacc",
+                  "params": {
+                    "opponent": "invite_anywhere",
+                    "min_credits": 4000,
+                    "move_to": "cantonica",
+                    "stake": 4000,
+                    "reward": [
+                      {
+                        "op": "credits.gain",
+                        "amount": 8000
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "syndicate"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 5000
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "unless",
+                  "penalty": [
+                    {
+                      "op": "combat",
+                      "type": "ground",
+                      "opponent": {
+                        "npc": {
+                          "value": 4,
+                          "name_key": "Trandoshan"
+                        }
+                      }
+                    }
+                  ],
+                  "avoid": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 5000
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 5,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-00",
+      "asset": "base-encounter-cantonica-ord-mantell-00-asset",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "syndicate",
+                    "in": [
+                      "pos"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "credits.gain",
+                      "amount": 5000
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 2000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "rep.gain",
+                              "faction": "syndicate"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 6,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-01",
+      "asset": "base-encounter-cantonica-ord-mantell-01-asset",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "choice",
+                  "options": [
+                    [
+                      {
+                        "op": "credits.gain",
+                        "amount": 2000
+                      }
+                    ],
+                    [
+                      {
+                        "op": "asset.gain_embedded"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "rebel"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 2000
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 7,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-02",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "custom",
+                  "handler": "side_bets",
+                  "params": {
+                    "bet": 1000,
+                    "crit": 8000,
+                    "focus": 5000,
+                    "hit": 3000
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "asset.take",
+                      "filter": {
+                        "asset": {
+                          "type": [
+                            "bounty"
+                          ],
+                          "matches_contact_here": true
+                        }
+                      },
+                      "from": {
+                        "choose": {
+                          "who": "other"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 8,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-03",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": {
+                            "up_to": {
+                              "max": 3000
+                            }
+                          }
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "test",
+                          "skill": [
+                            "tactics"
+                          ],
+                          "pass": [
+                            {
+                              "op": "credits.gain",
+                              "amount": {
+                                "times": {
+                                  "factor": 2,
+                                  "of": "spent"
+                                }
+                              }
+                            }
+                          ],
+                          "fail": [
+                            {
+                              "op": "damage.suffer",
+                              "target": "character",
+                              "amount": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "credits.gain",
+                  "amount": {
+                    "per": {
+                      "each": 3000,
+                      "counter": "bounties"
+                    }
+                  }
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "has_asset",
+                    "filter": {
+                      "asset": {
+                        "type": [
+                          "bounty"
+                        ]
+                      }
+                    },
+                    "max": 0
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "bounty"
+                          ],
+                          "source": "top"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "syndicate",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "strength"
+                      ],
+                      "pass": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 3000
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "syndicate"
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 9,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-04",
+      "asset": "base-encounter-cantonica-ord-mantell-04-asset",
+      "sections": [
+        {
+          "space": "cantonica",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "custom",
+                          "handler": "name_a_number",
+                          "params": {
+                            "dice": 5,
+                            "per_hit": 2000
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "ord-mantell",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "cantonica-ord-mantell",
+      "number": 10,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-05-asset",
+      "kind": "gear",
+      "embedded_in": "base-encounter-cantonica-ord-mantell-05",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [
+        "weapon"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "ground_combat"
+            ]
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "dice.add",
+              "face": "hit",
+              "count": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-06-asset",
+      "kind": "gear",
+      "embedded_in": "base-encounter-cantonica-ord-mantell-06",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [
+        "weapon"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "ground_combat",
+              "by": 1
+            }
+          ]
+        },
+        {
+          "text": "text.1",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "ground_combat"
+            ],
+            "filter": {
+              "cond": "not",
+              "of": {
+                "cond": "is_droid"
+              }
+            }
+          },
+          "optional": true,
+          "limit": "once_per_combat",
+          "effects": [
+            {
+              "op": "dice.turn",
+              "from": [
+                "focus",
+                "hit"
+              ],
+              "to": "crit",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-08-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-cantonica-ord-mantell-08",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "stealth"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "other_player_in_space"
+          },
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "credits.take",
+              "amount": 5000,
+              "from": {
+                "choose": {
+                  "who": "other",
+                  "where": {
+                    "cond": "same_space"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-00-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-cantonica-ord-mantell-00",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "piloting"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "replacement",
+            "event": "test_would_fail"
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "test.pass"
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-01-asset",
+      "kind": "crew",
+      "embedded_in": "base-encounter-cantonica-ord-mantell-01",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "knowledge"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "any",
+            "of": [
+              {
+                "cond": "on_space",
+                "type": "planet",
+                "faction": "rebel"
+              },
+              {
+                "cond": "on_space",
+                "type": "planet",
+                "faction": "imperial"
+              }
+            ]
+          },
+          "cost": [
+            {
+              "op": "credits.spend",
+              "amount": 6000
+            },
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "fame.gain",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-cantonica-ord-mantell-04-asset",
+      "kind": "gear",
+      "embedded_in": "base-encounter-cantonica-ord-mantell-04",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "replacement",
+            "event": "would_be_defeated",
+            "filter": {
+              "cond": "all",
+              "of": [
+                {
+                  "cond": "combat",
+                  "type": "ground"
+                },
+                {
+                  "cond": "not",
+                  "of": {
+                    "cond": "is_droid"
+                  }
+                }
+              ]
+            }
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "damage.recover",
+              "target": "character",
+              "amount": {
+                "all": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

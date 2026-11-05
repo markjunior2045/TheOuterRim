@@ -1,0 +1,1168 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-tatooine-nal-hutta",
+  "source": "data/transcription/encounter/base-encounter-tatooine-nal-hutta.json",
+  "cards": [
+    {
+      "id": "base-encounter-tatooine-nal-hutta-05",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "contact.look",
+                  "where": {
+                    "planet_where": {
+                      "cond": {
+                        "cond": "within_patrol",
+                        "faction": "hutt",
+                        "distance": 3
+                      }
+                    }
+                  },
+                  "count": {
+                    "all": {}
+                  }
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "choice"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "hutt"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "bounty",
+                                "secret"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 2000
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "hutt"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 1,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-06",
+      "asset": "base-encounter-tatooine-nal-hutta-06-asset",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "hutt",
+                    "in": [
+                      "pos"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "move.patrol_direct",
+                          "patrol": "hutt",
+                          "to": "any_space"
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 2000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "move.patrol_direct",
+                              "patrol": "hutt",
+                              "to": "any_space"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 2,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-07",
+      "asset": "base-encounter-tatooine-nal-hutta-07-asset",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "rep.lose",
+                  "faction": "choice",
+                  "player": {
+                    "choose": {
+                      "who": "other"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 3,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-08",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "encounter"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "combat",
+                      "type": "by_space",
+                      "opponent": {
+                        "player": {
+                          "who": {
+                            "choose": {
+                              "who": "other",
+                              "where": {
+                                "cond": "same_space"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "asset.take",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "cargo",
+                                "gear"
+                              ]
+                            }
+                          },
+                          "from": "opponent"
+                        },
+                        {
+                          "op": "rep.lose",
+                          "faction": "other_player_choice"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "hutt"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 5000
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "unless",
+                  "penalty": [
+                    {
+                      "op": "combat",
+                      "type": "ground",
+                      "opponent": {
+                        "npc": {
+                          "value": 4,
+                          "name_key": "enforcers"
+                        }
+                      }
+                    }
+                  ],
+                  "avoid": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 5000
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 4,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-09",
+      "asset": "base-encounter-tatooine-nal-hutta-09-asset",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        },
+                        {
+                          "op": "contact.look",
+                          "where": {
+                            "space": {
+                              "id": "lothal"
+                            }
+                          },
+                          "count": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "asset.gain_databank",
+                  "number": 90,
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "bounty"
+                          ],
+                          "source": "top"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 5,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-00",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "encounter"
+                  },
+                  "condition": {
+                    "cond": "all",
+                    "of": [
+                      {
+                        "cond": "credits_at_least",
+                        "amount": 6000
+                      },
+                      {
+                        "cond": "other_player_in_space"
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "influence"
+                      ],
+                      "pass": [
+                        {
+                          "op": "custom",
+                          "handler": "sabacc",
+                          "params": {
+                            "opponent": "choose_in_space",
+                            "reward": "steal_6000_or_trade_sheets"
+                          }
+                        },
+                        {
+                          "op": "card.discard_self"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "custom",
+                  "handler": "dice_gamble",
+                  "params": {
+                    "max": 3000,
+                    "step": 1000,
+                    "lose_on": [
+                      "hit",
+                      "crit"
+                    ],
+                    "factor": 3
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 6,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-01",
+      "asset": "base-encounter-tatooine-nal-hutta-01-asset",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "contact.look",
+                  "where": "any_space",
+                  "count": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 7,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-02",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "on_space",
+                    "id": "tatooine"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "bounty.deliver",
+                      "anywhere": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "market.buy",
+                      "deck": [
+                        "bounty"
+                      ],
+                      "source": "search",
+                      "free": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "hutt"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 8,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-03",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "pos"
+                ]
+              },
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "rep.lose",
+                      "faction": "chosen_token",
+                      "player": {
+                        "choose": {
+                          "who": "any"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "errata": "R-24.1"
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "hutt"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "has_asset",
+                    "filter": {
+                      "asset": {
+                        "type": [
+                          "crew"
+                        ]
+                      }
+                    },
+                    "max": 0
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "contact.look",
+                          "where": "your_space",
+                          "count": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "crew"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 4000
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 9,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-04",
+      "sections": [
+        {
+          "space": "tatooine",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "encounter"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "rep",
+                      "faction": "hutt",
+                      "in": [
+                        "neg"
+                      ]
+                    }
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "combat",
+                      "type": "by_space",
+                      "opponent": {
+                        "player": {
+                          "who": {
+                            "choose": {
+                              "who": "other",
+                              "where": {
+                                "cond": "all",
+                                "of": [
+                                  {
+                                    "cond": "same_space"
+                                  },
+                                  {
+                                    "cond": "rep",
+                                    "faction": "hutt",
+                                    "in": [
+                                      "neg"
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "hutt"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "nal-hutta",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "combat",
+                      "type": "ground",
+                      "opponent": {
+                        "npc": {
+                          "value": 5,
+                          "name_key": "dragonsnake"
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 3000
+                        },
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "hutt",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tactics"
+                  ],
+                  "pass": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "hutt"
+                    },
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "job"
+                          ],
+                          "source": "top"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "tatooine-nal-hutta",
+      "number": 10,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-06-asset",
+      "kind": "bounty",
+      "embedded_in": "base-encounter-tatooine-nal-hutta-06",
+      "cost": 0,
+      "patrol_icon": null,
+      "class": "green",
+      "target": "base-contact-14-hondo-ohnaka",
+      "combat": {
+        "type": "ground",
+        "value": 4
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "ord-mantell",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "syndicate"
+        }
+      ],
+      "end": "remove",
+      "traits": [],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-07-asset",
+      "kind": "bounty",
+      "embedded_in": "base-encounter-tatooine-nal-hutta-07",
+      "cost": 0,
+      "patrol_icon": null,
+      "class": "green",
+      "target": "base-contact-15-ig-rm-droid",
+      "combat": {
+        "type": "ground",
+        "value": 4
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 8000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "tatooine",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 11000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        }
+      ],
+      "end": "remove",
+      "traits": [],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-09-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-tatooine-nal-hutta-09",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [
+        "illegal"
+      ],
+      "destination": "lothal",
+      "cannot_buy_on": null,
+      "delivery_check": {
+        "success": [
+          "hit"
+        ],
+        "else_databank": 1
+      },
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-tatooine-nal-hutta-01-asset",
+      "kind": "job",
+      "embedded_in": "base-encounter-tatooine-nal-hutta-01",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": "your_space",
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "custom",
+          "handler": "sabacc",
+          "params": {
+            "opponent": "choose_in_space",
+            "stake": 5000
+          }
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        }
+      ],
+      "end": "discard",
+      "traits": [],
+      "abilities": []
+    }
+  ]
+}

@@ -1,0 +1,1331 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-lothal-mon-calamari",
+  "source": "data/transcription/encounter/base-encounter-lothal-mon-calamari.json",
+  "cards": [
+    {
+      "id": "base-encounter-lothal-mon-calamari-04",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "most_famous"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 7000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 15000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "job"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "any",
+                      "of": [
+                        {
+                          "cond": "rep",
+                          "faction": "rebel",
+                          "in": [
+                            "pos"
+                          ]
+                        },
+                        {
+                          "cond": "has_asset",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "crew"
+                              ],
+                              "faction": "rebel"
+                            }
+                          },
+                          "min": 1
+                        }
+                      ]
+                    }
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "player.choose",
+                      "who": "other",
+                      "where": {
+                        "cond": "any",
+                        "of": [
+                          {
+                            "cond": "rep",
+                            "faction": "rebel",
+                            "in": [
+                              "pos"
+                            ]
+                          },
+                          {
+                            "cond": "has_asset",
+                            "filter": {
+                              "asset": {
+                                "type": [
+                                  "crew"
+                                ],
+                                "faction": "rebel"
+                              }
+                            },
+                            "min": 1
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "imperial",
+                          "player": "participant"
+                        }
+                      ]
+                    },
+                    {
+                      "op": "credits.gain",
+                      "amount": 2000
+                    },
+                    {
+                      "op": "rep.gain",
+                      "faction": "imperial"
+                    }
+                  ]
+                }
+              ],
+              "errata": "R-24.2"
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 1,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-03",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "any",
+                    "of": [
+                      {
+                        "cond": "rep",
+                        "faction": "rebel",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      {
+                        "cond": "credits_at_least",
+                        "amount": 3000
+                      }
+                    ]
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "rebel",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [],
+                      "else": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 3000
+                        }
+                      ]
+                    },
+                    {
+                      "op": "move.player_direct",
+                      "to": "any_space"
+                    }
+                  ]
+                }
+              ],
+              "errata": "R-24.3"
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "most_famous"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 7000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 15000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 2,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-02",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "rebel",
+                    "in": [
+                      "pos",
+                      "neu"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "move.player_direct",
+                          "to": {
+                            "patrol_space": {
+                              "faction": "rebel"
+                            }
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "rep.gain",
+                              "faction": "rebel"
+                            },
+                            {
+                              "op": "rep.lose",
+                              "faction": "imperial"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "rebel"
+                        },
+                        {
+                          "op": "rep.lose",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "encounter"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "any",
+                      "of": [
+                        {
+                          "cond": "rep",
+                          "faction": "rebel",
+                          "in": [
+                            "pos"
+                          ]
+                        },
+                        {
+                          "cond": "rep",
+                          "faction": "imperial",
+                          "in": [
+                            "neg"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "combat",
+                      "type": "by_space",
+                      "opponent": {
+                        "player": {
+                          "who": {
+                            "choose": {
+                              "who": "other",
+                              "where": {
+                                "cond": "all",
+                                "of": [
+                                  {
+                                    "cond": "same_space"
+                                  },
+                                  {
+                                    "cond": "any",
+                                    "of": [
+                                      {
+                                        "cond": "rep",
+                                        "faction": "rebel",
+                                        "in": [
+                                          "pos"
+                                        ]
+                                      },
+                                      {
+                                        "cond": "rep",
+                                        "faction": "imperial",
+                                        "in": [
+                                          "neg"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 3,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-01",
+      "asset": "base-encounter-lothal-mon-calamari-01-asset",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 1000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "trigger",
+                    "event": "combat_won",
+                    "filter": {
+                      "cond": "combat",
+                      "opponent": "patrol",
+                      "patrol_faction": "rebel"
+                    }
+                  },
+                  "optional": true,
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "fame.gain",
+                      "amount": 1
+                    },
+                    {
+                      "op": "rep.gain",
+                      "faction": "imperial"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 4,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-00",
+      "asset": "base-encounter-lothal-mon-calamari-00-asset",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "no_damage"
+                  },
+                  "then": [
+                    {
+                      "op": "credits.gain",
+                      "amount": 2000
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "damage.recover",
+                      "target": "both",
+                      "amount": {
+                        "all": {}
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 5,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-09",
+      "asset": "base-encounter-lothal-mon-calamari-09-asset",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "on_space",
+                    "type": "planet",
+                    "faction": "imperial"
+                  },
+                  "effects": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "asset.gain_embedded"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 6,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-08",
+      "asset": "base-encounter-lothal-mon-calamari-08-asset",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "rebel"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 4000
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 7,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-07",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos"
+                ]
+              },
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "rep",
+                      "faction": "rebel",
+                      "in": [
+                        "neu"
+                      ]
+                    }
+                  },
+                  "effects": [
+                    {
+                      "op": "player.choose",
+                      "who": "other",
+                      "where": {
+                        "cond": "all",
+                        "of": [
+                          {
+                            "cond": "same_space"
+                          },
+                          {
+                            "cond": "rep",
+                            "faction": "rebel",
+                            "in": [
+                              "neu"
+                            ]
+                          }
+                        ]
+                      },
+                      "effects": [
+                        {
+                          "op": "choice",
+                          "chooser": "participant",
+                          "options": [
+                            [
+                              {
+                                "op": "credits.gain",
+                                "amount": 10000,
+                                "player": "participant"
+                              },
+                              {
+                                "op": "rep.gain",
+                                "faction": "rebel",
+                                "player": "participant"
+                              },
+                              {
+                                "op": "fame.gain",
+                                "amount": 1
+                              },
+                              {
+                                "op": "card.discard_self"
+                              }
+                            ],
+                            []
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "rebel"
+                    },
+                    {
+                      "op": "rep.lose",
+                      "faction": "imperial"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "player.choose",
+                  "who": "any",
+                  "effects": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "rebel",
+                      "player": "participant"
+                    },
+                    {
+                      "op": "damage.suffer",
+                      "target": "character",
+                      "amount": 2,
+                      "player": "participant"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 8,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-06",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "market.take",
+                      "name": "base-market-job-08",
+                      "from": "deck_or_player"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "cargo.deliver",
+                      "anywhere": true,
+                      "no_roll": true
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "market.buy",
+                      "deck": [
+                        "cargo"
+                      ],
+                      "source": "top",
+                      "free": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "rebel"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 9,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-05",
+      "sections": [
+        {
+          "space": "mon-calamari",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "trigger",
+                    "event": "move_into",
+                    "filter": {
+                      "cond": "all",
+                      "of": [
+                        {
+                          "cond": "moving_into",
+                          "what": "maelstrom"
+                        },
+                        {
+                          "cond": "rep",
+                          "faction": "rebel",
+                          "in": [
+                            "pos"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "optional": true,
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "move.no_stop"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "lothal",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "move.patrol",
+                  "patrol": "imperial",
+                  "distance": {
+                    "up_to": {
+                      "max": 4
+                    }
+                  },
+                  "toward": "any_direction"
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "imperial"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "lothal-mon-calamari",
+      "number": 10,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-01-asset",
+      "kind": "mod",
+      "embedded_in": "base-encounter-lothal-mon-calamari-01",
+      "cost": 0,
+      "patrol_icon": null,
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "planning"
+          },
+          "cost": [
+            {
+              "op": "card.discard_self"
+            }
+          ],
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "hyperdrive",
+              "by": 4,
+              "duration": "end_of_turn"
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-00-asset",
+      "kind": "job",
+      "embedded_in": "base-encounter-lothal-mon-calamari-00",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tech"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "kessel"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 53
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        },
+        {
+          "op": "rep.gain",
+          "faction": "rebel"
+        }
+      ],
+      "end": "remove",
+      "traits": [],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-09-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-lothal-mon-calamari-09",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [],
+      "destination": "takodana",
+      "cannot_buy_on": null,
+      "delivery_check": null,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        },
+        {
+          "op": "rep.gain",
+          "faction": "rebel"
+        }
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "discarded",
+            "filter": {
+              "cond": "not",
+              "of": {
+                "cond": "delivering"
+              }
+            }
+          },
+          "effects": [
+            {
+              "op": "rep.lose",
+              "faction": "rebel"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-encounter-lothal-mon-calamari-08-asset",
+      "kind": "job",
+      "embedded_in": "base-encounter-lothal-mon-calamari-08",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        {
+          "options": [
+            "knowledge"
+          ],
+          "certain": true
+        },
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "cantonica"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 52
+        }
+      ],
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove",
+      "traits": [],
+      "abilities": []
+    }
+  ]
+}

@@ -1,0 +1,1283 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "encounter-ryloth-naboo",
+  "source": "data/transcription/encounter/base-encounter-ryloth-naboo.json",
+  "cards": [
+    {
+      "id": "base-encounter-ryloth-naboo-08",
+      "asset": "base-encounter-ryloth-naboo-08-asset",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "rebel",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "cargo.deliver",
+                          "anywhere": true,
+                          "no_roll": true
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "cargo.deliver",
+                          "anywhere": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "on_space",
+                    "id": "takodana"
+                  },
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 1,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-07",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "trigger",
+                    "event": "combat_won",
+                    "filter": {
+                      "cond": "combat",
+                      "opponent": "patrol",
+                      "patrol_faction": "imperial"
+                    }
+                  },
+                  "optional": true,
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "fame.gain",
+                      "amount": 1
+                    },
+                    {
+                      "op": "rep.gain",
+                      "faction": "rebel"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "most_famous"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 7000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "credits.spend",
+                              "amount": 15000
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "knowledge"
+                  ],
+                  "pass": [
+                    {
+                      "op": "choice",
+                      "options": [
+                        [
+                          {
+                            "op": "rep.gain",
+                            "faction": "rebel"
+                          }
+                        ],
+                        [
+                          {
+                            "op": "rep.gain",
+                            "faction": "imperial"
+                          }
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 2,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-06",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "rebel",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "asset.discard",
+                              "filter": {
+                                "asset": {
+                                  "type": [
+                                    "cargo",
+                                    "gear",
+                                    "mod"
+                                  ]
+                                }
+                              },
+                              "count": 1
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "rep.gain",
+                              "faction": "rebel"
+                            },
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            },
+                            {
+                              "op": "rep.lose",
+                              "faction": "imperial"
+                            }
+                          ]
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "asset.discard",
+                              "filter": {
+                                "asset": {
+                                  "type": [
+                                    "cargo",
+                                    "gear",
+                                    "mod"
+                                  ]
+                                }
+                              },
+                              "count": 1
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "credits.gain",
+                              "amount": 4000
+                            },
+                            {
+                              "op": "rep.gain",
+                              "faction": "rebel"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "tactics"
+                      ],
+                      "pass": [
+                        {
+                          "op": "if",
+                          "cond": {
+                            "cond": "rep",
+                            "faction": "imperial",
+                            "in": [
+                              "pos"
+                            ]
+                          },
+                          "then": [
+                            {
+                              "op": "fame.gain",
+                              "amount": 1
+                            }
+                          ],
+                          "else": [
+                            {
+                              "op": "rep.gain",
+                              "faction": "imperial"
+                            }
+                          ]
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 3
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 3,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-05",
+      "asset": "base-encounter-ryloth-naboo-05-asset",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "imperial"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "test",
+                          "skill": [
+                            "tech"
+                          ],
+                          "pass": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "fame.lose",
+                                  "amount": 1
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "market.buy",
+                                  "deck": [
+                                    "ship"
+                                  ],
+                                  "source": "top",
+                                  "free": true
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "on_space",
+                    "id": "nal-hutta"
+                  },
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "rep.lose",
+                      "faction": "rebel"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 4,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-04",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "cargo"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 3000
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "market.buy",
+                      "deck": [
+                        "gear",
+                        "cargo",
+                        "ship"
+                      ],
+                      "source": "reveal",
+                      "reveal": 3,
+                      "discount": 1000
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "choice",
+                      "options": [
+                        [
+                          {
+                            "op": "to",
+                            "cost": [
+                              {
+                                "op": "rep.lose",
+                                "faction": "hutt"
+                              }
+                            ],
+                            "then": [
+                              {
+                                "op": "rep.gain",
+                                "faction": "imperial"
+                              }
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "op": "to",
+                            "cost": [
+                              {
+                                "op": "rep.lose",
+                                "faction": "imperial"
+                              }
+                            ],
+                            "then": [
+                              {
+                                "op": "credits.gain",
+                                "amount": 4000
+                              },
+                              {
+                                "op": "rep.gain",
+                                "faction": "hutt"
+                              }
+                            ]
+                          }
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 5,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-03",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "custom",
+                      "handler": "buy_any_sheet"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "neg"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "damage.suffer",
+                  "target": "character",
+                  "amount": 3
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not_defeated"
+                  },
+                  "then": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "rebel"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "rebel"
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": 2000
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 6,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-02",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "stealth"
+                      ],
+                      "pass": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "gear"
+                          ],
+                          "source": "search",
+                          "free": true,
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "gear"
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "imperial"
+                        },
+                        {
+                          "op": "damage.suffer",
+                          "target": "character",
+                          "amount": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "neg",
+                  "neu"
+                ]
+              },
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "asset.discard",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "cargo"
+                              ]
+                            }
+                          },
+                          "count": 1
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "credits.gain",
+                          "amount": {
+                            "times": {
+                              "factor": 1,
+                              "of": "cost"
+                            }
+                          }
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "rebel"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "market.buy",
+                  "deck": [
+                    "cargo"
+                  ],
+                  "source": "reveal",
+                  "reveal": 3,
+                  "discount": 1000
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 7,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-01",
+      "asset": "base-encounter-ryloth-naboo-01-asset",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "combat",
+                      "type": "ship",
+                      "opponent": {
+                        "npc": {
+                          "value": 5,
+                          "name_key": "TIE interceptors"
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "rep.lose",
+                          "faction": "imperial"
+                        },
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "rebel"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.1.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "action"
+                  },
+                  "condition": {
+                    "cond": "on_space",
+                    "id": "mon-calamari"
+                  },
+                  "effects": [
+                    {
+                      "op": "asset.gain_embedded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 8,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-00",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "secret": true,
+              "abilities": [
+                {
+                  "text": "sections.0.variants.0.text",
+                  "timing": {
+                    "type": "step",
+                    "step": "encounter"
+                  },
+                  "condition": {
+                    "cond": "other_player_in_space",
+                    "where": {
+                      "cond": "any",
+                      "of": [
+                        {
+                          "cond": "rep",
+                          "faction": "imperial",
+                          "in": [
+                            "pos"
+                          ]
+                        },
+                        {
+                          "cond": "rep",
+                          "faction": "rebel",
+                          "in": [
+                            "neg"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "cost": [
+                    {
+                      "op": "card.discard_self"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "op": "combat",
+                      "type": "by_space",
+                      "opponent": {
+                        "player": {
+                          "who": {
+                            "choose": {
+                              "who": "other",
+                              "where": {
+                                "cond": "all",
+                                "of": [
+                                  {
+                                    "cond": "same_space"
+                                  },
+                                  {
+                                    "cond": "any",
+                                    "of": [
+                                      {
+                                        "cond": "rep",
+                                        "faction": "imperial",
+                                        "in": [
+                                          "pos"
+                                        ]
+                                      },
+                                      {
+                                        "cond": "rep",
+                                        "faction": "rebel",
+                                        "in": [
+                                          "neg"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "knowledge"
+                      ],
+                      "pass": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        },
+                        {
+                          "op": "credits.gain",
+                          "amount": 4000
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "if",
+                          "cond": {
+                            "cond": "rep",
+                            "faction": "imperial",
+                            "in": [
+                              "neg"
+                            ]
+                          },
+                          "then": [
+                            {
+                              "op": "credits.lose",
+                              "amount": 4000
+                            }
+                          ]
+                        },
+                        {
+                          "op": "rep.lose",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 9,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-09",
+      "sections": [
+        {
+          "space": "ryloth",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "not",
+                    "of": {
+                      "cond": "ship_trait",
+                      "trait": "starter ship"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "custom",
+                          "handler": "replace_with_starter"
+                        },
+                        {
+                          "op": "fame.gain",
+                          "amount": 1
+                        },
+                        {
+                          "op": "rep.gain",
+                          "faction": "rebel"
+                        },
+                        {
+                          "op": "credits.gain",
+                          "amount": 5000
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "rep.lose",
+                                  "faction": "imperial"
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "credits.gain",
+                                  "amount": 4000
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "to",
+                          "cost": [
+                            {
+                              "op": "rep.lose",
+                              "faction": "imperial"
+                            }
+                          ],
+                          "then": [
+                            {
+                              "op": "credits.gain",
+                              "amount": 4000
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "errata": "R-24.5"
+            }
+          ]
+        },
+        {
+          "space": "naboo",
+          "variants": [
+            {
+              "condition": null,
+              "effects": [
+                {
+                  "op": "rep.lose",
+                  "faction": "rebel"
+                },
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep",
+                    "faction": "rebel",
+                    "in": [
+                      "neg"
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "if",
+                      "cond": {
+                        "cond": "rep",
+                        "faction": "imperial",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "market.buy",
+                          "deck": [
+                            "cargo"
+                          ],
+                          "source": "reveal",
+                          "reveal": 3,
+                          "free": true
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "imperial"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "kind": "encounter",
+      "deck": "ryloth-naboo",
+      "number": 10,
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-08-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-ryloth-naboo-08",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [],
+      "destination": "naboo",
+      "cannot_buy_on": null,
+      "delivery_check": null,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-05-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-ryloth-naboo-05",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [
+        "illegal"
+      ],
+      "destination": "naboo",
+      "cannot_buy_on": null,
+      "delivery_check": {
+        "success": [
+          "hit"
+        ],
+        "else_databank": 1
+      },
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-encounter-ryloth-naboo-01-asset",
+      "kind": "cargo",
+      "embedded_in": "base-encounter-ryloth-naboo-01",
+      "cost": 0,
+      "patrol_icon": null,
+      "traits": [],
+      "destination": "naboo",
+      "cannot_buy_on": null,
+      "delivery_check": null,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    }
+  ]
+}
