@@ -435,7 +435,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-11.23** Moving a patrol "directly" to a space takes it from its current space and places it there, with no intervening spaces.
 - **R-11.24** Patrols can occupy navpoints, planets and the Maelstrom.
 
-> Implementation (T1.8) **[?] awaiting owner confirmation:** "toward the player" is read on the map graph, since a fixed clockwise coordinate gets stuck at dead ends (Takodana, the Maelstrom) and in Kessel's zigzags. A patrol moving N spaces: if the current player's space is N or fewer spaces away (not counting through the Core Worlds), it goes there and stops (R-11.17, R-11.20). Otherwise it moves exactly N spaces along a route where each step goes to a space **no farther** from the player than the one it leaves, never repeating a space; the current player picks the end space among all such routes (R-11.16), which allows longer lanes and turning back at an intersection when that gets closer (R-11.19). Only the end space matters, because patrols pass through everything (R-11.21).
+> Implementation (T1.8, confirmed by the owner 2026-11-05 with the Learn to Play wording: "If there are multiple paths that lead toward you, you choose which path the patrol follows. However, if the patrol can possibly move to your space, it must move along the shortest path."). The clockwise wording of R-11.18 and R-11.19 only means "toward the player"; it is read on the map graph, since a fixed clockwise coordinate gets stuck at dead ends (Takodana, the Maelstrom) and in Kessel's zigzags. A patrol moving N spaces: if the current player's space is N or fewer spaces away (not counting through the Core Worlds), it goes there and stops (R-11.17, R-11.20). Otherwise it moves exactly N spaces along a route where each step goes to a space **no farther** from the player than the one it leaves, never repeating a space; the current player picks the end space among all such routes (R-11.16), which allows longer lanes and turning back at an intersection when that gets closer (R-11.19). Only the end space matters, because patrols pass through everything (R-11.21).
 
 ### 11.2 Encountering a patrol
 
@@ -1161,7 +1161,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
-| 2026-11-05 | Note after R-11.24: graph reading of patrol movement "toward the player" (T1.8), awaiting owner confirmation. |
+| 2026-11-05 | Note after R-11.24: graph reading of patrol movement "toward the player" (T1.8), confirmed by the owner with the Learn to Play wording. |
 | 2026-11-05 | Note after R-7.20: the game rolls for patrols, contacts and card enemies (digital adaptation, owner decision). |
 | 2026-11-05 | §26.1: decision commands as built in T1.2 (`ChooseOption`, `ResolveTie`, `ChooseOrder`, keyed by decision id). |
 | 2026-11-05 | R-25.15 to R-25.17: Bossk, GX1 Short Hauler and YV-666 goals (owner clarifications from T2.4). |
