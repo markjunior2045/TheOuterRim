@@ -1,0 +1,690 @@
+{
+  "format": "outer-rim-registry/0.1",
+  "notes": [
+    "Single list of what card data may use (docs/DATA_FORMAT.md). Built from docs/EFFECTS.md. The Python validator (tools/validate_data.py) reads it now; the C# loader reads the same file later.",
+    "Parameter types: int, bool, string, amount, effects, cond, enum:a|b, list:<type>, and the named types under 'types'. A trailing '?' marks an optional parameter.",
+    "card_kinds: fields a card of that kind may carry beyond the common ones (id, kind, abilities, errata, notes)."
+  ],
+  "enums": {
+    "faction": [
+      "rebel",
+      "imperial",
+      "hutt",
+      "syndicate"
+    ],
+    "rep_state": [
+      "pos",
+      "neu",
+      "neg"
+    ],
+    "skill": [
+      "influence",
+      "knowledge",
+      "piloting",
+      "stealth",
+      "strength",
+      "tactics",
+      "tech"
+    ],
+    "stat": [
+      "ground_combat",
+      "ship_combat",
+      "hyperdrive",
+      "hull",
+      "health"
+    ],
+    "face": [
+      "hit",
+      "crit",
+      "focus",
+      "blank"
+    ],
+    "deck": [
+      "bounty",
+      "cargo",
+      "gear",
+      "job",
+      "luxury",
+      "ship"
+    ],
+    "card_type": [
+      "cargo",
+      "crew",
+      "gear",
+      "mod",
+      "job",
+      "bounty",
+      "ship",
+      "special"
+    ],
+    "trait": [
+      "illegal",
+      "weapon",
+      "armor",
+      "favor",
+      "ship",
+      "starter ship"
+    ],
+    "damage_target": [
+      "character",
+      "ship",
+      "both"
+    ],
+    "combat_type": [
+      "ground",
+      "ship",
+      "by_space"
+    ],
+    "space_type": [
+      "planet",
+      "navpoint",
+      "maelstrom",
+      "core_worlds"
+    ],
+    "step": [
+      "planning",
+      "action",
+      "encounter"
+    ],
+    "limit": [
+      "once_per_turn",
+      "once_per_combat",
+      "once_per_test"
+    ],
+    "duration": [
+      "instant",
+      "this_test",
+      "this_combat",
+      "end_of_turn"
+    ],
+    "dice_scope": [
+      "ground_combat",
+      "ship_combat",
+      "skill_test",
+      "delivery_roll"
+    ]
+  },
+  "types": {
+    "player_sel": {
+      "strings": [
+        "self",
+        "opponent",
+        "each_other",
+        "participant",
+        "current"
+      ],
+      "objects": {
+        "choose": {
+          "who": "enum:other|any",
+          "where": "cond?"
+        }
+      }
+    },
+    "faction_sel": {
+      "strings": [
+        "planet",
+        "patrol_in_space",
+        "nearest_patrol",
+        "chosen_token",
+        "choice",
+        "other_player_choice"
+      ],
+      "enum": "faction",
+      "objects": {
+        "choose": {
+          "from_rep": "list:rep_state?"
+        },
+        "each_with_rep": {
+          "state": "rep_state"
+        }
+      }
+    },
+    "space_sel": {
+      "strings": [
+        "your_space",
+        "any_space",
+        "adjacent",
+        "nearest_planet",
+        "maelstrom",
+        "other_core_world"
+      ],
+      "objects": {
+        "space": {
+          "id": "string"
+        },
+        "patrol_space": {
+          "faction": "faction"
+        },
+        "player_space": {
+          "player": "player_sel"
+        },
+        "within": {
+          "distance": "int",
+          "of": "string"
+        },
+        "planet_where": {
+          "cond": "cond"
+        }
+      }
+    },
+    "patrol_sel": {
+      "strings": [
+        "any",
+        "in_your_space",
+        "chosen_in_your_space"
+      ],
+      "enum": "faction"
+    },
+    "opponent": {
+      "objects": {
+        "npc": {
+          "value": "int",
+          "name_key": "string"
+        },
+        "patrol": {
+          "which": "patrol_sel"
+        },
+        "player": {
+          "who": "player_sel"
+        },
+        "contact": {}
+      }
+    },
+    "asset_filter": {
+      "objects": {
+        "asset": {
+          "type": "list:card_type?",
+          "trait": "trait?",
+          "droid": "bool?",
+          "name": "string?",
+          "self": "bool?"
+        }
+      }
+    }
+  },
+  "amount": {
+    "notes": "An amount is an int or one of these objects (EFFECTS §7).",
+    "objects": {
+      "up_to": {
+        "max": "int"
+      },
+      "any": {},
+      "per": {
+        "each": "int",
+        "counter": "string",
+        "filter": "cond?"
+      },
+      "times": {
+        "factor": "int",
+        "of": "enum:spent|cost|named|chosen"
+      },
+      "all": {}
+    }
+  },
+  "timings": {
+    "passive": {},
+    "step": {
+      "step": "step"
+    },
+    "trigger": {
+      "event": "event",
+      "filter": "cond?"
+    },
+    "replacement": {
+      "event": "event",
+      "filter": "cond?"
+    },
+    "window": {
+      "window": "enum:dice_modify",
+      "scope": "list:dice_scope",
+      "filter": "cond?"
+    },
+    "goal": {
+      "kind": "enum:personal|ship"
+    },
+    "setup": {}
+  },
+  "events": [
+    "dice_rolled",
+    "combat_start",
+    "combat_won",
+    "combat_lost",
+    "would_be_defeated",
+    "defeated",
+    "test_before",
+    "test_would_fail",
+    "move_into",
+    "other_moves_into",
+    "patrol_would_move",
+    "fame_gained",
+    "job_completed",
+    "bounty_reward",
+    "contact_eliminated",
+    "planning_credits",
+    "discarded",
+    "action_step_end",
+    "damage_recovered",
+    "asset_gained",
+    "damage_suffered",
+    "cargo_delivered",
+    "reward_gained"
+  ],
+  "conditions": {
+    "all": {
+      "of": "list:cond"
+    },
+    "any": {
+      "of": "list:cond"
+    },
+    "not": {
+      "of": "cond"
+    },
+    "rep": {
+      "faction": "faction_sel",
+      "in": "list:rep_state",
+      "player": "player_sel?"
+    },
+    "rep_count": {
+      "state": "rep_state",
+      "min": "int?",
+      "max": "int?",
+      "player": "player_sel?"
+    },
+    "had_rep": {
+      "faction": "faction_sel",
+      "in": "list:rep_state"
+    },
+    "has_skill": {
+      "skill": "list:skill"
+    },
+    "has_asset": {
+      "filter": "asset_filter",
+      "min": "int?",
+      "max": "int?",
+      "min_total_cost": "int?"
+    },
+    "is_character": {
+      "name": "string"
+    },
+    "is_droid": {},
+    "credits_at_least": {
+      "amount": "int"
+    },
+    "most_famous": {},
+    "more_fame_than": {
+      "player": "player_sel"
+    },
+    "on_space": {
+      "type": "space_type?",
+      "id": "string?",
+      "faction": "faction?"
+    },
+    "in_patrol_space": {
+      "faction": "faction?",
+      "rep": "list:rep_state?"
+    },
+    "other_player_in_space": {
+      "where": "cond?"
+    },
+    "ship_trait": {
+      "trait": "trait"
+    },
+    "ship_cost_at_least": {
+      "amount": "int"
+    },
+    "no_damage": {},
+    "not_defeated": {},
+    "player_count": {
+      "min": "int",
+      "max": "int"
+    },
+    "databank_exists": {
+      "number": "int"
+    },
+    "did": {
+      "what": "enum:chose|paid|passed|failed|won|lost|gained|tested|fought"
+    },
+    "combat": {
+      "type": "combat_type?",
+      "opponent": "enum:patrol|player|contact|npc?",
+      "patrol_faction": "faction?",
+      "patrol_fame_reward": "bool?",
+      "result": "enum:won|lost?"
+    },
+    "dice_result": {
+      "face": "list:face",
+      "min": "int?"
+    },
+    "delivering": {
+      "trait": "trait?"
+    }
+  },
+  "effects": {
+    "if": {
+      "cond": "cond",
+      "then": "effects",
+      "else": "effects?"
+    },
+    "choice": {
+      "options": "list:effects",
+      "chooser": "player_sel?"
+    },
+    "may": {
+      "effects": "effects"
+    },
+    "to": {
+      "cost": "effects",
+      "then": "effects"
+    },
+    "unless": {
+      "penalty": "effects",
+      "avoid": "effects"
+    },
+    "test": {
+      "skill": "list:skill",
+      "player": "player_sel?",
+      "pass": "effects?",
+      "fail": "effects?"
+    },
+    "combat": {
+      "type": "combat_type",
+      "opponent": "opponent",
+      "win": "effects?",
+      "lose": "effects?",
+      "after": "effects?"
+    },
+    "dice.roll": {
+      "count": "amount",
+      "outcomes": "list:outcome"
+    },
+    "credits.gain": {
+      "amount": "amount",
+      "player": "player_sel?"
+    },
+    "credits.spend": {
+      "amount": "amount",
+      "barter": "bool?"
+    },
+    "credits.lose": {
+      "amount": "amount",
+      "player": "player_sel?"
+    },
+    "credits.take": {
+      "amount": "amount",
+      "from": "player_sel"
+    },
+    "credits.stake": {},
+    "fame.gain": {
+      "amount": "amount",
+      "additional": "bool?",
+      "player": "player_sel?"
+    },
+    "fame.lose": {
+      "amount": "amount",
+      "player": "player_sel?"
+    },
+    "rep.gain": {
+      "faction": "faction_sel",
+      "amount": "amount?",
+      "player": "player_sel?"
+    },
+    "rep.lose": {
+      "faction": "faction_sel",
+      "amount": "amount?",
+      "player": "player_sel?"
+    },
+    "rep.choice": {
+      "faction": "faction_sel",
+      "player": "player_sel"
+    },
+    "damage.suffer": {
+      "target": "damage_target",
+      "amount": "amount",
+      "player": "player_sel?"
+    },
+    "damage.recover": {
+      "target": "damage_target",
+      "amount": "amount"
+    },
+    "damage.prevent": {
+      "amount": "amount"
+    },
+    "damage.cap": {
+      "max": "int"
+    },
+    "damage.crit_value": {
+      "value": "int"
+    },
+    "test.pass": {},
+    "test.skill_grant": {
+      "skill": "enum:choice",
+      "duration": "duration"
+    },
+    "dice.reroll": {
+      "count": "amount",
+      "faces": "list:face?"
+    },
+    "dice.turn": {
+      "from": "list:face",
+      "to": "face",
+      "count": "amount"
+    },
+    "dice.add": {
+      "face": "face",
+      "count": "int"
+    },
+    "dice.cancel": {
+      "face": "list:face",
+      "count": "amount"
+    },
+    "dice.opponent_fewer": {
+      "count": "int",
+      "combat": "combat_type"
+    },
+    "combat.auto_win": {},
+    "stat.modify": {
+      "stat": "stat",
+      "by": "amount",
+      "duration": "duration?"
+    },
+    "fame.extra": {
+      "amount": "int"
+    },
+    "reward.modify": {
+      "asset": "card_type",
+      "by": "int"
+    },
+    "slot.modify": {
+      "slot": "card_type",
+      "capacity": "int"
+    },
+    "limit.trait": {
+      "trait": "trait",
+      "max": "int"
+    },
+    "rule.modify": {
+      "rule": "string"
+    },
+    "move.player": {
+      "distance": "amount"
+    },
+    "move.player_direct": {
+      "to": "space_sel"
+    },
+    "move.patrol": {
+      "patrol": "patrol_sel",
+      "distance": "amount",
+      "toward": "enum:you|any_direction|other_player"
+    },
+    "move.patrol_direct": {
+      "patrol": "patrol_sel",
+      "to": "space_sel"
+    },
+    "turn.additional": {},
+    "turn.end": {},
+    "step.end": {},
+    "market.extra_action": {},
+    "encounter.patrol": {
+      "patrol": "patrol_sel",
+      "who": "player_sel?"
+    },
+    "encounter.contact": {},
+    "encounter.space": {
+      "deck": "string"
+    },
+    "encounter_deck.peek": {},
+    "contact.look": {
+      "where": "space_sel",
+      "count": "amount?"
+    },
+    "contact.move": {
+      "facedown_only": "bool?"
+    },
+    "contact.exchange": {},
+    "contact.relocate_self": {
+      "planet": "string"
+    },
+    "contact.discard_token": {},
+    "contact.place_facedown": {},
+    "contact.reveal": {
+      "lowest_class": "bool?"
+    },
+    "asset.gain_embedded": {},
+    "asset.gain_databank": {
+      "number": "int",
+      "else": "effects?"
+    },
+    "market.buy": {
+      "deck": "list:deck",
+      "source": "enum:top|reveal|search",
+      "reveal": "int?",
+      "filter": "asset_filter?",
+      "discount": "int?",
+      "free": "bool?",
+      "barter": "bool?"
+    },
+    "market.take": {
+      "name": "string",
+      "from": "enum:deck_or_player"
+    },
+    "market.discard_top": {
+      "deck": "list:deck"
+    },
+    "asset.take": {
+      "filter": "asset_filter",
+      "from": "player_sel"
+    },
+    "asset.discard": {
+      "filter": "asset_filter",
+      "count": "int?"
+    },
+    "card.discard_self": {},
+    "card.remove_self": {},
+    "cargo.deliver": {
+      "anywhere": "bool?",
+      "no_roll": "bool?"
+    },
+    "bounty.deliver": {
+      "anywhere": "bool?"
+    },
+    "job.complete": {},
+    "job.fail": {},
+    "goal.complete": {},
+    "sheet.flip": {
+      "sheet": "enum:character|ship"
+    },
+    "ship.buy_sheet": {
+      "sheet": "string?"
+    },
+    "databank.resolve": {
+      "number": "int"
+    },
+    "planet.marker": {},
+    "custom": {
+      "handler": "custom_handler",
+      "params": "object?"
+    }
+  },
+  "outcome": {
+    "faces": "list:face?",
+    "min_hits": "int?",
+    "effects": "effects"
+  },
+  "custom_handlers": [
+    "used_ship_for_sale",
+    "sabacc",
+    "name_a_number",
+    "side_bets",
+    "double_or_nothing",
+    "shared_die_result",
+    "chromium_hull",
+    "patrol_redirect",
+    "planet_damage_marker",
+    "pay_for_goal",
+    "replace_with_starter",
+    "buy_any_sheet",
+    "tractor_beam"
+  ],
+  "card_fields": {
+    "id": "string",
+    "kind": "card_type",
+    "abilities": "list:ability",
+    "errata": "string?",
+    "notes": "list:string?"
+  },
+  "card_kinds": {
+    "gear": {
+      "deck": "deck",
+      "cost": "int",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon"
+    },
+    "mod": {
+      "deck": "deck",
+      "cost": "int",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "slot": "list:card_type?"
+    },
+    "crew": {
+      "deck": "deck",
+      "cost": "int",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "skills": "list:skill",
+      "faction": "faction?",
+      "droid": "bool?"
+    },
+    "cargo": {
+      "deck": "deck",
+      "cost": "int",
+      "traits": "list:trait",
+      "patrol_icon": "nullable:patrol_icon",
+      "destination": "nullable:space_id",
+      "cannot_buy_on": "nullable:space_id",
+      "delivery_check": "nullable:delivery_check",
+      "reward": "effects"
+    }
+  },
+  "field_types": {
+    "patrol_icon": {
+      "faction": "faction",
+      "distance": "int"
+    },
+    "delivery_check": {
+      "success": "list:face",
+      "else_databank": "int"
+    }
+  },
+  "ability_fields": {
+    "text": "string?",
+    "timing": "timing",
+    "limit": "limit?",
+    "optional": "bool?",
+    "condition": "cond?",
+    "cost": "effects?",
+    "effects": "effects",
+    "duration": "duration?",
+    "errata": "string?"
+  }
+}

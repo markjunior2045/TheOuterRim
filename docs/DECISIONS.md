@@ -107,6 +107,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Cards, the map graph and saves are JSON with a format version number; cards and rules have stable IDs. The map is a graph (spaces, positions, paths) kept separate from its art.
 - Content comes in **packs** with a manifest (id, version, dependencies, cards, characters, ships, rule hooks). In an online room all players must have the same packs and versions; a save records the packs it used.
 - Networking sits behind a simple interface (send command, receive event), so the connection type can change without touching the rules.
+- **Game data (2026-11-05):** card data is a tree of effect primitives (`DATA_FORMAT.md`), checked against one registry (`data/schema/registry.json`) that the Python validator reads now and the C# loader reads later. Card ids are the image ids from the extraction. Card text lives only in localization files; the English file is generated from the transcriptions.
 - Before V1, define the **full inventory** of card types, effect types and components of the base game; implement one slice at a time.
 
 ### 7.1 Image extraction tooling (Adopted)

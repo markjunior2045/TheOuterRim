@@ -1,0 +1,162 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "market-gear",
+  "source": "data/transcription/market/base-market-gear.json",
+  "cards": [
+    {
+      "id": "base-market-gear-00", "kind": "gear", "deck": "gear", "cost": 5000, "traits": ["weapon"],
+      "patrol_icon": {"faction": "rebel", "distance": 4},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "ground_combat", "by": 1}]},
+        {"text": "text.1", "timing": {"type": "replacement", "event": "damage_suffered",
+          "filter": {"cond": "combat", "type": "ground", "result": "won"}},
+         "effects": [{"op": "damage.cap", "max": 2}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-01", "kind": "gear", "deck": "gear", "cost": 4000, "traits": ["weapon"],
+      "patrol_icon": {"faction": "syndicate", "distance": 4},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "window", "window": "dice_modify", "scope": ["ground_combat"]}, "optional": true,
+         "effects": [{"op": "dice.turn", "from": ["focus"], "to": "hit", "count": 1}]},
+        {"text": "text.1", "timing": {"type": "passive"},
+         "condition": {"cond": "has_skill", "skill": ["stealth", "strength"]},
+         "effects": [{"op": "stat.modify", "stat": "ground_combat", "by": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-02", "kind": "gear", "deck": "gear", "cost": 3000, "traits": ["weapon"],
+      "patrol_icon": {"faction": "syndicate", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "ground_combat", "by": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-03", "kind": "gear", "deck": "gear", "cost": 3000, "traits": ["armor"],
+      "patrol_icon": {"faction": "imperial", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "health", "by": 2}]},
+        {"text": "text.1", "timing": {"type": "passive"},
+         "effects": [{"op": "limit.trait", "trait": "armor", "max": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-04", "kind": "gear", "deck": "gear", "cost": 8000, "traits": ["weapon"],
+      "patrol_icon": {"faction": "rebel", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "ground_combat", "by": 2}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-05", "kind": "gear", "deck": "gear", "cost": 6000, "traits": ["weapon"],
+      "patrol_icon": {"faction": "hutt", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "ground_combat", "by": 1}]},
+        {"text": "text.1", "timing": {"type": "window", "window": "dice_modify", "scope": ["ground_combat"]}, "optional": true,
+         "condition": {"cond": "has_skill", "skill": ["strength"]},
+         "effects": [{"op": "dice.turn", "from": ["focus"], "to": "crit", "count": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-06", "kind": "mod", "deck": "gear", "cost": 5000, "traits": [],
+      "patrol_icon": {"faction": "hutt", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "window", "window": "dice_modify", "scope": ["ship_combat"]},
+         "effects": [{"op": "if", "cond": {"cond": "has_skill", "skill": ["tactics"]},
+           "then": [{"op": "choice", "options": [
+             [{"op": "dice.cancel", "face": ["hit"], "count": 1}],
+             [{"op": "dice.cancel", "face": ["crit"], "count": 1}]]}],
+           "else": [{"op": "dice.cancel", "face": ["hit"], "count": 1}]}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-07", "kind": "mod", "deck": "gear", "cost": 2000, "traits": [],
+      "patrol_icon": {"faction": "rebel", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "window", "window": "dice_modify", "scope": ["ship_combat"]},
+         "limit": "once_per_combat", "optional": true,
+         "effects": [{"op": "dice.reroll", "count": {"any": {}}, "faces": ["blank"]}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-08", "kind": "mod", "deck": "gear", "cost": 2000, "traits": [],
+      "patrol_icon": {"faction": "imperial", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "ship_combat", "by": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-09", "kind": "gear", "deck": "gear", "cost": 8000, "traits": ["armor"],
+      "patrol_icon": {"faction": "imperial", "distance": 4},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "health", "by": 2}]},
+        {"text": "text.1", "timing": {"type": "passive"},
+         "condition": {"cond": "has_skill", "skill": ["strength"]},
+         "effects": [{"op": "dice.opponent_fewer", "count": 1, "combat": "ground"}]},
+        {"text": "text.2", "timing": {"type": "passive"},
+         "effects": [{"op": "limit.trait", "trait": "armor", "max": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-10", "kind": "gear", "deck": "gear", "cost": 6000, "traits": [],
+      "patrol_icon": {"faction": "hutt", "distance": 4},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "window", "window": "dice_modify", "scope": ["ground_combat"]},
+         "effects": [{"op": "if", "cond": {"cond": "has_skill", "skill": ["tactics"]},
+           "then": [{"op": "choice", "options": [
+             [{"op": "dice.cancel", "face": ["hit"], "count": 1}],
+             [{"op": "dice.cancel", "face": ["crit"], "count": 1}]]}],
+           "else": [{"op": "dice.cancel", "face": ["hit"], "count": 1}]}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-11", "kind": "mod", "deck": "gear", "cost": 3000, "traits": [],
+      "patrol_icon": null,
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "hyperdrive", "by": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-12", "kind": "mod", "deck": "gear", "cost": 5000, "traits": [],
+      "patrol_icon": null,
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "hull", "by": 1}]},
+        {"text": "text.1", "timing": {"type": "passive"},
+         "condition": {"cond": "has_skill", "skill": ["tactics"]},
+         "effects": [{"op": "dice.opponent_fewer", "count": 1, "combat": "ship"}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-13", "kind": "mod", "deck": "gear", "cost": 3000, "traits": [],
+      "patrol_icon": null,
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "stat.modify", "stat": "hull", "by": 1}]},
+        {"text": "abilities.0", "timing": {"type": "step", "step": "action"},
+         "effects": [{"op": "damage.recover", "target": "ship", "amount": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-gear-14", "kind": "mod", "deck": "gear", "cost": 7000, "traits": [],
+      "patrol_icon": {"faction": "syndicate", "distance": 3},
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "window", "window": "dice_modify", "scope": ["ship_combat"]},
+         "effects": [{"op": "if", "cond": {"cond": "has_skill", "skill": ["tactics"]},
+           "then": [{"op": "choice", "options": [
+             [{"op": "dice.turn", "from": ["focus"], "to": "hit", "count": {"up_to": {"max": 2}}}],
+             [{"op": "dice.turn", "from": ["focus"], "to": "crit", "count": 1}]]}],
+           "else": [{"op": "dice.turn", "from": ["focus"], "to": "hit", "count": {"up_to": {"max": 2}}}]}]}
+      ]
+    }
+  ]
+}

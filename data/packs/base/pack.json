@@ -1,0 +1,15 @@
+{
+  "format": "outer-rim-pack/0.1",
+  "id": "base",
+  "version": "0.1.0",
+  "name": "Star Wars: Outer Rim (base game)",
+  "depends": [],
+  "map": "data/map/base-map.json",
+  "cards": [
+    "data/packs/base/cards/market-gear.json",
+    "data/packs/base/cards/market-cargo.json"
+  ],
+  "localization": {
+    "en": "data/packs/base/loc/en.json"
+  }
+}

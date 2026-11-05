@@ -1,0 +1,88 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "market-cargo",
+  "source": "data/transcription/market/base-market-cargo.json",
+  "cards": [
+    {
+      "id": "base-market-cargo-00", "kind": "cargo", "deck": "cargo", "cost": 1000, "traits": [],
+      "patrol_icon": {"faction": "rebel", "distance": 4},
+      "cannot_buy_on": "mon-calamari", "destination": "mon-calamari", "delivery_check": null,
+      "reward": [{"op": "credits.gain", "amount": 5000}, {"op": "rep.gain", "faction": "rebel"}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-01", "kind": "cargo", "deck": "cargo", "cost": 2000, "traits": ["illegal"],
+      "patrol_icon": {"faction": "syndicate", "distance": 3},
+      "cannot_buy_on": "kessel", "destination": "kessel", "delivery_check": {"success": ["hit"], "else_databank": 1},
+      "reward": [{"op": "credits.gain", "amount": 7000}, {"op": "fame.gain", "amount": 1}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-02", "kind": "cargo", "deck": "cargo", "cost": 2000, "traits": ["illegal"],
+      "patrol_icon": null,
+      "cannot_buy_on": "cantonica", "destination": "cantonica", "delivery_check": {"success": ["hit"], "else_databank": 1},
+      "reward": [{"op": "credits.gain", "amount": 7000}, {"op": "fame.gain", "amount": 1}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-03", "kind": "cargo", "deck": "cargo", "cost": 1000, "traits": [],
+      "patrol_icon": {"faction": "syndicate", "distance": 4},
+      "cannot_buy_on": "ord-mantell", "destination": "ord-mantell", "delivery_check": null,
+      "reward": [{"op": "credits.gain", "amount": 5000}, {"op": "rep.gain", "faction": "syndicate"}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-04", "kind": "cargo", "deck": "cargo", "cost": 1000, "traits": [],
+      "patrol_icon": {"faction": "imperial", "distance": 4},
+      "cannot_buy_on": "ryloth", "destination": "ryloth", "delivery_check": null,
+      "reward": [{"op": "credits.gain", "amount": 5000}, {"op": "rep.gain", "faction": "imperial"}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-05", "kind": "cargo", "deck": "cargo", "cost": 1000, "traits": [],
+      "patrol_icon": {"faction": "hutt", "distance": 4},
+      "cannot_buy_on": "nal-hutta", "destination": "nal-hutta", "delivery_check": null,
+      "reward": [{"op": "credits.gain", "amount": 5000}, {"op": "rep.gain", "faction": "hutt"}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-06", "kind": "cargo", "deck": "cargo", "cost": 3000, "traits": ["illegal"],
+      "patrol_icon": {"faction": "rebel", "distance": 3},
+      "cannot_buy_on": "ring-of-kafrene", "destination": "ring-of-kafrene", "delivery_check": {"success": ["hit"], "else_databank": 1},
+      "reward": [{"op": "credits.gain", "amount": 9000}, {"op": "fame.gain", "amount": 1}],
+      "abilities": []
+    },
+    {
+      "id": "base-market-cargo-07", "kind": "cargo", "deck": "cargo", "cost": 1000, "traits": [],
+      "patrol_icon": {"faction": "hutt", "distance": 3},
+      "cannot_buy_on": "takodana", "destination": "takodana", "delivery_check": null,
+      "reward": [{"op": "credits.gain", "amount": 6000}],
+      "abilities": [
+        {"text": "abilities.0", "timing": {"type": "step", "step": "action"},
+         "condition": {"cond": "not", "of": {"cond": "is_droid"}},
+         "cost": [{"op": "card.discard_self"}],
+         "effects": [{"op": "damage.recover", "target": "character", "amount": {"all": {}}}]}
+      ]
+    },
+    {
+      "id": "base-market-cargo-08", "kind": "mod", "deck": "cargo", "cost": 2000, "traits": [],
+      "patrol_icon": null,
+      "slot": ["cargo", "mod"],
+      "abilities": [
+        {"text": "text.0", "timing": {"type": "passive"},
+         "effects": [{"op": "slot.modify", "slot": "cargo", "capacity": 1}]},
+        {"text": "text.1", "timing": {"type": "window", "window": "dice_modify", "scope": ["delivery_roll"],
+          "filter": {"cond": "delivering", "trait": "illegal"}}, "optional": true,
+         "effects": [{"op": "dice.turn", "from": ["blank"], "to": "hit", "count": 1}]}
+      ]
+    },
+    {
+      "id": "base-market-cargo-09", "kind": "cargo", "deck": "cargo", "cost": 2000, "traits": ["illegal"],
+      "patrol_icon": {"faction": "imperial", "distance": 3},
+      "cannot_buy_on": "tatooine", "destination": "tatooine", "delivery_check": {"success": ["hit"], "else_databank": 1},
+      "reward": [{"op": "credits.gain", "amount": 7000}, {"op": "fame.gain", "amount": 1}],
+      "abilities": []
+    }
+  ]
+}
