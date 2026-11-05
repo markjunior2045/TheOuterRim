@@ -197,6 +197,9 @@ namespace OuterRim.Core.Content
         private readonly Dictionary<string, string> _names = new Dictionary<string, string>(StringComparer.Ordinal);
         private readonly Dictionary<string, JObject> _cards = new Dictionary<string, JObject>(StringComparer.Ordinal);
 
+        /// <summary>Guards the card and crew tables: content may be extended while other readers use it.</summary>
+        private readonly object _lock = new object();
+
         /// <summary>
         /// Loads every card of a card data file (format outer-rim-data/0.1) as data, for the effect engine
         /// to read abilities from (DATA_FORMAT.md). Typed views (ship sides, characters, patrols) are loaded
@@ -209,9 +212,12 @@ namespace OuterRim.Core.Content
             {
                 throw new FormatException("Unsupported card data format '" + (string?)root["format"] + "'.");
             }
-            foreach (JObject card in (JArray)root["cards"]!)
+            lock (_lock)
             {
-                _cards[(string)card["id"]!] = card;
+                foreach (JObject card in (JArray)root["cards"]!)
+                {
+                    _cards[(string)card["id"]!] = card;
+                }
             }
         }
 
@@ -222,11 +228,29 @@ namespace OuterRim.Core.Content
         public List<string> DatabankCards(int number)
         {
             var ids = new List<string>();
-            foreach (var kv in _cards)
+            lock (_lock)
             {
-                if ((int?)kv.Value["number"] == number && kv.Value["kind"] != null)
+                foreach (var kv in _cards)
                 {
-                    ids.Add(kv.Key);
+                    if ((int?)kv.Value["number"] == number && kv.Value["kind"] != null)
+                    {
+                        ids.Add(kv.Key);
+                    }
+                }
+            }
+            ids.Sort(StringComparer.Ordinal);
+            return ids;
+        }
+
+        /// <summary>Cards of a market deck ("deck" field), in id order.</summary>
+        public List<string> MarketCards(string deck)
+        {
+            var ids = new List<string>();
+            lock (_lock)
+            {
+                foreach (var kv in _cards)
+                {
+                    if ((string?)kv.Value["deck"] == deck) ids.Add(kv.Key);
                 }
             }
             ids.Sort(StringComparer.Ordinal);
@@ -235,12 +259,18 @@ namespace OuterRim.Core.Content
 
         public bool HasCard(string id)
         {
-            return _cards.ContainsKey(id);
+            lock (_lock)
+            {
+                return _cards.ContainsKey(id);
+            }
         }
 
         public JObject Card(string id)
         {
-            return _cards.TryGetValue(id, out var c) ? c : throw new KeyNotFoundException("Unknown card '" + id + "'.");
+            lock (_lock)
+            {
+                return _cards.TryGetValue(id, out var c) ? c : throw new KeyNotFoundException("Unknown card '" + id + "'.");
+            }
         }
 
         /// <summary>The other side of the sheet a side belongs to (flipping, R-18.3).</summary>
@@ -336,13 +366,19 @@ namespace OuterRim.Core.Content
         /// <summary>Registers the skills of a crew card (R-6.4). Crew cards are loaded with their decks.</summary>
         public void AddCrew(string cardId, IEnumerable<Skill> skills)
         {
-            _crewSkills[cardId] = new HashSet<Skill>(skills);
+            lock (_lock)
+            {
+                _crewSkills[cardId] = new HashSet<Skill>(skills);
+            }
         }
 
         /// <summary>Skills printed on a crew card; none for unknown cards.</summary>
         public HashSet<Skill> CrewSkills(string cardId)
         {
-            return _crewSkills.TryGetValue(cardId, out var s) ? s : NoSkills;
+            lock (_lock)
+            {
+                return _crewSkills.TryGetValue(cardId, out var s) ? s : NoSkills;
+            }
         }
 
         /// <summary>Reads the characters of a card data file (format outer-rim-data/0.1).</summary>

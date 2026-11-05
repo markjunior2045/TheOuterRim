@@ -634,6 +634,63 @@ namespace OuterRim.Core.Engine
         public string SpaceId { get; }
     }
 
+    public sealed class MarketCardBoughtEvent : GameEvent
+    {
+        public MarketCardBoughtEvent(string playerId, string deck, string cardId, int price)
+        {
+            PlayerId = playerId;
+            Deck = deck;
+            CardId = cardId;
+            Price = price;
+        }
+
+        public string PlayerId { get; }
+
+        public string Deck { get; }
+
+        public string CardId { get; }
+
+        public int Price { get; }
+    }
+
+    /// <summary>R-16.18: the top card went to the bottom of its deck.</summary>
+    public sealed class MarketCardDiscardedEvent : GameEvent
+    {
+        public MarketCardDiscardedEvent(string deck, string cardId)
+        {
+            Deck = deck;
+            CardId = cardId;
+        }
+
+        public string Deck { get; }
+
+        public string CardId { get; }
+    }
+
+    /// <summary>R-16.42, R-16.43: a new top card is faceup.</summary>
+    public sealed class MarketCardRevealedEvent : GameEvent
+    {
+        public MarketCardRevealedEvent(string deck, string cardId)
+        {
+            Deck = deck;
+            CardId = cardId;
+        }
+
+        public string Deck { get; }
+
+        public string CardId { get; }
+    }
+
+    public sealed class MarketDeckShuffledEvent : GameEvent
+    {
+        public MarketDeckShuffledEvent(string deck)
+        {
+            Deck = deck;
+        }
+
+        public string Deck { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

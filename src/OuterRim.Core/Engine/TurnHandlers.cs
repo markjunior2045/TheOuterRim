@@ -15,6 +15,8 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new EncounterStepHandler());
             ResolutionHandlers.Register(new AbilityStepHandler());
             ResolutionHandlers.Register(new StartingReputationHandler());
+            ResolutionHandlers.Register(new MarketBuyHandler());
+            ResolutionHandlers.Register(new UsedShipForSaleHandler());
             EffectHandlers.Register();
             ResolutionHandlers.Register(new EncounterSpaceStub());
             ResolutionHandlers.Register(new PatrolEncounterHandler());

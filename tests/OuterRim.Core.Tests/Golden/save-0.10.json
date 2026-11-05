@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.9",
+  "format": "outer-rim-save/0.10",
   "packs": [
     {
       "id": "base",
@@ -9,7 +9,7 @@
   "state": {
     "seed": 12345,
     "random": {
-      "state": "3673fc23f6c4c11d",
+      "state": "9fd07e1dd9a51599",
       "increment": "000000000000006d"
     },
     "packs": [
@@ -24,7 +24,7 @@
         "id": "p1",
         "name": "Player 1",
         "color": "green",
-        "credits": 6000,
+        "credits": 8000,
         "fame": 0,
         "reputation": {
           "rebel": "neutral",
@@ -48,7 +48,7 @@
         "id": "p2",
         "name": "Player 2",
         "color": "red",
-        "credits": 8000,
+        "credits": 6000,
         "fame": 3,
         "reputation": {
           "rebel": "positive",
@@ -93,9 +93,9 @@
         "shipSideId": "base-ship-g9-rigger"
       }
     ],
-    "firstPlayerId": "p3",
+    "firstPlayerId": "p2",
     "round": 1,
-    "currentPlayerId": "p3",
+    "currentPlayerId": "p2",
     "step": "action",
     "mapPieces": [
       "endcap-rebel-syndicate",
@@ -139,6 +139,108 @@
       "base-ship-lancer-class-pursuit-craft",
       "base-ship-modified-yt-1300-light-freighter",
       "base-ship-yv-666-light-freighter"
+    ],
+    "marketDecks": [
+      {
+        "deck": "bounty",
+        "cards": [
+          "base-market-bounty-02",
+          "base-market-bounty-09",
+          "base-market-bounty-05",
+          "base-market-bounty-03",
+          "base-market-bounty-07",
+          "base-market-bounty-06",
+          "base-market-bounty-00",
+          "base-market-bounty-01",
+          "base-market-bounty-04",
+          "base-market-bounty-10",
+          "base-market-bounty-08"
+        ]
+      },
+      {
+        "deck": "cargo",
+        "cards": [
+          "base-market-cargo-09",
+          "base-market-cargo-04",
+          "base-market-cargo-06",
+          "base-market-cargo-05",
+          "base-market-cargo-02",
+          "base-market-cargo-00",
+          "base-market-cargo-07",
+          "base-market-cargo-03",
+          "base-market-cargo-01",
+          "base-market-cargo-08"
+        ]
+      },
+      {
+        "deck": "gear",
+        "cards": [
+          "base-market-gear-11",
+          "base-market-gear-10",
+          "base-market-gear-00",
+          "base-market-gear-03",
+          "base-market-gear-04",
+          "base-market-gear-12",
+          "base-market-gear-05",
+          "base-market-gear-02",
+          "base-market-gear-01",
+          "base-market-gear-08",
+          "base-market-gear-14",
+          "base-market-gear-06",
+          "base-market-gear-09",
+          "base-market-gear-13",
+          "base-market-gear-07"
+        ]
+      },
+      {
+        "deck": "job",
+        "cards": [
+          "base-market-job-09",
+          "base-market-job-13",
+          "base-market-job-12",
+          "base-market-job-06",
+          "base-market-job-01",
+          "base-market-job-02",
+          "base-market-job-11",
+          "base-market-job-04",
+          "base-market-job-08",
+          "base-market-job-07",
+          "base-market-job-05",
+          "base-market-job-00",
+          "base-market-job-10",
+          "base-market-job-03"
+        ]
+      },
+      {
+        "deck": "luxury",
+        "cards": [
+          "base-market-luxury-02",
+          "base-market-luxury-08",
+          "base-market-luxury-09",
+          "base-market-luxury-04",
+          "base-market-luxury-00",
+          "base-market-luxury-05",
+          "base-market-luxury-07",
+          "base-market-luxury-10",
+          "base-market-luxury-03",
+          "base-market-luxury-01",
+          "base-market-luxury-06"
+        ]
+      },
+      {
+        "deck": "ship",
+        "cards": [
+          "base-market-ship-08",
+          "base-market-ship-00",
+          "base-market-ship-04",
+          "base-market-ship-01",
+          "base-market-ship-06",
+          "base-market-ship-02",
+          "base-market-ship-03",
+          "base-market-ship-05",
+          "base-market-ship-07"
+        ]
+      }
     ],
     "patrolStacks": [
       {
@@ -198,7 +300,7 @@
     "pending": {
       "id": 1,
       "kind": "resolveTie",
-      "playerId": "p3",
+      "playerId": "p2",
       "prompt": "test.nearest",
       "options": [
         {

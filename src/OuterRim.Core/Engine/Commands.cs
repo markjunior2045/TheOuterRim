@@ -91,6 +91,31 @@ namespace OuterRim.Core.Engine
         public string Path { get; }
     }
 
+    /// <summary>Market action step 1: discard the top card of a deck to its bottom (R-16.18, R-16.19).</summary>
+    public sealed class MarketDiscardCommand : Command
+    {
+        public MarketDiscardCommand(string playerId, string deck) : base(playerId)
+        {
+            Deck = deck;
+        }
+
+        public string Deck { get; }
+    }
+
+    /// <summary>Market action step 2: buy the top card of a deck, bartering the listed assets (R-16.21, R-16.31).</summary>
+    public sealed class MarketBuyCommand : Command
+    {
+        public MarketBuyCommand(string playerId, string deck, IReadOnlyList<string>? barter = null) : base(playerId)
+        {
+            Deck = deck;
+            Barter = barter ?? new string[0];
+        }
+
+        public string Deck { get; }
+
+        public IReadOnlyList<string> Barter { get; }
+    }
+
     /// <summary>Base for answers to a <see cref="PendingDecision"/>.</summary>
     public abstract class AnswerCommand : Command
     {

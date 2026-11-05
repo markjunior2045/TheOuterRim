@@ -45,7 +45,7 @@ namespace OuterRim.Core.Engine
         /// <summary>Custom handlers (EFFECTS.md §8) this engine runs; patrol_redirect runs inside patrol movement.</summary>
         public static readonly HashSet<string> CustomImplemented = new HashSet<string>(StringComparer.Ordinal)
         {
-            "tractor_beam", "patrol_redirect",
+            "tractor_beam", "patrol_redirect", "used_ship_for_sale",
         };
 
         public static void Register()

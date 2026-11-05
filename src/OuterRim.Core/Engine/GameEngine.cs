@@ -150,6 +150,7 @@ namespace OuterRim.Core.Engine
                 });
             }
             Patrols.Setup(content, state);
+            Market.Setup(content, state);
             // R-3.16.d: unused ship sheets form the supply. There are four starter sheets (R-2.1).
             foreach (var sheet in content.ShipSheetIds())
             {
@@ -372,6 +373,10 @@ namespace OuterRim.Core.Engine
                     return Encounter(content, state, player, encounter);
                 case UseAbilityCommand use:
                     return UseAbility(content, state, player, use);
+                case MarketDiscardCommand discard:
+                    return MarketDiscard(content, state, player, discard.Deck);
+                case MarketBuyCommand buy:
+                    return MarketBuy(content, state, player, buy);
                 default:
                     return CommandResult.Rejected("Command not supported yet: " + command.GetType().Name + ".");
             }
@@ -793,6 +798,76 @@ namespace OuterRim.Core.Engine
                 return CommandResult.Ok(events);
             }
             return result;
+        }
+
+        private const string MarketUsed = "action:market";
+        private const string MarketBought = "action:market_bought";
+
+        /// <summary>R-16.17, R-4.9: the market action, on a planet, once per action step.</summary>
+        private static string? CheckMarket(GameContent content, GameState state, PlayerState player)
+        {
+            if (state.Step != TurnStep.Action)
+            {
+                return "R-16.17: the market action is taken in the action step.";
+            }
+            if (!content.Map[player.SpaceId].IsPlanet)
+            {
+                return "R-16.17: the market action needs a planet.";
+            }
+            if (state.UsedAbilities.Contains(MarketBought))
+            {
+                return "R-4.9: one market action per action step.";
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// R-16.18 to R-16.20: discard the top card of a deck to its bottom and reveal the next; a second
+        /// discard only from the same deck; no icons resolve.
+        /// </summary>
+        private static CommandResult MarketDiscard(GameContent content, GameState state, PlayerState player, string deckId)
+        {
+            var error = CheckMarket(content, state, player);
+            if (error != null) return CommandResult.Rejected(error);
+            int done = 0;
+            string? deckSoFar = null;
+            foreach (var u in state.UsedAbilities)
+            {
+                if (u.StartsWith("action:market_discard:", StringComparison.Ordinal))
+                {
+                    done++;
+                    deckSoFar = u.Substring("action:market_discard:".Length);
+                }
+            }
+            if (done >= 2) return CommandResult.Rejected("R-16.19: at most two discards.");
+            if (deckSoFar != null && deckSoFar != deckId) return CommandResult.Rejected("R-16.19: the second discard comes from the same deck.");
+            var deck = Market.Deck(state, deckId);
+            if (deck.Cards.Count == 0) return CommandResult.Rejected("That deck is empty.");
+            var card = deck.Cards[0];
+            deck.Cards.RemoveAt(0);
+            deck.Cards.Add(card);
+            if (!state.UsedAbilities.Contains(MarketUsed)) state.UsedAbilities.Add(MarketUsed);
+            state.UsedAbilities.Add("action:market_discard:" + deckId);
+            return CommandResult.Ok(new List<GameEvent>
+            {
+                new MarketCardDiscardedEvent(deckId, card),
+                new MarketCardRevealedEvent(deckId, deck.Cards[0]),
+            });
+        }
+
+        /// <summary>R-16.21 to R-16.40: buy the top card of one deck; this ends the market action.</summary>
+        private static CommandResult MarketBuy(GameContent content, GameState state, PlayerState player, MarketBuyCommand command)
+        {
+            var error = CheckMarket(content, state, player)
+                ?? Market.Check(content, state, player, command.Deck, command.Barter, out _);
+            if (error != null) return CommandResult.Rejected(error);
+            state.UsedAbilities.Add(MarketUsed);
+            state.UsedAbilities.Add(MarketBought);
+            var frame = new Frame(Market.BuyHandler);
+            frame.Set("player", player.Id);
+            frame.Set("deck", command.Deck);
+            frame.Set("barter", string.Join(",", command.Barter));
+            return StartResolution(content, state, frame);
         }
 
         private static string StepId(TurnStep step)

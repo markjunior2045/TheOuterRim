@@ -43,6 +43,9 @@ namespace OuterRim.Core.Model
         /// <summary>Ship sheets not held by any player (R-3.16.d, R-16.29); a sheet id per copy.</summary>
         public List<string> ShipSupply { get; set; } = new List<string>();
 
+        /// <summary>The six market decks, top card first; the top card is faceup (R-16.42).</summary>
+        public List<MarketDeck> MarketDecks { get; set; } = new List<MarketDeck>();
+
         /// <summary>Facedown patrol tokens per faction, top first (R-3.7).</summary>
         public List<PatrolStack> PatrolStacks { get; set; } = new List<PatrolStack>();
 
@@ -118,6 +121,14 @@ namespace OuterRim.Core.Model
         public int Level { get; set; } = 1;
 
         public string SpaceId { get; set; } = "";
+    }
+
+    /// <summary>A market deck: card ids, top first (R-16.41, R-16.42).</summary>
+    public sealed class MarketDeck
+    {
+        public string Deck { get; set; } = "";
+
+        public List<string> Cards { get; set; } = new List<string>();
     }
 
     /// <summary>A damage token placed on a planet as a marker (R-25.14).</summary>

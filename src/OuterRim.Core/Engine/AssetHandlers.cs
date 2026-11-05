@@ -164,7 +164,10 @@ namespace OuterRim.Core.Engine
             int shipValue = ctx.Content.ShipSide(player.ShipSideId).Cost ?? 0;
             int barter = Assets.BarterValue(bartered, out _)!.Value + shipValue; // R-16.38: the current ship is always bartered
             int price = Assets.PriceAfterBarter(goalSide.Cost ?? 0, barter);
-            PlayerRules.TrySpend(player, price, ctx.Events);
+            if (!frame.Vars.ContainsKey("paid"))
+            {
+                PlayerRules.TrySpend(player, price, ctx.Events);
+            }
             foreach (var a in bartered)
             {
                 Assets.Discard(player, a, "barter", ctx.Events);

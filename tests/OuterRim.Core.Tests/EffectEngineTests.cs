@@ -375,7 +375,7 @@ namespace OuterRim.Core.Tests
             ["job.complete"] = "T2.6", ["databank.resolve"] = "T2.6",
             ["custom:wanted"] = "T2.6", ["custom:sabacc"] = "T2.6", ["custom:reward_for_fame"] = "T2.6",
             ["custom:stolen_jewels"] = "T2.5", ["custom:undercover_agent"] = "T2.5", ["custom:dejarik"] = "T2.5",
-            ["custom:chromium_hull"] = "T2.5", ["custom:used_ship_for_sale"] = "T2.5",
+            ["custom:chromium_hull"] = "T2.5", 
         };
 
         [Fact]

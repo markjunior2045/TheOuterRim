@@ -17,7 +17,7 @@ namespace OuterRim.Core.Persistence
     public static class SaveSerializer
     {
         /// <summary>Save file format. Bump it when a saved field changes meaning or is removed.</summary>
-        public const string Format = "outer-rim-save/0.9";
+        public const string Format = "outer-rim-save/0.10";
 
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
