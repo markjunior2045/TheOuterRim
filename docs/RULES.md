@@ -1086,6 +1086,9 @@ Points the Living Rules handles case by case. The implementation of the correspo
 - **R-25.12 "Chromium Hull":** whenever a card uses the phrase "gain X additional fame", that fame is treated as **part of** the fame reward it modifies, not a new instance of gaining fame. So completing "Attend Statue Dedication" and spending 10,000 credits for additional fame yields only **1** additional fame from Chromium Hull, not 2.
 - **R-25.13 Tatooine encounter #6:** when ship sheets are traded via that encounter, each sheet stays on its current side, and all damage and goal tokens stay with their sheet. **Assets tucked under the sheets stay with their original owners** and are not traded along with the ships.
 - **R-25.14 Jyn Erso:** the damage tokens her front-side ability places on planets are markers for her personal goal only. They stay until the end of the game and have no other effect (owner clarification).
+- **R-25.15 Bossk:** his personal goal needs at least 1 mod and at least 2 gear, and the combined cost of **all** his mods and gear must be at least 15,000. Two mods and one gear never qualify, whatever their cost; two mods and two gear may (owner clarification).
+- **R-25.16 GX1 Short Hauler:** the ship goal is met by gaining a crew while already holding 2 crew; the player keeps all 3 crew, as the sheet says (owner clarification).
+- **R-25.17 YV-666 Light Freighter:** recovering ship damage follows the normal rules; each time the player recovers at least 1 damage from this ship they **may** spend 7,000 to gain 1 fame and flip the sheet (owner clarification).
 
 ---
 
@@ -1154,6 +1157,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | R-25.15 to R-25.17: Bossk, GX1 Short Hauler and YV-666 goals (owner clarifications from T2.4). |
 | 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded; map geometry read into `data/map/`. |
 | 2026-11-04 | R-9.8 spending versus losing credits and R-25.14 Jyn Erso's planet markers (owner clarifications from the T2.1 effect inventory). |
 | 2026-11-04 | Review after the base game transcription: R-12.3 pip counts per class; R-14.19 trait examples; R-24 implementation note aligned with the transcription format (printed text kept, errata applied at mapping); ship sheet count explained in §2.1; §27 gains the player board and a status line. Earlier the same day: R-15.32 reworded (italic job skills are certainly tested; owner clarification) and R-15.92 added ("Wanted" jobs hunt players). |
