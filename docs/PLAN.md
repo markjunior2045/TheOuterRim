@@ -114,7 +114,7 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 
 ## Phase 2 — Content
 
-### T2.1 — Effect inventory · `TODO`
+### T2.1 — Effect inventory · `REVIEW` (draft in `docs/EFFECTS.md`, 2026-11-04)
 - Classify every card's effect, condition and target types, plus card and component types, into `docs/EFFECTS.md`.
 - **Done when:** every base card maps to a known effect type or is listed as a custom exception, and every `[UB]` mechanic in `RULES.md` has a named extension point.
 - Classification, not transcription: it sets the card data format. Works from the T2.8 transcriptions. Expansion cards are not transcribed first; their structural mechanics come from the `[UB]` rules, and card-specific effects are added when the expansion is transcribed.
@@ -202,6 +202,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-04 | T2.1 draft: `docs/EFFECTS.md` (objects, timings, primitives, conditions, 13 custom handlers, `[UB]` extension points, base coverage); two open questions for the owner. |
 | 2026-11-04 | Roadmap section added (owner decision): patterns (T2.1) → data → core → V0 → Unity prototype with TTS scans → polish. Expansion transcription deferred to the Unfinished Business pack; T2.1 covers `[UB]` through extension points. T3.3 uses full scans. Phase 1 uses real data where it exists. |
 | 2026-11-04 | Base game transcription done (T2.8, 242 cards); T0.6 and T2.4 updated to match; T2.7 follow-up deferred (transcriptions already link image and printed number). |
 | 2026-11-04 | T0.3 and T2.7 done (v1 and v2 extraction). T2.8 pilot done; batches listed. Source of card text settled (images; photos only for doubts). T2.7 follow-up for encounter numbering. New T0.6 to bring the tools and the transcription format into the repository (T0.2 was already done). Encounter display notes in T2.6 and T3.4. Transcription (T2.8) and effect inventory (T2.1) moved ahead of T0.4. |

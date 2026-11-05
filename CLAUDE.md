@@ -11,6 +11,7 @@ Repository root: `C:\TheOuterRimProject\TheOuterRim` (this folder).
 | `docs/DECISIONS.md` | Structural decisions. A guide, not a rulebook. |
 | `docs/PLAN.md` | Task plan (T0.1, T0.2, ...). Each task has a "Done when". |
 | `docs/RULES.md` | Single source of truth for game rules. Rule IDs are `R-x.y`. |
+| `docs/EFFECTS.md` | Inventory of card objects, timings and effect primitives (T2.1). Sets the card data format. |
 | `docs/sources/` | Raw text of the rulebooks used to write `RULES.md`. |
 | `src/OuterRim.Core/` | Rules core. The only copy of the core source. |
 | `tests/OuterRim.Core.Tests/` | xUnit project that compiles the core source files directly. |
