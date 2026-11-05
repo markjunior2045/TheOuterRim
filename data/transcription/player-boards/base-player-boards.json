@@ -1,0 +1,125 @@
+{
+  "format": "outer-rim-transcription/0.10",
+  "pack": "base",
+  "deck": "player-boards",
+  "source": "[Mod 01] sorted/base/player-boards",
+  "notes": [
+    "The four boards are identical apart from colour; each image gets an entry so the art stays linked.",
+    "slots: printed labels 'GEAR' (×2, top edge, cards tuck in from above) and 'JOB or BOUNTY' (×2, bottom edge). 'JOB or BOUNTY' is one dual slot holding one card (R-14.16).",
+    "fame_track: spaces 0 to 12; the {FAME} icon is printed under space 10, the standard fame requirement (R-18.9).",
+    "reputation_tracks: left to right as printed; each track has '+' at the top and '−' at the bottom, a green upper zone, a grey centre zone marked with the faction icon and name, and a red lower zone (three states, R-10.4). The tick lines inside each zone are decoration."
+  ],
+  "cards": [
+    {
+      "image": "base-player-board-green",
+      "color": "green",
+      "slots": [
+        {
+          "type": "gear",
+          "count": 2
+        },
+        {
+          "type": "job or bounty",
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12,
+        "marked_space": 10,
+        "marker_icon": "{FAME}"
+      },
+      "reputation_tracks": [
+        "hutt",
+        "syndicate",
+        "imperial",
+        "rebel"
+      ],
+      "verify": [
+        "Colour names (green, red, yellow, white) are taken from the frame colour of the [Mod 01] images; confirm against the physical boards.",
+        "The round area with three coloured discs (centre of the board) and the black cut-out on the left carry no printed label; read here as the place for the character card (cut-out) and decoration (discs). Confirm nothing in the rules uses them."
+      ]
+    },
+    {
+      "image": "base-player-board-red",
+      "color": "red",
+      "slots": [
+        {
+          "type": "gear",
+          "count": 2
+        },
+        {
+          "type": "job or bounty",
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12,
+        "marked_space": 10,
+        "marker_icon": "{FAME}"
+      },
+      "reputation_tracks": [
+        "hutt",
+        "syndicate",
+        "imperial",
+        "rebel"
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-player-board-yellow",
+      "color": "yellow",
+      "slots": [
+        {
+          "type": "gear",
+          "count": 2
+        },
+        {
+          "type": "job or bounty",
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12,
+        "marked_space": 10,
+        "marker_icon": "{FAME}"
+      },
+      "reputation_tracks": [
+        "hutt",
+        "syndicate",
+        "imperial",
+        "rebel"
+      ],
+      "verify": []
+    },
+    {
+      "image": "base-player-board-white",
+      "color": "white",
+      "slots": [
+        {
+          "type": "gear",
+          "count": 2
+        },
+        {
+          "type": "job or bounty",
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12,
+        "marked_space": 10,
+        "marker_icon": "{FAME}"
+      },
+      "reputation_tracks": [
+        "hutt",
+        "syndicate",
+        "imperial",
+        "rebel"
+      ],
+      "verify": []
+    }
+  ]
+}

@@ -1,14 +1,14 @@
-# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.9
+# TRANSCRIPTION_FORMAT.md — outer-rim-transcription/0.10
 
 Raw printed text of the cards, transcribed from the mod images (`PLAN.md` T2.8). This is **not** the game's card data format: mapping text to effects happens later (T2.1, T2.2). The goal here is a faithful, checkable copy of what is printed.
 
 ## Files
 
-One file per deck, grouped in one folder per category: `data/transcription/{category}/{pack}-{category}-{deck}.json`, for example `market/base-market-cargo.json` or `encounter/base-encounter-lothal-mon-calamari.json`. The folder is the category (`market`, `encounter`, `databank`, `characters`, `contacts`, `ship-sheets`, `ai`, `ambitions`). `PROGRESS.md` stays at the root of `data/transcription/`.
+One file per deck, grouped in one folder per category: `data/transcription/{category}/{pack}-{category}-{deck}.json`, for example `market/base-market-cargo.json` or `encounter/base-encounter-lothal-mon-calamari.json`. The folder is the category (`market`, `encounter`, `databank`, `characters`, `contacts`, `ship-sheets`, `ai`, `ambitions`, `patrols`, `player-boards`). `PROGRESS.md` stays at the root of `data/transcription/`.
 
 ```json
 {
-  "format": "outer-rim-transcription/0.9",
+  "format": "outer-rim-transcription/0.10",
   "pack": "base",
   "deck": "cargo",
   "source": "[Mod 01] sheet 49, sorted/base/market/cargo",
@@ -133,6 +133,30 @@ One entry per card image. Files: `databank/{pack}-databank.json`. The back of ev
 | `asset` | embedded asset or `null`. `crew`: `name`, `skills`, `faction`, `droid`, `text[]`. `job`: `name`, optional `flavor`, `skills` (`{ skill, certain }`), `destination`, `encounter`, `reward`. `bounty`: `name`, `combat`, `elimination_reward`, `capture_reward`, `text[]`. `cargo`: `name`, `destination`, `reward`. Each carries `card_type` |
 
 Branches such as "skip to step 3" or "repeat this step" stay as printed text.
+
+## Patrol tokens
+
+Not cards (they are not counted in `PROGRESS.md`); transcribed for their printed values. File: `patrols/{pack}-patrols.json`.
+
+| Field | Content |
+|---|---|
+| `image`, `image_back` | face and back image names |
+| `faction` | `rebel`, `imperial`, `hutt`, `syndicate` (icon and ring colour) |
+| `level` | white dots on the back, 1 to 4 (R-11.3) |
+| `combat` | `{ "type": "{SHIP_COMBAT}", "value": n }`; `value` is `null` when the token prints "–" (level 4, R-11.6) |
+| `reward` | printed reward as text (`{CREDITS}5,000`, `{FAME}1`) or `null` |
+
+## Player boards
+
+One entry per board image (the boards differ only in colour). File: `player-boards/{pack}-player-boards.json`.
+
+| Field | Content |
+|---|---|
+| `image` | board image name |
+| `color` | frame colour |
+| `slots` | `[{ "type", "count" }]` from the printed slot labels; dual labels keep both names (`"job or bounty"`) |
+| `fame_track` | `{ "min", "max", "marked_space", "marker_icon" }` |
+| `reputation_tracks` | factions, left to right as printed |
 
 ## Pending for later decks
 

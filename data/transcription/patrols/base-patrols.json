@@ -1,0 +1,208 @@
+{
+  "format": "outer-rim-transcription/0.10",
+  "pack": "base",
+  "deck": "patrols",
+  "source": "[Mod 01] sorted/base/patrols",
+  "notes": [
+    "Patrol tokens are not cards: listed here for their printed values only (PLAN T2.4). Not counted in PROGRESS.md.",
+    "level = white dots on the back (R-11.3). The face shows the faction icon, the combat value and the reward.",
+    "combat.value null: the token prints '–' (level 4, infinite value, no dice rolled, R-11.6).",
+    "reward is the printed text: {CREDITS}5,000 (level 1) or {FAME}1 (levels 2 and 3); null when nothing is printed (level 4, R-11.4).",
+    "The yellow fame icon is the same one printed under space 10 of the player board fame track.",
+    "The ship art differs per token and carries no printed name."
+  ],
+  "cards": [
+    {
+      "image": "base-patrol-hutt-1",
+      "image_back": "base-patrol-hutt-1-back",
+      "faction": "hutt",
+      "level": 1,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 3
+      },
+      "reward": "{CREDITS}5,000",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-hutt-2",
+      "image_back": "base-patrol-hutt-2-back",
+      "faction": "hutt",
+      "level": 2,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 5
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-hutt-3",
+      "image_back": "base-patrol-hutt-3-back",
+      "faction": "hutt",
+      "level": 3,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 6
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-hutt-4",
+      "image_back": "base-patrol-hutt-4-back",
+      "faction": "hutt",
+      "level": 4,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": null
+      },
+      "reward": null,
+      "verify": []
+    },
+    {
+      "image": "base-patrol-imperial-1",
+      "image_back": "base-patrol-imperial-1-back",
+      "faction": "imperial",
+      "level": 1,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 3
+      },
+      "reward": "{CREDITS}5,000",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-imperial-2",
+      "image_back": "base-patrol-imperial-2-back",
+      "faction": "imperial",
+      "level": 2,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 5
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-imperial-3",
+      "image_back": "base-patrol-imperial-3-back",
+      "faction": "imperial",
+      "level": 3,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 6
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-imperial-4",
+      "image_back": "base-patrol-imperial-4-back",
+      "faction": "imperial",
+      "level": 4,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": null
+      },
+      "reward": null,
+      "verify": []
+    },
+    {
+      "image": "base-patrol-rebel-1",
+      "image_back": "base-patrol-rebel-1-back",
+      "faction": "rebel",
+      "level": 1,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 3
+      },
+      "reward": "{CREDITS}5,000",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-rebel-2",
+      "image_back": "base-patrol-rebel-2-back",
+      "faction": "rebel",
+      "level": 2,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 5
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-rebel-3",
+      "image_back": "base-patrol-rebel-3-back",
+      "faction": "rebel",
+      "level": 3,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 6
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-rebel-4",
+      "image_back": "base-patrol-rebel-4-back",
+      "faction": "rebel",
+      "level": 4,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": null
+      },
+      "reward": null,
+      "verify": []
+    },
+    {
+      "image": "base-patrol-syndicate-1",
+      "image_back": "base-patrol-syndicate-1-back",
+      "faction": "syndicate",
+      "level": 1,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 3
+      },
+      "reward": "{CREDITS}5,000",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-syndicate-2",
+      "image_back": "base-patrol-syndicate-2-back",
+      "faction": "syndicate",
+      "level": 2,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 5
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-syndicate-3",
+      "image_back": "base-patrol-syndicate-3-back",
+      "faction": "syndicate",
+      "level": 3,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": 6
+      },
+      "reward": "{FAME}1",
+      "verify": []
+    },
+    {
+      "image": "base-patrol-syndicate-4",
+      "image_back": "base-patrol-syndicate-4-back",
+      "faction": "syndicate",
+      "level": 4,
+      "combat": {
+        "type": "{SHIP_COMBAT}",
+        "value": null
+      },
+      "reward": null,
+      "verify": []
+    }
+  ]
+}
