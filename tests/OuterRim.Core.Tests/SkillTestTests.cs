@@ -112,8 +112,8 @@ namespace OuterRim.Core.Tests
             var p = s.Players[0];
             Assert.Equal(1, SkillTests.Instances(C, p, Skill.Stealth));
             Assert.Equal(0, SkillTests.Instances(C, p, Skill.Tech));
-            p.Crew.Add("test-crew-stealth");
-            p.Crew.Add("test-crew-tech-stealth");
+            p.Assets.Add(new AssetState { CardId = "test-crew-stealth", Kind = "crew" });
+            p.Assets.Add(new AssetState { CardId = "test-crew-tech-stealth", Kind = "crew" });
             Assert.Equal(3, SkillTests.Instances(C, p, Skill.Stealth));
             Assert.Equal(1, SkillTests.Instances(C, p, Skill.Tech));
             Assert.Equal(SkillLevel.HighlySkilled, SkillTests.Level(3));
@@ -124,9 +124,9 @@ namespace OuterRim.Core.Tests
         {
             var s = Game(Ketsu);
             var p = s.Players[0];
-            p.Crew.Add("test-crew-tech-stealth");
+            p.Assets.Add(new AssetState { CardId = "test-crew-tech-stealth", Kind = "crew" });
             Assert.Equal(1, SkillTests.Instances(C, p, Skill.Tech));
-            p.Crew.Clear();
+            p.Assets.Clear();
             Assert.Equal(0, SkillTests.Instances(C, p, Skill.Tech));
             Assert.Equal(1, SkillTests.Instances(C, p, Skill.Stealth));
         }

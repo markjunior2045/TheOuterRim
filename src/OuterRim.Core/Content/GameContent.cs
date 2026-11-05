@@ -10,7 +10,8 @@ namespace OuterRim.Core.Content
     /// <summary>One side of a ship sheet: the values the rules read (data/packs/*/cards/ship-sheets.json).</summary>
     public sealed class ShipSide
     {
-        public ShipSide(string id, string sheetId, string role, int hyperdrive, int shipCombat, int hull)
+        public ShipSide(string id, string sheetId, string role, int hyperdrive, int shipCombat, int hull,
+            int? cost = null, IReadOnlyList<SlotSpec>? slots = null)
         {
             Id = id;
             SheetId = sheetId;
@@ -18,7 +19,15 @@ namespace OuterRim.Core.Content
             Hyperdrive = hyperdrive;
             ShipCombat = shipCombat;
             Hull = hull;
+            Cost = cost;
+            Slots = slots ?? new SlotSpec[0];
         }
+
+        /// <summary>Price and barter value (R-17.6); null for the starter sheet.</summary>
+        public int? Cost { get; }
+
+        /// <summary>Slots on this side (R-17.5).</summary>
+        public IReadOnlyList<SlotSpec> Slots { get; }
 
         /// <summary>The side's image id, unique per side.</summary>
         public string Id { get; }
@@ -103,6 +112,72 @@ namespace OuterRim.Core.Content
             {
                 _characters[c.Id] = c;
             }
+        }
+
+        /// <summary>Slots of the player board (all four colours alike): 2 gear, 2 job or bounty.</summary>
+        public IReadOnlyList<SlotSpec> BoardSlots { get; private set; } = new SlotSpec[0];
+
+        /// <summary>Reads the player board slots from a card data file; all boards must be identical.</summary>
+        public void SetBoardSlots(string json)
+        {
+            var root = JObject.Parse(json);
+            List<SlotSpec>? first = null;
+            foreach (JObject card in (JArray)root["cards"]!)
+            {
+                if ((string?)card["kind"] != "player_board")
+                {
+                    continue;
+                }
+                var slots = ReadSlots((JArray)card["slots"]!);
+                if (first == null)
+                {
+                    first = slots;
+                }
+                else if (slots.Count != first.Count)
+                {
+                    throw new FormatException("Player boards differ in slots.");
+                }
+            }
+            BoardSlots = first ?? throw new FormatException("No player board in the file.");
+        }
+
+        private static List<SlotSpec> ReadSlots(JArray slots)
+        {
+            var result = new List<SlotSpec>();
+            foreach (JObject s in slots)
+            {
+                var types = new List<string>();
+                foreach (var t in (JArray)s["types"]!)
+                {
+                    types.Add((string)t!);
+                }
+                result.Add(new SlotSpec(types, (int)s["count"]!));
+            }
+            return result;
+        }
+
+        /// <summary>The ship goal side of a buyable sheet: where a bought ship starts (R-16.27, R-17.9).</summary>
+        public ShipSide ShipGoalSide(string sheetId)
+        {
+            foreach (var s in _shipSides.Values)
+            {
+                if (s.SheetId == sheetId && s.Role == "ship_goal")
+                {
+                    return s;
+                }
+            }
+            throw new KeyNotFoundException("Ship sheet '" + sheetId + "' has no ship goal side.");
+        }
+
+        /// <summary>Every sheet id, once.</summary>
+        public List<string> ShipSheetIds()
+        {
+            var ids = new SortedSet<string>(StringComparer.Ordinal);
+            foreach (var s in _shipSides.Values)
+            {
+                ids.Add(s.SheetId);
+            }
+            return new List<string>(ids);
         }
 
         public CharacterCard Character(string id)
@@ -262,7 +337,8 @@ namespace OuterRim.Core.Content
                 {
                     var stats = (JObject)side["stats"]!;
                     result.Add(new ShipSide((string)side["image"]!, sheet, (string)side["role"]!,
-                        (int)stats["hyperdrive"]!, (int)stats["ship_combat"]!, (int)stats["hull"]!));
+                        (int)stats["hyperdrive"]!, (int)stats["ship_combat"]!, (int)stats["hull"]!,
+                        (int?)side["cost"], ReadSlots((JArray)side["slots"]!)));
                 }
             }
             return result;

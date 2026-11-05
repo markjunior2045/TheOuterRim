@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.6",
+  "format": "outer-rim-save/0.7",
   "packs": [
     {
       "id": "base",
@@ -37,7 +37,7 @@
         "defeated": false,
         "characterId": "base-character-00",
         "secrets": [],
-        "crew": [],
+        "assets": [],
         "spaceId": "lothal",
         "shipSheetId": "base-ship-g9-rigger",
         "shipSideId": "base-ship-g9-rigger"
@@ -59,7 +59,7 @@
         "defeated": false,
         "characterId": "base-character-01",
         "secrets": [],
-        "crew": [],
+        "assets": [],
         "spaceId": "tatooine",
         "shipSheetId": "base-ship-g9-rigger",
         "shipSideId": "base-ship-g9-rigger"
@@ -81,7 +81,7 @@
         "defeated": false,
         "characterId": "base-character-02",
         "secrets": [],
-        "crew": [],
+        "assets": [],
         "spaceId": "naboo",
         "shipSheetId": "base-ship-g9-rigger",
         "shipSideId": "base-ship-g9-rigger"
@@ -122,6 +122,17 @@
         "level": 1,
         "spaceId": "nav-takodana-6"
       }
+    ],
+    "shipSupply": [
+      "base-ship-aggressor-class-assault-fighter",
+      "base-ship-firespray-31-patrol-craft",
+      "base-ship-g9-rigger",
+      "base-ship-gx1-short-hauler",
+      "base-ship-heavy-duty-lifter",
+      "base-ship-hwk-290-freighter",
+      "base-ship-lancer-class-pursuit-craft",
+      "base-ship-modified-yt-1300-light-freighter",
+      "base-ship-yv-666-light-freighter"
     ],
     "patrolStacks": [
       {

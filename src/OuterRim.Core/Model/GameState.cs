@@ -40,6 +40,9 @@ namespace OuterRim.Core.Model
         /// <summary>Patrols on the map: always one per faction (R-11.9).</summary>
         public List<PatrolState> Patrols { get; set; } = new List<PatrolState>();
 
+        /// <summary>Ship sheets not held by any player (R-3.16.d, R-16.29); a sheet id per copy.</summary>
+        public List<string> ShipSupply { get; set; } = new List<string>();
+
         /// <summary>Facedown patrol tokens per faction, top first (R-3.7).</summary>
         public List<PatrolStack> PatrolStacks { get; set; } = new List<PatrolStack>();
 

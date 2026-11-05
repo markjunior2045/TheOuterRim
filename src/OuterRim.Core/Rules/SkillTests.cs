@@ -66,9 +66,9 @@ namespace OuterRim.Core.Rules
             {
                 n++;
             }
-            foreach (var crew in player.Crew)
+            foreach (var asset in player.Assets)
             {
-                if (content.CrewSkills(crew).Contains(skill))
+                if (asset.Kind == "crew" && content.CrewSkills(asset.CardId).Contains(skill))
                 {
                     n++;
                 }

@@ -48,6 +48,7 @@ namespace OuterRim.Core.Tests
                 Content.GameContent.ReadCharacters(Repo.Read("data/packs/base/cards/characters.json")));
             content.AddNames(Repo.Read("data/packs/base/loc/en.json"));
             content.AddPatrols(Content.GameContent.ReadPatrols(Repo.Read("data/packs/base/cards/patrols.json")));
+            content.SetBoardSlots(Repo.Read("data/packs/base/cards/player-boards.json"));
             return content;
         }
     }

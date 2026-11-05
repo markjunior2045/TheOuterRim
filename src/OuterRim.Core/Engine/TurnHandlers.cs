@@ -15,6 +15,9 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new PatrolEncounterHandler());
             ResolutionHandlers.Register(new PatrolOutcomeHandler());
             ResolutionHandlers.Register(new PatrolMoveHandler());
+            ResolutionHandlers.Register(new GainAssetHandler());
+            ResolutionHandlers.Register(new EnforceSlotsHandler());
+            ResolutionHandlers.Register(new BuyShipHandler());
             ResolutionHandlers.Register(new SkillTestHandler());
             ResolutionHandlers.Register(new CombatHandler());
         }

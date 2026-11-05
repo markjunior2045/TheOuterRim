@@ -424,6 +424,82 @@ namespace OuterRim.Core.Engine
         public string SpaceId { get; }
     }
 
+    public sealed class AssetGainedEvent : GameEvent
+    {
+        public AssetGainedEvent(string playerId, string cardId, string kind)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Kind = kind;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string Kind { get; }
+    }
+
+    /// <summary>An asset left the player's slots. Reason: open_slot (R-14.4), no_slot (R-14.18), barter (R-16.31), or an effect.</summary>
+    public sealed class AssetDiscardedEvent : GameEvent
+    {
+        public AssetDiscardedEvent(string playerId, string cardId, string kind, string reason)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Kind = kind;
+            Reason = reason;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string Kind { get; }
+
+        public string Reason { get; }
+    }
+
+    /// <summary>R-14.5: the player chose not to gain the asset; it is discarded.</summary>
+    public sealed class AssetDeclinedEvent : GameEvent
+    {
+        public AssetDeclinedEvent(string playerId, string cardId, string kind)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Kind = kind;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string Kind { get; }
+    }
+
+    /// <summary>R-16.27: the player replaced their ship sheet.</summary>
+    public sealed class ShipChangedEvent : GameEvent
+    {
+        public ShipChangedEvent(string playerId, string fromSheet, string toSheet, string side, int pricePaid)
+        {
+            PlayerId = playerId;
+            FromSheet = fromSheet;
+            ToSheet = toSheet;
+            Side = side;
+            PricePaid = pricePaid;
+        }
+
+        public string PlayerId { get; }
+
+        public string FromSheet { get; }
+
+        public string ToSheet { get; }
+
+        public string Side { get; }
+
+        public int PricePaid { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

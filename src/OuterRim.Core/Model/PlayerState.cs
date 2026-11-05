@@ -34,8 +34,8 @@ namespace OuterRim.Core.Model
         /// <summary>Secret encounter cards the player holds facedown (R-15.82); they take no slot (R-15.90).</summary>
         public List<string> Secrets { get; set; } = new List<string>();
 
-        /// <summary>Crew card ids the player holds (R-15.2); their skills count for tests (R-6.6).</summary>
-        public List<string> Crew { get; set; } = new List<string>();
+        /// <summary>Assets in the player's slots (R-14.1): bounties, cargo, crew, gear, mods and jobs. Placement is free (R-14.17).</summary>
+        public List<AssetState> Assets { get; set; } = new List<AssetState>();
 
         /// <summary>The map space where the player's standee is (R-5).</summary>
         public string SpaceId { get; set; } = "";
@@ -45,6 +45,23 @@ namespace OuterRim.Core.Model
 
         /// <summary>The faceup side of the ship sheet (its image id); the rules read its values.</summary>
         public string ShipSideId { get; set; } = "";
+    }
+
+    /// <summary>An asset held by a player. Kind and cost are copied from the card when it is gained.</summary>
+    public sealed class AssetState
+    {
+        public string CardId { get; set; } = "";
+
+        /// <summary>bounty, cargo, crew, gear, mod or job (R-14.1).</summary>
+        public string Kind { get; set; } = "";
+
+        /// <summary>Printed cost, used for bartering (R-16.31); 0 for assets from encounter cards (R-15.78).</summary>
+        public int Cost { get; set; }
+
+        public List<string> Traits { get; set; } = new List<string>();
+
+        /// <summary>Rotating assets [UB]: true once rotated to the other end (R-14.10).</summary>
+        public bool Rotated { get; set; }
     }
 
     /// <summary>Reputation with each faction (R-10.4). Fixed fields keep saves stable and readable.</summary>

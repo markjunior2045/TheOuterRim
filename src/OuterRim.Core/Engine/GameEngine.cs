@@ -78,6 +78,9 @@ namespace OuterRim.Core.Engine
         /// <summary>R-4.6: credits gained by the planning option.</summary>
         public const int PlanningCredits = 2000;
 
+        /// <summary>R-2.1: the base game has four copies of the starter sheet.</summary>
+        public const int StarterSheets = 4;
+
         /// <summary>R-3.11: dice each player rolls to decide the first player.</summary>
         public const int FirstPlayerDice = 6;
 
@@ -141,6 +144,16 @@ namespace OuterRim.Core.Engine
                 });
             }
             Patrols.Setup(content, state);
+            // R-3.16.d: unused ship sheets form the supply. There are four starter sheets (R-2.1).
+            foreach (var sheet in content.ShipSheetIds())
+            {
+                bool starter = content.ShipSide(sheet).Role == "starter";
+                int copies = starter ? StarterSheets - setup.Players.Count : 1;
+                for (int i = 0; i < copies; i++)
+                {
+                    state.ShipSupply.Add(sheet);
+                }
+            }
 
             var log = new List<GameEvent>();
             string first = RollForFirstPlayer(state, log);
@@ -479,6 +492,30 @@ namespace OuterRim.Core.Engine
         public static int Hyperdrive(GameContent content, PlayerState player)
         {
             return content.ShipSide(player.ShipSideId).Hyperdrive;
+        }
+
+        /// <summary>
+        /// Starts a ship purchase after checking it (R-16.27 to R-16.30, R-16.38): the sheet must be in the
+        /// supply, the barter allowed and the price affordable. Called by the market (PLAN T2.5) and effects.
+        /// </summary>
+        public static CommandResult BuyShip(GameContent content, GameState state, string playerId, string sheet,
+            IReadOnlyList<string> barterIds)
+        {
+            var player = state.FindPlayer(playerId);
+            if (player == null)
+            {
+                return CommandResult.Rejected("Unknown player " + playerId + ".");
+            }
+            var error = BuyShipHandler.Validate(content, state, player, sheet, barterIds);
+            if (error != null)
+            {
+                return CommandResult.Rejected(error);
+            }
+            var frame = new Frame(Assets.BuyShipHandler);
+            frame.Set("player", playerId);
+            frame.Set("sheet", sheet);
+            frame.Set("barter", string.Join(",", barterIds));
+            return StartResolution(content, state, frame);
         }
 
         /// <summary>

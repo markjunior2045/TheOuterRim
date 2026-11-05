@@ -123,8 +123,10 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered:** patrol tokens loaded from `patrols.json`; patrol stacks in the state (R-3.7, save format 0.6); elimination and spawning (R-11.8 to R-11.10); direct moves (R-11.23); movement toward the current player as a resolution frame (`rules.patrol_move`) with the current player choosing among destinations (R-11.15 to R-11.22, reading noted in `RULES.md` after R-11.24); the real patrol encounter replaces the stub: ship combat at the token's value, win gives the reward, costs 1 reputation and replaces the patrol, loss lets the player push it to an adjacent space, all before damage (R-11.6, R-11.7, R-11.25, R-11.29). 141 tests.
 - The trigger of patrol movement (market icons on buying, R-11.12 to R-11.14) comes with the market (T2.5).
 
-### T1.9 — Assets, slots, ships · `TODO` (T1.1)
+### T1.9 — Assets, slots, ships · `DONE` (2026-11-05)
 - Slots, rearranging, forced discard, rotating assets, ship purchase and barter hooks (R-14, R-17).
+- **Delivered:** player assets (card, kind, cost, traits, rotation flag for `[UB]`) replace the crew list; board slots and ship slots and costs loaded from data; `Assets.Fits` checks for any valid arrangement (free placement, R-14.13 to R-14.17); gaining an asset with discard-to-open-a-slot or decline (R-14.2, R-14.4, R-14.5; no decline for forced assets, R-25.1); discarding until everything fits (R-14.18, R-16.30); ship supply (R-3.16.d) and ship purchase with mandatory barter of the current ship, allowed barter assets and no change (R-16.27 to R-16.39, R-17.8, R-17.9). Save format 0.7. 157 tests.
+- Rotating an asset (R-14.10) and slot changes from cards (Weapon Specialist, Smuggling Compartment) come with the effect engine; removing the ship's market card with the market (T2.5).
 
 ---
 
@@ -223,6 +225,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.9 done: assets and slots, gaining and discarding, ship supply and purchase with barter. Phase 1 (core) complete; save format 0.7. |
 | 2026-11-05 | T1.8 done: patrol stacks, spawning, movement toward the player with the player's choice, real patrol encounters; save format 0.6. |
 | 2026-11-05 | T1.7 done: credits, reputation, fame, defeat procedure, victory with tiebreak; game rolls for enemies with labelled rolls; save format 0.5. |
 | 2026-11-05 | T1.6 done: combat as a resolution frame, five steps, tie to attacker, win before damage, level-4 patrols. |
