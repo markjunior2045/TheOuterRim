@@ -151,6 +151,23 @@ namespace OuterRim.Core.Tests
         }
 
         [Fact]
+        public void Rolls_AreLabelled_WithTheCharacterOrTheEnemy()
+        {
+            var s = Game(2);
+            s.Patrols.Single(p => p.Faction == Faction.Hutt).Level = 2;
+            var patrol = Fight(s, "ship", "patrol", "hutt", "5");
+            var rolls = patrol.Events.OfType<CombatRolledEvent>().ToList();
+            Assert.Equal("Ketsu Onyo (One)", rolls[0].RollerLabel);
+            Assert.Equal("Hutt Patrol Lvl 2 (Game)", rolls[1].RollerLabel);
+
+            var enemy = Fight(Game(2), "ship", "npc", "TIE fighters", "3");
+            Assert.Equal("TIE fighters (Game)", enemy.Events.OfType<CombatRolledEvent>().Last().RollerLabel);
+
+            var duel = Fight(Game(2), "ground", "player", "p2");
+            Assert.Equal("Lando Calrissian (Two)", duel.Events.OfType<CombatRolledEvent>().Last().RollerLabel);
+        }
+
+        [Fact]
         public void R7_13_R8_15_TheWinningEffect_ResolvesBeforeDamage()
         {
             bool checkedOne = false;

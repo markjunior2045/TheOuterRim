@@ -62,7 +62,7 @@ namespace OuterRim.Core.Engine
                     var faces = Decode(frame.Get("attacker_faces"));
                     int damage = Combat.DamageOf(faces);
                     frame.Set("attacker_damage", damage);
-                    ctx.Events.Add(new CombatRolledEvent("attacker", attacker.Id, faces, damage));
+                    ctx.Events.Add(new CombatRolledEvent("attacker", attacker.Id, Combat.PlayerLabel(content, attacker), faces, damage));
                     frame.Step = 3;
                     return StepResult.Continue(); // window: result changes, roller first
                 }
@@ -88,7 +88,8 @@ namespace OuterRim.Core.Engine
                     frame.Set("defender_damage", damage);
                     // A player rolls their own dice; for a patrol, contact or card enemy the game rolls
                     // (digital adaptation of R-7.9 and R-7.12, DECISIONS §4.2).
-                    ctx.Events.Add(new CombatRolledEvent("defender", defenderPlayer?.Id, faces, damage));
+                    ctx.Events.Add(new CombatRolledEvent("defender", defenderPlayer?.Id, DefenderLabel(ctx, frame, defenderPlayer),
+                        faces, damage));
                     frame.Step = 5;
                     return StepResult.Continue(); // window: result changes, roller first
                 }
@@ -134,6 +135,26 @@ namespace OuterRim.Core.Engine
                     return StepResult.Done();
                 }
             }
+        }
+
+        private static string DefenderLabel(ResolutionContext ctx, Frame frame, PlayerState? defenderPlayer)
+        {
+            if (defenderPlayer != null)
+            {
+                return Combat.PlayerLabel(ctx.Content, defenderPlayer);
+            }
+            var defender = frame.Get("defender");
+            if (frame.Get("defender_kind") == "patrol")
+            {
+                foreach (var patrol in ctx.State.Patrols)
+                {
+                    if (patrol.Faction.ToString().ToLowerInvariant() == defender)
+                    {
+                        return Combat.GameLabel(Combat.PatrolName(patrol.Faction, patrol.Level));
+                    }
+                }
+            }
+            return Combat.GameLabel(defender);
         }
 
         private static void Hurt(ResolutionContext ctx, PlayerState player, CombatType type, int amount)

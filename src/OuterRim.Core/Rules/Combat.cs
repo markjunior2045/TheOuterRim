@@ -19,7 +19,7 @@ namespace OuterRim.Core.Rules
         /// <summary>
         /// Resolution handler id of a combat. Frame variables in:
         /// "type" (ground | ship); "attacker" (player id); "defender_kind" (player | npc | patrol);
-        /// "defender" (player id, enemy name key or patrol faction); "defender_value" (dice for an npc or
+        /// "defender" (player id, enemy name or patrol faction); "defender_value" (dice for an npc or
         /// patrol, or "infinite" for a level-4 patrol, R-11.6); optional "outcome" (handler id run after
         /// the winner is known and before damage, R-7.13). Returned: "ret.winner" (attacker | defender |
         /// none), "ret.attacker_damage", "ret.defender_damage".
@@ -27,6 +27,25 @@ namespace OuterRim.Core.Rules
         public const string Handler = "rules.combat";
 
         public const string Infinite = "infinite";
+
+        /// <summary>Who rolls, as shown in events and logs: "Ketsu Onyo (Player 1)".</summary>
+        public static string PlayerLabel(GameContent content, PlayerState player)
+        {
+            return player.CharacterId.Length > 0
+                ? content.Name(player.CharacterId) + " (" + player.Name + ")"
+                : player.Name;
+        }
+
+        /// <summary>An enemy the game rolls for (DECISIONS §4.2): "Hutt Patrol Lvl 2 (Game)", "TIE fighters (Game)".</summary>
+        public static string GameLabel(string enemy)
+        {
+            return enemy + " (Game)";
+        }
+
+        public static string PatrolName(Faction faction, int level)
+        {
+            return faction + " Patrol Lvl " + level.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
 
         /// <summary>R-7.11: each hit deals 1 damage, each crit 2; focus and blank deal nothing.</summary>
         public static int DamageOf(IEnumerable<DieFace> faces)

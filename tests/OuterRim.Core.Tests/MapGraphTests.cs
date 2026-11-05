@@ -38,10 +38,17 @@ namespace OuterRim.Core.Tests
         public const string G9Rigger = "base-ship-g9-rigger";
         public const string G1AStarfighter = "base-ship-g9-rigger-back";
 
-        public static readonly Content.GameContent Base = new Content.GameContent(
-            Repo.Maps().Build("standard"),
-            Content.GameContent.ReadShipSheets(Repo.Read("data/packs/base/cards/ship-sheets.json")),
-            Content.GameContent.ReadCharacters(Repo.Read("data/packs/base/cards/characters.json")));
+        public static readonly Content.GameContent Base = Build();
+
+        private static Content.GameContent Build()
+        {
+            var content = new Content.GameContent(
+                Repo.Maps().Build("standard"),
+                Content.GameContent.ReadShipSheets(Repo.Read("data/packs/base/cards/ship-sheets.json")),
+                Content.GameContent.ReadCharacters(Repo.Read("data/packs/base/cards/characters.json")));
+            content.AddNames(Repo.Read("data/packs/base/loc/en.json"));
+            return content;
+        }
     }
 
     public class MapGraphTests

@@ -92,6 +92,34 @@ namespace OuterRim.Core.Content
             return _characters.ContainsKey(id);
         }
 
+        private readonly Dictionary<string, string> _names = new Dictionary<string, string>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Loads display names ("&lt;card id&gt;.name") from a pack's strings file (format outer-rim-loc/0.1).
+        /// Used for event labels and logs; the interface reads its own language file.
+        /// </summary>
+        public void AddNames(string locJson)
+        {
+            var strings = (JObject?)JObject.Parse(locJson)["strings"];
+            if (strings == null)
+            {
+                return;
+            }
+            foreach (var kv in strings)
+            {
+                if (kv.Key.EndsWith(".name", StringComparison.Ordinal) && kv.Key.IndexOf('.') == kv.Key.Length - 5)
+                {
+                    _names[kv.Key.Substring(0, kv.Key.Length - 5)] = (string)kv.Value!;
+                }
+            }
+        }
+
+        /// <summary>Display name of a card, or its id when no name is loaded.</summary>
+        public string Name(string cardId)
+        {
+            return _names.TryGetValue(cardId, out var n) ? n : cardId;
+        }
+
         /// <summary>Registers the skills of a crew card (R-6.4). Crew cards are loaded with their decks.</summary>
         public void AddCrew(string cardId, IEnumerable<Skill> skills)
         {

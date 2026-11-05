@@ -66,7 +66,8 @@ namespace OuterRim.Core.Engine
                     int instances = SkillTests.Instances(ctx.Content, player, skill, granted);
                     var faces = ParseFaces(frame.Get("faces"));
                     bool passed = SkillTests.Passes(SkillTests.Level(instances), faces);
-                    ctx.Events.Add(new SkillTestRolledEvent(player.Id, SkillTests.Id(skill), instances, faces, passed));
+                    ctx.Events.Add(new SkillTestRolledEvent(player.Id, Combat.PlayerLabel(ctx.Content, player),
+                        SkillTests.Id(skill), instances, faces, passed));
                     ctx.Return("passed", passed ? "true" : "false");
                     ctx.Return("skill", SkillTests.Id(skill));
                     return StepResult.Done();

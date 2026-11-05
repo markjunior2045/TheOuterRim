@@ -78,7 +78,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 
 ### 4.2 Digital adaptations of table conventions (Decided)
 
-- **Dice for enemies (2026-11-05):** a player rolls only their own dice (skill tests and their side of a combat). For a patrol, contact or card enemy the game rolls; the "player to the left rolls" convention of the board game (`RULES.md` R-7.9, R-7.12) does not apply, and R-7.20 becomes moot. Combat results are unchanged: the enemy's dice still count as the defender's roll.
+- **Dice for enemies (2026-11-05):** a player rolls only their own dice (skill tests and their side of a combat). For a patrol, contact or card enemy the game rolls; the "player to the left rolls" convention of the board game (`RULES.md` R-7.9, R-7.12) does not apply, and R-7.20 becomes moot. Combat results are unchanged: the enemy's dice still count as the defender's roll. Events and the interface name who rolled: the character and player for a player ("Ketsu Onyo (Player 1)"), the enemy followed by "(Game)" otherwise ("Hutt Patrol Lvl 2 (Game)", "TIE fighters (Game)").
 
 ## 5. Engine, tools and conventions (Decided)
 

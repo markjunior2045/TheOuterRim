@@ -143,9 +143,11 @@ namespace OuterRim.Core.Engine
     /// <summary>A skill test was rolled and judged (R-6.9).</summary>
     public sealed class SkillTestRolledEvent : GameEvent
     {
-        public SkillTestRolledEvent(string playerId, string skill, int instances, IReadOnlyList<DieFace> faces, bool passed)
+        public SkillTestRolledEvent(string playerId, string rollerLabel, string skill, int instances, IReadOnlyList<DieFace> faces,
+            bool passed)
         {
             PlayerId = playerId;
+            RollerLabel = rollerLabel;
             Skill = skill;
             Instances = instances;
             Faces = faces;
@@ -153,6 +155,9 @@ namespace OuterRim.Core.Engine
         }
 
         public string PlayerId { get; }
+
+        /// <summary>Who rolled: "Lando Calrissian (Player 1)".</summary>
+        public string RollerLabel { get; }
 
         public string Skill { get; }
 
@@ -196,10 +201,11 @@ namespace OuterRim.Core.Engine
     /// <summary>One side's roll and its damage (R-7.10 to R-7.12).</summary>
     public sealed class CombatRolledEvent : GameEvent
     {
-        public CombatRolledEvent(string side, string? rollerId, IReadOnlyList<DieFace> faces, int damage)
+        public CombatRolledEvent(string side, string? rollerId, string rollerLabel, IReadOnlyList<DieFace> faces, int damage)
         {
             Side = side;
             RollerId = rollerId;
+            RollerLabel = rollerLabel;
             Faces = faces;
             Damage = damage;
         }
@@ -212,6 +218,9 @@ namespace OuterRim.Core.Engine
         /// (digital adaptation of R-7.9, DECISIONS §4.2).
         /// </summary>
         public string? RollerId { get; }
+
+        /// <summary>Who rolled, for logs and the interface: "Ketsu Onyo (Player 1)", "Hutt Patrol Lvl 2 (Game)".</summary>
+        public string RollerLabel { get; }
 
         public IReadOnlyList<DieFace> Faces { get; }
 
