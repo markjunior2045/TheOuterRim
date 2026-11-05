@@ -1,6 +1,6 @@
 # EFFECTS.md — Effect inventory (T2.1)
 
-Status: **draft, awaiting owner review** (2026-11-04; objects completed with the player board, patrol tokens and map on 2026-11-05).
+Status: **approved by the owner** (2026-11-05). Drafted 2026-11-04; objects completed with the player board, patrol tokens and map on 2026-11-05.
 
 Inventory of the objects, ability shapes, effect primitives, conditions, targets and timings found on the **242 base game cards** (`data/transcription/`, format 0.10), the player boards, patrol tokens and map (`data/map/`), plus the extension points the *Unfinished Business* rules (`[UB]` in `RULES.md`) require. Expansion cards are not transcribed yet: their structural mechanics come from the rules, and card-specific effects are added when they are transcribed (`PLAN.md` T2.8).
 

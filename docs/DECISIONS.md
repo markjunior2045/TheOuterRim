@@ -132,13 +132,12 @@ Suggested (not confirmed):
 
 ## 9. Open
 
-- Inventory of effect, condition and target types (`PLAN.md` T2.1).
 - **Expansion card images:** [Mod 01]'s expansion scans have the highest resolution but look washed out with white speckles. Options: use (Mod 02)'s expansion cards where they look better despite lower resolution, or clean up [Mod 01]'s art (levels and denoise). Decide after a side-by-side review.
 - Render pipeline: URP by default *(Suggested)*.
 - Distribution: zip by link, with a version check when joining a room *(Suggested)*.
 - Offer/accept flow for credit trades between players (`RULES.md` R-9.6, R-9.7).
 
-Resolved by `RULES.md`: skill tests and the character's role (R-6), movement (R-5), victory (R-18), starting ships (R-17.1; their values come from card data), expansion changes (`[UB]`), official solo mode (R-23).
+Resolved: the effect inventory (`EFFECTS.md`, 2026-11-05). Resolved by `RULES.md`: skill tests and the character's role (R-6), movement (R-5), victory (R-18), starting ships (R-17.1; their values come from card data), expansion changes (`[UB]`), official solo mode (R-23).
 
 ## 10. Out of scope for now
 

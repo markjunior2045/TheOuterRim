@@ -114,7 +114,7 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 
 ## Phase 2 — Content
 
-### T2.1 — Effect inventory · `REVIEW` (draft in `docs/EFFECTS.md`, 2026-11-04)
+### T2.1 — Effect inventory · `DONE` (`docs/EFFECTS.md`, approved 2026-11-05)
 - Classify every card's effect, condition and target types, plus card and component types, into `docs/EFFECTS.md`.
 - **Done when:** every base card maps to a known effect type or is listed as a custom exception, and every `[UB]` mechanic in `RULES.md` has a named extension point.
 - Classification, not transcription: it sets the card data format. Works from the T2.8 transcriptions. Expansion cards are not transcribed first; their structural mechanics come from the `[UB]` rules, and card-specific effects are added when the expansion is transcribed.
@@ -202,6 +202,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.1 done: `docs/EFFECTS.md` approved by the owner. |
 | 2026-11-05 | T0.5 map geometry delivered for review: `data/map/`, `docs/MAP_FORMAT.md`, `tools/validate_map.py`. |
 | 2026-11-05 | Patrol tokens (16) and player boards (4) transcribed, format 0.10; four boards and the die now extracted from [Mod 01]. Map tiles (T0.5) next, before closing T2.1. |
 | 2026-11-04 | T2.1 draft: `docs/EFFECTS.md` (objects, timings, primitives, conditions, 13 custom handlers, `[UB]` extension points, base coverage); two open questions for the owner. |
