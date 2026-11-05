@@ -117,6 +117,13 @@ class ValidateDataTests(unittest.TestCase):
     def test_missing_card_field(self):
         self.assert_error(self.mutate(lambda c: c.pop("deck")), "missing 'deck'")
 
+    def test_embedded_asset_has_no_deck(self):
+        def embed(c):
+            c.pop("deck")
+            c["embedded_in"] = "base-encounter-x-00"
+        self.assertEqual([], self.run_with(self.mutate(embed)))
+        self.assert_error(self.mutate(lambda c: c.update(embedded_in="base-encounter-x-00")), "embedded asset has no 'deck'")
+
     def test_unknown_card_field(self):
         self.assert_error(self.mutate(lambda c: c.update(rarity="rare")), "unknown field 'rarity'")
 

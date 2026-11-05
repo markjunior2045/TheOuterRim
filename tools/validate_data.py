@@ -170,6 +170,11 @@ class Validator:
             return self.err(path, f"unknown or unsupported card kind {kind!r}")
         spec = dict(self.r["card_fields"], **self.r["card_kinds"][kind])
         self.check_params(card, spec, path, f"card {kind}")
+        # A market asset needs its deck; an asset printed on another card (embedded_in) has none.
+        if spec.get("deck") == "deck?" and "deck" not in card and "embedded_in" not in card:
+            self.err(path, f"card {kind}: missing 'deck'")
+        if "embedded_in" in card and "deck" in card:
+            self.err(path, f"card {kind}: an embedded asset has no 'deck'")
         for apath, ab in iter_abilities(card, path):
             key = ab.get("text") if isinstance(ab, dict) else None
             if key and f"{card_id}.{key}" not in self.loc:
