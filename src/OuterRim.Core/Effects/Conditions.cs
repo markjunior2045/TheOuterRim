@@ -22,9 +22,14 @@ namespace OuterRim.Core.Effects
             "all", "any", "not", "has_skill", "has_asset", "on_space", "is_droid", "is_character", "rep", "rep_count",
             "credits_at_least", "most_famous", "more_fame_than", "same_space", "other_player_in_space", "in_patrol_space",
             "ship_cost_at_least", "ship_trait", "planet_markers", "not_defeated", "no_damage", "player_count",
+            "combat", "delivering", "moving_into",
         };
 
-        public static bool Eval(GameContent content, GameState state, PlayerState you, JToken? node, PlayerState? candidate = null)
+        /// <param name="context">What is happening, for conditions about it: "combat_type" (ground, ship),
+        /// "combat_result" (won, lost), "opponent" (patrol, player, npc, contact), "patrol_faction",
+        /// "delivering_traits" (comma list), "moving_into" (patrol, maelstrom).</param>
+        public static bool Eval(GameContent content, GameState state, PlayerState you, JToken? node, PlayerState? candidate = null,
+            IReadOnlyDictionary<string, string>? context = null)
         {
             if (node == null || node.Type == JTokenType.Null)
             {
@@ -38,17 +43,17 @@ namespace OuterRim.Core.Effects
                 case "all":
                     foreach (var x in (JArray)c["of"]!)
                     {
-                        if (!Eval(content, state, you, x, candidate)) return false;
+                        if (!Eval(content, state, you, x, candidate, context)) return false;
                     }
                     return true;
                 case "any":
                     foreach (var x in (JArray)c["of"]!)
                     {
-                        if (Eval(content, state, you, x, candidate)) return true;
+                        if (Eval(content, state, you, x, candidate, context)) return true;
                     }
                     return false;
                 case "not":
-                    return !Eval(content, state, you, c["of"], candidate);
+                    return !Eval(content, state, you, c["of"], candidate, context);
                 case "has_skill":
                     foreach (var s in (JArray)c["skill"]!)
                     {
@@ -133,6 +138,22 @@ namespace OuterRim.Core.Effects
                     return !subject.Defeated;
                 case "no_damage":
                     return subject.CharacterDamage == 0 && subject.ShipDamage == 0;
+                case "combat":
+                {
+                    if (context == null || !context.ContainsKey("combat_type")) return false;
+                    if (c["type"] != null && (string)c["type"]! != "by_space" && (string)c["type"]! != context["combat_type"]) return false;
+                    if (c["result"] != null && (!context.TryGetValue("combat_result", out var res) || res != (string)c["result"]!)) return false;
+                    if (c["opponent"] != null && (!context.TryGetValue("opponent", out var opp) || opp != (string)c["opponent"]!)) return false;
+                    if (c["patrol_faction"] != null && (!context.TryGetValue("patrol_faction", out var pf) || pf != (string)c["patrol_faction"]!)) return false;
+                    return true;
+                }
+                case "delivering":
+                {
+                    if (context == null || !context.TryGetValue("delivering_traits", out var traits)) return false;
+                    return c["trait"] == null || Array.IndexOf(traits.Split(','), (string)c["trait"]!) >= 0;
+                }
+                case "moving_into":
+                    return context != null && context.TryGetValue("moving_into", out var into) && into == (string)c["what"]!;
                 case "player_count":
                     return state.Players.Count >= (int)c["min"]! && state.Players.Count <= (int)c["max"]!;
                 default:

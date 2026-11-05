@@ -115,13 +115,22 @@ namespace OuterRim.Core.Rules
         /// </summary>
         public static int Suffer(GameContent content, GameState state, PlayerState player, CombatType target, int amount)
         {
+            int placed = Place(content, state, player, target, amount);
+            if (AtLimit(content, state, player))
+            {
+                player.Defeated = true;
+            }
+            return placed;
+        }
+
+        /// <summary>Puts damage tokens on the character or ship, never beyond health or hull (R-8.4). Defeat is decided by the caller.</summary>
+        public static int Place(GameContent content, GameState state, PlayerState player, CombatType target, int amount)
+        {
             if (amount <= 0)
             {
                 return 0;
             }
-            int health = Health(content, state, player);
-            int hull = Hull(content, state, player);
-            int limit = target == CombatType.Ground ? health : hull;
+            int limit = target == CombatType.Ground ? Health(content, state, player) : Hull(content, state, player);
             int current = target == CombatType.Ground ? player.CharacterDamage : player.ShipDamage;
             int placed = Math.Min(amount, Math.Max(0, limit - current));
             if (target == CombatType.Ground)
@@ -132,11 +141,13 @@ namespace OuterRim.Core.Rules
             {
                 player.ShipDamage += placed;
             }
-            if (player.CharacterDamage >= health || player.ShipDamage >= hull)
-            {
-                player.Defeated = true;
-            }
             return placed;
+        }
+
+        /// <summary>R-8.2, R-8.3: damage equal to health or hull.</summary>
+        public static bool AtLimit(GameContent content, GameState state, PlayerState player)
+        {
+            return player.CharacterDamage >= Health(content, state, player) || player.ShipDamage >= Hull(content, state, player);
         }
     }
 }

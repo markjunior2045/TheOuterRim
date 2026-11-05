@@ -32,7 +32,9 @@ namespace OuterRim.Core.Engine
             "if", "choice", "may", "to", "test", "combat",
             "credits.gain", "credits.spend", "credits.lose", "fame.gain", "fame.lose", "rep.gain", "rep.lose",
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
-            "dice.reroll", "dice.turn", "dice.cancel", "dice.add",
+            "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard",
+            // Replacement-only ops, applied by the damage frame.
+            "damage.cap",
             // Passive-only ops, read as queries by Modifiers or by the rules that check them.
             "stat.modify", "dice.opponent_fewer",
         };
@@ -49,6 +51,10 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new FightOutcomeHandler());
             ResolutionHandlers.Register(new DiceWindowHandler());
             ResolutionHandlers.Register(new DiceOpHandler());
+            ResolutionHandlers.Register(new TriggersHandler());
+            ResolutionHandlers.Register(new SufferDamageHandler());
+            ResolutionHandlers.Register(new EffectDiceRollHandler());
+            ResolutionHandlers.Register(new AssetDiscardHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -173,6 +179,29 @@ namespace OuterRim.Core.Engine
                 case "dice.cancel":
                 case "dice.add":
                     return StepResult.Call(EffectHandlers.Child(DiceOpHandler.HandlerId, frame, nodePath));
+                case "dice.roll":
+                    return StepResult.Call(EffectHandlers.Child(EffectDiceRollHandler.HandlerId, frame, nodePath));
+                case "asset.discard":
+                    return StepResult.Call(EffectHandlers.Child(AssetDiscardHandler.HandlerId, frame, nodePath));
+                case "damage.suffer":
+                {
+                    // Through the damage frame, so caps and "would be defeated" replacements apply.
+                    var amount = Selectors.Amount(ctx.Content, owner, node["amount"]!);
+                    string target = (string)node["target"]!;
+                    if (target == "both")
+                    {
+                        frame.Set("i", i); // run this node again for the ship half
+                        if (!frame.Vars.ContainsKey("both_ship"))
+                        {
+                            frame.Set("both_ship", "1");
+                            return StepResult.Call(SufferDamageHandler.For(owner.Id, CombatType.Ground, amount));
+                        }
+                        frame.Vars.Remove("both_ship");
+                        frame.Set("i", i + 1);
+                        return StepResult.Call(SufferDamageHandler.For(owner.Id, CombatType.Ship, amount));
+                    }
+                    return StepResult.Call(SufferDamageHandler.For(owner.Id, target == "ship" ? CombatType.Ship : CombatType.Ground, amount));
+                }
                 default:
                     if (!Instant.Apply(ctx, owner, frame.Get("card"), node))
                     {

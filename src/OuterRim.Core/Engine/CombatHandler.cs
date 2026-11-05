@@ -133,23 +133,42 @@ namespace OuterRim.Core.Engine
                     }
                     return StepResult.Continue();
                 }
-                default:
+                case 6:
                 {
                     // Step 5: each side suffers the opponent's damage; only players take damage (R-7.14).
-                    int a = frame.GetInt("attacker_damage");
                     int d = frame.GetInt("defender_damage");
                     if (frame.Get("defender_value") == Combat.Infinite)
                     {
-                        // R-11.6: enough ship damage to be defeated.
-                        d = Combat.Hull(content, state, attacker);
+                        d = Combat.Hull(content, state, attacker); // R-11.6: enough ship damage to be defeated
                     }
-                    Hurt(ctx, attacker, type, d);
+                    frame.Step = 7;
+                    return StepResult.Call(SufferDamageHandler.For(attacker.Id, type, d, Context(frame, "attacker")));
+                }
+                case 7:
+                    frame.Step = 8;
                     if (defenderPlayer != null)
                     {
-                        Hurt(ctx, defenderPlayer, type, a);
+                        return StepResult.Call(SufferDamageHandler.For(defenderPlayer.Id, type, frame.GetInt("attacker_damage"),
+                            Context(frame, "defender")));
                     }
+                    return StepResult.Continue();
+                case 8:
+                {
+                    // "After you win a combat": triggers of the winning player, once the combat is over.
+                    frame.Step = 9;
+                    string winner = frame.Get("winner");
+                    var winnerPlayer = winner == "attacker" ? attacker : winner == "defender" ? defenderPlayer : null;
+                    if (winnerPlayer != null)
+                    {
+                        return StepResult.Call(TriggersHandler.For("combat_won", winnerPlayer.Id, Context(frame, winner)));
+                    }
+                    return StepResult.Continue();
+                }
+                default:
+                {
+                    int d = frame.Get("defender_value") == Combat.Infinite ? Combat.Hull(content, state, attacker) : frame.GetInt("defender_damage");
                     ctx.Return("winner", frame.Get("winner"));
-                    ctx.Return("attacker_damage", a.ToString(CultureInfo.InvariantCulture));
+                    ctx.Return("attacker_damage", frame.Get("attacker_damage"));
                     ctx.Return("defender_damage", d.ToString(CultureInfo.InvariantCulture));
                     return StepResult.Done();
                 }
@@ -176,9 +195,21 @@ namespace OuterRim.Core.Engine
             return Combat.GameLabel(defender);
         }
 
-        private static void Hurt(ResolutionContext ctx, PlayerState player, CombatType type, int amount)
+        /// <summary>What a side's abilities see about this combat: type, result for that side, opponent.</summary>
+        private static Dictionary<string, string> Context(Frame frame, string side)
         {
-            PlayerRules.SufferDamage(ctx.Content, ctx.State, player, type, amount, ctx.Events);
+            string winner = frame.Get("winner");
+            var d = new Dictionary<string, string>
+            {
+                ["combat_type"] = frame.Get("type"),
+                ["combat_result"] = winner == side ? "won" : "lost",
+                ["opponent"] = side == "attacker" ? frame.Get("defender_kind") : "player",
+            };
+            if (side == "attacker" && frame.Get("defender_kind") == "patrol")
+            {
+                d["patrol_faction"] = frame.Get("defender");
+            }
+            return d;
         }
 
         private static string Scope(CombatType type)

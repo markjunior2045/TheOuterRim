@@ -574,6 +574,26 @@ namespace OuterRim.Core.Engine
         public string After { get; }
     }
 
+    /// <summary>Dice rolled by a card effect ("Roll a die. On a ..."), outside tests and combat.</summary>
+    public sealed class EffectDiceRolledEvent : GameEvent
+    {
+        public EffectDiceRolledEvent(string playerId, string rollerLabel, string cardId, IReadOnlyList<DieFace> faces)
+        {
+            PlayerId = playerId;
+            RollerLabel = rollerLabel;
+            CardId = cardId;
+            Faces = faces;
+        }
+
+        public string PlayerId { get; }
+
+        public string RollerLabel { get; }
+
+        public string CardId { get; }
+
+        public IReadOnlyList<DieFace> Faces { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {
