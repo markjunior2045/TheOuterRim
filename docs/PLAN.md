@@ -20,6 +20,19 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 
 ---
 
+## Roadmap (owner decision, 2026-11-04)
+
+The phases below group tasks by subject; this is the order they are worked in:
+
+1. **Patterns:** T2.1, the inventory of objects, effects, conditions, targets and timings, from the 242 base cards plus the `[UB]` extension points in `RULES.md`. The expansion cards are not transcribed for this.
+2. **Data:** T2.2 (schema), T0.5 (map geometry), T2.4 (small data sets: patrols, player board, sheets).
+3. **Core:** Phase 1, using real data wherever it already exists.
+4. **V0:** T3.1, seeded automated games in a terminal.
+5. **Prototype:** T0.4 (Unity), then T3.2 to T3.5, adding one feature at a time. The prototype shows the TTS scans as they are (`DECISIONS.md` §3, prototype exception).
+6. **After V1:** see the last section. Templates, translation, animation and sound come only once the game works.
+
+---
+
 ## Phase 0 — Foundation
 
 ### T0.1 — Manuals → RULES.md · `DONE`
@@ -61,9 +74,9 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 
 ---
 
-## Phase 1 — Core without content
+## Phase 1 — Core
 
-Fictional content, verified with `dotnet test`.
+Verified with `dotnet test`. Uses real card and map data where it already exists (T2.2, T0.5); fictional content only fills gaps.
 
 ### T1.1 — State, commands, events, RNG, save/load · `TODO` (T0.2)
 - **Done when:** state round-trips through save/load unchanged; the same seed always gives the same results; saves carry a format version and the list of content packs.
@@ -103,8 +116,8 @@ Fictional content, verified with `dotnet test`.
 
 ### T2.1 — Effect inventory · `TODO`
 - Classify every card's effect, condition and target types, plus card and component types, into `docs/EFFECTS.md`.
-- **Done when:** every card maps to a known effect type or is listed as a custom exception.
-- Classification, not transcription: it sets the card data format. Works from the T2.8 transcriptions.
+- **Done when:** every base card maps to a known effect type or is listed as a custom exception, and every `[UB]` mechanic in `RULES.md` has a named extension point.
+- Classification, not transcription: it sets the card data format. Works from the T2.8 transcriptions. Expansion cards are not transcribed first; their structural mechanics come from the `[UB]` rules, and card-specific effects are added when the expansion is transcribed.
 
 ### T2.2 — Data schema and validator · `TODO` (T2.1, T1.9)
 - JSON schema for cards, effects, characters, ships and **content packs** (id, version, dependencies); validator; stable IDs.
@@ -127,8 +140,8 @@ Fictional content, verified with `dotnet test`.
 - Done by `sort_outer_rim.py` (v2): 1,040 files sorted by pack and deck, with manifest, report and `CREDITS.md`.
 - **Follow-up · `DEFERRED`:** name encounter images by their printed card number (n/10). The file order differs from the printed number in every deck, and not by a fixed rule. The encounter transcriptions record both `image` and `number`, so nothing depends on this rename; do it only if the art pipeline needs it, and update the `image` fields in the same commit.
 
-### T2.8 — Card transcription in batches · base game `DONE` (2026-11-04), expansion `TODO` (priority: before T0.4, by owner decision 2026-11-04)
-- Transcription comes first because the card patterns found here drive the core design (T2.1). Phase 0 resumes with T0.4 after the base game is transcribed and inventoried.
+### T2.8 — Card transcription in batches · base game `DONE` (2026-11-04), expansion `DEFERRED` (with the Unfinished Business pack, after V1; owner decision 2026-11-04)
+- Transcription came first because the card patterns found here drive the core design (T2.1).
 - Raw printed text into JSON, format `outer-rim-transcription/0.9` (`docs/TRANSCRIPTION_FORMAT.md`). Mapping text to effects happens later, in T2.1/T2.2.
 - Each batch starts with an icon legend (market deck backs, reputation icons, die faces) and ends with the owner reviewing the cards listed under `verify`.
 - English first; Portuguese through the localization files.
@@ -154,8 +167,9 @@ Fictional content, verified with `dotnet test`.
 - Show the map, pick a destination, animate the ship from start to end space.
 
 ### T3.3 — Unity: first card object · `TODO` (T0.4, T2.2)
-- One Job card from data: template, three sample cards, English and Portuguese text, cropped art.
+- One Job card object: the core reads the card data, the interface shows the card's full TTS scan (prototype exception, `DECISIONS.md` §3). Three sample cards.
 - The UI technology for cards is chosen here; changing it later is acceptable.
+- The template version (recreated frame and text, cropped art, English and Portuguese) comes after V1.
 
 ### T3.4 — Unity: remaining V1 interface · `TODO` (T3.2, T3.3)
 - Ship choice, one character, one card of each type, one contact, one encounter (`DECISIONS.md` §8).
@@ -168,7 +182,7 @@ Fictional content, verified with `dotnet test`.
 
 ## After V1 (not yet broken into tasks)
 
-Official solo mode → general bot → host and room code (relay behind the network interface) → *Unfinished Business* pack → Spanish → sound and music.
+Official solo mode → general bot → host and room code (relay behind the network interface) → *Unfinished Business* pack (transcription T2.8, then its content) → polish: card templates with recreated frame and text (`DECISIONS.md` §3), Portuguese, better graphics and animations → Spanish → sound and music.
 
 ---
 
@@ -188,6 +202,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-04 | Roadmap section added (owner decision): patterns (T2.1) → data → core → V0 → Unity prototype with TTS scans → polish. Expansion transcription deferred to the Unfinished Business pack; T2.1 covers `[UB]` through extension points. T3.3 uses full scans. Phase 1 uses real data where it exists. |
 | 2026-11-04 | Base game transcription done (T2.8, 242 cards); T0.6 and T2.4 updated to match; T2.7 follow-up deferred (transcriptions already link image and printed number). |
 | 2026-11-04 | T0.3 and T2.7 done (v1 and v2 extraction). T2.8 pilot done; batches listed. Source of card text settled (images; photos only for doubts). T2.7 follow-up for encounter numbering. New T0.6 to bring the tools and the transcription format into the repository (T0.2 was already done). Encounter display notes in T2.6 and T3.4. Transcription (T2.8) and effect inventory (T2.1) moved ahead of T0.4. |
 | 2026-10-24 | Extraction pilot moved before the Unity project (T0.3 ↔ T0.4). Git LFS dropped. Plan stated as a guide. Full extraction split from transcription (T2.7, T2.8). |

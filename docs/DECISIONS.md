@@ -1,6 +1,6 @@
 # DECISIONS.md — Outer Rim digital
 
-Last updated: 2026-11-04 (review after the base game transcription)
+Last updated: 2026-11-04 (roadmap and prototype art exception)
 
 Personal, non-commercial project: a digital version of the *Star Wars: Outer Rim* board game, built in Unity with Claude Code, to play with friends on PC.
 
@@ -27,6 +27,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - 1 to 4 players, as in the original.
 - Modular content chosen when creating a game: base game only, base + *Unfinished Business*, and unofficial packs (e.g. Mandalorian).
 - Development order: base game first, then *Unfinished Business*, unofficial packs last. The structure must make adding packs easy.
+- Work order (2026-11-04): card patterns → data → rules core → terminal V0 → Unity prototype, adding features one at a time → graphics, animation and sound polish last. Details in `PLAN.md`, "Roadmap".
 - Platform: Windows only.
 
 ## 2. Rules (Decided)
@@ -43,6 +44,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - **Extraction feasibility is validated first**, on a pilot set, before the Unity project is built. Without usable images there is no project.
 - Interactive objects are built in Unity. Each card type (Job, Contact, Encounter and so on) has **one template** filled from data: title, art, text, icons and values come from data files.
 - Only the cropped art is taken from a scan. Frame and text are recreated so they can be translated.
+- **Prototype exception (Decided, 2026-11-04):** the template rule above is the final model. Until the templates are built (after V1), the prototype shows the full TTS scans of cards, sheets, tokens and map as they are, so it is English only. The game rules still read the card data files, never the image.
 - Languages: English and Portuguese first; Spanish later. Player-facing text lives in localization files, separate from code.
 - **Card text** is transcribed from the mod images (pilot of 2026-11-04: all text legible); photos of the physical cards only settle doubts. Raw printed text is stored first (format in `docs/TRANSCRIPTION_FORMAT.md`) and mapped to effects later (`PLAN.md` T2.8, T2.1). The base game is fully transcribed (2026-11-04). Errata are applied at mapping time, not in the transcription (`RULES.md` §24).
 - Raw source images stay outside the repository, in `C:\TheOuterRimProject\RawGameFiles`; only processed assets are committed.
@@ -123,7 +125,7 @@ Decided:
 Suggested (not confirmed):
 - Save and load already in V1.
 - A screenless "V0": the core running in a terminal with automated test games.
-- First end-to-end test: one Job card (template, three sample cards, English and Portuguese text, cropped art).
+- First end-to-end test: one Job card (data from the card file, full scan shown, three sample cards). The template version with English and Portuguese text comes after V1 (section 3).
 - Official solo mode before the general bot.
 - Online connection through Unity Relay (free at this scale), behind the network interface.
 
