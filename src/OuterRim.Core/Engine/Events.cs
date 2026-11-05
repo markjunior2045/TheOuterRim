@@ -140,6 +140,30 @@ namespace OuterRim.Core.Engine
         public string Target { get; }
     }
 
+    /// <summary>A skill test was rolled and judged (R-6.9).</summary>
+    public sealed class SkillTestRolledEvent : GameEvent
+    {
+        public SkillTestRolledEvent(string playerId, string skill, int instances, IReadOnlyList<DieFace> faces, bool passed)
+        {
+            PlayerId = playerId;
+            Skill = skill;
+            Instances = instances;
+            Faces = faces;
+            Passed = passed;
+        }
+
+        public string PlayerId { get; }
+
+        public string Skill { get; }
+
+        /// <summary>Instances of the skill counted for this test (R-6.7).</summary>
+        public int Instances { get; }
+
+        public IReadOnlyList<DieFace> Faces { get; }
+
+        public bool Passed { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

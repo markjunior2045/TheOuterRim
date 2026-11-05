@@ -102,8 +102,9 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered:** `GameContent` (map and ship sheet sides, not saved); the engine takes it on every call. State gains map pieces, patrols (level 1 on their spawn spaces, R-3.5), each player's space and ship side (starter side and starting planet given in the setup until character setup is built). Commands `MoveCommand(path)`, `EndActionStepCommand`, `EncounterCommand(space | patrol | contact)`. Movement checks adjacency, hyperdrive and the stops of R-5.11 and R-5.20; `MoveDirect` for effects (R-5.23). Encounter step enforces R-4.12 to R-4.15 and R-11.26 to R-11.28, then ends the turn (R-4.4) through the resolution stack. Save format 0.3. 77 tests.
 - **Stubs, replaced later:** encountering a space only records the encounter (encounter decks, T2.6); encountering a patrol only records it (combat, T1.6 and T1.8); contacts are rejected until they are on the map (T2.6). Hyperdrive modifiers (R-5.19), "Planning" and "Encounter" abilities (R-4.7, R-4.16) and additional turns (R-5.14) come with the effect engine.
 
-### T1.5 — Dice and skill tests · `TODO` (T1.1)
+### T1.5 — Dice and skill tests · `DONE` (2026-11-05)
 - **Tests:** face distribution; the three thresholds of R-6.9 over many seeded rolls; `{CRIT}` is not `{HIT}` (R-6.2).
+- **Delivered:** `SkillTests` (skills, instances from character and crew R-6.6, R-6.7, granted instances R-6.8, levels and pass rule R-6.9); characters loaded from `characters.json` into `GameContent`, crew skills registered per card; players carry a character and crew list (save format 0.4); the skill test runs as a resolution frame (`rules.skill_test`): "test X or Y" asks the player, then rolls two dice and returns pass or fail to the card that called it (R-6.10, R-6.11). Steps for "before a test" abilities and dice-modification windows are in place for the effect engine. 93 tests, including pass rates over 40,000 seeded rolls (23.4%, 75%, 93.75%).
 
 ### T1.6 — Combat · `TODO` (T1.2, T1.5)
 - The five steps (R-7.10 to R-7.14), ability windows as hooks, ties to the attacker, win-then-defeated ordering.
@@ -216,6 +217,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.5 done: skill tests (levels, thresholds, choice of skill) as a resolution frame; characters loaded; save format 0.4. |
 | 2026-11-05 | T1.4 done: turn loop, planning options, movement with stops, encounter step choice; save format 0.3. |
 | 2026-11-05 | T1.3 done: map graph in the core; T0.5 count corrected to 51 paths (the Python validator had counted stack links). |
 | 2026-11-05 | T1.2 done: resolution stack, pending decisions (option, tie, order), save while paused; save format 0.2. |

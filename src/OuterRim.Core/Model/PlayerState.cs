@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace OuterRim.Core.Model
 {
     /// <summary>One player's state. Fields are added as the rules that use them are built.</summary>
@@ -25,6 +27,12 @@ namespace OuterRim.Core.Model
 
         /// <summary>True while the player is defeated (R-8, R-4.8).</summary>
         public bool Defeated { get; set; }
+
+        /// <summary>Character card id (data/packs/*/cards/characters.json); empty until characters are chosen.</summary>
+        public string CharacterId { get; set; } = "";
+
+        /// <summary>Crew card ids the player holds (R-15.2); their skills count for tests (R-6.6).</summary>
+        public List<string> Crew { get; set; } = new List<string>();
 
         /// <summary>The map space where the player's standee is (R-5).</summary>
         public string SpaceId { get; set; } = "";

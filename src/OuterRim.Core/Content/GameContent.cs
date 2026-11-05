@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using OuterRim.Core.Map;
+using OuterRim.Core.Rules;
 
 namespace OuterRim.Core.Content
 {
@@ -34,15 +35,40 @@ namespace OuterRim.Core.Content
         public int Hull { get; }
     }
 
+    /// <summary>A character card: the values the rules read (data/packs/*/cards/characters.json).</summary>
+    public sealed class CharacterCard
+    {
+        public CharacterCard(string id, int groundCombat, int health, IReadOnlyCollection<Skill> skills)
+        {
+            Id = id;
+            GroundCombat = groundCombat;
+            Health = health;
+            Skills = new HashSet<Skill>(skills);
+        }
+
+        public string Id { get; }
+
+        public int GroundCombat { get; }
+
+        public int Health { get; }
+
+        /// <summary>R-6.4, R-6.5: skills on the character card, never lost.</summary>
+        public HashSet<Skill> Skills { get; }
+    }
+
     /// <summary>
     /// Static content of a game: the assembled map and card data. Not saved; rebuilt from the packs
     /// and the map pieces recorded in the state. Grows as card kinds are loaded (PLAN T2.3 onward).
     /// </summary>
     public sealed class GameContent
     {
-        private readonly Dictionary<string, ShipSide> _shipSides;
+        private static readonly HashSet<Skill> NoSkills = new HashSet<Skill>();
 
-        public GameContent(MapGraph map, IEnumerable<ShipSide> shipSides)
+        private readonly Dictionary<string, ShipSide> _shipSides;
+        private readonly Dictionary<string, CharacterCard> _characters = new Dictionary<string, CharacterCard>(StringComparer.Ordinal);
+        private readonly Dictionary<string, HashSet<Skill>> _crewSkills = new Dictionary<string, HashSet<Skill>>(StringComparer.Ordinal);
+
+        public GameContent(MapGraph map, IEnumerable<ShipSide> shipSides, IEnumerable<CharacterCard>? characters = null)
         {
             Map = map;
             _shipSides = new Dictionary<string, ShipSide>(StringComparer.Ordinal);
@@ -50,6 +76,57 @@ namespace OuterRim.Core.Content
             {
                 _shipSides[s.Id] = s;
             }
+            foreach (var c in characters ?? new CharacterCard[0])
+            {
+                _characters[c.Id] = c;
+            }
+        }
+
+        public CharacterCard Character(string id)
+        {
+            return _characters.TryGetValue(id, out var c) ? c : throw new KeyNotFoundException("Unknown character '" + id + "'.");
+        }
+
+        public bool HasCharacter(string id)
+        {
+            return _characters.ContainsKey(id);
+        }
+
+        /// <summary>Registers the skills of a crew card (R-6.4). Crew cards are loaded with their decks.</summary>
+        public void AddCrew(string cardId, IEnumerable<Skill> skills)
+        {
+            _crewSkills[cardId] = new HashSet<Skill>(skills);
+        }
+
+        /// <summary>Skills printed on a crew card; none for unknown cards.</summary>
+        public HashSet<Skill> CrewSkills(string cardId)
+        {
+            return _crewSkills.TryGetValue(cardId, out var s) ? s : NoSkills;
+        }
+
+        /// <summary>Reads the characters of a card data file (format outer-rim-data/0.1).</summary>
+        public static List<CharacterCard> ReadCharacters(string json)
+        {
+            var root = JObject.Parse(json);
+            if ((string?)root["format"] != "outer-rim-data/0.1")
+            {
+                throw new FormatException("Unsupported card data format '" + (string?)root["format"] + "'.");
+            }
+            var result = new List<CharacterCard>();
+            foreach (JObject card in (JArray)root["cards"]!)
+            {
+                if ((string?)card["kind"] != "character")
+                {
+                    continue;
+                }
+                var skills = new List<Skill>();
+                foreach (var sk in (JArray)card["skills"]!)
+                {
+                    skills.Add(SkillTests.Parse((string)sk!));
+                }
+                result.Add(new CharacterCard((string)card["id"]!, (int)card["ground_combat"]!, (int)card["health"]!, skills));
+            }
+            return result;
         }
 
         public MapGraph Map { get; }

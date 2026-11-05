@@ -40,7 +40,8 @@ namespace OuterRim.Core.Tests
 
         public static readonly Content.GameContent Base = new Content.GameContent(
             Repo.Maps().Build("standard"),
-            Content.GameContent.ReadShipSheets(Repo.Read("data/packs/base/cards/ship-sheets.json")));
+            Content.GameContent.ReadShipSheets(Repo.Read("data/packs/base/cards/ship-sheets.json")),
+            Content.GameContent.ReadCharacters(Repo.Read("data/packs/base/cards/characters.json")));
     }
 
     public class MapGraphTests

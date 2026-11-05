@@ -13,6 +13,7 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new EncounterStepHandler());
             ResolutionHandlers.Register(new EncounterSpaceStub());
             ResolutionHandlers.Register(new EncounterPatrolStub());
+            ResolutionHandlers.Register(new SkillTestHandler());
         }
 
         /// <summary>Runs the chosen encounter, then ends the turn once it has fully resolved.</summary>

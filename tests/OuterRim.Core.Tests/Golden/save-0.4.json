@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.3",
+  "format": "outer-rim-save/0.4",
   "packs": [
     {
       "id": "base",
@@ -35,6 +35,8 @@
         "characterDamage": 0,
         "shipDamage": 0,
         "defeated": false,
+        "characterId": "",
+        "crew": [],
         "spaceId": "lothal",
         "shipSheetId": "base-ship-g9-rigger",
         "shipSideId": "base-ship-g9-rigger"
@@ -54,6 +56,8 @@
         "characterDamage": 2,
         "shipDamage": 0,
         "defeated": false,
+        "characterId": "",
+        "crew": [],
         "spaceId": "tatooine",
         "shipSheetId": "base-ship-g9-rigger",
         "shipSideId": "base-ship-g9-rigger"
@@ -73,6 +77,8 @@
         "characterDamage": 0,
         "shipDamage": 0,
         "defeated": false,
+        "characterId": "",
+        "crew": [],
         "spaceId": "naboo",
         "shipSheetId": "base-ship-g9-rigger",
         "shipSideId": "base-ship-g9-rigger"

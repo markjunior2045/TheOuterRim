@@ -11,14 +11,19 @@ namespace OuterRim.Core.Engine
     /// <summary>Who sits at the table, before the game starts.</summary>
     public sealed class PlayerSetup
     {
-        public PlayerSetup(string id, string name, string color, string startSpaceId, string starterShipSideId)
+        public PlayerSetup(string id, string name, string color, string startSpaceId, string starterShipSideId,
+            string characterId = "")
         {
             Id = id;
             Name = name;
             Color = color;
             StartSpaceId = startSpaceId;
             StarterShipSideId = starterShipSideId;
+            CharacterId = characterId;
         }
+
+        /// <summary>The chosen character (R-3.11); its setup line is applied once character setup is built.</summary>
+        public string CharacterId { get; }
 
         public string Id { get; }
 
@@ -102,6 +107,10 @@ namespace OuterRim.Core.Engine
                 {
                     throw new ArgumentException("R-3.15.b: " + p.Id + " must start on a planet, not '" + p.StartSpaceId + "'.", nameof(setup));
                 }
+                if (p.CharacterId.Length > 0 && !content.HasCharacter(p.CharacterId))
+                {
+                    throw new ArgumentException("Unknown character '" + p.CharacterId + "'.", nameof(setup));
+                }
                 if (!content.HasShipSide(p.StarterShipSideId) || content.ShipSide(p.StarterShipSideId).Role != "starter")
                 {
                     throw new ArgumentException("R-3.11.e: " + p.Id + " must start with a starter ship side.", nameof(setup));
@@ -124,6 +133,7 @@ namespace OuterRim.Core.Engine
                     Id = p.Id,
                     Name = p.Name,
                     Color = p.Color,
+                    CharacterId = p.CharacterId,
                     SpaceId = p.StartSpaceId,
                     ShipSheetId = side.SheetId,
                     ShipSideId = side.Id,
