@@ -48,7 +48,7 @@ Every card has `id`, `kind`, `abilities`, and the fields of its kind in `registr
 | patrol | `faction`, `level`, `combat` (`null` for level 4, R-11.6), `reward` (effects) |
 | player_board | `color`, `slots`, `fame_track` (`min`, `max`) |
 
-A slot is `{ "types": ["job", "bounty"], "count": 2 }`: `types` lists the asset types the slot accepts ("job or bounty"), `count` how many such slots. Two-sided cards keep their abilities on each side; their text keys start with the side (`"front.upper.0"`, `"sides.1.text.0"`). Goals are abilities with a `goal` timing whose `progress` is a count of events, a state, an event with a condition, or a step ability (`EFFECTS.md` §3.5).
+A slot is `{ "types": ["job", "bounty"], "count": 2 }`: `types` lists the asset types the slot accepts ("job or bounty"), `count` how many cards of those types fit. `count` is the number of printed boxes with that label: "CREW" printed three times is `{ "types": ["crew"], "count": 3 }`. A box printed "X2" holds two cards (R-14.14) and counts as 2; in the base game only Slave I (the flipped Firespray-31 Patrol Craft) prints one, "MOD X2" (checked against the physical sheet, 2026-11-05). Since placement is free (R-14.17), separate boxes and an "X2" box behave the same. Two-sided cards keep their abilities on each side; their text keys start with the side (`"front.upper.0"`, `"sides.1.text.0"`). Goals are abilities with a `goal` timing whose `progress` is a count of events, a state, an event with a condition, or a step ability (`EFFECTS.md` §3.5).
 
 The validator also checks consistency between sets: contact tokens per class match the contact spaces on the map (R-12.4), and each faction has one patrol token of each level (R-11.3).
 
