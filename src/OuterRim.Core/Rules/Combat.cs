@@ -1,0 +1,120 @@
+#nullable enable
+using System;
+using System.Collections.Generic;
+using OuterRim.Core.Content;
+using OuterRim.Core.Model;
+
+namespace OuterRim.Core.Rules
+{
+    /// <summary>Ground or ship combat (R-7.2).</summary>
+    public enum CombatType
+    {
+        Ground,
+        Ship,
+    }
+
+    /// <summary>Combat arithmetic and damage (R-7, R-8).</summary>
+    public static class Combat
+    {
+        /// <summary>
+        /// Resolution handler id of a combat. Frame variables in:
+        /// "type" (ground | ship); "attacker" (player id); "defender_kind" (player | npc | patrol);
+        /// "defender" (player id, enemy name key or patrol faction); "defender_value" (dice for an npc or
+        /// patrol, or "infinite" for a level-4 patrol, R-11.6); optional "outcome" (handler id run after
+        /// the winner is known and before damage, R-7.13). Returned: "ret.winner" (attacker | defender |
+        /// none), "ret.attacker_damage", "ret.defender_damage".
+        /// </summary>
+        public const string Handler = "rules.combat";
+
+        public const string Infinite = "infinite";
+
+        /// <summary>R-7.11: each hit deals 1 damage, each crit 2; focus and blank deal nothing.</summary>
+        public static int DamageOf(IEnumerable<DieFace> faces)
+        {
+            int total = 0;
+            foreach (var f in faces)
+            {
+                if (f == DieFace.Hit)
+                {
+                    total += 1;
+                }
+                else if (f == DieFace.Crit)
+                {
+                    total += 2;
+                }
+            }
+            return total;
+        }
+
+        /// <summary>R-7.13: more damage wins; on a tie the attacker wins.</summary>
+        public static bool AttackerWins(int attackerDamage, int defenderDamage)
+        {
+            return attackerDamage >= defenderDamage;
+        }
+
+        public static CombatType ParseType(string type)
+        {
+            switch (type)
+            {
+                case "ground": return CombatType.Ground;
+                case "ship": return CombatType.Ship;
+                default: throw new FormatException("Unknown combat type '" + type + "'.");
+            }
+        }
+
+        /// <summary>R-7.5: player versus player is ground combat if both are on planets, ship combat otherwise.</summary>
+        public static CombatType BetweenPlayers(GameContent content, PlayerState a, PlayerState b)
+        {
+            return content.Map[a.SpaceId].IsPlanet && content.Map[b.SpaceId].IsPlanet ? CombatType.Ground : CombatType.Ship;
+        }
+
+        /// <summary>Combat value of a player: ground combat on the character, ship combat on the ship (R-7.10). Card modifiers come with the effect engine (R-7.19).</summary>
+        public static int Value(GameContent content, PlayerState player, CombatType type)
+        {
+            return type == CombatType.Ground
+                ? content.Character(player.CharacterId).GroundCombat
+                : content.ShipSide(player.ShipSideId).ShipCombat;
+        }
+
+        /// <summary>Character health (R-8.2); card modifiers come with the effect engine.</summary>
+        public static int Health(GameContent content, PlayerState player)
+        {
+            return content.Character(player.CharacterId).Health;
+        }
+
+        /// <summary>Ship hull (R-8.3); card modifiers come with the effect engine.</summary>
+        public static int Hull(GameContent content, PlayerState player)
+        {
+            return content.ShipSide(player.ShipSideId).Hull;
+        }
+
+        /// <summary>
+        /// Puts damage on the character (ground) or ship (ship). Damage beyond health or hull is ignored
+        /// (R-8.4); reaching it makes the player defeated (R-8.2, R-8.3). Returns the damage actually placed.
+        /// The consequences of becoming defeated (R-8.8) are applied by the caller (PLAN T1.7).
+        /// </summary>
+        public static int Suffer(GameContent content, PlayerState player, CombatType target, int amount)
+        {
+            if (amount <= 0)
+            {
+                return 0;
+            }
+            int limit = target == CombatType.Ground ? Health(content, player) : Hull(content, player);
+            int current = target == CombatType.Ground ? player.CharacterDamage : player.ShipDamage;
+            int placed = Math.Min(amount, Math.Max(0, limit - current));
+            if (target == CombatType.Ground)
+            {
+                player.CharacterDamage += placed;
+            }
+            else
+            {
+                player.ShipDamage += placed;
+            }
+            if (player.CharacterDamage >= Health(content, player) || player.ShipDamage >= Hull(content, player))
+            {
+                player.Defeated = true;
+            }
+            return placed;
+        }
+    }
+}

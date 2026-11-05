@@ -164,6 +164,98 @@ namespace OuterRim.Core.Engine
         public bool Passed { get; }
     }
 
+    public sealed class CombatStartedEvent : GameEvent
+    {
+        public CombatStartedEvent(string type, string attackerId, string defenderKind, string defender, int attackerValue,
+            string defenderValue)
+        {
+            Type = type;
+            AttackerId = attackerId;
+            DefenderKind = defenderKind;
+            Defender = defender;
+            AttackerValue = attackerValue;
+            DefenderValue = defenderValue;
+        }
+
+        /// <summary>ground or ship (R-7.2).</summary>
+        public string Type { get; }
+
+        public string AttackerId { get; }
+
+        /// <summary>player, npc or patrol.</summary>
+        public string DefenderKind { get; }
+
+        public string Defender { get; }
+
+        public int AttackerValue { get; }
+
+        /// <summary>Number of dice, or "infinite" for a level-4 patrol (R-11.6).</summary>
+        public string DefenderValue { get; }
+    }
+
+    /// <summary>One side's roll and its damage (R-7.10 to R-7.12).</summary>
+    public sealed class CombatRolledEvent : GameEvent
+    {
+        public CombatRolledEvent(string side, string rollerId, IReadOnlyList<DieFace> faces, int damage)
+        {
+            Side = side;
+            RollerId = rollerId;
+            Faces = faces;
+            Damage = damage;
+        }
+
+        /// <summary>attacker or defender.</summary>
+        public string Side { get; }
+
+        /// <summary>The player who physically rolls: for a patrol or card enemy, the player to the left (R-7.9).</summary>
+        public string RollerId { get; }
+
+        public IReadOnlyList<DieFace> Faces { get; }
+
+        public int Damage { get; }
+    }
+
+    /// <summary>The winner of a combat (R-7.13): attacker, defender, or none if it could not happen.</summary>
+    public sealed class CombatResolvedEvent : GameEvent
+    {
+        public CombatResolvedEvent(string winner, int attackerDamage, int defenderDamage)
+        {
+            Winner = winner;
+            AttackerDamage = attackerDamage;
+            DefenderDamage = defenderDamage;
+        }
+
+        public string Winner { get; }
+
+        public int AttackerDamage { get; }
+
+        public int DefenderDamage { get; }
+    }
+
+    /// <summary>Damage placed on a character or ship (R-8.1); Placed may be less than Amount (R-8.4).</summary>
+    public sealed class DamageSufferedEvent : GameEvent
+    {
+        public DamageSufferedEvent(string playerId, string target, int amount, int placed, bool becameDefeated)
+        {
+            PlayerId = playerId;
+            Target = target;
+            Amount = amount;
+            Placed = placed;
+            BecameDefeated = becameDefeated;
+        }
+
+        public string PlayerId { get; }
+
+        /// <summary>character or ship.</summary>
+        public string Target { get; }
+
+        public int Amount { get; }
+
+        public int Placed { get; }
+
+        public bool BecameDefeated { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

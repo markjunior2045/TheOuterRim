@@ -106,9 +106,11 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Tests:** face distribution; the three thresholds of R-6.9 over many seeded rolls; `{CRIT}` is not `{HIT}` (R-6.2).
 - **Delivered:** `SkillTests` (skills, instances from character and crew R-6.6, R-6.7, granted instances R-6.8, levels and pass rule R-6.9); characters loaded from `characters.json` into `GameContent`, crew skills registered per card; players carry a character and crew list (save format 0.4); the skill test runs as a resolution frame (`rules.skill_test`): "test X or Y" asks the player, then rolls two dice and returns pass or fail to the card that called it (R-6.10, R-6.11). Steps for "before a test" abilities and dice-modification windows are in place for the effect engine. 93 tests, including pass rates over 40,000 seeded rolls (23.4%, 75%, 93.75%).
 
-### T1.6 — Combat · `TODO` (T1.2, T1.5)
+### T1.6 — Combat · `DONE` (2026-11-05)
 - The five steps (R-7.10 to R-7.14), ability windows as hooks, ties to the attacker, win-then-defeated ordering.
 - **Tests:** each step; tie rule; level-4 patrols roll no dice (R-11.6).
+- **Delivered:** `Combat` (damage of a roll R-7.11, tie to the attacker R-7.13, combat type between players R-7.5, combat values, health, hull, damage with cap and defeat flag R-8.2 to R-8.4) and the combat as a resolution frame (`rules.combat`): attacker rolls, defender rolls (the player to the left for patrols and card enemies, R-7.9), winner, the caller's winning or losing effect before damage (R-7.13, R-8.15), damage to the character or ship (only players take damage, R-7.14); a level-4 patrol rolls nothing, always wins and defeats the ship (R-11.6); a defeated player cannot be attacked (R-8.12). Windows for combat abilities are marked for the effect engine. 106 tests.
+- The consequences of becoming defeated (R-8.8) come in T1.7.
 
 ### T1.7 — Damage, defeat, reputation, fame, victory · `TODO` (T1.6)
 - **Tests:** R-8 invariants; reputation clamping (R-10.5, R-10.6); fame floor; victory tiebreak (R-18.16).
@@ -217,6 +219,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.6 done: combat as a resolution frame, five steps, tie to attacker, win before damage, level-4 patrols. |
 | 2026-11-05 | T1.5 done: skill tests (levels, thresholds, choice of skill) as a resolution frame; characters loaded; save format 0.4. |
 | 2026-11-05 | T1.4 done: turn loop, planning options, movement with stops, encounter step choice; save format 0.3. |
 | 2026-11-05 | T1.3 done: map graph in the core; T0.5 count corrected to 51 paths (the Python validator had counted stack links). |
