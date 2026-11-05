@@ -34,6 +34,12 @@ namespace OuterRim.Core.Model
 
         public TurnStep Step { get; set; } = TurnStep.Planning;
 
+        /// <summary>Map pieces left to right (R-3.2 standard, or a random order with R-3.3). The map is rebuilt from it.</summary>
+        public List<string> MapPieces { get; set; } = new List<string>();
+
+        /// <summary>Patrols on the map: always one per faction (R-11.9).</summary>
+        public List<PatrolState> Patrols { get; set; } = new List<PatrolState>();
+
         /// <summary>Fame needed to win (R-3.1, R-18.9).</summary>
         public int FameRequirement { get; set; } = 10;
 
@@ -58,6 +64,19 @@ namespace OuterRim.Core.Model
             return null;
         }
 
+        public List<PatrolState> PatrolsIn(string spaceId)
+        {
+            var result = new List<PatrolState>();
+            foreach (var p in Patrols)
+            {
+                if (p.SpaceId == spaceId)
+                {
+                    result.Add(p);
+                }
+            }
+            return result;
+        }
+
         /// <summary>Index of a player in seating order, or -1.</summary>
         public int SeatOf(string id)
         {
@@ -70,6 +89,17 @@ namespace OuterRim.Core.Model
             }
             return -1;
         }
+    }
+
+    /// <summary>A patrol token on the map (R-11).</summary>
+    public sealed class PatrolState
+    {
+        public Faction Faction { get; set; }
+
+        /// <summary>1 to 4 (R-11.3).</summary>
+        public int Level { get; set; } = 1;
+
+        public string SpaceId { get; set; } = "";
     }
 
     /// <summary>A content pack used by a game: id and version (DECISIONS §7).</summary>

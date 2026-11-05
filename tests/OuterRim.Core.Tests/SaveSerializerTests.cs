@@ -11,12 +11,12 @@ namespace OuterRim.Core.Tests
 {
     public class SaveSerializerTests
     {
-        private const string GoldenName = "save-0.2.json";
+        private const string GoldenName = "save-0.3.json";
 
         private static GameState GoldenGame()
         {
-            var state = GameEngine.NewGame(GameEngineTests.Setup(12345, 3), out _);
-            GameEngine.Execute(state, new GainCreditsCommand(state.CurrentPlayerId));
+            var state = GameEngine.NewGame(TestContent.Base, GameEngineTests.Setup(12345, 3), out _);
+            GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(state.CurrentPlayerId));
             var someone = state.Players[1];
             someone.Fame = 3;
             someone.CharacterDamage = 2;
@@ -27,7 +27,7 @@ namespace OuterRim.Core.Tests
             TestHandlers.Register();
             var frame = new Frame("test.tie_parent");
             frame.Set("candidates", "p1,p2,p3");
-            GameEngine.StartResolution(state, frame);
+            GameEngine.StartResolution(TestContent.Base, state, frame);
             return state;
         }
 
@@ -62,7 +62,7 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void LargeSeed_SurvivesTheRoundTrip()
         {
-            var state = GameEngine.NewGame(GameEngineTests.Setup(ulong.MaxValue - 3, 2), out _);
+            var state = GameEngine.NewGame(TestContent.Base, GameEngineTests.Setup(ulong.MaxValue - 3, 2), out _);
             var loaded = SaveSerializer.Load(SaveSerializer.Save(state));
             Assert.Equal(ulong.MaxValue - 3, loaded.Seed);
         }

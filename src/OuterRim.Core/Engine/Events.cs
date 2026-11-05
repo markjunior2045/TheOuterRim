@@ -79,6 +79,67 @@ namespace OuterRim.Core.Engine
         public TurnStep Step { get; }
     }
 
+    public sealed class TurnStartedEvent : GameEvent
+    {
+        public TurnStartedEvent(string playerId, int round)
+        {
+            PlayerId = playerId;
+            Round = round;
+        }
+
+        public string PlayerId { get; }
+
+        public int Round { get; }
+    }
+
+    public sealed class TurnEndedEvent : GameEvent
+    {
+        public TurnEndedEvent(string playerId)
+        {
+            PlayerId = playerId;
+        }
+
+        public string PlayerId { get; }
+    }
+
+    /// <summary>A player's standee moved. Direct moves (R-5.23) jump without passing through spaces.</summary>
+    public sealed class PlayerMovedEvent : GameEvent
+    {
+        public PlayerMovedEvent(string playerId, string from, IReadOnlyList<string> path, bool direct)
+        {
+            PlayerId = playerId;
+            From = from;
+            Path = path;
+            Direct = direct;
+        }
+
+        public string PlayerId { get; }
+
+        public string From { get; }
+
+        /// <summary>Spaces entered, in order; for a direct move, only the destination.</summary>
+        public IReadOnlyList<string> Path { get; }
+
+        public bool Direct { get; }
+    }
+
+    /// <summary>An encounter finished resolving (kind: space, patrol, contact).</summary>
+    public sealed class EncounterResolvedEvent : GameEvent
+    {
+        public EncounterResolvedEvent(string playerId, string kind, string target)
+        {
+            PlayerId = playerId;
+            Kind = kind;
+            Target = target;
+        }
+
+        public string PlayerId { get; }
+
+        public string Kind { get; }
+
+        public string Target { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

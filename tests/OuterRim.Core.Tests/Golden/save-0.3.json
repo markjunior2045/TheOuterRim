@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.2",
+  "format": "outer-rim-save/0.3",
   "packs": [
     {
       "id": "base",
@@ -34,7 +34,10 @@
         },
         "characterDamage": 0,
         "shipDamage": 0,
-        "defeated": false
+        "defeated": false,
+        "spaceId": "lothal",
+        "shipSheetId": "base-ship-g9-rigger",
+        "shipSideId": "base-ship-g9-rigger"
       },
       {
         "id": "p2",
@@ -50,7 +53,10 @@
         },
         "characterDamage": 2,
         "shipDamage": 0,
-        "defeated": false
+        "defeated": false,
+        "spaceId": "tatooine",
+        "shipSheetId": "base-ship-g9-rigger",
+        "shipSideId": "base-ship-g9-rigger"
       },
       {
         "id": "p3",
@@ -66,13 +72,48 @@
         },
         "characterDamage": 0,
         "shipDamage": 0,
-        "defeated": false
+        "defeated": false,
+        "spaceId": "naboo",
+        "shipSheetId": "base-ship-g9-rigger",
+        "shipSideId": "base-ship-g9-rigger"
       }
     ],
     "firstPlayerId": "p3",
     "round": 1,
     "currentPlayerId": "p3",
     "step": "action",
+    "mapPieces": [
+      "endcap-rebel-syndicate",
+      "tile-cantonica-ord-mantell",
+      "tile-lothal-mon-calamari",
+      "tile-kessel",
+      "tile-tatooine-nal-hutta",
+      "tile-ryloth-naboo",
+      "tile-ring-of-kafrene-takodana",
+      "endcap-empire-hutt"
+    ],
+    "patrols": [
+      {
+        "faction": "rebel",
+        "level": 1,
+        "spaceId": "nav-cantonica-1"
+      },
+      {
+        "faction": "syndicate",
+        "level": 1,
+        "spaceId": "nav-cantonica-2"
+      },
+      {
+        "faction": "imperial",
+        "level": 1,
+        "spaceId": "nav-takodana-5"
+      },
+      {
+        "faction": "hutt",
+        "level": 1,
+        "spaceId": "nav-takodana-6"
+      }
+    ],
     "fameRequirement": 10,
     "stack": [
       {

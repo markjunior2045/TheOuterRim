@@ -96,9 +96,11 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered:** `MapLoader` (reads `data/map/*.json` text, assembles any piece order, joins ports, finds patrol spawn spaces) and `MapGraph` (spaces with type and faction, contact spaces with stable ids, adjacency, distance, "within N", "nearest" returning every tied candidate for the current player to choose, optional exclusion of Core Worlds transit). The graph is static data rebuilt from packs and layout, never saved.
 - **Tests (16):** board counts (11 planets, 34 navpoints, Maelstrom, 51 paths; 59 with the Core Worlds), contact classes, planet factions, symmetric paths, reachability, 50 random tile orders (R-3.3), spawn spaces (R-3.5, R-3.6), Core Worlds not adjacent (R-5.4), distance, same-space nearest (R-5.31), ties (R-5.30), no transit through the Core Worlds (R-5.33). The edge count also corrected the Python map validator, which had counted the patrol stack links.
 
-### T1.4 — Turn loop, planning step, movement · `TODO` (T1.2, T1.3)
+### T1.4 — Turn loop, planning step, movement · `DONE` (2026-11-05)
 - Turn order and the three steps (R-4); movement with patrol and Maelstrom interruption and "directly" moves (R-5.11 to R-5.23).
 - **Tests:** one per rule in R-4.6 to R-4.8 and R-5.17 to R-5.23.
+- **Delivered:** `GameContent` (map and ship sheet sides, not saved); the engine takes it on every call. State gains map pieces, patrols (level 1 on their spawn spaces, R-3.5), each player's space and ship side (starter side and starting planet given in the setup until character setup is built). Commands `MoveCommand(path)`, `EndActionStepCommand`, `EncounterCommand(space | patrol | contact)`. Movement checks adjacency, hyperdrive and the stops of R-5.11 and R-5.20; `MoveDirect` for effects (R-5.23). Encounter step enforces R-4.12 to R-4.15 and R-11.26 to R-11.28, then ends the turn (R-4.4) through the resolution stack. Save format 0.3. 77 tests.
+- **Stubs, replaced later:** encountering a space only records the encounter (encounter decks, T2.6); encountering a patrol only records it (combat, T1.6 and T1.8); contacts are rejected until they are on the map (T2.6). Hyperdrive modifiers (R-5.19), "Planning" and "Encounter" abilities (R-4.7, R-4.16) and additional turns (R-5.14) come with the effect engine.
 
 ### T1.5 — Dice and skill tests · `TODO` (T1.1)
 - **Tests:** face distribution; the three thresholds of R-6.9 over many seeded rolls; `{CRIT}` is not `{HIT}` (R-6.2).
@@ -214,6 +216,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.4 done: turn loop, planning options, movement with stops, encounter step choice; save format 0.3. |
 | 2026-11-05 | T1.3 done: map graph in the core; T0.5 count corrected to 51 paths (the Python validator had counted stack links). |
 | 2026-11-05 | T1.2 done: resolution stack, pending decisions (option, tie, order), save while paused; save format 0.2. |
 | 2026-11-05 | T1.1 done: state, commands, events, seeded RNG, dice, save/load with golden file. |

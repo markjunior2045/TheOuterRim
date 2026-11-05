@@ -32,6 +32,17 @@ namespace OuterRim.Core.Tests
         }
     }
 
+    /// <summary>Base game content for tests: standard map and the ship sheets.</summary>
+    internal static class TestContent
+    {
+        public const string G9Rigger = "base-ship-g9-rigger";
+        public const string G1AStarfighter = "base-ship-g9-rigger-back";
+
+        public static readonly Content.GameContent Base = new Content.GameContent(
+            Repo.Maps().Build("standard"),
+            Content.GameContent.ReadShipSheets(Repo.Read("data/packs/base/cards/ship-sheets.json")));
+    }
+
     public class MapGraphTests
     {
         private static readonly MapLoader Loader = Repo.Maps();

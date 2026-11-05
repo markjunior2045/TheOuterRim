@@ -25,6 +25,15 @@ namespace OuterRim.Core.Model
 
         /// <summary>True while the player is defeated (R-8, R-4.8).</summary>
         public bool Defeated { get; set; }
+
+        /// <summary>The map space where the player's standee is (R-5).</summary>
+        public string SpaceId { get; set; } = "";
+
+        /// <summary>Ship sheet id (data/packs/*/cards/ship-sheets.json).</summary>
+        public string ShipSheetId { get; set; } = "";
+
+        /// <summary>The faceup side of the ship sheet (its image id); the rules read its values.</summary>
+        public string ShipSideId { get; set; } = "";
     }
 
     /// <summary>Reputation with each faction (R-10.4). Fixed fields keep saves stable and readable.</summary>

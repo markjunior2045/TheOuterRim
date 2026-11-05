@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using OuterRim.Core.Content;
 using OuterRim.Core.Model;
 
 namespace OuterRim.Core.Engine
@@ -154,11 +155,15 @@ namespace OuterRim.Core.Engine
     /// <summary>What a handler can see and do while it runs.</summary>
     public sealed class ResolutionContext
     {
-        internal ResolutionContext(GameState state, List<GameEvent> events)
+        internal ResolutionContext(GameContent content, GameState state, List<GameEvent> events)
         {
+            Content = content;
             State = state;
             Events = events;
         }
+
+        /// <summary>Static content: map and card data.</summary>
+        public GameContent Content { get; }
 
         public GameState State { get; }
 
@@ -254,9 +259,9 @@ namespace OuterRim.Core.Engine
         /// <summary>Guards against a handler that never finishes.</summary>
         private const int MaxSteps = 100000;
 
-        public static void Run(GameState state, List<GameEvent> events)
+        public static void Run(GameContent content, GameState state, List<GameEvent> events)
         {
-            var context = new ResolutionContext(state, events);
+            var context = new ResolutionContext(content, state, events);
             int steps = 0;
             while (state.Stack.Count > 0 && state.Pending == null)
             {

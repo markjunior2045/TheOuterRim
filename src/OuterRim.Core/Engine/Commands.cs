@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 
 namespace OuterRim.Core.Engine
@@ -31,6 +32,48 @@ namespace OuterRim.Core.Engine
         public RecoverDamageCommand(string playerId) : base(playerId)
         {
         }
+    }
+
+    /// <summary>Planning option: move along a path of adjacent spaces (R-4.6, R-5.17). An empty path moves zero spaces.</summary>
+    public sealed class MoveCommand : Command
+    {
+        public MoveCommand(string playerId, IReadOnlyList<string> path) : base(playerId)
+        {
+            Path = path;
+        }
+
+        /// <summary>Spaces entered, in order, not including the starting space.</summary>
+        public IReadOnlyList<string> Path { get; }
+    }
+
+    /// <summary>Ends the action step (R-4.9: actions are optional).</summary>
+    public sealed class EndActionStepCommand : Command
+    {
+        public EndActionStepCommand(string playerId) : base(playerId)
+        {
+        }
+    }
+
+    /// <summary>What the player encounters in the encounter step (R-4.13).</summary>
+    public enum EncounterKind
+    {
+        Space,
+        Patrol,
+        Contact,
+    }
+
+    /// <summary>The one encounter of the turn (R-4.12). TargetId is the patrol's faction or the contact token.</summary>
+    public sealed class EncounterCommand : Command
+    {
+        public EncounterCommand(string playerId, EncounterKind kind, string? targetId = null) : base(playerId)
+        {
+            Kind = kind;
+            TargetId = targetId;
+        }
+
+        public EncounterKind Kind { get; }
+
+        public string? TargetId { get; }
     }
 
     /// <summary>Base for answers to a <see cref="PendingDecision"/>.</summary>

@@ -164,7 +164,7 @@ namespace OuterRim.Core.Tests
 
         private static GameState NewGame()
         {
-            return GameEngine.NewGame(GameEngineTests.Setup(77, 3), out _);
+            return GameEngine.NewGame(TestContent.Base, GameEngineTests.Setup(77, 3), out _);
         }
 
         private static PlayerState Current(GameState s)
@@ -182,14 +182,14 @@ namespace OuterRim.Core.Tests
         {
             var s = NewGame();
             int before = Current(s).Credits;
-            var start = GameEngine.StartResolution(s, new Frame("test.reward_choice"));
+            var start = GameEngine.StartResolution(TestContent.Base, s, new Frame("test.reward_choice"));
             Assert.True(start.Accepted);
             var asked = Assert.IsType<DecisionRequestedEvent>(start.Events.Single());
             Assert.Equal(s.CurrentPlayerId, asked.Decision.PlayerId);
             Assert.NotNull(s.Pending);
             Assert.Equal(before, Current(s).Credits);
 
-            var answer = GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, asked.Decision.Id, "big"));
+            var answer = GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, asked.Decision.Id, "big"));
             Assert.True(answer.Accepted);
             Assert.Equal(before + 3000, Current(s).Credits);
             Assert.Null(s.Pending);
@@ -200,9 +200,9 @@ namespace OuterRim.Core.Tests
         public void WhileWaiting_OtherCommandsAreRejected_AndChangeNothing()
         {
             var s = NewGame();
-            GameEngine.StartResolution(s, new Frame("test.reward_choice"));
+            GameEngine.StartResolution(TestContent.Base, s, new Frame("test.reward_choice"));
             var before = SaveSerializer.Save(s);
-            var r = GameEngine.Execute(s, new GainCreditsCommand(s.CurrentPlayerId));
+            var r = GameEngine.Execute(TestContent.Base, s, new GainCreditsCommand(s.CurrentPlayerId));
             Assert.False(r.Accepted);
             Assert.Contains("Waiting for decision", r.Reason);
             Assert.Equal(before, SaveSerializer.Save(s));
@@ -212,8 +212,8 @@ namespace OuterRim.Core.Tests
         public void R21_12_ANewResolution_CannotStartWhileOneIsInProgress()
         {
             var s = NewGame();
-            GameEngine.StartResolution(s, new Frame("test.reward_choice"));
-            var r = GameEngine.StartResolution(s, new Frame("test.reward_choice"));
+            GameEngine.StartResolution(TestContent.Base, s, new Frame("test.reward_choice"));
+            var r = GameEngine.StartResolution(TestContent.Base, s, new Frame("test.reward_choice"));
             Assert.False(r.Accepted);
             Assert.Contains("R-21.12", r.Reason);
         }
@@ -222,13 +222,13 @@ namespace OuterRim.Core.Tests
         public void InvalidAnswers_AreRejected_AndChangeNothing()
         {
             var s = NewGame();
-            GameEngine.StartResolution(s, new Frame("test.reward_choice"));
+            GameEngine.StartResolution(TestContent.Base, s, new Frame("test.reward_choice"));
             int id = s.Pending!.Id;
             var before = SaveSerializer.Save(s);
-            Assert.Contains("is for", GameEngine.Execute(s, new ChooseOptionCommand(NotCurrent(s), id, "big")).Reason);
-            Assert.Contains("not the pending one", GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, id + 1, "big")).Reason);
-            Assert.Contains("not an option", GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, id, "huge")).Reason);
-            Assert.Contains("needs a ChooseOption answer", GameEngine.Execute(s, new ResolveTieCommand(s.CurrentPlayerId, id, "big")).Reason);
+            Assert.Contains("is for", GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(NotCurrent(s), id, "big")).Reason);
+            Assert.Contains("not the pending one", GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, id + 1, "big")).Reason);
+            Assert.Contains("not an option", GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, id, "huge")).Reason);
+            Assert.Contains("needs a ChooseOption answer", GameEngine.Execute(TestContent.Base, s, new ResolveTieCommand(s.CurrentPlayerId, id, "big")).Reason);
             Assert.Equal(before, SaveSerializer.Save(s));
         }
 
@@ -236,7 +236,7 @@ namespace OuterRim.Core.Tests
         public void AnAnswer_WithNothingPending_IsRejected()
         {
             var s = NewGame();
-            Assert.Contains("No decision is pending", GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, 1, "big")).Reason);
+            Assert.Contains("No decision is pending", GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, 1, "big")).Reason);
         }
 
         [Fact]
@@ -246,10 +246,10 @@ namespace OuterRim.Core.Tests
             var other = NotCurrent(s);
             var frame = new Frame("test.other_player_choice");
             frame.Set("chooser", other);
-            GameEngine.StartResolution(s, frame);
+            GameEngine.StartResolution(TestContent.Base, s, frame);
             Assert.Equal(other, s.Pending!.PlayerId);
-            Assert.False(GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, s.Pending.Id, "yes")).Accepted);
-            Assert.True(GameEngine.Execute(s, new ChooseOptionCommand(other, s.Pending.Id, "yes")).Accepted);
+            Assert.False(GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, s.Pending.Id, "yes")).Accepted);
+            Assert.True(GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(other, s.Pending.Id, "yes")).Accepted);
             Assert.Equal(1, s.FindPlayer(other)!.Fame);
         }
 
@@ -260,12 +260,12 @@ namespace OuterRim.Core.Tests
             var others = s.Players.Where(p => p.Id != s.CurrentPlayerId).Select(p => p.Id).ToList();
             var frame = new Frame("test.tie_parent");
             frame.Set("candidates", string.Join(",", others));
-            GameEngine.StartResolution(s, frame);
+            GameEngine.StartResolution(TestContent.Base, s, frame);
             Assert.Equal(DecisionKind.ResolveTie, s.Pending!.Kind);
             Assert.Equal(s.CurrentPlayerId, s.Pending.PlayerId);
             Assert.Equal(2, s.Stack.Count);
             int before = s.FindPlayer(others[1])!.Credits;
-            Assert.True(GameEngine.Execute(s, new ResolveTieCommand(s.CurrentPlayerId, s.Pending.Id, others[1])).Accepted);
+            Assert.True(GameEngine.Execute(TestContent.Base, s, new ResolveTieCommand(s.CurrentPlayerId, s.Pending.Id, others[1])).Accepted);
             Assert.Equal(before + 500, s.FindPlayer(others[1])!.Credits);
             Assert.Empty(s.Stack);
         }
@@ -274,11 +274,11 @@ namespace OuterRim.Core.Tests
         public void R21_10_Order_MustListEveryOptionOnce()
         {
             var s = NewGame();
-            GameEngine.StartResolution(s, new Frame("test.order"));
+            GameEngine.StartResolution(TestContent.Base, s, new Frame("test.order"));
             int id = s.Pending!.Id;
-            Assert.Contains("R-21.10", GameEngine.Execute(s, new ChooseOrderCommand(s.CurrentPlayerId, id, new[] { "a", "b" })).Reason);
-            Assert.Contains("R-21.10", GameEngine.Execute(s, new ChooseOrderCommand(s.CurrentPlayerId, id, new[] { "a", "a", "b" })).Reason);
-            var ok = GameEngine.Execute(s, new ChooseOrderCommand(s.CurrentPlayerId, id, new[] { "c", "a", "b" }));
+            Assert.Contains("R-21.10", GameEngine.Execute(TestContent.Base, s, new ChooseOrderCommand(s.CurrentPlayerId, id, new[] { "a", "b" })).Reason);
+            Assert.Contains("R-21.10", GameEngine.Execute(TestContent.Base, s, new ChooseOrderCommand(s.CurrentPlayerId, id, new[] { "a", "a", "b" })).Reason);
+            var ok = GameEngine.Execute(TestContent.Base, s, new ChooseOrderCommand(s.CurrentPlayerId, id, new[] { "c", "a", "b" }));
             Assert.True(ok.Accepted);
             Assert.Equal("c,a,b", ok.Events.OfType<DecisionAnsweredEvent>().Single().Answer);
         }
@@ -287,9 +287,9 @@ namespace OuterRim.Core.Tests
         public void DecisionIds_NeverRepeat()
         {
             var s = NewGame();
-            GameEngine.StartResolution(s, new Frame("test.two_choices"));
+            GameEngine.StartResolution(TestContent.Base, s, new Frame("test.two_choices"));
             int first = s.Pending!.Id;
-            GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, first, "small"));
+            GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, first, "small"));
             Assert.Equal(first + 1, s.Pending!.Id);
         }
 
@@ -298,13 +298,13 @@ namespace OuterRim.Core.Tests
         {
             string Finish(GameState s)
             {
-                GameEngine.Execute(s, new ChooseOptionCommand(s.CurrentPlayerId, s.Pending!.Id, "big"));
+                GameEngine.Execute(TestContent.Base, s, new ChooseOptionCommand(s.CurrentPlayerId, s.Pending!.Id, "big"));
                 return SaveSerializer.Save(s);
             }
 
             var straight = NewGame();
-            GameEngine.StartResolution(straight, new Frame("test.two_choices"));
-            GameEngine.Execute(straight, new ChooseOptionCommand(straight.CurrentPlayerId, straight.Pending!.Id, "small"));
+            GameEngine.StartResolution(TestContent.Base, straight, new Frame("test.two_choices"));
+            GameEngine.Execute(TestContent.Base, straight, new ChooseOptionCommand(straight.CurrentPlayerId, straight.Pending!.Id, "small"));
 
             var reloaded = SaveSerializer.Load(SaveSerializer.Save(straight));
             Assert.NotNull(reloaded.Pending);
@@ -318,7 +318,7 @@ namespace OuterRim.Core.Tests
         public void UnknownHandler_IsAnError()
         {
             var s = NewGame();
-            Assert.Throws<System.InvalidOperationException>(() => GameEngine.StartResolution(s, new Frame("no.such.handler")));
+            Assert.Throws<System.InvalidOperationException>(() => GameEngine.StartResolution(TestContent.Base, s, new Frame("no.such.handler")));
         }
     }
 }

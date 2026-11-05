@@ -11,13 +11,15 @@ namespace OuterRim.Core.Tests
 {
     public class GameEngineTests
     {
+        internal static readonly string[] StartSpaces = { "lothal", "tatooine", "naboo", "takodana" };
+
         internal static GameSetup Setup(ulong seed, int players = 3)
         {
             var colors = new[] { "green", "red", "yellow", "white" };
             var list = new List<PlayerSetup>();
             for (int i = 0; i < players; i++)
             {
-                list.Add(new PlayerSetup("p" + (i + 1), "Player " + (i + 1), colors[i]));
+                list.Add(new PlayerSetup("p" + (i + 1), "Player " + (i + 1), colors[i], StartSpaces[i], TestContent.G9Rigger));
             }
             return new GameSetup(seed, list, new[] { new PackRef("base", "0.1.0") });
         }
@@ -37,7 +39,7 @@ namespace OuterRim.Core.Tests
         {
             for (ulong seed = 0; seed < 200; seed++)
             {
-                GameEngine.NewGame(Setup(seed, 4), out var events);
+                GameEngine.NewGame(TestContent.Base, Setup(seed, 4), out var events);
                 var rolls = events.OfType<FirstPlayerRolledEvent>().ToList();
                 var chosen = events.OfType<FirstPlayerChosenEvent>().Single().PlayerId;
                 // The last round of rolls only includes the tied leaders of the round before.
@@ -60,7 +62,7 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R3_11g_StartingCredits_FollowTurnOrder()
         {
-            var state = GameEngine.NewGame(Setup(11, 4), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(11, 4), out _);
             int first = state.SeatOf(state.FirstPlayerId);
             var expected = new[] { 4000, 6000, 8000, 10000 };
             for (int i = 0; i < 4; i++)
@@ -72,7 +74,7 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R3_11d_PlayersStartNeutralWithZeroFame()
         {
-            var state = GameEngine.NewGame(Setup(3), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(3), out _);
             foreach (var p in state.Players)
             {
                 Assert.Equal(0, p.Fame);
@@ -86,7 +88,7 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void NewGame_StartsWithTheFirstPlayersPlanningStep()
         {
-            var state = GameEngine.NewGame(Setup(8), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(8), out _);
             Assert.Equal(GamePhase.Playing, state.Phase);
             Assert.Equal(state.FirstPlayerId, state.CurrentPlayerId);
             Assert.Equal(TurnStep.Planning, state.Step);
@@ -96,10 +98,10 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R4_6_GainCredits_Adds2000_AndStartsTheActionStep()
         {
-            var state = GameEngine.NewGame(Setup(5), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(5), out _);
             var player = state.FindPlayer(state.CurrentPlayerId)!;
             int before = player.Credits;
-            var result = GameEngine.Execute(state, new GainCreditsCommand(player.Id));
+            var result = GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(player.Id));
             Assert.True(result.Accepted);
             Assert.Equal(before + 2000, player.Credits);
             Assert.Equal(TurnStep.Action, state.Step);
@@ -109,10 +111,10 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R4_6_PlanningOption_OnlyOncePerTurn()
         {
-            var state = GameEngine.NewGame(Setup(5), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(5), out _);
             var id = state.CurrentPlayerId;
-            Assert.True(GameEngine.Execute(state, new GainCreditsCommand(id)).Accepted);
-            var second = GameEngine.Execute(state, new GainCreditsCommand(id));
+            Assert.True(GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(id)).Accepted);
+            var second = GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(id));
             Assert.False(second.Accepted);
             Assert.Contains("R-4.6", second.Reason);
         }
@@ -120,10 +122,10 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R4_5_OnlyTheCurrentPlayerActs()
         {
-            var state = GameEngine.NewGame(Setup(5), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(5), out _);
             var other = state.Players.First(p => p.Id != state.CurrentPlayerId);
             var before = SaveSerializer.Save(state);
-            var result = GameEngine.Execute(state, new GainCreditsCommand(other.Id));
+            var result = GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(other.Id));
             Assert.False(result.Accepted);
             Assert.Contains("R-4.5", result.Reason);
             Assert.Equal(before, SaveSerializer.Save(state));
@@ -132,15 +134,15 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void R4_8_DefeatedPlayer_CannotGainCredits_ButCanRecover()
         {
-            var state = GameEngine.NewGame(Setup(5), out _);
+            var state = GameEngine.NewGame(TestContent.Base, Setup(5), out _);
             var player = state.FindPlayer(state.CurrentPlayerId)!;
             player.Defeated = true;
             player.CharacterDamage = 4;
             player.ShipDamage = 2;
-            var rejected = GameEngine.Execute(state, new GainCreditsCommand(player.Id));
+            var rejected = GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(player.Id));
             Assert.False(rejected.Accepted);
             Assert.Contains("R-4.8", rejected.Reason);
-            var recovered = GameEngine.Execute(state, new RecoverDamageCommand(player.Id));
+            var recovered = GameEngine.Execute(TestContent.Base, state, new RecoverDamageCommand(player.Id));
             Assert.True(recovered.Accepted);
             Assert.Equal(0, player.CharacterDamage);
             Assert.Equal(0, player.ShipDamage);
@@ -152,8 +154,8 @@ namespace OuterRim.Core.Tests
         {
             string Play(ulong seed)
             {
-                var state = GameEngine.NewGame(Setup(seed, 4), out _);
-                GameEngine.Execute(state, new GainCreditsCommand(state.CurrentPlayerId));
+                var state = GameEngine.NewGame(TestContent.Base, Setup(seed, 4), out _);
+                GameEngine.Execute(TestContent.Base, state, new GainCreditsCommand(state.CurrentPlayerId));
                 return SaveSerializer.Save(state);
             }
             Assert.Equal(Play(2024), Play(2024));
