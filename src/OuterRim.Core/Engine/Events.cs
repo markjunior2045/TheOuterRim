@@ -551,6 +551,29 @@ namespace OuterRim.Core.Engine
         public string SpaceId { get; }
     }
 
+    /// <summary>An ability changed a roll (reroll, turn, add, cancel). Before and After use the DicePool codes.</summary>
+    public sealed class DiceModifiedEvent : GameEvent
+    {
+        public DiceModifiedEvent(string playerId, string cardId, string op, string before, string after)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Op = op;
+            Before = before;
+            After = after;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string Op { get; }
+
+        public string Before { get; }
+
+        public string After { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

@@ -70,7 +70,7 @@ namespace OuterRim.Core.Tests
 
         private static CommandResult Use(GameState s, string card, string path)
         {
-            return GameEngine.Execute(C, s, new UseAbilityCommand("p1", card, path));
+            return TestHelpers.PassDiceWindows(C, s, GameEngine.Execute(C, s, new UseAbilityCommand("p1", card, path)));
         }
 
         // ---- passive modifiers -----------------------------------------------------------------
@@ -368,7 +368,6 @@ namespace OuterRim.Core.Tests
         private static readonly Dictionary<string, string> Pending = new Dictionary<string, string>
         {
             // T2.3b: triggers, replacements and dice windows
-            ["dice.reroll"] = "T2.3b", ["dice.turn"] = "T2.3b", ["dice.cancel"] = "T2.3b", ["dice.opponent_fewer"] = "T2.3b",
             ["dice.roll"] = "T2.3b", ["damage.cap"] = "T2.3b", ["move.no_stop"] = "T2.3b", ["test.skill_grant"] = "T2.3b",
             ["custom"] = "T2.3b", ["limit.trait"] = "T2.3b", ["slot.modify"] = "T2.3b", ["rule.modify"] = "T2.3b",
             ["asset.take"] = "T2.3b", ["asset.discard"] = "T2.3b",

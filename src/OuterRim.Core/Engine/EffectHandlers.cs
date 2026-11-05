@@ -32,8 +32,9 @@ namespace OuterRim.Core.Engine
             "if", "choice", "may", "to", "test", "combat",
             "credits.gain", "credits.spend", "credits.lose", "fame.gain", "fame.lose", "rep.gain", "rep.lose",
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
+            "dice.reroll", "dice.turn", "dice.cancel", "dice.add",
             // Passive-only ops, read as queries by Modifiers or by the rules that check them.
-            "stat.modify",
+            "stat.modify", "dice.opponent_fewer",
         };
 
         public static void Register()
@@ -46,6 +47,8 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new TestHandler());
             ResolutionHandlers.Register(new FightHandler());
             ResolutionHandlers.Register(new FightOutcomeHandler());
+            ResolutionHandlers.Register(new DiceWindowHandler());
+            ResolutionHandlers.Register(new DiceOpHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -165,6 +168,11 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(EffectHandlers.Test, frame, nodePath));
                 case "combat":
                     return StepResult.Call(EffectHandlers.Child(EffectHandlers.Fight, frame, nodePath));
+                case "dice.reroll":
+                case "dice.turn":
+                case "dice.cancel":
+                case "dice.add":
+                    return StepResult.Call(EffectHandlers.Child(DiceOpHandler.HandlerId, frame, nodePath));
                 default:
                     if (!Instant.Apply(ctx, owner, frame.Get("card"), node))
                     {

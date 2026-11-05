@@ -197,7 +197,7 @@ namespace OuterRim.Core.Tests
             var p = Patrol(s, faction);
             p.Level = level;
             p.SpaceId = Current(s).SpaceId;
-            var r = GameEngine.Execute(C, s, new EncounterCommand(s.CurrentPlayerId, EncounterKind.Patrol, Patrols.Id(faction)));
+            var r = TestHelpers.PassDiceWindows(C, s, GameEngine.Execute(C, s, new EncounterCommand(s.CurrentPlayerId, EncounterKind.Patrol, Patrols.Id(faction))));
             return (s, r);
         }
 
@@ -278,7 +278,7 @@ namespace OuterRim.Core.Tests
                 var player = Current(s);
                 player.ShipDamage = 2; // G9 Rigger hull 3: one more damage defeats
                 Patrol(s, Faction.Rebel).SpaceId = player.SpaceId;
-                var r = GameEngine.Execute(C, s, new EncounterCommand(player.Id, EncounterKind.Patrol, "rebel"));
+                var r = TestHelpers.PassDiceWindows(C, s, GameEngine.Execute(C, s, new EncounterCommand(player.Id, EncounterKind.Patrol, "rebel")));
                 var result = r.Events.OfType<CombatResolvedEvent>().Single();
                 if (result.Winner != "attacker" || result.DefenderDamage == 0)
                 {

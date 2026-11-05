@@ -181,8 +181,8 @@ namespace OuterRim.Core.Tests
             Assert.Equal(new[] { "strength", "piloting" }, s.Pending.Options.Select(o => o.Id));
 
             var copy = SaveSerializer.Load(SaveSerializer.Save(s));
-            var a = GameEngine.Execute(C, s, new ChooseOptionCommand("p1", s.Pending.Id, "piloting"));
-            var b = GameEngine.Execute(C, copy, new ChooseOptionCommand("p1", copy.Pending!.Id, "piloting"));
+            var a = TestHelpers.PassDiceWindows(C, s, GameEngine.Execute(C, s, new ChooseOptionCommand("p1", s.Pending.Id, "piloting")));
+            var b = TestHelpers.PassDiceWindows(C, copy, GameEngine.Execute(C, copy, new ChooseOptionCommand("p1", copy.Pending!.Id, "piloting")));
             var rolled = a.Events.OfType<SkillTestRolledEvent>().Single();
             Assert.Equal("piloting", rolled.Skill);
             Assert.Equal(1, rolled.Instances);

@@ -35,5 +35,29 @@ namespace OuterRim.Core.Effects
             }
             return total;
         }
+
+        /// <summary>
+        /// Dice the opponent of <paramref name="player"/> rolls fewer in a combat of this type
+        /// ("During ground combat, your opponent rolls 1 fewer die": Plastoid Armor, Maneuvering Thrusters).
+        /// </summary>
+        public static int OpponentFewer(GameContent content, GameState state, PlayerState player, string combatType)
+        {
+            int total = 0;
+            foreach (var ability in AbilitySources.Of(content, player))
+            {
+                if (ability.TimingType != "passive" || !Conditions.Eval(content, state, player, ability.Ability["condition"]))
+                {
+                    continue;
+                }
+                foreach (JObject effect in (JArray)ability.Ability["effects"]!)
+                {
+                    if ((string?)effect["op"] == "dice.opponent_fewer" && (string?)effect["combat"] == combatType)
+                    {
+                        total += (int)effect["count"]!;
+                    }
+                }
+            }
+            return total;
+        }
     }
 }

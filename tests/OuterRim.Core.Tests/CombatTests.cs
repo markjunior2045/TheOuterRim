@@ -77,7 +77,7 @@ namespace OuterRim.Core.Tests
             f.Set("defender", defender);
             f.Set("defender_value", value);
             f.Set("outcome", outcome);
-            return GameEngine.StartResolution(C, s, f);
+            return TestHelpers.PassDiceWindows(C, s, GameEngine.StartResolution(C, s, f));
         }
 
         [Fact]

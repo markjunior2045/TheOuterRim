@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using OuterRim.Core.Dice;
+using OuterRim.Core.Effects;
 using OuterRim.Core.Model;
 using OuterRim.Core.Rules;
 
@@ -50,16 +51,21 @@ namespace OuterRim.Core.Engine
                 }
                 case 1:
                 {
-                    // Step 1: the attacker rolls dice equal to their combat value (R-7.10).
-                    var faces = DiceRoller.Roll(state.Random, frame.GetInt("attacker_value"));
-                    frame.Set("attacker_faces", Encode(faces));
+                    // Step 1: the attacker rolls dice equal to their combat value (R-7.10), less any
+                    // "your opponent rolls fewer dice" of the defender.
+                    int fewer = defenderPlayer != null ? Modifiers.OpponentFewer(content, state, defenderPlayer, frame.Get("type")) : 0;
+                    var faces = DiceRoller.Roll(state.Random, System.Math.Max(0, frame.GetInt("attacker_value") - fewer));
+                    frame.Set("attacker_faces", DicePool.Encode(faces));
                     frame.Step = 2;
-                    return StepResult.Continue(); // window: attacker value changes, rerolls
+                    // Rerolls and result changes: the attacker (who rolled) first, then the defender (R-7.10, R-7.11).
+                    var players = new List<string> { attacker.Id };
+                    if (defenderPlayer != null) players.Add(defenderPlayer.Id);
+                    return StepResult.Call(DiceWindows.For(state, "attacker_faces", Scope(type), attacker.Id, players));
                 }
                 case 2:
                 {
                     // Step 2: attacker damage (R-7.11).
-                    var faces = Decode(frame.Get("attacker_faces"));
+                    var faces = DicePool.Effective(DicePool.Decode(frame.Get("attacker_faces")));
                     int damage = Combat.DamageOf(faces);
                     frame.Set("attacker_damage", damage);
                     ctx.Events.Add(new CombatRolledEvent("attacker", attacker.Id, Combat.PlayerLabel(content, attacker), faces, damage));
@@ -76,14 +82,20 @@ namespace OuterRim.Core.Engine
                         frame.Step = 5;
                         return StepResult.Continue();
                     }
-                    var faces = DiceRoller.Roll(state.Random, int.Parse(frame.Get("defender_value"), CultureInfo.InvariantCulture));
-                    frame.Set("defender_faces", Encode(faces));
+                    int fewer = Modifiers.OpponentFewer(content, state, attacker, frame.Get("type"));
+                    int count = System.Math.Max(0, int.Parse(frame.Get("defender_value"), CultureInfo.InvariantCulture) - fewer);
+                    var faces = DiceRoller.Roll(state.Random, count);
+                    frame.Set("defender_faces", DicePool.Encode(faces));
                     frame.Step = 4;
-                    return StepResult.Continue(); // window: defender value changes, rerolls
+                    // The defender (if a player) first, then the attacker (R-7.12).
+                    var players = new List<string>();
+                    if (defenderPlayer != null) players.Add(defenderPlayer.Id);
+                    players.Add(attacker.Id);
+                    return StepResult.Call(DiceWindows.For(state, "defender_faces", Scope(type), defenderPlayer?.Id ?? "", players));
                 }
                 case 4:
                 {
-                    var faces = Decode(frame.Get("defender_faces"));
+                    var faces = DicePool.Effective(DicePool.Decode(frame.Get("defender_faces")));
                     int damage = Combat.DamageOf(faces);
                     frame.Set("defender_damage", damage);
                     // A player rolls their own dice; for a patrol, contact or card enemy the game rolls
@@ -169,28 +181,9 @@ namespace OuterRim.Core.Engine
             PlayerRules.SufferDamage(ctx.Content, ctx.State, player, type, amount, ctx.Events);
         }
 
-        private static string Encode(IEnumerable<DieFace> faces)
+        private static string Scope(CombatType type)
         {
-            var parts = new List<string>();
-            foreach (var f in faces)
-            {
-                parts.Add(((int)f).ToString(CultureInfo.InvariantCulture));
-            }
-            return string.Join(",", parts);
-        }
-
-        private static List<DieFace> Decode(string text)
-        {
-            var result = new List<DieFace>();
-            if (text.Length == 0)
-            {
-                return result;
-            }
-            foreach (var p in text.Split(','))
-            {
-                result.Add((DieFace)int.Parse(p, CultureInfo.InvariantCulture));
-            }
-            return result;
+            return type == CombatType.Ground ? "ground_combat" : "ship_combat";
         }
     }
 }

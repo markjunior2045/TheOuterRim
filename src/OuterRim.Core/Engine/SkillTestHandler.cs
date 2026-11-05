@@ -51,12 +51,12 @@ namespace OuterRim.Core.Engine
                 case 2:
                 {
                     var faces = DiceRoller.Roll(ctx.State.Random, SkillTests.Dice);
-                    frame.Set("faces", Faces(faces));
+                    frame.Set("faces", DicePool.Encode(faces));
                     frame.Step = 3;
-                    return StepResult.Continue();
+                    // After rolling: rerolls and result changes by the tester (Jyn Erso, Lando, Maz Kanata).
+                    return StepResult.Call(DiceWindows.For(ctx.State, "faces", "skill_test", player.Id, new[] { player.Id }));
                 }
                 case 3:
-                    // After rolling: rerolls and result changes (T2.3).
                     frame.Step = 4;
                     return StepResult.Continue();
                 default:
@@ -64,7 +64,7 @@ namespace OuterRim.Core.Engine
                     var skill = SkillTests.Parse(frame.Get("skill"));
                     int granted = frame.Vars.ContainsKey("granted") ? frame.GetInt("granted") : 0;
                     int instances = SkillTests.Instances(ctx.Content, player, skill, granted);
-                    var faces = ParseFaces(frame.Get("faces"));
+                    var faces = DicePool.Effective(DicePool.Decode(frame.Get("faces")));
                     bool passed = SkillTests.Passes(SkillTests.Level(instances), faces);
                     ctx.Events.Add(new SkillTestRolledEvent(player.Id, Combat.PlayerLabel(ctx.Content, player),
                         SkillTests.Id(skill), instances, faces, passed));
@@ -75,24 +75,5 @@ namespace OuterRim.Core.Engine
             }
         }
 
-        private static string Faces(IEnumerable<Model.DieFace> faces)
-        {
-            var parts = new List<string>();
-            foreach (var f in faces)
-            {
-                parts.Add(((int)f).ToString(CultureInfo.InvariantCulture));
-            }
-            return string.Join(",", parts);
-        }
-
-        private static List<Model.DieFace> ParseFaces(string text)
-        {
-            var result = new List<Model.DieFace>();
-            foreach (var p in text.Split(','))
-            {
-                result.Add((Model.DieFace)int.Parse(p, CultureInfo.InvariantCulture));
-            }
-            return result;
-        }
     }
 }
