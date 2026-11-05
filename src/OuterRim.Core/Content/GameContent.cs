@@ -242,6 +242,53 @@ namespace OuterRim.Core.Content
             return ids;
         }
 
+        /// <summary>Ids of the encounter decks in play, in order.</summary>
+        public List<string> EncounterDeckIds()
+        {
+            var ids = new SortedSet<string>(StringComparer.Ordinal);
+            lock (_lock)
+            {
+                foreach (var kv in _cards)
+                {
+                    if ((string?)kv.Value["kind"] == "encounter") ids.Add((string)kv.Value["deck"]!);
+                }
+            }
+            return new List<string>(ids);
+        }
+
+        /// <summary>Cards of an encounter deck, in id order.</summary>
+        public List<string> EncounterCards(string deck)
+        {
+            var ids = new List<string>();
+            lock (_lock)
+            {
+                foreach (var kv in _cards)
+                {
+                    if ((string?)kv.Value["kind"] == "encounter" && (string?)kv.Value["deck"] == deck) ids.Add(kv.Key);
+                }
+            }
+            ids.Sort(StringComparer.Ordinal);
+            return ids;
+        }
+
+        /// <summary>R-15.73: the encounter deck of a space (every navpoint shares one).</summary>
+        public string EncounterDeckFor(string spaceId)
+        {
+            string key = Map[spaceId].Type == SpaceType.Navpoint ? "navpoint" : spaceId;
+            lock (_lock)
+            {
+                foreach (var kv in _cards)
+                {
+                    if ((string?)kv.Value["kind"] != "encounter") continue;
+                    foreach (var section in (JArray)kv.Value["sections"]!)
+                    {
+                        if ((string?)section["space"] == key) return (string)kv.Value["deck"]!;
+                    }
+                }
+            }
+            throw new KeyNotFoundException("No encounter deck for space '" + spaceId + "'.");
+        }
+
         /// <summary>Cards of a market deck ("deck" field), in id order.</summary>
         public List<string> MarketCards(string deck)
         {

@@ -151,6 +151,7 @@ namespace OuterRim.Core.Engine
             }
             Patrols.Setup(content, state);
             Market.Setup(content, state);
+            Encounters.Setup(content, state);
             // R-3.16.d: unused ship sheets form the supply. There are four starter sheets (R-2.1).
             foreach (var sheet in content.ShipSheetIds())
             {

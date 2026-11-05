@@ -735,6 +735,47 @@ namespace OuterRim.Core.Engine
         public string CardId { get; }
     }
 
+    /// <summary>
+    /// R-15.79: an encounter card was drawn. <see cref="Section"/> is the path of the section and variant
+    /// resolved ("" if none applies); a secret is not read aloud (R-15.81), so the interface shows it only to
+    /// its owner.
+    /// </summary>
+    public sealed class EncounterCardDrawnEvent : GameEvent
+    {
+        public EncounterCardDrawnEvent(string playerId, string deck, string cardId, string section, bool secret)
+        {
+            PlayerId = playerId;
+            Deck = deck;
+            CardId = cardId;
+            Section = section;
+            Secret = secret;
+        }
+
+        public string PlayerId { get; }
+
+        public string Deck { get; }
+
+        public string CardId { get; }
+
+        public string Section { get; }
+
+        public bool Secret { get; }
+    }
+
+    /// <summary>R-15.86: a secret was resolved and revealed, then discarded.</summary>
+    public sealed class SecretDiscardedEvent : GameEvent
+    {
+        public SecretDiscardedEvent(string playerId, string cardId)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

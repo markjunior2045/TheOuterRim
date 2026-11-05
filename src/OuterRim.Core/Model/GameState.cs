@@ -46,6 +46,9 @@ namespace OuterRim.Core.Model
         /// <summary>The six market decks, top card first; the top card is faceup (R-16.42).</summary>
         public List<MarketDeck> MarketDecks { get; set; } = new List<MarketDeck>();
 
+        /// <summary>Encounter decks, facedown, top card first (R-15.72, R-15.73).</summary>
+        public List<MarketDeck> EncounterDecks { get; set; } = new List<MarketDeck>();
+
         /// <summary>Facedown patrol tokens per faction, top first (R-3.7).</summary>
         public List<PatrolStack> PatrolStacks { get; set; } = new List<PatrolStack>();
 

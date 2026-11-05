@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.11",
+  "format": "outer-rim-save/0.12",
   "packs": [
     {
       "id": "base",
@@ -9,7 +9,7 @@
   "state": {
     "seed": 12345,
     "random": {
-      "state": "9fd07e1dd9a51599",
+      "state": "f3ceb04c4ad4051c",
       "increment": "000000000000006d"
     },
     "packs": [
@@ -239,6 +239,113 @@
           "base-market-ship-03",
           "base-market-ship-05",
           "base-market-ship-07"
+        ]
+      }
+    ],
+    "encounterDecks": [
+      {
+        "deck": "cantonica-ord-mantell",
+        "cards": [
+          "base-encounter-cantonica-ord-mantell-07",
+          "base-encounter-cantonica-ord-mantell-08",
+          "base-encounter-cantonica-ord-mantell-04",
+          "base-encounter-cantonica-ord-mantell-01",
+          "base-encounter-cantonica-ord-mantell-03",
+          "base-encounter-cantonica-ord-mantell-06",
+          "base-encounter-cantonica-ord-mantell-05",
+          "base-encounter-cantonica-ord-mantell-02",
+          "base-encounter-cantonica-ord-mantell-09",
+          "base-encounter-cantonica-ord-mantell-00"
+        ]
+      },
+      {
+        "deck": "kessel-maelstrom",
+        "cards": [
+          "base-encounter-kessel-maelstrom-08",
+          "base-encounter-kessel-maelstrom-04",
+          "base-encounter-kessel-maelstrom-09",
+          "base-encounter-kessel-maelstrom-05",
+          "base-encounter-kessel-maelstrom-01",
+          "base-encounter-kessel-maelstrom-07",
+          "base-encounter-kessel-maelstrom-06",
+          "base-encounter-kessel-maelstrom-00",
+          "base-encounter-kessel-maelstrom-03",
+          "base-encounter-kessel-maelstrom-02"
+        ]
+      },
+      {
+        "deck": "lothal-mon-calamari",
+        "cards": [
+          "base-encounter-lothal-mon-calamari-09",
+          "base-encounter-lothal-mon-calamari-00",
+          "base-encounter-lothal-mon-calamari-02",
+          "base-encounter-lothal-mon-calamari-04",
+          "base-encounter-lothal-mon-calamari-03",
+          "base-encounter-lothal-mon-calamari-06",
+          "base-encounter-lothal-mon-calamari-07",
+          "base-encounter-lothal-mon-calamari-05",
+          "base-encounter-lothal-mon-calamari-08",
+          "base-encounter-lothal-mon-calamari-01"
+        ]
+      },
+      {
+        "deck": "navpoint",
+        "cards": [
+          "base-encounter-navpoint-05",
+          "base-encounter-navpoint-08",
+          "base-encounter-navpoint-06",
+          "base-encounter-navpoint-04",
+          "base-encounter-navpoint-00",
+          "base-encounter-navpoint-02",
+          "base-encounter-navpoint-01",
+          "base-encounter-navpoint-07",
+          "base-encounter-navpoint-09",
+          "base-encounter-navpoint-03"
+        ]
+      },
+      {
+        "deck": "ring-of-kafrene-takodana",
+        "cards": [
+          "base-encounter-ring-of-kafrene-takodana-04",
+          "base-encounter-ring-of-kafrene-takodana-06",
+          "base-encounter-ring-of-kafrene-takodana-05",
+          "base-encounter-ring-of-kafrene-takodana-09",
+          "base-encounter-ring-of-kafrene-takodana-08",
+          "base-encounter-ring-of-kafrene-takodana-02",
+          "base-encounter-ring-of-kafrene-takodana-07",
+          "base-encounter-ring-of-kafrene-takodana-00",
+          "base-encounter-ring-of-kafrene-takodana-01",
+          "base-encounter-ring-of-kafrene-takodana-03"
+        ]
+      },
+      {
+        "deck": "ryloth-naboo",
+        "cards": [
+          "base-encounter-ryloth-naboo-00",
+          "base-encounter-ryloth-naboo-08",
+          "base-encounter-ryloth-naboo-05",
+          "base-encounter-ryloth-naboo-03",
+          "base-encounter-ryloth-naboo-02",
+          "base-encounter-ryloth-naboo-06",
+          "base-encounter-ryloth-naboo-09",
+          "base-encounter-ryloth-naboo-07",
+          "base-encounter-ryloth-naboo-04",
+          "base-encounter-ryloth-naboo-01"
+        ]
+      },
+      {
+        "deck": "tatooine-nal-hutta",
+        "cards": [
+          "base-encounter-tatooine-nal-hutta-08",
+          "base-encounter-tatooine-nal-hutta-09",
+          "base-encounter-tatooine-nal-hutta-03",
+          "base-encounter-tatooine-nal-hutta-01",
+          "base-encounter-tatooine-nal-hutta-04",
+          "base-encounter-tatooine-nal-hutta-05",
+          "base-encounter-tatooine-nal-hutta-02",
+          "base-encounter-tatooine-nal-hutta-06",
+          "base-encounter-tatooine-nal-hutta-00",
+          "base-encounter-tatooine-nal-hutta-07"
         ]
       }
     ],

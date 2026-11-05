@@ -131,8 +131,7 @@ namespace OuterRim.Core.Engine
                     var traits = MarketBuyHandler.Traits(ctx.Content.Card(cargo));
                     if (asset != null)
                     {
-                        Assets.Discard(player, asset, "delivered", ctx.Events);
-                        MarketBuyHandler.ReturnToDeck(ctx, cargo);
+                        Assets.Discard(ctx.Content, ctx.State, player, asset, "delivered", ctx.Events);
                     }
                     ctx.Events.Add(new CargoDeliveredEvent(player.Id, cargo));
                     return StepResult.Call(TriggersHandler.For("cargo_delivered", player.Id,

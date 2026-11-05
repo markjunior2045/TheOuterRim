@@ -70,7 +70,7 @@ namespace OuterRim.Core.Engine
                         ctx.Events.Add(new AssetDeclinedEvent(player.Id, asset.CardId, asset.Kind));
                         return StepResult.Done();
                     }
-                    Assets.Discard(player, Assets.Find(player, choice)!, "open_slot", ctx.Events);
+                    Assets.Discard(ctx.Content, ctx.State, player, Assets.Find(player, choice)!, "open_slot", ctx.Events);
                     Gain(ctx, player, asset);
                     return StepResult.Done();
                 }
@@ -118,7 +118,7 @@ namespace OuterRim.Core.Engine
             var player = ctx.State.FindPlayer(frame.Get("player"))!;
             if (frame.Step == 1)
             {
-                Assets.Discard(player, Assets.Find(player, frame.Get("choice"))!, "no_slot", ctx.Events);
+                Assets.Discard(ctx.Content, ctx.State, player, Assets.Find(player, frame.Get("choice"))!, "no_slot", ctx.Events);
                 frame.Step = 0;
             }
             if (Assets.AllFit(ctx.Content, player))
@@ -171,7 +171,7 @@ namespace OuterRim.Core.Engine
             }
             foreach (var a in bartered)
             {
-                Assets.Discard(player, a, "barter", ctx.Events);
+                Assets.Discard(ctx.Content, ctx.State, player, a, "barter", ctx.Events);
             }
             ctx.State.ShipSupply.Remove(sheet);
             ctx.State.ShipSupply.Add(player.ShipSheetId);

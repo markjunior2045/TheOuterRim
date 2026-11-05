@@ -146,7 +146,7 @@ namespace OuterRim.Core.Rules
             }
             if (player.Defeated && !wasDefeated)
             {
-                BecomeDefeated(state, player, events);
+                BecomeDefeated(content, state, player, events);
             }
             return placed;
         }
@@ -155,16 +155,18 @@ namespace OuterRim.Core.Rules
         /// R-8.8: lose 3,000 credits (or all), discard all secrets (R-15.89), lay the standee down; the
         /// current player then finishes the current action or step and their turn ends.
         /// </summary>
-        public static void BecomeDefeated(GameState state, PlayerState player, List<GameEvent> events)
+        public static void BecomeDefeated(GameContent content, GameState state, PlayerState player, List<GameEvent> events)
         {
             player.Defeated = true;
             events.Add(new PlayerDefeatedEvent(player.Id));
             LoseCredits(player, DefeatCredits, events);
             if (player.Secrets.Count > 0)
             {
-                // R-15.89: secrets go to the bottom of their encounter decks, unrevealed (decks: PLAN T2.6).
-                events.Add(new SecretsDiscardedEvent(player.Id, new List<string>(player.Secrets)));
-                player.Secrets.Clear();
+                // R-15.89: secrets go to the bottom of their encounter decks, unrevealed.
+                var cards = new List<string>();
+                foreach (var s in player.Secrets) cards.Add(Encounters.SecretCard(s));
+                events.Add(new SecretsDiscardedEvent(player.Id, cards));
+                Encounters.DiscardAllSecrets(content, state, player);
             }
             if (player.Id == state.CurrentPlayerId && state.Phase == GamePhase.Playing)
             {

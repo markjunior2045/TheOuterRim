@@ -38,6 +38,32 @@ namespace OuterRim.Core.Engine
             throw new KeyNotFoundException("Unknown market deck '" + deck + "'.");
         }
 
+        /// <summary>
+        /// R-22.1: a discarded market card goes to the bottom of its deck; an asset printed on an encounter card
+        /// returns that card to its encounter deck (R-15.84). Cards with neither are left aside.
+        /// </summary>
+        public static void ReturnToDeck(GameContent content, GameState state, string cardId)
+        {
+            if (!content.HasCard(cardId)) return;
+            var card = content.Card(cardId);
+            var host = (string?)card["embedded_in"];
+            if (host != null && content.HasCard(host) && (string?)content.Card(host)["kind"] == "encounter")
+            {
+                Encounters.ToBottom(content, state, host);
+                return;
+            }
+            var deck = (string?)card["deck"];
+            if (deck == null) return;
+            foreach (var d in state.MarketDecks)
+            {
+                if (d.Deck == deck)
+                {
+                    d.Cards.Add(cardId);
+                    return;
+                }
+            }
+        }
+
         /// <summary>Price of the top card after bartering, or a rejection reason (R-16.22, R-16.31 to R-16.39, R-15.6).</summary>
         internal static string? Check(GameContent content, GameState state, PlayerState player, string deck, IReadOnlyList<string> barterIds,
             out int price)
@@ -115,8 +141,7 @@ namespace OuterRim.Core.Engine
                     PlayerRules.TrySpend(player, price, ctx.Events);
                     foreach (var id in barterIds)
                     {
-                        Assets.Discard(player, Assets.Find(player, id)!, "barter", ctx.Events);
-                        ReturnToDeck(ctx, id);
+                        Assets.Discard(ctx.Content, ctx.State, player, Assets.Find(player, id)!, "barter", ctx.Events);
                     }
                     deck.Cards.RemoveAt(0);
                     ctx.Events.Add(new MarketCardBoughtEvent(player.Id, deck.Deck, cardId, price));
@@ -176,11 +201,7 @@ namespace OuterRim.Core.Engine
         /// <summary>R-22.1: a discarded market card goes to the bottom of its deck (cards without a deck, such as encounter assets, are left aside).</summary>
         internal static void ReturnToDeck(ResolutionContext ctx, string cardId)
         {
-            if (!ctx.Content.HasCard(cardId) || ctx.Content.Card(cardId)["deck"] == null)
-            {
-                return;
-            }
-            Market.Deck(ctx.State, (string)ctx.Content.Card(cardId)["deck"]!).Cards.Add(cardId);
+            Market.ReturnToDeck(ctx.Content, ctx.State, cardId);
         }
     }
 

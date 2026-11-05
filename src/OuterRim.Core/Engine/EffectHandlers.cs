@@ -34,6 +34,7 @@ namespace OuterRim.Core.Engine
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
             "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard", "asset.take",
             "test.skill_grant", "move.no_stop", "custom", "cargo.deliver", "cargo.discard", "turn.end", "step.end", "unless",
+            "asset.gain_embedded", "encounter.space",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -239,6 +240,16 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(AssetTakeHandler.HandlerId, frame, nodePath));
                 case "unless":
                     return StepResult.Call(EffectHandlers.Child(UnlessHandler.HandlerId, frame, nodePath));
+                case "asset.gain_embedded":
+                    return StepResult.Call(EffectHandlers.Child(GainEmbeddedHandler.HandlerId, frame, nodePath));
+                case "encounter.space":
+                {
+                    // "Resolve another Takodana encounter card" (Takodana-5).
+                    var another = new Frame(TurnHandlers.EncounterSpace);
+                    another.Set("player", owner.Id);
+                    another.Set("deck", (string)node["deck"]!);
+                    return StepResult.Call(another);
+                }
                 case "cargo.deliver":
                 {
                     // "Deliver this cargo": the cargo being delivered by the deliver action.
@@ -349,9 +360,9 @@ namespace OuterRim.Core.Engine
                     var asset = Assets.Find(owner, card);
                     if (asset == null)
                     {
-                        return false;
+                        return Encounters.DiscardSecret(content, state, owner, card, events); // a secret (R-15.86)
                     }
-                    Assets.Discard(owner, asset, "effect", events);
+                    Assets.Discard(ctx.Content, ctx.State, owner, asset, "effect", events);
                     return true;
                 }
                 case "sheet.flip":
@@ -386,7 +397,7 @@ namespace OuterRim.Core.Engine
                     var deliver = DeliverHandler.Nearest(state);
                     var asset = deliver == null ? null : Assets.Find(owner, deliver.Get("current"));
                     if (asset == null) return false;
-                    Assets.Discard(owner, asset, "effect", events);
+                    Assets.Discard(ctx.Content, ctx.State, owner, asset, "effect", events);
                     return true;
                 }
                 case "turn.end":

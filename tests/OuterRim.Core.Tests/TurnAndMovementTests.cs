@@ -221,7 +221,7 @@ namespace OuterRim.Core.Tests
             var s = Game();
             var first = s.CurrentPlayerId;
             ToEncounterStep(s);
-            var r = GameEngine.Execute(C, s, new EncounterCommand(first, EncounterKind.Space));
+            var r = TestHelpers.DeclineAll(C, s, GameEngine.Execute(C, s, new EncounterCommand(first, EncounterKind.Space)));
             Assert.True(r.Accepted);
             Assert.Contains(r.Events, e => e is EncounterResolvedEvent);
             var next = s.Players[(s.SeatOf(first) + 1) % s.Players.Count].Id;
@@ -234,10 +234,11 @@ namespace OuterRim.Core.Tests
         public void R4_1_R4_4_AfterEveryoneHasPlayed_ANewRoundStarts()
         {
             var s = Game(players: 3);
+            foreach (var d in s.EncounterDecks) d.Cards.Clear(); // only the turn order matters here
             for (int i = 0; i < 3; i++)
             {
                 ToEncounterStep(s);
-                GameEngine.Execute(C, s, new EncounterCommand(s.CurrentPlayerId, EncounterKind.Space));
+                TestHelpers.DeclineAll(C, s, GameEngine.Execute(C, s, new EncounterCommand(s.CurrentPlayerId, EncounterKind.Space)));
             }
             Assert.Equal(2, s.Round);
             Assert.Equal(s.FirstPlayerId, s.CurrentPlayerId);

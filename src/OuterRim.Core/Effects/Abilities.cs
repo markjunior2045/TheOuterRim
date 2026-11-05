@@ -60,6 +60,15 @@ namespace OuterRim.Core.Effects
                     AddList(result, asset.CardId, content.Card(asset.CardId), "abilities");
                 }
             }
+            // R-15.85: a secret's abilities, on the variant drawn ("card#sections[i].variants[j]").
+            foreach (var secret in player.Secrets)
+            {
+                int hash = secret.IndexOf('#');
+                if (hash > 0 && content.HasCard(secret.Substring(0, hash)))
+                {
+                    AddList(result, secret.Substring(0, hash), content.Card(secret.Substring(0, hash)), secret.Substring(hash + 1) + ".abilities");
+                }
+            }
             return result;
         }
 

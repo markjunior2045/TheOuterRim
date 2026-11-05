@@ -250,10 +250,16 @@ namespace OuterRim.Core.Rules
         }
 
         /// <summary>Discards an asset (R-14.6 allows it only when a rule or ability does, or to open a slot).</summary>
-        public static void Discard(PlayerState player, AssetState asset, string reason, List<GameEvent> events)
+        /// <summary>
+        /// Discards an asset: a market card to the bottom of its deck (R-22.1), an asset printed on an
+        /// encounter card back to the bottom of that encounter deck (R-15.84).
+        /// </summary>
+        public static void Discard(GameContent content, GameState state, PlayerState player, AssetState asset, string reason,
+            List<GameEvent> events)
         {
             player.Assets.Remove(asset);
             events.Add(new AssetDiscardedEvent(player.Id, asset.CardId, asset.Kind, reason));
+            Market.ReturnToDeck(content, state, asset.CardId);
         }
 
         public static AssetState? Find(PlayerState player, string cardId)

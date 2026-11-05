@@ -18,7 +18,8 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new MarketBuyHandler());
             ResolutionHandlers.Register(new UsedShipForSaleHandler());
             EffectHandlers.Register();
-            ResolutionHandlers.Register(new EncounterSpaceStub());
+            ResolutionHandlers.Register(new SpaceEncounterHandler());
+            ResolutionHandlers.Register(new GainEmbeddedHandler());
             ResolutionHandlers.Register(new PatrolEncounterHandler());
             ResolutionHandlers.Register(new PatrolOutcomeHandler());
             ResolutionHandlers.Register(new PatrolMoveHandler());
@@ -100,21 +101,6 @@ namespace OuterRim.Core.Engine
                         GameEngine.EndTurn(context.State, context.Events);
                         return StepResult.Done();
                 }
-            }
-        }
-
-        /// <summary>
-        /// STUB until encounter decks are built (PLAN T2.6): drawing and resolving an encounter card.
-        /// It only records that the encounter happened.
-        /// </summary>
-        private sealed class EncounterSpaceStub : IResolutionHandler
-        {
-            public string Id => EncounterSpace;
-
-            public StepResult Step(ResolutionContext context, Frame frame)
-            {
-                context.Events.Add(new EncounterResolvedEvent(context.State.CurrentPlayerId, "space", ""));
-                return StepResult.Done();
             }
         }
 

@@ -293,7 +293,7 @@ namespace OuterRim.Core.Engine
                 default:
                     if (Combat.AtLimit(ctx.Content, ctx.State, player) && !player.Defeated)
                     {
-                        PlayerRules.BecomeDefeated(ctx.State, player, ctx.Events);
+                        PlayerRules.BecomeDefeated(ctx.Content, ctx.State, player, ctx.Events);
                     }
                     return StepResult.Done();
             }
@@ -410,7 +410,7 @@ namespace OuterRim.Core.Engine
             var owner = ctx.State.FindPlayer(frame.Get("owner"))!;
             if (frame.Step == 1)
             {
-                Assets.Discard(owner, Assets.Find(owner, frame.Get("pick"))!, "effect", ctx.Events);
+                Assets.Discard(ctx.Content, ctx.State, owner, Assets.Find(owner, frame.Get("pick"))!, "effect", ctx.Events);
                 return StepResult.Done();
             }
             var filter = (JObject)node["filter"]!["asset"]!;

@@ -25,5 +25,28 @@ namespace OuterRim.Core.Tests
             }
             return CommandResult.Ok(events);
         }
+
+        /// <summary>
+        /// Answers every pending decision: "no", "pass" or "decline" when offered, otherwise the first option.
+        /// For tests that only care about what comes after an encounter.
+        /// </summary>
+        public static CommandResult DeclineAll(GameContent content, GameState state, CommandResult result)
+        {
+            if (!result.Accepted)
+            {
+                return result;
+            }
+            var events = new List<GameEvent>(result.Events);
+            while (state.Pending != null)
+            {
+                var pick = state.Pending.Options[0].Id;
+                foreach (var o in state.Pending.Options)
+                {
+                    if (o.Id == "no" || o.Id == "pass" || o.Id == "decline" || o.Id == "penalty") pick = o.Id;
+                }
+                events.AddRange(GameEngine.Execute(content, state, new ChooseOptionCommand(state.Pending.PlayerId, state.Pending.Id, pick)).Events);
+            }
+            return CommandResult.Ok(events);
+        }
     }
 }
