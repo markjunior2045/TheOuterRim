@@ -379,7 +379,8 @@
         }
       ],
       "end": "discard",
-      "abilities": []
+      "abilities": [],
+      "favor": "hutt"
     },
     {
       "id": "base-market-job-06",
@@ -539,7 +540,8 @@
         }
       ],
       "end": "discard",
-      "abilities": []
+      "abilities": [],
+      "favor": "rebel"
     },
     {
       "id": "base-market-job-09",
@@ -644,7 +646,8 @@
         }
       ],
       "end": "discard",
-      "abilities": []
+      "abilities": [],
+      "favor": "imperial"
     },
     {
       "id": "base-market-job-11",
@@ -722,7 +725,8 @@
         }
       ],
       "end": "discard",
-      "abilities": []
+      "abilities": [],
+      "favor": "syndicate"
     },
     {
       "id": "base-market-job-12",

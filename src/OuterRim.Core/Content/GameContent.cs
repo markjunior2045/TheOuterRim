@@ -242,6 +242,18 @@ namespace OuterRim.Core.Content
             return ids;
         }
 
+        /// <summary>Every card id, in id order.</summary>
+        public List<string> CardIds()
+        {
+            List<string> ids;
+            lock (_lock)
+            {
+                ids = new List<string>(_cards.Keys);
+            }
+            ids.Sort(StringComparer.Ordinal);
+            return ids;
+        }
+
         /// <summary>Every contact token (cards of kind "contact"), in id order.</summary>
         public List<string> ContactTokenIds()
         {

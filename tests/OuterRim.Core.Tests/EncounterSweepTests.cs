@@ -173,5 +173,79 @@ namespace OuterRim.Core.Tests
             }
             Assert.True(s.Pending == null || s.Step == TurnStep.Planning, "still waiting: " + s.Pending?.Prompt);
         }
+
+        /// <summary>Every job resolves when attempted at its destination, for both ways of answering.</summary>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void EveryJob_Resolves(bool accept)
+        {
+            var problems = new List<string>();
+            var jobs = C.CardIds().Where(id => (string?)C.Card(id)["kind"] == "job").ToList();
+            Assert.True(jobs.Count >= 20, "jobs: " + jobs.Count);
+            foreach (var job in jobs)
+            {
+                for (ulong seed = 0; seed < 6; seed++)
+                {
+                    try
+                    {
+                        Job(job, accept, seed);
+                    }
+                    catch (NotSupportedException e) when (Planned.Any(p => e.Message.Contains(p)))
+                    {
+                        Skipped.Add(job + ": " + e.Message);
+                    }
+                    catch (Exception e)
+                    {
+                        problems.Add(job + " seed " + seed + " " + (accept ? "accept" : "decline") + ": " + e.GetType().Name + ": " + e.Message);
+                    }
+                }
+            }
+            Assert.True(problems.Count == 0, string.Join(Environment.NewLine, problems.Distinct()));
+        }
+
+        private static void Job(string job, bool accept, ulong seed)
+        {
+            var s = GameEngine.NewGame(C, new GameSetup(seed, new[]
+            {
+                new PlayerSetup("p1", "One", "green", "kessel", TestContent.G9Rigger, "base-character-00"),
+                new PlayerSetup("p2", "Two", "red", "tatooine", TestContent.G9Rigger, "base-character-03"),
+            }, new[] { new PackRef("base", "0.1.0") }), out _);
+            s.CurrentPlayerId = "p1";
+            var p1 = s.FindPlayer("p1")!;
+            var p2 = s.FindPlayer("p2")!;
+            p1.Credits = 20000;
+            p2.Credits = 20000;
+            p2.Reputation.Hutt = Reputation.Negative; // a target for Wanted
+            foreach (var p in s.Patrols) p.SpaceId = "nav-tatooine-1";
+            var card = C.Card(job);
+            var dest = card["destination"];
+            string space = "kessel";
+            if (dest is JObject o && o["space"] is JObject sp) space = (string)sp["id"]!;
+            else if (dest is JObject o2 && o2["patrol_space"] is JObject ps) space = Patrols.Of(s, Patrols.Parse((string)ps["faction"]!)).SpaceId;
+            else if (dest is JObject o3 && o3["planet_where"] != null)
+            {
+                foreach (Faction f in new[] { Faction.Rebel, Faction.Imperial, Faction.Hutt, Faction.Syndicate }) p1.Reputation.Set(f, Reputation.Positive);
+                space = SpaceSelect.Options(C, s, p1, dest).First();
+            }
+            p1.SpaceId = space;
+            p2.SpaceId = space;
+            p1.Assets.Add(new AssetState { CardId = job, Kind = "job" });
+            GameEngine.Execute(C, s, new MoveCommand("p1", new string[0]));
+            GameEngine.Execute(C, s, new EndActionStepCommand("p1"));
+            var r = GameEngine.Execute(C, s, new EncounterCommand("p1", EncounterKind.Job, job));
+            Assert.True(r.Accepted, job + ": " + r.Reason);
+            for (int guard = 0; s.Pending != null && guard < 200; guard++)
+            {
+                var pick = s.Pending.Options[0].Id;
+                foreach (var opt in s.Pending.Options)
+                {
+                    if (accept ? opt.Id == "yes" || opt.Id == "avoid" : opt.Id == "no" || opt.Id == "pass" || opt.Id == "none" || opt.Id == "decline" || opt.Id == "penalty") pick = opt.Id;
+                }
+                var a = GameEngine.Execute(C, s, new ChooseOptionCommand(s.Pending.PlayerId, s.Pending.Id, pick));
+                Assert.True(a.Accepted, a.Reason);
+            }
+            Assert.True(s.Pending == null || s.Step == TurnStep.Planning, "still waiting: " + s.Pending?.Prompt);
+        }
     }
 }

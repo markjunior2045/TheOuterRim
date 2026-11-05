@@ -38,7 +38,8 @@ namespace OuterRim.Core.Engine
             "move.player", "move.player_direct", "move.patrol", "move.patrol_direct", "encounter.patrol",
             "market.buy", "market.take", "encounter_deck.peek", "damage.prevent",
             "contact.discard_token", "contact.relocate_self", "contact.place_facedown", "contact.look", "contact.move",
-            "encounter.contact", "bounty.deliver",
+            "encounter.contact", "bounty.deliver", "databank.resolve", "job.complete", "job.fail", "job.discard",
+            "step.goto", "step.repeat", "sabacc.win", "sabacc.stake", "sabacc.duel", "reward.modify",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -52,7 +53,7 @@ namespace OuterRim.Core.Engine
         {
             "tractor_beam", "patrol_redirect", "used_ship_for_sale",
             "double_or_nothing", "dice_gamble", "side_bets", "name_a_number", "lose_any_reputation",
-            "buy_any_sheet", "replace_with_starter", "pay_for_goal", "patrol_hunt", "look_and_exchange",
+            "buy_any_sheet", "replace_with_starter", "pay_for_goal", "patrol_hunt", "look_and_exchange", "sabacc", "wanted", "reward_for_fame",
         };
 
         public static void Register()
@@ -94,6 +95,13 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new ContactEffectHandler());
             ResolutionHandlers.Register(new LookAndExchangeHandler());
             ResolutionHandlers.Register(new BountyDeliverEffectHandler());
+            ResolutionHandlers.Register(new JobAttemptHandler());
+            ResolutionHandlers.Register(new DatabankResolveHandler());
+            ResolutionHandlers.Register(new StepsHandler());
+            ResolutionHandlers.Register(new SabaccHandler());
+            ResolutionHandlers.Register(new SabaccStakeHandler());
+            ResolutionHandlers.Register(new SabaccDuelHandler());
+            ResolutionHandlers.Register(new WantedHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -308,6 +316,16 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(ContactEffectHandler.HandlerId, frame, nodePath));
                 case "bounty.deliver":
                     return StepResult.Call(EffectHandlers.Child(BountyDeliverEffectHandler.HandlerId, frame, nodePath));
+                case "databank.resolve":
+                    return StepResult.Call(EffectHandlers.Child(Jobs.ResolveHandler, frame, nodePath));
+                case "sabacc.stake":
+                    return StepResult.Call(EffectHandlers.Child(SabaccStakeHandler.HandlerId, frame, nodePath));
+                case "sabacc.duel":
+                    return StepResult.Call(EffectHandlers.Child(SabaccDuelHandler.HandlerId, frame, nodePath));
+                case "custom" when (string)node["handler"]! == "sabacc":
+                    return StepResult.Call(EffectHandlers.Child(Jobs.SabaccHandler, frame, nodePath));
+                case "custom" when (string)node["handler"]! == "wanted":
+                    return StepResult.Call(EffectHandlers.Child(WantedHandler.HandlerId, frame, nodePath));
                 case "custom" when (string)node["handler"]! == "look_and_exchange":
                     return StepResult.Call(EffectHandlers.Child(LookAndExchangeHandler.HandlerId, frame, nodePath));
                 case "custom" when CustomFrameHandler.Handlers.Contains((string)node["handler"]!):
@@ -472,6 +490,23 @@ namespace OuterRim.Core.Engine
                         return true;
                     }
                     return false;
+                }
+                case "step.goto":
+                case "step.repeat":
+                case "job.complete":
+                case "job.fail":
+                case "sabacc.win":
+                    return StepsHandler.Control(state, op, node); // R-15.36 to R-15.38
+                case "job.discard":
+                    return JobDiscard.Apply(ctx, owner, r.Context);
+                case "custom" when (string)node["handler"]! == "reward_for_fame":
+                {
+                    // Sy Snootles, Mandalorian Armor (R-25.11): the reward's credits become 1 additional fame.
+                    int credits = r.Context.TryGetValue("reward_credits", out var rc) ? int.Parse(rc, CultureInfo.InvariantCulture) : 0;
+                    if (credits <= 0) return false;
+                    PlayerRules.LoseCredits(owner, credits, events);
+                    PlayerRules.GainFame(owner, 1, events);
+                    return true;
                 }
                 case "turn.additional":
                     // R-5.14: a full turn after this one; none while already in an additional turn.
@@ -724,7 +759,8 @@ namespace OuterRim.Core.Engine
                     var skills = new List<string>();
                     foreach (var s in (JArray)node["skill"]!) skills.Add((string)s!);
                     var test = new Frame(SkillTests.Handler);
-                    test.Set("player", frame.Get("owner"));
+                    var tester = Targeting.Player(ctx.State, ctx.State.FindPlayer(frame.Get("owner"))!, node["player"], FrameContext.Of(frame));
+                    test.Set("player", (tester ?? ctx.State.FindPlayer(frame.Get("owner"))!).Id);
                     test.Set("skills", string.Join(",", skills));
                     frame.Step = 1;
                     return StepResult.Call(test);
@@ -777,6 +813,19 @@ namespace OuterRim.Core.Engine
             {
                 case 0:
                 {
+                    if (opponent["player"] is JObject named && named["who"]!.Type == JTokenType.String)
+                    {
+                        frame.Step = 1;
+                        var fixedOpponent = Targeting.Player(ctx.State, owner, named["who"], FrameContext.Of(frame));
+                        if (fixedOpponent == null || fixedOpponent.Id == owner.Id)
+                        {
+                            frame.Set("failed", "true");
+                            EffectHandlers.ReturnFailed(ctx, frame);
+                            return StepResult.Done();
+                        }
+                        frame.Set("defender", fixedOpponent.Id);
+                        return StepResult.Continue();
+                    }
                     if (opponent["player"] is JObject who)
                     {
                         var choose = (JObject)who["who"]!["choose"]!;

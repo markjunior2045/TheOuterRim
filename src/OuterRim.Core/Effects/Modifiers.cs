@@ -60,7 +60,8 @@ namespace OuterRim.Core.Effects
             int credits = 0;
             foreach (JObject e in effects)
             {
-                if ((string?)e["op"] == "credits.spend") credits += Selectors.Amount(content, player, e["amount"]!);
+                // R-9.8: "unless you lose X" offered as a way out is a payment too.
+                if ((string?)e["op"] == "credits.spend" || (string?)e["op"] == "credits.lose") credits += Selectors.Amount(content, player, e["amount"]!);
             }
             return player.Credits >= credits;
         }

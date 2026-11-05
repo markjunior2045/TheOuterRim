@@ -122,7 +122,9 @@
       "starting_asset",
       "cargo_check",
       "encounter",
-      "contact_card"
+      "contact_card",
+      "job_steps",
+      "favor_check"
     ],
     "contact_class": [
       "white",
@@ -727,6 +729,22 @@
       "who": "enum:other|any",
       "where": "cond?",
       "effects": "effects"
+    },
+    "step.goto": {
+      "step": "int"
+    },
+    "step.repeat": {},
+    "job.discard": {},
+    "sabacc.win": {
+      "who": "enum:you|opponent"
+    },
+    "sabacc.stake": {
+      "who": "enum:you|opponent",
+      "match": "bool?",
+      "else": "effects?"
+    },
+    "sabacc.duel": {
+      "skills": "list:skill"
     }
   },
   "outcome": {
@@ -847,7 +865,8 @@
       "cannot_buy_on": "nullable:space_id",
       "encounter": "effects",
       "reward": "effects",
-      "end": "enum:remove|discard"
+      "end": "enum:remove|discard",
+      "favor": "faction?"
     },
     "bounty": {
       "deck": "deck?",
@@ -893,6 +912,16 @@
       "number": "int",
       "effects": "effects",
       "asset": "nullable:string"
+    },
+    "job_steps": {
+      "number": "int",
+      "variant": "nullable:string",
+      "steps": "list:effects"
+    },
+    "favor_check": {
+      "number": "int",
+      "variant": "string",
+      "sections": "favor_sections"
     }
   },
   "field_types": {
@@ -958,6 +987,12 @@
       "effects": "effects?",
       "abilities": "list:ability?",
       "errata": "string?"
+    },
+    "favor_sections": {
+      "hutt": "effects",
+      "imperial": "effects",
+      "rebel": "effects",
+      "syndicate": "effects"
     }
   },
   "ability_fields": {

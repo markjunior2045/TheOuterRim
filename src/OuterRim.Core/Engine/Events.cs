@@ -938,6 +938,80 @@ namespace OuterRim.Core.Engine
         public string TokenId { get; }
     }
 
+    public sealed class JobAttemptedEvent : GameEvent
+    {
+        public JobAttemptedEvent(string playerId, string jobId)
+        {
+            PlayerId = playerId;
+            JobId = jobId;
+        }
+
+        public string PlayerId { get; }
+
+        public string JobId { get; }
+    }
+
+    /// <summary>R-15.37: the job's reward was gained. <see cref="Completed"/> is false for "claim this reward" (R-18.7).</summary>
+    public sealed class JobCompletedEvent : GameEvent
+    {
+        public JobCompletedEvent(string playerId, string jobId, bool completed)
+        {
+            PlayerId = playerId;
+            JobId = jobId;
+            Completed = completed;
+        }
+
+        public string PlayerId { get; }
+
+        public string JobId { get; }
+
+        public bool Completed { get; }
+    }
+
+    /// <summary>R-15.38: the job failed; the player keeps the card.</summary>
+    public sealed class JobFailedEvent : GameEvent
+    {
+        public JobFailedEvent(string playerId, string jobId)
+        {
+            PlayerId = playerId;
+            JobId = jobId;
+        }
+
+        public string PlayerId { get; }
+
+        public string JobId { get; }
+    }
+
+    /// <summary>R-15.36: a step of a databank procedure is being read.</summary>
+    public sealed class DatabankStepEvent : GameEvent
+    {
+        public DatabankStepEvent(string playerId, string cardId, int step)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            Step = step;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public int Step { get; }
+    }
+
+    public sealed class SabaccWonEvent : GameEvent
+    {
+        public SabaccWonEvent(string winnerId, string loserId)
+        {
+            WinnerId = winnerId;
+            LoserId = loserId;
+        }
+
+        public string WinnerId { get; }
+
+        public string LoserId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

@@ -62,8 +62,40 @@ namespace OuterRim.Core.Engine
                     result.Add(Patrols.Of(state, Patrols.Parse((string)ps["faction"]!)).SpaceId);
                     return result;
                 }
+                if (o["planet_where"] is JObject pw)
+                {
+                    foreach (var space in map.Spaces)
+                    {
+                        if (space.IsPlanet && PlanetHolds(content, state, you, space.Id, (JObject)pw["cond"]!)) result.Add(space.Id);
+                    }
+                    result.Sort(System.StringComparer.Ordinal);
+                    return result;
+                }
             }
             throw new System.NotSupportedException("Space selector " + selector.ToString(Newtonsoft.Json.Formatting.None) + " is not implemented yet.");
+        }
+
+        /// <summary>Conditions about a planet: "within 3 spaces of the Hutt patrol", "a planet of a faction you are {REP_POS} with".</summary>
+        internal static bool PlanetHolds(GameContent content, GameState state, PlayerState owner, string planet, JObject cond)
+        {
+            switch ((string)cond["cond"]!)
+            {
+                case "within_patrol":
+                {
+                    var patrol = Patrols.Of(state, Patrols.Parse((string)cond["faction"]!));
+                    int d = content.Map.Distance(patrol.SpaceId, planet);
+                    return d >= 0 && d <= (int)cond["distance"]!;
+                }
+                case "rep" when (string?)cond["faction"] == "planet":
+                {
+                    var f = content.Map[planet].Faction;
+                    if (f == null) return false;
+                    var states = ((JArray)cond["in"]!).ToObject<List<string>>()!;
+                    return states.Contains(Conditions.RepId(owner.Reputation.Get(f.Value)));
+                }
+                default:
+                    throw new System.NotSupportedException("Planet condition '" + (string)cond["cond"]! + "' is not implemented yet.");
+            }
         }
 
         /// <summary>The patrols a patrol selector allows ("any", "in_your_space", a faction).</summary>

@@ -133,6 +133,8 @@ namespace OuterRim.Core.Engine
                 case 1:
                 {
                     frame.Step = 2;
+                    int bonus = Jobs.RewardBonus(ctx.Content, ctx.State, player, "cargo");
+                    if (bonus > 0) PlayerRules.GainCredits(player, bonus, ctx.Events);
                     var traits = MarketBuyHandler.Traits(ctx.Content.Card(cargo));
                     if (asset != null)
                     {

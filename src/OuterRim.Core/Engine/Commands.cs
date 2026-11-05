@@ -60,6 +60,9 @@ namespace OuterRim.Core.Engine
         Space,
         Patrol,
         Contact,
+
+        /// <summary>Attempting a job at its destination (R-15.29); TargetId is the job card.</summary>
+        Job,
     }
 
     /// <summary>The one encounter of the turn (R-4.12). TargetId is the patrol's faction or the contact token.</summary>

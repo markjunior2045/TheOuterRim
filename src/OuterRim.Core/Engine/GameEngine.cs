@@ -703,6 +703,24 @@ namespace OuterRim.Core.Engine
                     }
                     handler = TurnHandlers.EncounterSpace;
                     break;
+                case EncounterKind.Job:
+                {
+                    if (hostile.Count > 0)
+                    {
+                        return CommandResult.Rejected("R-4.17: a player who must encounter a patrol cannot attempt a job.");
+                    }
+                    var job = command.TargetId == null ? null : Assets.Find(player, command.TargetId);
+                    if (job == null || job.Kind != "job" || !content.HasCard(job.CardId))
+                    {
+                        return CommandResult.Rejected("You hold no job " + command.TargetId + ".");
+                    }
+                    if (!Jobs.AtDestination(content, state, player, content.Card(job.CardId)))
+                    {
+                        return CommandResult.Rejected("R-15.29, R-15.30: a job is attempted at its destination.");
+                    }
+                    handler = Jobs.AttemptHandler;
+                    break;
+                }
                 default:
                     if (hostile.Count > 0)
                     {

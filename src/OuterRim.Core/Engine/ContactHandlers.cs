@@ -595,27 +595,9 @@ namespace OuterRim.Core.Engine
             return result;
         }
 
-        /// <summary>Conditions about a planet: "within 3 spaces of the Hutt patrol", "a planet of a faction you are {REP_POS} with".</summary>
         private static bool PlanetHolds(ResolutionContext ctx, PlayerState owner, string planet, JObject cond)
         {
-            switch ((string)cond["cond"]!)
-            {
-                case "within_patrol":
-                {
-                    var patrol = Patrols.Of(ctx.State, Patrols.Parse((string)cond["faction"]!));
-                    int d = ctx.Content.Map.Distance(patrol.SpaceId, planet);
-                    return d >= 0 && d <= (int)cond["distance"]!;
-                }
-                case "rep" when (string?)cond["faction"] == "planet":
-                {
-                    var f = ctx.Content.Map[planet].Faction;
-                    if (f == null) return false;
-                    var states = ((JArray)cond["in"]!).ToObject<List<string>>()!;
-                    return states.Contains(Conditions.RepId(owner.Reputation.Get(f.Value)));
-                }
-                default:
-                    throw new NotSupportedException("Planet condition '" + (string)cond["cond"]! + "' is not implemented yet.");
-            }
+            return SpaceSelect.PlanetHolds(ctx.Content, ctx.State, owner, planet, cond);
         }
 
         /// <summary>

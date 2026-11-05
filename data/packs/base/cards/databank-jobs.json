@@ -1,0 +1,1446 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "databank-jobs",
+  "source": "data/transcription/databank/base-databank.json",
+  "cards": [
+    {
+      "id": "base-databank-040a",
+      "kind": "job_steps",
+      "number": 40,
+      "variant": "a",
+      "steps": [
+        [
+          {
+            "op": "sabacc.stake",
+            "who": "you",
+            "else": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "sabacc.stake",
+            "who": "opponent",
+            "match": true,
+            "else": [
+              {
+                "op": "sabacc.win",
+                "who": "you"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "sabacc.duel",
+            "skills": [
+              "knowledge",
+              "tactics"
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-040b",
+      "kind": "job_steps",
+      "number": 40,
+      "variant": "b",
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "pass": [
+              {
+                "op": "sabacc.win",
+                "who": "opponent"
+              }
+            ],
+            "player": "opponent"
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "pass": [
+              {
+                "op": "sabacc.win",
+                "who": "you"
+              }
+            ],
+            "fail": [
+              {
+                "op": "sabacc.win",
+                "who": "opponent"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-040c",
+      "kind": "job_steps",
+      "number": 40,
+      "variant": "c",
+      "steps": [
+        [
+          {
+            "op": "may",
+            "effects": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "choice",
+            "options": [
+              [
+                {
+                  "op": "combat",
+                  "type": "ground",
+                  "opponent": {
+                    "player": {
+                      "who": "opponent"
+                    }
+                  },
+                  "win": [
+                    {
+                      "op": "sabacc.win",
+                      "who": "you"
+                    }
+                  ],
+                  "lose": [
+                    {
+                      "op": "sabacc.win",
+                      "who": "opponent"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "op": "sabacc.win",
+                  "who": "opponent"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "pass": [
+              {
+                "op": "sabacc.win",
+                "who": "you"
+              }
+            ],
+            "fail": [
+              {
+                "op": "choice",
+                "chooser": "opponent",
+                "options": [
+                  [
+                    {
+                      "op": "step.goto",
+                      "step": 2
+                    }
+                  ],
+                  [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "influence"
+                      ],
+                      "pass": [
+                        {
+                          "op": "sabacc.win",
+                          "who": "opponent"
+                        }
+                      ],
+                      "fail": [
+                        {
+                          "op": "sabacc.win",
+                          "who": "you"
+                        }
+                      ],
+                      "player": "opponent"
+                    }
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-041a",
+      "kind": "favor_check",
+      "number": 41,
+      "variant": "a",
+      "sections": {
+        "hutt": [
+          {
+            "op": "if",
+            "cond": {
+              "cond": "rep",
+              "faction": "syndicate",
+              "in": [
+                "pos"
+              ]
+            },
+            "then": [
+              {
+                "op": "job.discard"
+              }
+            ]
+          }
+        ],
+        "imperial": [
+          {
+            "op": "if",
+            "cond": {
+              "cond": "rep",
+              "faction": "rebel",
+              "in": [
+                "pos"
+              ]
+            },
+            "then": [
+              {
+                "op": "job.discard"
+              }
+            ]
+          }
+        ],
+        "rebel": [
+          {
+            "op": "if",
+            "cond": {
+              "cond": "rep",
+              "faction": "imperial",
+              "in": [
+                "pos"
+              ]
+            },
+            "then": [
+              {
+                "op": "job.discard"
+              }
+            ]
+          }
+        ],
+        "syndicate": [
+          {
+            "op": "if",
+            "cond": {
+              "cond": "rep",
+              "faction": "hutt",
+              "in": [
+                "pos"
+              ]
+            },
+            "then": [
+              {
+                "op": "job.discard"
+              }
+            ]
+          }
+        ]
+      },
+      "abilities": []
+    },
+    {
+      "id": "base-databank-041b",
+      "kind": "favor_check",
+      "number": 41,
+      "variant": "b",
+      "sections": {
+        "hutt": [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "rep.lose",
+                "faction": "hutt"
+              }
+            ]
+          }
+        ],
+        "imperial": [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "rep.lose",
+                "faction": "imperial"
+              }
+            ]
+          }
+        ],
+        "rebel": [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "rep.lose",
+                "faction": "rebel"
+              }
+            ]
+          }
+        ],
+        "syndicate": [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "rep.lose",
+                "faction": "syndicate"
+              }
+            ]
+          }
+        ]
+      },
+      "abilities": []
+    },
+    {
+      "id": "base-databank-042",
+      "kind": "job_steps",
+      "number": 42,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "job.fail"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tech"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.goto",
+                "step": 4
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "local security"
+              }
+            },
+            "lose": [
+              {
+                "op": "step.repeat"
+              }
+            ],
+            "after": [
+              {
+                "op": "if",
+                "cond": {
+                  "cond": "all",
+                  "of": [
+                    {
+                      "cond": "combat",
+                      "result": "won"
+                    },
+                    {
+                      "cond": "not_defeated"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "op": "job.complete"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-043",
+      "kind": "job_steps",
+      "number": 43,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "piloting"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tech"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 2
+              }
+            ]
+          },
+          {
+            "op": "if",
+            "cond": {
+              "cond": "not_defeated"
+            },
+            "then": [
+              {
+                "op": "job.complete"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-044",
+      "kind": "job_steps",
+      "number": 44,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "piloting"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "pass": [
+              {
+                "op": "test",
+                "skill": [
+                  "tech"
+                ],
+                "pass": [
+                  {
+                    "op": "step.goto",
+                    "step": 4
+                  }
+                ],
+                "fail": [
+                  {
+                    "op": "damage.suffer",
+                    "target": "ship",
+                    "amount": 1
+                  }
+                ]
+              }
+            ],
+            "fail": [
+              {
+                "op": "test",
+                "skill": [
+                  "tech"
+                ]
+              },
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ship",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "Black Sun fighters"
+              }
+            },
+            "win": [
+              {
+                "op": "damage.prevent",
+                "amount": 1
+              }
+            ],
+            "after": [
+              {
+                "op": "if",
+                "cond": {
+                  "cond": "not_defeated"
+                },
+                "then": [
+                  {
+                    "op": "job.complete"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-045",
+      "kind": "job_steps",
+      "number": 45,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "fail": [
+              {
+                "op": "unless",
+                "penalty": [
+                  {
+                    "op": "damage.suffer",
+                    "target": "character",
+                    "amount": 1
+                  }
+                ],
+                "avoid": [
+                  {
+                    "op": "credits.lose",
+                    "amount": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tech"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "combat",
+                "type": "ground",
+                "opponent": {
+                  "npc": {
+                    "value": 4,
+                    "name_key": "local security"
+                  }
+                },
+                "win": [
+                  {
+                    "op": "damage.prevent",
+                    "amount": 2
+                  }
+                ],
+                "after": [
+                  {
+                    "op": "if",
+                    "cond": {
+                      "cond": "not_defeated"
+                    },
+                    "then": [
+                      {
+                        "op": "job.complete"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-046",
+      "kind": "job_steps",
+      "number": 46,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "fail": [
+              {
+                "op": "job.fail"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "fail": [
+              {
+                "op": "job.fail"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "move.player_direct",
+            "to": "maelstrom"
+          },
+          {
+            "op": "test",
+            "skill": [
+              "piloting"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-047",
+      "kind": "job_steps",
+      "number": 47,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 4
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ship",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "TIE fighters"
+              }
+            },
+            "win": [
+              {
+                "op": "step.goto",
+                "step": 4
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "piloting"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "ship",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "Stormtroopers"
+              }
+            },
+            "lose": [
+              {
+                "op": "step.repeat"
+              }
+            ],
+            "after": [
+              {
+                "op": "if",
+                "cond": {
+                  "cond": "all",
+                  "of": [
+                    {
+                      "cond": "combat",
+                      "result": "won"
+                    },
+                    {
+                      "cond": "not_defeated"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "op": "job.complete"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-048",
+      "kind": "job_steps",
+      "number": 48,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ],
+            "fail": [
+              {
+                "op": "may",
+                "effects": [
+                  {
+                    "op": "to",
+                    "cost": [
+                      {
+                        "op": "rep.lose",
+                        "faction": "rebel"
+                      }
+                    ],
+                    "then": [
+                      {
+                        "op": "step.goto",
+                        "step": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 4,
+                "name_key": "Rebel guards"
+              }
+            },
+            "win": [
+              {
+                "op": "step.goto",
+                "step": 4
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 2
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 3
+              }
+            ]
+          },
+          {
+            "op": "if",
+            "cond": {
+              "cond": "not_defeated"
+            },
+            "then": [
+              {
+                "op": "job.complete"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-049",
+      "kind": "job_steps",
+      "number": 49,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "job.fail"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-050",
+      "kind": "job_steps",
+      "number": 50,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 5
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 4,
+                "name_key": "Pyke sentinels"
+              }
+            },
+            "win": [
+              {
+                "op": "step.goto",
+                "step": 5
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-051",
+      "kind": "job_steps",
+      "number": 51,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "influence"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "minions"
+              }
+            },
+            "win": [
+              {
+                "op": "damage.prevent",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tactics"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-052",
+      "kind": "job_steps",
+      "number": 52,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "job.fail"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 4
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "guards"
+              }
+            },
+            "win": [
+              {
+                "op": "damage.prevent",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "strength"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-053",
+      "kind": "job_steps",
+      "number": 53,
+      "variant": null,
+      "steps": [
+        [
+          {
+            "op": "test",
+            "skill": [
+              "stealth"
+            ],
+            "pass": [
+              {
+                "op": "step.goto",
+                "step": 3
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "combat",
+            "type": "ground",
+            "opponent": {
+              "npc": {
+                "value": 3,
+                "name_key": "Trandoshan guards"
+              }
+            },
+            "win": [
+              {
+                "op": "damage.prevent",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "knowledge"
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "op": "test",
+            "skill": [
+              "tech"
+            ],
+            "pass": [
+              {
+                "op": "job.complete"
+              }
+            ],
+            "fail": [
+              {
+                "op": "damage.suffer",
+                "target": "character",
+                "amount": 1
+              },
+              {
+                "op": "step.repeat"
+              }
+            ]
+          }
+        ]
+      ],
+      "abilities": []
+    }
+  ]
+}
