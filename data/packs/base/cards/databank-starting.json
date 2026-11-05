@@ -14,9 +14,33 @@
       "destination": null,
       "reward": [],
       "abilities": [],
-      "notes": [
-        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
-      ]
+      "target": "base-contact-18-lobot",
+      "combat": {
+        "type": "ground",
+        "value": 2
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "cantonica",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove"
     },
     {
       "id": "base-databank-090b",
@@ -28,9 +52,33 @@
       "destination": null,
       "reward": [],
       "abilities": [],
-      "notes": [
-        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
-      ]
+      "target": "base-contact-20-ponda-baba",
+      "combat": {
+        "type": "ground",
+        "value": 2
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "takodana",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove"
     },
     {
       "id": "base-databank-090c",
@@ -42,9 +90,33 @@
       "destination": null,
       "reward": [],
       "abilities": [],
-      "notes": [
-        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
-      ]
+      "target": "base-contact-09-doctor-evazan",
+      "combat": {
+        "type": "ground",
+        "value": 2
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "mon-calamari",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove"
     },
     {
       "id": "base-databank-090d",
@@ -56,9 +128,33 @@
       "destination": null,
       "reward": [],
       "abilities": [],
-      "notes": [
-        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
-      ]
+      "target": "base-contact-05-black-sun-agent",
+      "combat": {
+        "type": "ground",
+        "value": 2
+      },
+      "elimination_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "capture_destination": "ryloth",
+      "capture_reward": [
+        {
+          "op": "credits.gain",
+          "amount": 10000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "end": "remove"
     },
     {
       "id": "base-databank-091a",
@@ -127,9 +223,35 @@
         }
       ],
       "abilities": [],
-      "notes": [
-        "The job's encounter test is encoded with the databank (PLAN T2.6)."
-      ]
+      "skills": [
+        {
+          "options": [
+            "piloting"
+          ],
+          "certain": true
+        }
+      ],
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "piloting"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "damage.suffer",
+              "target": "ship",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "end": "remove"
     },
     {
       "id": "base-databank-092b",
@@ -150,9 +272,35 @@
         }
       ],
       "abilities": [],
-      "notes": [
-        "The job's encounter test is encoded with the databank (PLAN T2.6)."
-      ]
+      "skills": [
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": true
+        }
+      ],
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "strength"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "damage.suffer",
+              "target": "character",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "end": "remove"
     },
     {
       "id": "base-databank-092c",
@@ -173,9 +321,37 @@
         }
       ],
       "abilities": [],
-      "notes": [
-        "The job's encounter test is encoded with the databank (PLAN T2.6)."
-      ]
+      "skills": [
+        {
+          "options": [
+            "strength",
+            "piloting"
+          ],
+          "certain": true
+        }
+      ],
+      "encounter": [
+        {
+          "op": "test",
+          "skill": [
+            "strength",
+            "piloting"
+          ],
+          "pass": [
+            {
+              "op": "job.complete"
+            }
+          ],
+          "fail": [
+            {
+              "op": "damage.suffer",
+              "target": "both",
+              "amount": 1
+            }
+          ]
+        }
+      ],
+      "end": "remove"
     }
   ]
 }

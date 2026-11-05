@@ -16,8 +16,8 @@ Status: `Done` · `Next` · `To do` · `Later`.
 | 4 | Patterns | inventory of objects, timings and effects (`EFFECTS.md`), with the expansion's extension points | Done |
 | 5 | Data | card data format, validator, base pack; small sets encoded | Done (base) |
 | 6 | Core | rules engine in plain C#, tested with `dotnet test` | Done |
-| 7 | Effects and content | effect engine; market, encounters, databank and secrets playable in the core | **Next** |
-| 8 | V0 | seeded bot games in a terminal, checking every rule invariant | To do |
+| 7 | Effects and content | effect engine; market, encounters, databank and secrets playable in the core | Done (base) |
+| 8 | V0 | seeded bot games in a terminal, checking every rule invariant | **Next** |
 | 9 | Prototype (V1) | Unity project; map, movement and cards on screen with the Tabletop scans | To do |
 | 10 | After V1 | solo mode, bots, online play, *Unfinished Business* | Later |
 | 11 | Polish | card templates, Portuguese, graphics, animation, Spanish, sound | Last |
@@ -57,16 +57,16 @@ Status: `Done` · `Next` · `To do` · `Later`.
 - T1.8 patrols: stacks, spawning, movement, encounters — Done
 - T1.9 assets, slots, ships — Done
 
-### 7. Effects and content · Next
+### 7. Effects and content · Done
 - T2.3a effect interpreter, passive bonuses, step abilities — Done
 - T2.3b triggers, replacements, dice windows — Done
 - T2.3c personal and ship goals — Done
 - T2.9 character setup from the starting databank cards (#90 to #92) — Done
 - T2.5 market — Done: decks, discard and buy, barter, patrol movement icons, ship cards, Used Ship for Sale — encode bounty, job, luxury and ship decks
-- T2.6 encounters, contacts, databank and secrets (**Next**): encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank
-- Remove the remaining stubs (encountering a space)
+- T2.6 encounters, contacts, databank and secrets — Done: encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank
+- Remove the remaining stubs (encountering a space) — Done
 
-### 8. V0 · To do
+### 8. V0 · Next
 - T3.1 terminal game with a random bot; 1,000 seeded games without a crash or a broken invariant
 
 ### 9. Prototype (V1) · To do

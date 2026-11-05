@@ -100,7 +100,9 @@ namespace OuterRim.Core.Engine
                     }
                     if (fits && timing["filter"] != null)
                     {
-                        fits = Conditions.Eval(ctx.Content, ctx.State, owner, timing["filter"], null, FrameContext.Of(frame));
+                        var context = FrameContext.Of(frame);
+                        context["dice"] = ctx.State.Stack[frame.GetInt("target")].Get(frame.Get("var")); // BoShek, Ponda Baba
+                        fits = Conditions.Eval(ctx.Content, ctx.State, owner, timing["filter"], null, context);
                     }
                 }
                 else if (type == "trigger" && (string?)timing["event"] == "dice_rolled")

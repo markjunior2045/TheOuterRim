@@ -169,7 +169,7 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered (base):** `data/packs/base/cards/` `patrols.json` (16), `player-boards.json` (4), `contacts.json` (22), `characters.json` (8, both sides with abilities and goals), `ship-sheets.json` (9, both sides). The validator also checks that contacts per class match the map's contact spaces and that each faction has patrol levels 1 to 4. 25 validator tests.
 - Expansion parts (6 sheets, 11 contacts, 8 characters, 8 ambition sheets) come with the expansion transcription (T2.8).
 
-### T2.5 — Market · `DONE` (2026-11-05; some luxury cards pending, see below)
+### T2.5 — Market · `DONE` (2026-11-05; the pending luxury cards were finished in T2.6)
 - Discard, buy, barter, icons, ship purchase, "Used Ship for Sale" (R-16).
 - **Delivered:**
   - Data: the job, bounty, luxury and ship decks encoded (registry kinds job, bounty, ship, special); databank card #1 (cargo check, four versions).
@@ -184,9 +184,21 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
   - the "reveal contact" icon `[UB]`;
   - delivering a captured bounty, with the contacts in T2.6.
 
-### T2.6 — Encounters, contacts, databank, secrets · `TODO` (T2.3)
-- R-12, R-13, R-15.72 to R-15.91, including the Core Worlds announcement (R-15.80).
+### T2.6 — Encounters, contacts, databank, secrets · `DONE` (2026-11-05, in four parts)
+- R-12, R-13, R-15.72 to R-15.91, including the Core Worlds announcement (R-15.80, with the expansion).
 - One deck per pair of spaces; the interface shows only the player's section (`DECISIONS.md` §4.1).
+- **Delivered:**
+  - Data: the seven encounter decks (70 cards, 27 embedded assets) and the whole databank (contact cards #2 to #23 with their crew and jobs, job procedures #40 to #53, favor checks #41; the starting bounties #90 and jobs #92 completed). Every effect of the base game cards is built: the coverage test has no pending entry.
+  - Space encounters: deck per space, section by space or patrol presence, variant by reputation when drawn, secrets kept as abilities and returned on defeat, embedded assets, the card back to the bottom (R-15.72 to R-15.91).
+  - Effects asked of players: choose a player, faction or amount; movement outside the planning step; patrols moved and encountered; additional turns; buying through effects with barter; the card games; patrol hunts.
+  - Contacts: tokens on the map, encountering a contact, bounty combats, capture and elimination, delivering a captured contact, tokens returning to the map (R-12, R-15.42 to R-15.55, R-16.4).
+  - Jobs: attempted at the destination as the encounter; step procedures; favors; sabacc; Wanted; reward bonuses and Sy Snootles (R-15.25 to R-15.39, R-15.92, R-25.10, R-25.11).
+  - Crew and luxury rules: K-2SO, Ponda Baba, Doctor Evazan, Savvy Pilot, BoShek, Lobot; Stolen Jewels, Undercover Agent, Dejarik Holotable, Chromium Hull's encounter; extra market actions (Doctor Aphra, W1-LE); bounties against your own or another player's crew (R-15.56 to R-15.64).
+  - Sweeps resolve every encounter section, contact card and job, accepting and declining. Save format 0.14. 322 tests.
+- **Pending:**
+  - R-15.59: while fighting a crew for its bounty, its owner still has that crew's abilities (no rule of the base game cards depends on it yet).
+  - `[UB]` rules wait for the expansion pack: R-12.14 (contacts matching a character), the reveal contact icon (R-16.26), multi-player and opposed jobs (R-15.40, R-15.41), bounties on characters (R-15.65 to R-15.71), the Core Worlds deck (R-15.80).
+  - Readings awaiting the owner: `docs/REVIEW.md`.
 
 ### T2.7 — Full image extraction · `DONE`
 - Done by `sort_outer_rim.py` (v2): 1,040 files sorted by pack and deck, with manifest, report and `CREDITS.md`.
@@ -258,6 +270,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.6 done: encounter decks, contacts, databank procedures, jobs, crew rules; every base game effect built; save format 0.14. |
 | 2026-11-05 | T2.5 done: market decks and action, deliver action with databank #1, extra fame; four decks encoded; save format 0.11. |
 | 2026-11-05 | T2.9 added and done: character setup from the starting databank cards (R-3.15). |
 | 2026-11-05 | T2.3c done: personal and ship goals; T2.3 complete; save format 0.9. |

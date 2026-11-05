@@ -40,6 +40,7 @@ namespace OuterRim.Core.Engine
             "contact.discard_token", "contact.relocate_self", "contact.place_facedown", "contact.look", "contact.move",
             "encounter.contact", "bounty.deliver", "databank.resolve", "job.complete", "job.fail", "job.discard",
             "step.goto", "step.repeat", "sabacc.win", "sabacc.stake", "sabacc.duel", "reward.modify",
+            "market.extra_action", "asset.gain_databank", "test.pass", "combat.auto_win", "damage.crit_value",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -54,6 +55,7 @@ namespace OuterRim.Core.Engine
             "tractor_beam", "patrol_redirect", "used_ship_for_sale",
             "double_or_nothing", "dice_gamble", "side_bets", "name_a_number", "lose_any_reputation",
             "buy_any_sheet", "replace_with_starter", "pay_for_goal", "patrol_hunt", "look_and_exchange", "sabacc", "wanted", "reward_for_fame",
+            "stolen_jewels", "undercover_agent", "dejarik", "evazan", "chromium_hull",
         };
 
         public static void Register()
@@ -102,6 +104,11 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new SabaccStakeHandler());
             ResolutionHandlers.Register(new SabaccDuelHandler());
             ResolutionHandlers.Register(new WantedHandler());
+            ResolutionHandlers.Register(new MarketSessionHandler());
+            ResolutionHandlers.Register(new GainDatabankHandler());
+            ResolutionHandlers.Register(new AssetCustomHandler());
+            ResolutionHandlers.Register(new BountyCrewHandler());
+            ResolutionHandlers.Register(new ChallengeHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -318,6 +325,12 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(BountyDeliverEffectHandler.HandlerId, frame, nodePath));
                 case "databank.resolve":
                     return StepResult.Call(EffectHandlers.Child(Jobs.ResolveHandler, frame, nodePath));
+                case "market.extra_action":
+                    return StepResult.Call(EffectHandlers.Child(MarketSessionHandler.HandlerId, frame, nodePath));
+                case "asset.gain_databank":
+                    return StepResult.Call(EffectHandlers.Child(GainDatabankHandler.HandlerId, frame, nodePath));
+                case "custom" when AssetCustomHandler.Handlers.Contains((string)node["handler"]!):
+                    return StepResult.Call(EffectHandlers.Child(AssetCustomHandler.HandlerId, frame, nodePath));
                 case "sabacc.stake":
                     return StepResult.Call(EffectHandlers.Child(SabaccStakeHandler.HandlerId, frame, nodePath));
                 case "sabacc.duel":
@@ -499,6 +512,13 @@ namespace OuterRim.Core.Engine
                     return StepsHandler.Control(state, op, node); // R-15.36 to R-15.38
                 case "job.discard":
                     return JobDiscard.Apply(ctx, owner, r.Context);
+                case "test.pass":
+                {
+                    // Savvy Pilot: the skill test that would fail is passed instead.
+                    var test = Jobs.Nearest(state, SkillTests.Handler);
+                    test?.Set("forced_pass", "1");
+                    return test != null;
+                }
                 case "custom" when (string)node["handler"]! == "reward_for_fame":
                 {
                     // Sy Snootles, Mandalorian Armor (R-25.11): the reward's credits become 1 additional fame.

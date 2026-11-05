@@ -1891,11 +1891,9 @@
         }
       ],
       "end": "remove",
-      "notes": [
-        "'If you have {REP_NEG} Imperial reputation you may resolve this card instead of encountering the Imperial patrol' (R-4.14 exception, T2.6 part 4)."
-      ],
       "traits": [],
-      "abilities": []
+      "abilities": [],
+      "instead_of_patrol": "imperial"
     },
     {
       "id": "base-databank-018-asset",

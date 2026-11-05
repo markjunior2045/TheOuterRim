@@ -63,6 +63,12 @@ namespace OuterRim.Core.Engine
 
         /// <summary>Attempting a job at its destination (R-15.29); TargetId is the job card.</summary>
         Job,
+
+        /// <summary>A bounty combat against crew (R-15.56, R-15.60); TargetId is the bounty card.</summary>
+        BountyCrew,
+
+        /// <summary>A ship combat against another player who offers it (Chromium Hull); TargetId is that player.</summary>
+        Player,
     }
 
     /// <summary>The one encounter of the turn (R-4.12). TargetId is the patrol's faction or the contact token.</summary>

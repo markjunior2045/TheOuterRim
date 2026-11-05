@@ -15,7 +15,7 @@ namespace OuterRim.Core.Tests
         private static readonly Content.GameContent C = TestContent.Base;
 
         /// <summary>Effects still planned (PLAN T2.6 parts 3 and 4): a section that reaches one is skipped, not failed.</summary>
-        internal static readonly string[] Planned = { "databank", "sabacc", "test.pass" };
+        internal static readonly string[] Planned = new string[0]; // nothing left: every effect is built
 
         internal static readonly HashSet<string> Skipped = new HashSet<string>();
 

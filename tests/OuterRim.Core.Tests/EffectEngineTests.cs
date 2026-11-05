@@ -367,24 +367,7 @@ namespace OuterRim.Core.Tests
         /// <summary>Effects and conditions the encoded cards use that are built in later subtasks.</summary>
         private static readonly Dictionary<string, string> Pending = new Dictionary<string, string>
         {
-            // T2.6: encounters, contacts, jobs and databank procedures
-            
-            
-            
-            // Left over from T2.5 (market), built with T2.6
-            ["market.extra_action"] = "T2.6", ["custom:stolen_jewels"] = "T2.6", ["custom:undercover_agent"] = "T2.6",
-            ["custom:dejarik"] = "T2.6", ["custom:chromium_hull"] = "T2.6",
-            // T2.6: encounter card sections and their embedded assets
-            // T2.6: crew abilities from the contact cards
-            ["combat.auto_win"] = "T2.6", ["cond:dice_result"] = "T2.6", ["custom:evazan"] = "T2.6",
-            ["damage.crit_value"] = "T2.6", 
-            ["asset.gain_databank"] = "T2.6", 
-            
-            
-            
-            
-            
-            ["test.pass"] = "T2.6", 
+            // Every effect of the base game cards is built (T2.6). New packs list theirs here until built.
         };
 
         [Fact]

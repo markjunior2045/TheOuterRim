@@ -49,6 +49,37 @@ namespace OuterRim.Core.Rules
         }
 
         /// <summary>R-7.11: each hit deals 1 damage, each crit 2; focus and blank deal nothing.</summary>
+        /// <summary>
+        /// Doctor Evazan: "both players may turn up to 2 of their blank dice to the chosen result". Turning a blank
+        /// into a result is never worse, so up to 2 blanks of each roll are turned.
+        /// </summary>
+        public static void Evazan(Engine.Frame combat, List<DieFace> faces)
+        {
+            if (!combat.Vars.TryGetValue("evazan", out var chosen)) return;
+            var face = chosen == "crit" ? DieFace.Crit : chosen == "hit" ? DieFace.Hit : DieFace.Focus;
+            int turned = 0;
+            for (int i = 0; i < faces.Count && turned < 2; i++)
+            {
+                if (faces[i] == DieFace.Blank)
+                {
+                    faces[i] = face;
+                    turned++;
+                }
+            }
+        }
+
+        /// <summary>Damage of a roll, with {CRIT} worth <paramref name="critValue"/> (R-7.11; K-2SO makes it 1).</summary>
+        public static int DamageOf(IEnumerable<DieFace> faces, int critValue)
+        {
+            int total = 0;
+            foreach (var f in faces)
+            {
+                if (f == DieFace.Hit) total += 1;
+                else if (f == DieFace.Crit) total += critValue;
+            }
+            return total;
+        }
+
         public static int DamageOf(IEnumerable<DieFace> faces)
         {
             int total = 0;

@@ -853,7 +853,15 @@
       "starting_planet": "space_id",
       "asset_kind": "enum:cargo|job|bounty",
       "destination": "nullable:space_id",
-      "reward": "effects"
+      "reward": "effects",
+      "target": "string?",
+      "combat": "bounty_combat?",
+      "elimination_reward": "effects?",
+      "capture_destination": "space_id?",
+      "capture_reward": "effects?",
+      "skills": "list:job_skill_entry?",
+      "encounter": "effects?",
+      "end": "enum:remove|discard?"
     },
     "job": {
       "deck": "deck?",
@@ -866,7 +874,8 @@
       "encounter": "effects",
       "reward": "effects",
       "end": "enum:remove|discard",
-      "favor": "faction?"
+      "favor": "faction?",
+      "instead_of_patrol": "faction?"
     },
     "bounty": {
       "deck": "deck?",

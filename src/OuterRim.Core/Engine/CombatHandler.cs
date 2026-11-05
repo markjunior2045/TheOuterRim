@@ -62,6 +62,7 @@ namespace OuterRim.Core.Engine
                         var face = parts[0] == "crit" ? DieFace.Crit : parts[0] == "hit" ? DieFace.Hit : parts[0] == "focus" ? DieFace.Focus : DieFace.Blank;
                         for (int k = 0; k < int.Parse(parts[1], CultureInfo.InvariantCulture); k++) faces.Add(face);
                     }
+                    Combat.Evazan(frame, faces);
                     frame.Set("attacker_faces", DicePool.Encode(faces));
                     frame.Step = 2;
                     // Rerolls and result changes: the attacker (who rolled) first, then the defender (R-7.10, R-7.11).
@@ -73,7 +74,8 @@ namespace OuterRim.Core.Engine
                 {
                     // Step 2: attacker damage (R-7.11).
                     var faces = DicePool.Effective(DicePool.Decode(frame.Get("attacker_faces")));
-                    int damage = Combat.DamageOf(faces);
+                    // K-2SO: "each of your opponent's {CRIT} results count as 1 damage instead of 2" (the defender's crew).
+                    int damage = Combat.DamageOf(faces, defenderPlayer == null ? 2 : Modifiers.OpponentCritValue(content, state, defenderPlayer, frame.Get("type")));
                     frame.Set("attacker_damage", damage);
                     ctx.Events.Add(new CombatRolledEvent("attacker", attacker.Id, Combat.PlayerLabel(content, attacker), faces, damage));
                     frame.Step = 3;
@@ -91,7 +93,8 @@ namespace OuterRim.Core.Engine
                     }
                     int fewer = Modifiers.OpponentFewer(content, state, attacker, frame.Get("type"));
                     int count = System.Math.Max(0, int.Parse(frame.Get("defender_value"), CultureInfo.InvariantCulture) - fewer);
-                    var faces = DiceRoller.Roll(state.Random, count);
+                    var faces = new List<DieFace>(DiceRoller.Roll(state.Random, count));
+                    Combat.Evazan(frame, faces);
                     frame.Set("defender_faces", DicePool.Encode(faces));
                     frame.Step = 4;
                     // The defender (if a player) first, then the attacker (R-7.12).
@@ -103,7 +106,7 @@ namespace OuterRim.Core.Engine
                 case 4:
                 {
                     var faces = DicePool.Effective(DicePool.Decode(frame.Get("defender_faces")));
-                    int damage = Combat.DamageOf(faces);
+                    int damage = Combat.DamageOf(faces, Modifiers.OpponentCritValue(content, state, attacker, frame.Get("type")));
                     frame.Set("defender_damage", damage);
                     // A player rolls their own dice; for a patrol, contact or card enemy the game rolls
                     // (digital adaptation of R-7.9 and R-7.12, DECISIONS §4.2).
@@ -118,6 +121,17 @@ namespace OuterRim.Core.Engine
                     int a = frame.GetInt("attacker_damage");
                     int d = frame.GetInt("defender_damage");
                     bool attackerWins = frame.Get("defender_value") != Combat.Infinite && Combat.AttackerWins(a, d);
+                    // Ponda Baba: "if you have at least 2 {FOCUS} results, you win the combat regardless".
+                    var attackerFaces = DicePool.Effective(DicePool.Decode(frame.Get("attacker_faces")));
+                    var defenderFaces = DicePool.Effective(DicePool.Decode(frame.Get("defender_faces")));
+                    if (frame.Get("defender_value") != Combat.Infinite && Modifiers.AutoWins(content, state, attacker, frame.Get("type"), attackerFaces))
+                    {
+                        attackerWins = true;
+                    }
+                    else if (defenderPlayer != null && Modifiers.AutoWins(content, state, defenderPlayer, frame.Get("type"), defenderFaces))
+                    {
+                        attackerWins = false;
+                    }
                     string winner = attackerWins ? "attacker" : "defender";
                     frame.Set("winner", winner);
                     ctx.Events.Add(new CombatResolvedEvent(winner, a, d));

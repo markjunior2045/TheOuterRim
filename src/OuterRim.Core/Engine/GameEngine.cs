@@ -705,11 +705,14 @@ namespace OuterRim.Core.Engine
                     break;
                 case EncounterKind.Job:
                 {
-                    if (hostile.Count > 0)
+                    var job = command.TargetId == null ? null : Assets.Find(player, command.TargetId);
+                    // Rebel Prison Break: "If you have {REP_NEG} Imperial reputation you may resolve this card instead of
+                    // encountering the Imperial patrol."
+                    var instead = job != null && content.HasCard(job.CardId) ? (string?)content.Card(job.CardId)["instead_of_patrol"] : null;
+                    if (hostile.Count > 0 && !(hostile.Count == 1 && instead != null && Patrols.Id(hostile[0]) == instead))
                     {
                         return CommandResult.Rejected("R-4.17: a player who must encounter a patrol cannot attempt a job.");
                     }
-                    var job = command.TargetId == null ? null : Assets.Find(player, command.TargetId);
                     if (job == null || job.Kind != "job" || !content.HasCard(job.CardId))
                     {
                         return CommandResult.Rejected("You hold no job " + command.TargetId + ".");
@@ -719,6 +722,47 @@ namespace OuterRim.Core.Engine
                         return CommandResult.Rejected("R-15.29, R-15.30: a job is attempted at its destination.");
                     }
                     handler = Jobs.AttemptHandler;
+                    break;
+                }
+                case EncounterKind.BountyCrew:
+                {
+                    if (hostile.Count > 0)
+                    {
+                        return CommandResult.Rejected("R-4.17: a player who must encounter a patrol cannot use an Encounter ability.");
+                    }
+                    var bounty = command.TargetId == null ? null : Assets.Find(player, command.TargetId);
+                    if (bounty == null || bounty.Kind != "bounty" || Contacts.CapturedOn(state, bounty.CardId) != null)
+                    {
+                        return CommandResult.Rejected("You hold no open bounty " + command.TargetId + ".");
+                    }
+                    var token = (string)content.Card(bounty.CardId)["target"]!;
+                    // R-15.56: your own crew first; R-15.60: another player's crew in your space.
+                    PlayerState? holder = BountyCrewHandler.CrewOf(content, player, token) != null ? player : null;
+                    foreach (var p in state.Players)
+                    {
+                        if (holder == null && p.Id != player.Id && p.SpaceId == player.SpaceId && BountyCrewHandler.CrewOf(content, p, token) != null) holder = p;
+                    }
+                    if (holder == null)
+                    {
+                        return CommandResult.Rejected("R-15.56, R-15.60: no crew matching that bounty is with you or in your space.");
+                    }
+                    var frame2 = new Frame(TurnHandlers.EncounterStep);
+                    frame2.Set("handler", BountyCrewHandler.HandlerId);
+                    frame2.Set("target", bounty.CardId + "|" + holder.Id + "|" + BountyCrewHandler.CrewOf(content, holder, token)!.CardId);
+                    return StartResolution(content, state, frame2);
+                }
+                case EncounterKind.Player:
+                {
+                    if (hostile.Count > 0)
+                    {
+                        return CommandResult.Rejected("R-4.14: you must encounter the patrol you have negative reputation with.");
+                    }
+                    var other = command.TargetId == null ? null : state.FindPlayer(command.TargetId);
+                    if (other == null || other.Id == player.Id || other.SpaceId != player.SpaceId || !ChallengeHandler.Offers(content, other))
+                    {
+                        return CommandResult.Rejected("Only a player in your space with a Chromium Hull can be fought as an encounter.");
+                    }
+                    handler = ChallengeHandler.HandlerId;
                     break;
                 }
                 default:

@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using OuterRim.Core.Content;
 using OuterRim.Core.Model;
@@ -52,6 +54,41 @@ namespace OuterRim.Core.Effects
                 }
             }
             return total;
+        }
+
+        /// <summary>K-2SO: the value of the opponent's {CRIT} results in this combat, for the player holding the card.</summary>
+        public static int OpponentCritValue(GameContent content, GameState state, PlayerState player, string combatType)
+        {
+            int value = 2;
+            var context = new Dictionary<string, string> { ["combat_type"] = combatType };
+            foreach (var a in AbilitySources.Of(content, player))
+            {
+                if (a.TimingType != "passive" || !Conditions.Eval(content, state, player, a.Ability["condition"], null, context)) continue;
+                foreach (JObject e in (JArray)a.Ability["effects"]!)
+                {
+                    if ((string?)e["op"] == "damage.crit_value") value = Math.Min(value, (int)e["value"]!);
+                }
+            }
+            return value;
+        }
+
+        /// <summary>Ponda Baba: an ability that wins the combat when the player's own results match its filter.</summary>
+        public static bool AutoWins(GameContent content, GameState state, PlayerState player, string combatType, IReadOnlyList<DieFace> faces)
+        {
+            var context = new Dictionary<string, string> { ["combat_type"] = combatType, ["dice"] = Dice.DicePool.Encode(faces) };
+            string scope = combatType == "ship" ? "ship_combat" : "ground_combat";
+            foreach (var a in AbilitySources.Of(content, player))
+            {
+                var timing = a.Ability["timing"]!;
+                if ((string?)timing["type"] != "window" || !((JArray)timing["scope"]!).ToObject<List<string>>()!.Contains(scope)) continue;
+                bool wins = false;
+                foreach (JObject e in (JArray)a.Ability["effects"]!)
+                {
+                    wins |= (string?)e["op"] == "combat.auto_win";
+                }
+                if (wins && Conditions.Eval(content, state, player, timing["filter"], null, context)) return true;
+            }
+            return false;
         }
 
         /// <summary>Whether a list of payments ("credits.spend") can be paid in full now (R-9.8).</summary>

@@ -33,6 +33,7 @@ namespace OuterRim.Core.Engine
                 return false;
             }
             if (dest.Type == JTokenType.String && (string)dest! == "your_space") return true;
+            if (dest.Type == JTokenType.String && content.Map.Contains((string)dest!)) return player.SpaceId == (string)dest!; // starting jobs (#92)
             return SpaceSelect.Options(content, state, player, dest).Contains(player.SpaceId);
         }
 

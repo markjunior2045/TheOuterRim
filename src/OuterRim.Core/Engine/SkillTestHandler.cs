@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using OuterRim.Core.Dice;
+using OuterRim.Core.Effects;
 using OuterRim.Core.Rules;
 
 namespace OuterRim.Core.Engine
@@ -60,13 +61,39 @@ namespace OuterRim.Core.Engine
                 case 3:
                     frame.Step = 4;
                     return StepResult.Continue();
+                case 5:
+                {
+                    // The player answered whether to use a "when you would fail" ability.
+                    frame.Step = 6;
+                    if (frame.Get("use") != "yes") return StepResult.Continue();
+                    var key = frame.Get("would_fail");
+                    int hash = key.IndexOf('#');
+                    var use = new Frame(EffectHandlers.Ability);
+                    use.Set("owner", player.Id);
+                    use.Set("card", key.Substring(0, hash));
+                    use.Set("path", key.Substring(hash + 1));
+                    return StepResult.Call(use);
+                }
                 default:
                 {
                     var skill = SkillTests.Parse(frame.Get("skill"));
                     int granted = frame.Vars.ContainsKey("granted") ? frame.GetInt("granted") : 0;
                     int instances = SkillTests.Instances(ctx.Content, player, skill, granted);
                     var faces = DicePool.Effective(DicePool.Decode(frame.Get("faces")));
-                    bool passed = SkillTests.Passes(SkillTests.Level(instances), faces);
+                    bool passed = SkillTests.Passes(SkillTests.Level(instances), faces) || frame.Vars.ContainsKey("forced_pass");
+                    if (!passed && !frame.Vars.ContainsKey("would_fail"))
+                    {
+                        foreach (var a in AbilitySources.Of(ctx.Content, player))
+                        {
+                            var timing = a.Ability["timing"]!;
+                            if ((string?)timing["type"] != "replacement" || (string?)timing["event"] != "test_would_fail") continue;
+                            if (!FrameContext.CostPayable(ctx.Content, player, a.Ability)) continue;
+                            frame.Set("would_fail", a.Key);
+                            frame.Step = 5;
+                            return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, player.Id, "rules.use_ability",
+                                new[] { new DecisionOption("yes", a.Key), new DecisionOption("no", a.Key) }, "use"));
+                        }
+                    }
                     ctx.Events.Add(new SkillTestRolledEvent(player.Id, Combat.PlayerLabel(ctx.Content, player),
                         SkillTests.Id(skill), instances, faces, passed));
                     ctx.Return("passed", passed ? "true" : "false");

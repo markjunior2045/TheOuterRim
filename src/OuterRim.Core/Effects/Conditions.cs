@@ -24,7 +24,7 @@ namespace OuterRim.Core.Effects
             "ship_cost_at_least", "ship_trait", "planet_markers", "not_defeated", "no_damage", "player_count",
             "combat", "delivering", "moving_into", "gained", "recovered",
             // Planet conditions, evaluated by the contact effects for each planet (ContactEffectHandler).
-            "within_patrol",
+            "within_patrol", "dice_result",
         };
 
         /// <param name="context">What is happening, for conditions about it: "combat_type" (ground, ship),
@@ -99,6 +99,19 @@ namespace OuterRim.Core.Effects
                         if (RepId(subject.Reputation.Get(f)) == wanted) n++;
                     }
                     return n >= ((int?)c["min"] ?? 0) && n <= ((int?)c["max"] ?? 4);
+                }
+                case "dice_result":
+                {
+                    // "If you have at least 2 {FOCUS} results" / "If you do not roll a {HIT}": the dice in play.
+                    if (context == null || !context.TryGetValue("dice", out var encoded)) return false;
+                    var faces = ((JArray)c["face"]!).ToObject<List<string>>()!;
+                    int n = 0;
+                    foreach (var f in Dice.DicePool.Effective(Dice.DicePool.Decode(encoded)))
+                    {
+                        string id = f == DieFace.Hit ? "hit" : f == DieFace.Crit ? "crit" : f == DieFace.Focus ? "focus" : "blank";
+                        if (faces.Contains(id)) n++;
+                    }
+                    return n >= ((int?)c["min"] ?? 1);
                 }
                 case "credits_at_least":
                     return subject.Credits >= (int)c["amount"]!;
