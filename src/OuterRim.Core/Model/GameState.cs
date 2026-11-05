@@ -43,6 +43,12 @@ namespace OuterRim.Core.Model
         /// <summary>Ship sheets not held by any player (R-3.16.d, R-16.29); a sheet id per copy.</summary>
         public List<string> ShipSupply { get; set; } = new List<string>();
 
+        /// <summary>R-5.14: the current player takes another full turn after this one.</summary>
+        public bool AdditionalTurn { get; set; }
+
+        /// <summary>R-5.14: the current turn is an additional turn; further ones gained in it are ignored.</summary>
+        public bool InAdditionalTurn { get; set; }
+
         /// <summary>The six market decks, top card first; the top card is faceup (R-16.42).</summary>
         public List<MarketDeck> MarketDecks { get; set; } = new List<MarketDeck>();
 

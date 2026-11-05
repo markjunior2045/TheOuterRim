@@ -34,7 +34,8 @@ namespace OuterRim.Core.Engine
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
             "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard", "asset.take",
             "test.skill_grant", "move.no_stop", "custom", "cargo.deliver", "cargo.discard", "turn.end", "step.end", "unless",
-            "asset.gain_embedded", "encounter.space",
+            "asset.gain_embedded", "encounter.space", "player.choose", "credits.take", "turn.additional",
+            "move.player", "move.player_direct", "move.patrol", "move.patrol_direct", "encounter.patrol",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -71,6 +72,12 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new DeliverCargoHandler());
             ResolutionHandlers.Register(new CargoCheckHandler());
             ResolutionHandlers.Register(new UnlessHandler());
+            ResolutionHandlers.Register(new SelectHandler());
+            ResolutionHandlers.Register(new PlayerChooseHandler());
+            ResolutionHandlers.Register(new MovePlayerEffectHandler());
+            ResolutionHandlers.Register(new MoveDirectHandler());
+            ResolutionHandlers.Register(new MovePatrolEffectHandler());
+            ResolutionHandlers.Register(new EncounterPatrolEffectHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -109,8 +116,12 @@ namespace OuterRim.Core.Engine
             f.Set("owner", parent.Get("owner"));
             f.Set("card", parent.Get("card"));
             f.Set("path", path);
+            FrameContext.Copy(parent, f);
             return f;
         }
+
+        /// <summary>What a list's effects produced that a later "to ... then" may refer to (Targeting context keys).</summary>
+        internal static readonly string[] Outputs = { "spent", "cost", "last_faction", "moved_patrol" };
 
         /// <summary>"character", "ship" or "both" for what lost damage tokens, or null if nothing did.</summary>
         internal static string? Recovered(int character, int ship)
@@ -128,6 +139,14 @@ namespace OuterRim.Core.Engine
                 frame.Set("failed", "true");
             }
             frame.Vars.Remove("ret.failed");
+            foreach (var key in Outputs)
+            {
+                if (frame.Vars.TryGetValue("ret." + key, out var v))
+                {
+                    frame.Set("out." + key, v);
+                    frame.Vars.Remove("ret." + key);
+                }
+            }
         }
 
         internal static void ReturnFailed(ResolutionContext ctx, Frame frame)
@@ -135,6 +154,10 @@ namespace OuterRim.Core.Engine
             if (frame.Vars.TryGetValue("failed", out var f) && f == "true")
             {
                 ctx.Return("failed", "true");
+            }
+            foreach (var key in Outputs)
+            {
+                if (frame.Vars.TryGetValue("out." + key, out var v)) ctx.Return(key, v);
             }
         }
     }
@@ -153,7 +176,7 @@ namespace OuterRim.Core.Engine
                     frame.Step = 1;
                     if (ability["cost"] is JArray cost && cost.Count > 0)
                     {
-                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".cost"));
+                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".cost", frame));
                     }
                     return StepResult.Continue();
                 case 1:
@@ -163,7 +186,7 @@ namespace OuterRim.Core.Engine
                     {
                         return StepResult.Continue();
                     }
-                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".effects"));
+                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".effects", frame));
                 default:
                     return StepResult.Done();
             }
@@ -198,7 +221,7 @@ namespace OuterRim.Core.Engine
                     string branch = holds ? "then" : "else";
                     if (node[branch] is JArray)
                     {
-                        var child = EffectHandlers.ListFrame(owner.Id, frame.Get("card"), nodePath + "." + branch);
+                        var child = EffectHandlers.ListFrame(owner.Id, frame.Get("card"), nodePath + "." + branch, frame);
                         FrameContext.Copy(frame, child);
                         return StepResult.Call(child);
                     }
@@ -242,6 +265,17 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(UnlessHandler.HandlerId, frame, nodePath));
                 case "asset.gain_embedded":
                     return StepResult.Call(EffectHandlers.Child(GainEmbeddedHandler.HandlerId, frame, nodePath));
+                case "player.choose":
+                    return StepResult.Call(EffectHandlers.Child(PlayerChooseHandler.HandlerId, frame, nodePath));
+                case "move.player":
+                    return StepResult.Call(EffectHandlers.Child(MovePlayerEffectHandler.HandlerId, frame, nodePath));
+                case "move.player_direct":
+                case "move.patrol_direct":
+                    return StepResult.Call(EffectHandlers.Child(MoveDirectHandler.HandlerId, frame, nodePath));
+                case "move.patrol":
+                    return StepResult.Call(EffectHandlers.Child(MovePatrolEffectHandler.HandlerId, frame, nodePath));
+                case "encounter.patrol":
+                    return StepResult.Call(EffectHandlers.Child(EncounterPatrolEffectHandler.HandlerId, frame, nodePath));
                 case "encounter.space":
                 {
                     // "Resolve another Takodana encounter card" (Takodana-5).
@@ -264,6 +298,11 @@ namespace OuterRim.Core.Engine
                 case "damage.suffer":
                 {
                     // Through the damage frame, so caps and "would be defeated" replacements apply.
+                    var victim = Targeting.Player(ctx.State, owner, node["player"], FrameContext.Of(frame));
+                    if (victim == null)
+                    {
+                        return StepResult.Call(EffectHandlers.Child(SelectHandler.HandlerId, frame, nodePath));
+                    }
                     var amount = Selectors.Amount(ctx.Content, owner, node["amount"]!);
                     string target = (string)node["target"]!;
                     if (target == "both")
@@ -272,20 +311,30 @@ namespace OuterRim.Core.Engine
                         if (!frame.Vars.ContainsKey("both_ship"))
                         {
                             frame.Set("both_ship", "1");
-                            return StepResult.Call(SufferDamageHandler.For(owner.Id, CombatType.Ground, amount));
+                            return StepResult.Call(SufferDamageHandler.For(victim.Id, CombatType.Ground, amount));
                         }
                         frame.Vars.Remove("both_ship");
                         frame.Set("i", i + 1);
-                        return StepResult.Call(SufferDamageHandler.For(owner.Id, CombatType.Ship, amount));
+                        return StepResult.Call(SufferDamageHandler.For(victim.Id, CombatType.Ship, amount));
                     }
-                    return StepResult.Call(SufferDamageHandler.For(owner.Id, target == "ship" ? CombatType.Ship : CombatType.Ground, amount));
+                    return StepResult.Call(SufferDamageHandler.For(victim.Id, target == "ship" ? CombatType.Ship : CombatType.Ground, amount));
                 }
                 default:
-                    if (!Instant.Apply(ctx, owner, frame.Get("card"), node))
+                {
+                    var context = FrameContext.Of(frame);
+                    var resolved = Targeting.Simple(ctx.Content, ctx.State, owner, node, context);
+                    if (resolved == null)
+                    {
+                        return StepResult.Call(EffectHandlers.Child(SelectHandler.HandlerId, frame, nodePath)); // a choice first
+                    }
+                    var outcome = new Instant.Outcome();
+                    if (!Instant.Apply(ctx, owner, frame.Get("card"), node, resolved, outcome))
                     {
                         frame.Set("failed", "true");
                     }
+                    outcome.Into(frame);
                     return StepResult.Continue();
+                }
             }
         }
     }
@@ -293,66 +342,106 @@ namespace OuterRim.Core.Engine
     /// <summary>Effects that resolve at once. Returns false when the effect could not be fully done (a payment short of credits).</summary>
     internal static class Instant
     {
+        /// <summary>Values an effect produced for later effects of the same card ("twice the amount you spent").</summary>
+        internal sealed class Outcome
+        {
+            public readonly Dictionary<string, string> Values = new Dictionary<string, string>(StringComparer.Ordinal);
+
+            public void Into(Frame list)
+            {
+                foreach (var kv in Values) list.Set("out." + kv.Key, kv.Value);
+            }
+
+            public void ReturnTo(ResolutionContext ctx)
+            {
+                foreach (var kv in Values) ctx.Return(kv.Key, kv.Value);
+            }
+        }
+
         public static bool Apply(ResolutionContext ctx, PlayerState owner, string card, JObject node)
+        {
+            if (node["player"] != null && node["player"]!.Type != JTokenType.String)
+            {
+                throw new InvalidOperationException("Effect '" + (string)node["op"]! + "' on a chosen player needs its selector settled first.");
+            }
+            return Apply(ctx, owner, card, node, new Resolved(owner, null, null, new Dictionary<string, string>()), new Outcome());
+        }
+
+        public static bool Apply(ResolutionContext ctx, PlayerState owner, string card, JObject node, Resolved r, Outcome outcome)
         {
             var content = ctx.Content;
             var state = ctx.State;
             var events = ctx.Events;
             string op = (string)node["op"]!;
-            if (node["player"] != null && node["player"]!.Type != JTokenType.String)
-            {
-                // Effects aimed at another player ("you both gain ...") are not built yet; never apply them to the owner.
-                throw new NotSupportedException("Effect '" + op + "' on a chosen player is not implemented yet.");
-            }
+            var target = r.Target;
+            int Amount() => r.Amount ?? Targeting.Amount(content, owner, node["amount"]!, r.Context);
             switch (op)
             {
                 case "credits.gain":
-                    PlayerRules.GainCredits(owner, Selectors.Amount(content, owner, node["amount"]!), events);
+                    PlayerRules.GainCredits(target, Amount(), events);
                     return true;
                 case "credits.spend":
-                    return PlayerRules.TrySpend(owner, Selectors.Amount(content, owner, node["amount"]!), events);
-                case "credits.lose":
-                    PlayerRules.LoseCredits(owner, Selectors.Amount(content, owner, node["amount"]!), events);
+                {
+                    int n = Amount();
+                    if (!PlayerRules.TrySpend(owner, n, events)) return false;
+                    outcome.Values["spent"] = n.ToString(CultureInfo.InvariantCulture);
                     return true;
+                }
+                case "credits.lose":
+                    PlayerRules.LoseCredits(target, Amount(), events);
+                    return true;
+                case "credits.take":
+                {
+                    // "Take N from a player": they lose it (as much as they have, R-9.8) and you gain what they lost.
+                    int lost = PlayerRules.LoseCredits(target, Amount(), events);
+                    PlayerRules.GainCredits(owner, lost, events);
+                    return lost > 0;
+                }
                 case "fame.gain":
-                    PlayerRules.GainFame(owner, Selectors.Amount(content, owner, node["amount"]!), events);
+                    PlayerRules.GainFame(target, Amount(), events);
                     return true;
                 case "fame.lose":
-                    return PlayerRules.LoseFame(owner, Selectors.Amount(content, owner, node["amount"]!), events)
-                        == Selectors.Amount(content, owner, node["amount"]!);
+                    return PlayerRules.LoseFame(target, Amount(), events) == Amount();
                 case "rep.gain":
                 case "rep.lose":
                 {
-                    var faction = Selectors.Faction(content, state, owner, node["faction"]!);
+                    var faction = r.Faction ?? Selectors.Faction(content, state, target, node["faction"]!);
                     if (faction == null)
                     {
-                        return false; // no planet faction: nothing to gain or lose (R-5.5)
+                        return false; // no planet faction or no patrol here: nothing to gain or lose (R-5.5)
                     }
-                    int n = node["amount"] != null ? Selectors.Amount(content, owner, node["amount"]!) : 1;
-                    var before = owner.Reputation.Get(faction.Value);
+                    int n = node["amount"] != null ? Amount() : 1;
+                    var before = target.Reputation.Get(faction.Value);
                     if (op == "rep.gain")
                     {
-                        PlayerRules.GainReputation(owner, faction.Value, n, events);
+                        PlayerRules.GainReputation(target, faction.Value, n, events);
                     }
                     else
                     {
-                        PlayerRules.LoseReputation(owner, faction.Value, n, events);
+                        PlayerRules.LoseReputation(target, faction.Value, n, events);
                     }
-                    return owner.Reputation.Get(faction.Value) != before; // R-21.4: "lose X to ..." needs a real loss
+                    outcome.Values["last_faction"] = Patrols.Id(faction.Value);
+                    return target.Reputation.Get(faction.Value) != before; // R-21.4: "lose X to ..." needs a real loss
                 }
-                case "damage.suffer":
-                    foreach (var target in Targets((string)node["target"]!))
+                case "turn.additional":
+                    // R-5.14: a full turn after this one; none while already in an additional turn.
+                    if (!state.InAdditionalTurn && !state.AdditionalTurn)
                     {
-                        PlayerRules.SufferDamage(content, state, owner, target, Selectors.Amount(content, owner, node["amount"]!), events);
+                        state.AdditionalTurn = true;
+                        events.Add(new AdditionalTurnGainedEvent(owner.Id));
+                    }
+                    return true;
+                case "damage.suffer":
+                    foreach (var part in Targets((string)node["target"]!))
+                    {
+                        PlayerRules.SufferDamage(content, state, target, part, Amount(), events);
                     }
                     return true;
                 case "damage.recover":
-                    foreach (var target in Targets((string)node["target"]!))
+                    foreach (var part in Targets((string)node["target"]!))
                     {
-                        int amount = node["amount"] is JObject all && all["all"] != null
-                            ? int.MaxValue
-                            : Selectors.Amount(content, owner, node["amount"]!);
-                        PlayerRules.RecoverDamage(content, state, owner, target, amount, events);
+                        int amount = node["amount"] is JObject all && all["all"] != null ? int.MaxValue : Amount();
+                        PlayerRules.RecoverDamage(content, state, target, part, amount, events);
                     }
                     return true;
                 case "card.discard_self":
@@ -487,12 +576,14 @@ namespace OuterRim.Core.Engine
                         options.Add(new DecisionOption(id, frame.Get("card") + ":" + frame.Get("path") + ".options[" + id + "]"));
                     }
                     frame.Step = 1;
-                    return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, frame.Get("owner"), "effects.choice", options, "pick"));
+                    var chooser = Targeting.Player(ctx.State, ctx.State.FindPlayer(frame.Get("owner"))!, node["chooser"], FrameContext.Of(frame));
+                    return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, (chooser ?? ctx.State.FindPlayer(frame.Get("owner"))!).Id,
+                        "effects.choice", options, "pick"));
                 }
                 case 1:
                     frame.Step = 2;
                     return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"),
-                        frame.Get("path") + ".options[" + frame.Get("pick") + "]"));
+                        frame.Get("path") + ".options[" + frame.Get("pick") + "]", frame));
                 default:
                     EffectHandlers.MarkFailedFromChild(frame);
                     EffectHandlers.ReturnFailed(ctx, frame);
@@ -518,7 +609,12 @@ namespace OuterRim.Core.Engine
                     frame.Step = 2;
                     if (frame.Get("answer") == "yes")
                     {
-                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".effects"));
+                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".effects", frame));
+                    }
+                    // "If you do not ..." (EFFECTS: may with else).
+                    if (EffectHandlers.Token(ctx, frame)["else"] is JArray)
+                    {
+                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".else", frame));
                     }
                     return StepResult.Continue();
                 default:
@@ -538,7 +634,7 @@ namespace OuterRim.Core.Engine
             {
                 case 0:
                     frame.Step = 1;
-                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".cost"));
+                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".cost", frame));
                 case 1:
                     EffectHandlers.MarkFailedFromChild(frame);
                     frame.Step = 2;
@@ -547,7 +643,14 @@ namespace OuterRim.Core.Engine
                         EffectHandlers.ReturnFailed(ctx, frame);
                         return StepResult.Done();
                     }
-                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".then"));
+                {
+                    var then = EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + ".then", frame);
+                    foreach (var key in EffectHandlers.Outputs)
+                    {
+                        if (frame.Vars.TryGetValue("out." + key, out var v)) then.Set("ctx." + key, v);
+                    }
+                    return StepResult.Call(then);
+                }
                 default:
                     return StepResult.Done();
             }
@@ -580,7 +683,7 @@ namespace OuterRim.Core.Engine
                     frame.Step = 2;
                     if (node[branch] is JArray)
                     {
-                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + "." + branch));
+                        return StepResult.Call(EffectHandlers.ListFrame(frame.Get("owner"), frame.Get("card"), frame.Get("path") + "." + branch, frame));
                     }
                     return StepResult.Continue();
                 }
@@ -673,7 +776,7 @@ namespace OuterRim.Core.Engine
                     if (node["after"] is JArray)
                     {
                         // "If you win and you are not defeated, ..." (cargo check, jobs).
-                        var after = EffectHandlers.ListFrame(owner.Id, frame.Get("card"), frame.Get("path") + ".after");
+                        var after = EffectHandlers.ListFrame(owner.Id, frame.Get("card"), frame.Get("path") + ".after", frame);
                         after.Set("ctx.combat_type", frame.Get("ret.winner") == "none" ? "none" : (string)node["type"]!);
                         after.Set("ctx.combat_result", frame.Get("ret.winner") == "attacker" ? "won" : "lost");
                         return StepResult.Call(after);
@@ -701,7 +804,7 @@ namespace OuterRim.Core.Engine
                 string branch = frame.Get("winner") == "attacker" ? "win" : "lose";
                 if (node[branch] is JArray)
                 {
-                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("ctx.owner"), card, path + "." + branch));
+                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("ctx.owner"), card, path + "." + branch, frame));
                 }
             }
             return StepResult.Done();

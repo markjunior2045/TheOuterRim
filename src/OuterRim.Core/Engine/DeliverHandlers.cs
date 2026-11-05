@@ -124,7 +124,7 @@ namespace OuterRim.Core.Engine
                         return StepResult.Done(); // already gone (discarded by the cargo check)
                     }
                     frame.Step = 1;
-                    return StepResult.Call(EffectHandlers.ListFrame(player.Id, cargo, "reward"));
+                    return StepResult.Call(EffectHandlers.ListFrame(player.Id, cargo, "reward", frame));
                 case 1:
                 {
                     frame.Step = 2;
@@ -160,7 +160,7 @@ namespace OuterRim.Core.Engine
             {
                 case 0:
                     frame.Step = 1;
-                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("player"), frame.Get("card"), "intro"));
+                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("player"), frame.Get("card"), "intro", frame));
                 case 1:
                 {
                     frame.Step = 2;
@@ -169,7 +169,7 @@ namespace OuterRim.Core.Engine
                     {
                         return StepResult.Done();
                     }
-                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("player"), frame.Get("card"), frame.Get("face")));
+                    return StepResult.Call(EffectHandlers.ListFrame(frame.Get("player"), frame.Get("card"), frame.Get("face"), frame));
                 }
                 default:
                     return StepResult.Done();
@@ -205,7 +205,7 @@ namespace OuterRim.Core.Engine
                 case 1:
                     frame.Step = 2;
                     return StepResult.Call(EffectHandlers.ListFrame(owner.Id, frame.Get("card"),
-                        frame.Get("path") + (frame.Get("answer") == "avoid" ? ".avoid" : ".penalty")));
+                        frame.Get("path") + (frame.Get("answer") == "avoid" ? ".avoid" : ".penalty"), frame));
                 default:
                     return StepResult.Done();
             }

@@ -229,6 +229,10 @@ namespace OuterRim.Core.Effects
                 case "hutt": return Model.Faction.Hutt;
                 case "syndicate": return Model.Faction.Syndicate;
                 case "planet": return content.Map[you.SpaceId].Faction;
+                case "patrol_in_space":
+                    // The patrol in your space; with several, the effect asks (Targeting.FactionOptions).
+                    foreach (var p in state.PatrolsIn(you.SpaceId)) return p.Faction;
+                    return null;
                 default: throw new NotSupportedException("Faction selector '" + s + "' is not implemented yet (PLAN T2.3b).");
             }
         }
@@ -277,6 +281,17 @@ namespace OuterRim.Core.Effects
                 case "cargo": kind = "cargo"; break;
                 case "mods": kind = "mod"; break;
                 case "gear": kind = "gear"; break;
+                case "rep_neg":
+                case "rep_pos":
+                {
+                    int r = 0;
+                    var wanted = counter == "rep_neg" ? Reputation.Negative : Reputation.Positive;
+                    foreach (Faction f in new[] { Model.Faction.Rebel, Model.Faction.Imperial, Model.Faction.Hutt, Model.Faction.Syndicate })
+                    {
+                        if (you.Reputation.Get(f) == wanted) r++;
+                    }
+                    return r;
+                }
                 default: throw new NotSupportedException("Counter '" + counter + "' is not implemented yet.");
             }
             int n = 0;

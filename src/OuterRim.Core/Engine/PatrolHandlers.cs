@@ -23,6 +23,12 @@ namespace OuterRim.Core.Engine
                     // action, you may move the patrol toward another player instead of toward you."
                     var current = ctx.State.FindPlayer(ctx.State.CurrentPlayerId)!;
                     frame.Step = 2;
+                    if (frame.Vars.ContainsKey("toward_player"))
+                    {
+                        // A card effect: "toward you" is its owner, and Jyn's market-action redirect does not apply.
+                        frame.Set("toward", frame.Get("toward_player"));
+                        return StepResult.Continue();
+                    }
                     if (ctx.State.Players.Count > 1 && CanRedirect(ctx, current, patrol))
                     {
                         var choices = new List<DecisionOption> { new DecisionOption(current.Id, "rules.toward_you") };
@@ -38,7 +44,28 @@ namespace OuterRim.Core.Engine
                 case 2:
                 {
                     var target = ctx.State.FindPlayer(frame.Get("toward"))!;
-                    var ends = Patrols.Destinations(ctx.Content.Map, patrol.SpaceId, target.SpaceId, frame.GetInt("distance"));
+                    int distance = frame.GetInt("distance");
+                    List<string> ends;
+                    if (frame.Vars.ContainsKey("any_direction"))
+                    {
+                        // "Up to N spaces in any direction" (Lothal-5).
+                        ends = ctx.Content.Map.Within(patrol.SpaceId, distance, throughCoreWorlds: false);
+                    }
+                    else if (frame.Vars.ContainsKey("up_to"))
+                    {
+                        ends = new List<string>();
+                        for (int k = 0; k <= distance; k++)
+                        {
+                            foreach (var e in Patrols.Destinations(ctx.Content.Map, patrol.SpaceId, target.SpaceId, k))
+                            {
+                                if (!ends.Contains(e)) ends.Add(e);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ends = Patrols.Destinations(ctx.Content.Map, patrol.SpaceId, target.SpaceId, distance);
+                    }
                     frame.Step = 1;
                     if (ends.Count == 1)
                     {
@@ -100,7 +127,7 @@ namespace OuterRim.Core.Engine
                 var token = ctx.Content.PatrolToken(faction, patrol.Level);
                 var combat = new Frame(Combat.Handler);
                 combat.Set("type", "ship");
-                combat.Set("attacker", ctx.State.CurrentPlayerId);
+                combat.Set("attacker", frame.Vars.ContainsKey("player") ? frame.Get("player") : ctx.State.CurrentPlayerId);
                 combat.Set("defender_kind", "patrol");
                 combat.Set("defender", Patrols.Id(faction));
                 combat.Set("defender_value", token.Combat.HasValue

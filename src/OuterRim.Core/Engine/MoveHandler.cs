@@ -97,7 +97,10 @@ namespace OuterRim.Core.Engine
             var taken = new List<string>();
             for (int k = 0; k < entered && k < path.Length; k++) taken.Add(path[k]);
             ctx.Events.Add(new PlayerMovedEvent(player.Id, frame.Get("from"), taken, false));
-            GameEngine.StartStep(ctx.State, TurnStep.Action, ctx.Events);
+            if (!frame.Vars.ContainsKey("effect"))
+            {
+                GameEngine.StartStep(ctx.State, TurnStep.Action, ctx.Events); // planning movement only
+            }
             return StepResult.Done();
         }
 

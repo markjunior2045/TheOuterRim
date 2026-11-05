@@ -776,6 +776,17 @@ namespace OuterRim.Core.Engine
         public string CardId { get; }
     }
 
+    /// <summary>R-5.14: an additional turn will follow this one.</summary>
+    public sealed class AdditionalTurnGainedEvent : GameEvent
+    {
+        public AdditionalTurnGainedEvent(string playerId)
+        {
+            PlayerId = playerId;
+        }
+
+        public string PlayerId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

@@ -163,7 +163,7 @@ namespace OuterRim.Core.Engine
                         frame.Set("kept", "1");
                         return StepResult.Continue();
                     }
-                    return StepResult.Call(EffectHandlers.ListFrame(player.Id, cardId, path + ".effects"));
+                    return StepResult.Call(EffectHandlers.ListFrame(player.Id, cardId, path + ".effects", frame));
                 }
                 default:
                 {

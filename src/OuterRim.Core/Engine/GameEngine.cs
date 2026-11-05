@@ -929,6 +929,16 @@ namespace OuterRim.Core.Engine
                 foreach (var a in p.Assets) a.GainedThisEncounter = false;
             }
             events.Add(new TurnEndedEvent(state.CurrentPlayerId));
+            if (state.AdditionalTurn)
+            {
+                // R-5.14: the same player takes a full turn again; the round does not advance.
+                state.AdditionalTurn = false;
+                state.InAdditionalTurn = true;
+                events.Add(new TurnStartedEvent(state.CurrentPlayerId, state.Round));
+                StartStep(state, TurnStep.Planning, events);
+                return;
+            }
+            state.InAdditionalTurn = false;
             int next = (state.SeatOf(state.CurrentPlayerId) + 1) % state.Players.Count;
             state.CurrentPlayerId = state.Players[next].Id;
             if (state.CurrentPlayerId == state.FirstPlayerId)

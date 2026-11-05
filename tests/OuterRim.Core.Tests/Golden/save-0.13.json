@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.12",
+  "format": "outer-rim-save/0.13",
   "packs": [
     {
       "id": "base",
@@ -140,6 +140,8 @@
       "base-ship-modified-yt-1300-light-freighter",
       "base-ship-yv-666-light-freighter"
     ],
+    "additionalTurn": false,
+    "inAdditionalTurn": false,
     "marketDecks": [
       {
         "deck": "bounty",
