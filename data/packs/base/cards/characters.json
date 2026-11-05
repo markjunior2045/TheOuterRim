@@ -1,0 +1,1069 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "characters",
+  "source": "data/transcription/characters/base-characters.json",
+  "cards": [
+    {
+      "id": "base-character-00",
+      "kind": "character",
+      "ground_combat": 3,
+      "health": 4,
+      "skills": [
+        "stealth",
+        "strength"
+      ],
+      "setup": {
+        "databank": 90,
+        "reputation": [
+          {
+            "faction": "syndicate",
+            "state": "pos"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-00",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "step",
+                "step": "encounter"
+              },
+              "effects": [
+                {
+                  "op": "choice",
+                  "options": [
+                    [
+                      {
+                        "op": "encounter.patrol",
+                        "patrol": {
+                          "within": {
+                            "distance": 3
+                          }
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "op": "encounter.contact",
+                        "where": {
+                          "within": {
+                            "distance": 3,
+                            "of": "you"
+                          }
+                        }
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "count": {
+                    "event": "combat_won",
+                    "times": 3
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-00-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "step",
+                "step": "encounter"
+              },
+              "effects": [
+                {
+                  "op": "choice",
+                  "options": [
+                    [
+                      {
+                        "op": "encounter.patrol",
+                        "patrol": {
+                          "within": {
+                            "distance": 3
+                          }
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "op": "encounter.contact",
+                        "where": {
+                          "within": {
+                            "distance": 3,
+                            "of": "you"
+                          }
+                        }
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "trigger",
+                "event": "combat_won"
+              },
+              "effects": [
+                {
+                  "op": "credits.gain",
+                  "amount": 4000
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-01",
+      "kind": "character",
+      "ground_combat": 2,
+      "health": 4,
+      "skills": [
+        "influence",
+        "knowledge",
+        "piloting"
+      ],
+      "setup": {
+        "databank": 91,
+        "reputation": [
+          {
+            "faction": "choice",
+            "state": "pos"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-01",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "trigger",
+                "event": "dice_rolled"
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.reroll",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "count": {
+                    "event": "cargo_delivered",
+                    "times": 2,
+                    "filter": {
+                      "cond": "delivering",
+                      "trait": "illegal"
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-01-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "trigger",
+                "event": "dice_rolled"
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.reroll",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "optional": true,
+              "condition": {
+                "cond": "on_space",
+                "type": "planet"
+              },
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 1000
+                }
+              ],
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "influence"
+                  ],
+                  "pass": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "planet"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-02",
+      "kind": "character",
+      "ground_combat": 3,
+      "health": 4,
+      "skills": [
+        "influence",
+        "tactics"
+      ],
+      "setup": {
+        "databank": 92,
+        "reputation": [
+          {
+            "faction": "imperial",
+            "state": "neg"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-02",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "window",
+                "window": "dice_modify",
+                "scope": [
+                  "ground_combat",
+                  "ship_combat",
+                  "skill_test"
+                ]
+              },
+              "limit": "once_per_turn",
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.turn",
+                  "from": [
+                    "focus"
+                  ],
+                  "to": "crit",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "condition": {
+                "cond": "on_space",
+                "type": "planet",
+                "faction": "imperial"
+              },
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "stealth"
+                  ],
+                  "pass": [
+                    {
+                      "op": "planet.marker"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "front.lower.1",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "state": {
+                    "cond": {
+                      "cond": "planet_markers",
+                      "min": 2,
+                      "faction": "imperial"
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-02-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "window",
+                "window": "dice_modify",
+                "scope": [
+                  "ground_combat",
+                  "ship_combat",
+                  "skill_test"
+                ]
+              },
+              "limit": "once_per_turn",
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.turn",
+                  "from": [
+                    "focus"
+                  ],
+                  "to": "crit",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "replacement",
+                "event": "patrol_would_move"
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "custom",
+                  "handler": "patrol_redirect",
+                  "params": {
+                    "within": 3
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-03",
+      "kind": "character",
+      "ground_combat": 3,
+      "health": 4,
+      "skills": [
+        "strength",
+        "tactics"
+      ],
+      "setup": {
+        "databank": 90,
+        "reputation": [
+          {
+            "faction": "hutt",
+            "state": "pos"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-03",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "effects": [
+                {
+                  "op": "damage.recover",
+                  "target": "character",
+                  "amount": 2
+                },
+                {
+                  "op": "damage.recover",
+                  "target": "ship",
+                  "amount": 2
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "state": {
+                    "cond": {
+                      "cond": "all",
+                      "of": [
+                        {
+                          "cond": "has_asset",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "mod"
+                              ]
+                            }
+                          },
+                          "min": 1
+                        },
+                        {
+                          "cond": "has_asset",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "gear"
+                              ]
+                            }
+                          },
+                          "min": 2
+                        },
+                        {
+                          "cond": "has_asset",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "mod",
+                                "gear"
+                              ]
+                            }
+                          },
+                          "min_total_cost": 15000
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-03-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "effects": [
+                {
+                  "op": "damage.recover",
+                  "target": "character",
+                  "amount": 2
+                },
+                {
+                  "op": "damage.recover",
+                  "target": "ship",
+                  "amount": 2
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "step",
+                "step": "encounter"
+              },
+              "effects": [
+                {
+                  "op": "combat",
+                  "type": "by_space",
+                  "opponent": {
+                    "player": {
+                      "who": {
+                        "choose": {
+                          "who": "other",
+                          "where": {
+                            "cond": "all",
+                            "of": [
+                              {
+                                "cond": "same_space"
+                              },
+                              {
+                                "cond": "more_fame_than",
+                                "player": "self"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "win": [
+                    {
+                      "op": "fame.gain",
+                      "amount": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-04",
+      "kind": "character",
+      "ground_combat": 3,
+      "health": 4,
+      "skills": [
+        "piloting",
+        "tech"
+      ],
+      "setup": {
+        "databank": 91,
+        "reputation": [
+          {
+            "faction": "hutt",
+            "state": "neg"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-04",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "passive"
+              },
+              "effects": [
+                {
+                  "op": "stat.modify",
+                  "stat": "hyperdrive",
+                  "by": 2
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "state": {
+                    "cond": {
+                      "cond": "ship_cost_at_least",
+                      "amount": 15000
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-04-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "passive"
+              },
+              "effects": [
+                {
+                  "op": "stat.modify",
+                  "stat": "hyperdrive",
+                  "by": 2
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "trigger",
+                "event": "move_into",
+                "filter": {
+                  "cond": "moving_into",
+                  "what": "patrol"
+                }
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "piloting"
+                  ],
+                  "pass": [
+                    {
+                      "op": "move.no_stop"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-05",
+      "kind": "character",
+      "ground_combat": 2,
+      "health": 4,
+      "skills": [
+        "knowledge",
+        "stealth",
+        "tech"
+      ],
+      "setup": {
+        "databank": 92,
+        "reputation": [
+          {
+            "faction": "imperial",
+            "state": "pos"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-05",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "trigger",
+                "event": "test_before"
+              },
+              "limit": "once_per_turn",
+              "optional": true,
+              "effects": [
+                {
+                  "op": "test.skill_grant",
+                  "skill": "choice",
+                  "duration": "this_test"
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "count": {
+                    "event": "job_completed",
+                    "times": 2
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-05-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "trigger",
+                "event": "test_before"
+              },
+              "limit": "once_per_turn",
+              "optional": true,
+              "effects": [
+                {
+                  "op": "test.skill_grant",
+                  "skill": "choice",
+                  "duration": "this_test"
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "step",
+                "step": "planning"
+              },
+              "condition": {
+                "cond": "any",
+                "of": [
+                  {
+                    "cond": "on_space",
+                    "type": "planet"
+                  },
+                  {
+                    "cond": "on_space",
+                    "type": "navpoint"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "op": "market.extra_action"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-06",
+      "kind": "character",
+      "ground_combat": 3,
+      "health": 4,
+      "skills": [
+        "stealth",
+        "tactics"
+      ],
+      "setup": {
+        "databank": 90,
+        "reputation": [
+          {
+            "faction": "hutt",
+            "state": "pos"
+          }
+        ]
+      },
+      "sides": [
+        {
+          "image": "base-character-06",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "effects": [
+                {
+                  "op": "contact.look",
+                  "where": "your_space",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "count": {
+                    "event": "bounty_reward",
+                    "times": 2
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-06-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "effects": [
+                {
+                  "op": "contact.look",
+                  "where": "your_space",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "trigger",
+                "event": "contact_eliminated"
+              },
+              "effects": [
+                {
+                  "op": "credits.gain",
+                  "amount": 5000
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-character-07",
+      "kind": "character",
+      "ground_combat": 3,
+      "health": 4,
+      "skills": [
+        "strength",
+        "tech"
+      ],
+      "setup": {
+        "databank": 90,
+        "reputation": []
+      },
+      "sides": [
+        {
+          "image": "base-character-07",
+          "side": "front",
+          "abilities": [
+            {
+              "text": "front.upper.0",
+              "timing": {
+                "type": "window",
+                "window": "dice_modify",
+                "scope": [
+                  "ground_combat",
+                  "ship_combat"
+                ]
+              },
+              "limit": "once_per_combat",
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.reroll",
+                  "count": {
+                    "any": {}
+                  }
+                }
+              ]
+            },
+            {
+              "text": "front.lower.0",
+              "timing": {
+                "type": "step",
+                "step": "action"
+              },
+              "effects": [
+                {
+                  "op": "asset.take",
+                  "filter": {
+                    "asset": {
+                      "type": [
+                        "crew"
+                      ],
+                      "droid": true
+                    }
+                  },
+                  "from": {
+                    "choose": {
+                      "who": "other",
+                      "where": {
+                        "cond": "same_space"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "text": "front.lower.1",
+              "timing": {
+                "type": "goal",
+                "kind": "personal",
+                "progress": {
+                  "state": {
+                    "cond": {
+                      "cond": "has_asset",
+                      "filter": {
+                        "asset": {
+                          "type": [
+                            "crew"
+                          ],
+                          "droid": true
+                        }
+                      },
+                      "min": 2
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-character-07-back",
+          "side": "back",
+          "abilities": [
+            {
+              "text": "back.upper.0",
+              "timing": {
+                "type": "window",
+                "window": "dice_modify",
+                "scope": [
+                  "ground_combat",
+                  "ship_combat"
+                ]
+              },
+              "limit": "once_per_combat",
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.reroll",
+                  "count": {
+                    "any": {}
+                  }
+                }
+              ]
+            },
+            {
+              "text": "back.lower.0",
+              "timing": {
+                "type": "replacement",
+                "event": "would_be_defeated"
+              },
+              "optional": true,
+              "cost": [
+                {
+                  "op": "asset.discard",
+                  "filter": {
+                    "asset": {
+                      "type": [
+                        "crew"
+                      ]
+                    }
+                  },
+                  "count": 1
+                }
+              ],
+              "effects": [
+                {
+                  "op": "damage.recover",
+                  "target": "both",
+                  "amount": {
+                    "all": {}
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

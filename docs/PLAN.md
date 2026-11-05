@@ -129,8 +129,10 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 ### T2.3 — Effect engine · `TODO` (T2.2)
 - The effects from the inventory, with hooks for custom exceptions.
 
-### T2.4 — Small data sets · `TODO` (T2.2)
-- Patrols (16), ship sheets (9 + 6 unique), contacts (22 + 11), characters (8 + 8), ambition sheets (8), player board slots. Patrol values and player board slots come from `data/transcription/patrols/` and `data/transcription/player-boards/`. **Done when:** all load and validate.
+### T2.4 — Small data sets · base `DONE` (2026-11-05), expansion with its pack
+- Patrols (16), ship sheets (9 + 6 unique), contacts (22 + 11), characters (8 + 8), ambition sheets (8), player boards (4). **Done when:** all load and validate.
+- **Delivered (base):** `data/packs/base/cards/` `patrols.json` (16), `player-boards.json` (4), `contacts.json` (22), `characters.json` (8, both sides with abilities and goals), `ship-sheets.json` (9, both sides). The validator also checks that contacts per class match the map's contact spaces and that each faction has patrol levels 1 to 4. 25 validator tests.
+- Expansion parts (6 sheets, 11 contacts, 8 characters, 8 ambition sheets) come with the expansion transcription (T2.8).
 
 ### T2.5 — Market · `TODO` (T2.3, T2.4)
 - Discard, buy, barter, icons, ship purchase, "Used Ship for Sale" (R-16).
@@ -205,6 +207,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.4 base done: patrols, player boards, contacts, characters and ship sheets encoded and validated; cross-set consistency checks. |
 | 2026-11-05 | T2.2 done (owner approved the format). |
 | 2026-11-05 | T2.2 delivered for review: data format, registry, base pack manifest, localization builder, validator and tests; gear and cargo encoded. |
 | 2026-11-05 | T2.1 done: `docs/EFFECTS.md` approved by the owner. |

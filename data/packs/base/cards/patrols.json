@@ -1,0 +1,212 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "patrols",
+  "source": "data/transcription/patrols/base-patrols.json",
+  "cards": [
+    {
+      "id": "base-patrol-hutt-1",
+      "kind": "patrol",
+      "faction": "hutt",
+      "level": 1,
+      "combat": 3,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-hutt-2",
+      "kind": "patrol",
+      "faction": "hutt",
+      "level": 2,
+      "combat": 5,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-hutt-3",
+      "kind": "patrol",
+      "faction": "hutt",
+      "level": 3,
+      "combat": 6,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-hutt-4",
+      "kind": "patrol",
+      "faction": "hutt",
+      "level": 4,
+      "combat": null,
+      "reward": [],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-imperial-1",
+      "kind": "patrol",
+      "faction": "imperial",
+      "level": 1,
+      "combat": 3,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-imperial-2",
+      "kind": "patrol",
+      "faction": "imperial",
+      "level": 2,
+      "combat": 5,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-imperial-3",
+      "kind": "patrol",
+      "faction": "imperial",
+      "level": 3,
+      "combat": 6,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-imperial-4",
+      "kind": "patrol",
+      "faction": "imperial",
+      "level": 4,
+      "combat": null,
+      "reward": [],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-rebel-1",
+      "kind": "patrol",
+      "faction": "rebel",
+      "level": 1,
+      "combat": 3,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-rebel-2",
+      "kind": "patrol",
+      "faction": "rebel",
+      "level": 2,
+      "combat": 5,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-rebel-3",
+      "kind": "patrol",
+      "faction": "rebel",
+      "level": 3,
+      "combat": 6,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-rebel-4",
+      "kind": "patrol",
+      "faction": "rebel",
+      "level": 4,
+      "combat": null,
+      "reward": [],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-syndicate-1",
+      "kind": "patrol",
+      "faction": "syndicate",
+      "level": 1,
+      "combat": 3,
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-syndicate-2",
+      "kind": "patrol",
+      "faction": "syndicate",
+      "level": 2,
+      "combat": 5,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-syndicate-3",
+      "kind": "patrol",
+      "faction": "syndicate",
+      "level": 3,
+      "combat": 6,
+      "reward": [
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-patrol-syndicate-4",
+      "kind": "patrol",
+      "faction": "syndicate",
+      "level": 4,
+      "combat": null,
+      "reward": [],
+      "abilities": []
+    }
+  ]
+}

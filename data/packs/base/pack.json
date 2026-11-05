@@ -7,7 +7,12 @@
   "map": "data/map/base-map.json",
   "cards": [
     "data/packs/base/cards/market-gear.json",
-    "data/packs/base/cards/market-cargo.json"
+    "data/packs/base/cards/market-cargo.json",
+    "data/packs/base/cards/patrols.json",
+    "data/packs/base/cards/player-boards.json",
+    "data/packs/base/cards/contacts.json",
+    "data/packs/base/cards/characters.json",
+    "data/packs/base/cards/ship-sheets.json"
   ],
   "localization": {
     "en": "data/packs/base/loc/en.json"

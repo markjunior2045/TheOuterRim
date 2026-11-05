@@ -1,0 +1,1192 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "ship-sheets",
+  "source": "data/transcription/ship-sheets/base-ship-sheets.json",
+  "cards": [
+    {
+      "id": "base-ship-aggressor-class-assault-fighter",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-08",
+      "sides": [
+        {
+          "image": "base-ship-aggressor-class-assault-fighter-back",
+          "role": "ship_goal",
+          "cost": 15000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "count": {
+                    "event": "combat_won",
+                    "times": 2,
+                    "filter": {
+                      "cond": "combat",
+                      "opponent": "patrol"
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-aggressor-class-assault-fighter",
+          "role": "flipped",
+          "cost": 15000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "bounty"
+              ],
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "passive"
+              },
+              "effects": [
+                {
+                  "op": "rule.modify",
+                  "rule": "no_reputation_loss_on_patrol_win"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-firespray-31-patrol-craft",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-00",
+      "sides": [
+        {
+          "image": "base-ship-firespray-31-patrol-craft",
+          "role": "ship_goal",
+          "cost": 20000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 6
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "step": {
+                    "step": "encounter"
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "combat",
+                  "type": "ship",
+                  "opponent": {
+                    "player": {
+                      "who": {
+                        "choose": {
+                          "who": "other",
+                          "where": {
+                            "cond": "all",
+                            "of": [
+                              {
+                                "cond": "same_space"
+                              },
+                              {
+                                "cond": "more_fame_than",
+                                "player": "self"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "win": [
+                    {
+                      "op": "fame.gain",
+                      "amount": 1
+                    },
+                    {
+                      "op": "sheet.flip",
+                      "sheet": "ship"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-firespray-31-patrol-craft-back",
+          "role": "flipped",
+          "cost": 20000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 5,
+            "hull": 6
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "trigger",
+                "event": "move_into",
+                "filter": {
+                  "cond": "moving_into",
+                  "what": "patrol"
+                }
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "stealth"
+                  ],
+                  "pass": [
+                    {
+                      "op": "move.no_stop"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-g9-rigger",
+      "kind": "ship_sheet",
+      "market_card": null,
+      "sides": [
+        {
+          "image": "base-ship-g9-rigger",
+          "role": "starter",
+          "cost": 0,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 2,
+            "hull": 3
+          },
+          "traits": [
+            "starter ship"
+          ],
+          "abilities": []
+        },
+        {
+          "image": "base-ship-g9-rigger-back",
+          "role": "starter",
+          "cost": 0,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 5,
+            "ship_combat": 3,
+            "hull": 4
+          },
+          "traits": [
+            "starter ship"
+          ],
+          "abilities": []
+        }
+      ]
+    },
+    {
+      "id": "base-ship-gx1-short-hauler",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-05",
+      "sides": [
+        {
+          "image": "base-ship-gx1-short-hauler",
+          "role": "ship_goal",
+          "cost": 5000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 2,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "on_event": {
+                    "event": "asset_gained",
+                    "filter": {
+                      "cond": "all",
+                      "of": [
+                        {
+                          "cond": "gained",
+                          "type": [
+                            "crew"
+                          ]
+                        },
+                        {
+                          "cond": "has_asset",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "crew"
+                              ]
+                            }
+                          },
+                          "min": 3
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-gx1-short-hauler-back",
+          "role": "flipped",
+          "cost": 5000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 2,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "passive"
+              },
+              "effects": [
+                {
+                  "op": "rule.modify",
+                  "rule": "not_forced_to_encounter_negative_patrols"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-heavy-duty-lifter",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-07",
+      "sides": [
+        {
+          "image": "base-ship-heavy-duty-lifter",
+          "role": "ship_goal",
+          "cost": 10000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "on_event": {
+                    "event": "job_completed",
+                    "filter": {
+                      "cond": "has_asset",
+                      "filter": {
+                        "asset": {
+                          "type": [
+                            "cargo"
+                          ]
+                        }
+                      },
+                      "min": 1
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-heavy-duty-lifter-back",
+          "role": "flipped",
+          "cost": 10000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "passive"
+              },
+              "effects": [
+                {
+                  "op": "stat.modify",
+                  "stat": "hyperdrive",
+                  "by": {
+                    "per": {
+                      "each": 1,
+                      "counter": "jobs"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-hwk-290-freighter",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-02",
+      "sides": [
+        {
+          "image": "base-ship-hwk-290-freighter",
+          "role": "ship_goal",
+          "cost": 5000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 4
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "step": {
+                    "step": "action"
+                  }
+                }
+              },
+              "condition": {
+                "cond": "has_asset",
+                "filter": {
+                  "asset": {
+                    "type": [
+                      "mod"
+                    ]
+                  }
+                },
+                "min": 1
+              },
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 7000
+                }
+              ],
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-hwk-290-freighter-back",
+          "role": "flipped",
+          "cost": 5000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 3,
+            "hull": 4
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "passive"
+              },
+              "effects": [
+                {
+                  "op": "stat.modify",
+                  "stat": "ground_combat",
+                  "by": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-lancer-class-pursuit-craft",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-06",
+      "sides": [
+        {
+          "image": "base-ship-lancer-class-pursuit-craft",
+          "role": "ship_goal",
+          "cost": 10000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "on_event": {
+                    "event": "contact_delivered"
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-lancer-class-pursuit-craft-back",
+          "role": "flipped",
+          "cost": 10000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "crew",
+                "bounty"
+              ],
+              "count": 1
+            }
+          ],
+          "stats": {
+            "hyperdrive": 6,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "trigger",
+                "event": "other_moves_into"
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "custom",
+                  "handler": "tractor_beam"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-modified-yt-1300-light-freighter",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-01",
+      "sides": [
+        {
+          "image": "base-ship-modified-yt-1300-light-freighter",
+          "role": "ship_goal",
+          "cost": 20000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "on_event": {
+                    "event": "cargo_delivered",
+                    "filter": {
+                      "cond": "any",
+                      "of": [
+                        {
+                          "cond": "has_asset",
+                          "filter": {
+                            "asset": {
+                              "type": [
+                                "mod"
+                              ]
+                            }
+                          },
+                          "min": 2
+                        },
+                        {
+                          "cond": "all",
+                          "of": [
+                            {
+                              "cond": "has_asset",
+                              "filter": {
+                                "asset": {
+                                  "type": [
+                                    "mod"
+                                  ]
+                                }
+                              },
+                              "min": 1
+                            },
+                            {
+                              "cond": "has_asset",
+                              "filter": {
+                                "asset": {
+                                  "type": [
+                                    "crew"
+                                  ],
+                                  "name": "Chewbacca"
+                                }
+                              },
+                              "min": 1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-modified-yt-1300-light-freighter-back",
+          "role": "flipped",
+          "cost": 20000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 5,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "window",
+                "window": "dice_modify",
+                "scope": [
+                  "delivery_roll"
+                ],
+                "filter": {
+                  "cond": "delivering",
+                  "trait": "illegal"
+                }
+              },
+              "optional": true,
+              "effects": [
+                {
+                  "op": "dice.turn",
+                  "from": [
+                    "focus",
+                    "crit"
+                  ],
+                  "to": "hit",
+                  "count": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "base-ship-yv-666-light-freighter",
+      "kind": "ship_sheet",
+      "market_card": "base-market-ship-03",
+      "sides": [
+        {
+          "image": "base-ship-yv-666-light-freighter",
+          "role": "ship_goal",
+          "cost": 15000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 3,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.0.text.0",
+              "timing": {
+                "type": "goal",
+                "kind": "ship",
+                "progress": {
+                  "on_event": {
+                    "event": "damage_recovered",
+                    "filter": {
+                      "cond": "recovered",
+                      "target": "ship"
+                    }
+                  }
+                }
+              },
+              "optional": true,
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 7000
+                }
+              ],
+              "effects": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "sheet.flip",
+                  "sheet": "ship"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "image": "base-ship-yv-666-light-freighter-back",
+          "role": "flipped",
+          "cost": 15000,
+          "slots": [
+            {
+              "types": [
+                "cargo"
+              ],
+              "count": 2
+            },
+            {
+              "types": [
+                "cargo",
+                "mod"
+              ],
+              "count": 1
+            },
+            {
+              "types": [
+                "crew"
+              ],
+              "count": 3
+            }
+          ],
+          "stats": {
+            "hyperdrive": 7,
+            "ship_combat": 4,
+            "hull": 5
+          },
+          "traits": [],
+          "abilities": [
+            {
+              "text": "sides.1.text.0",
+              "timing": {
+                "type": "replacement",
+                "event": "would_be_defeated",
+                "filter": {
+                  "cond": "combat",
+                  "type": "ship"
+                }
+              },
+              "effects": [
+                {
+                  "op": "dice.roll",
+                  "count": 1,
+                  "outcomes": [
+                    {
+                      "faces": [
+                        "focus",
+                        "hit"
+                      ],
+                      "effects": [
+                        {
+                          "op": "damage.recover",
+                          "target": "ship",
+                          "amount": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

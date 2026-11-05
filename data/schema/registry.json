@@ -3,7 +3,8 @@
   "notes": [
     "Single list of what card data may use (docs/DATA_FORMAT.md). Built from docs/EFFECTS.md. The Python validator (tools/validate_data.py) reads it now; the C# loader reads the same file later.",
     "Parameter types: int, bool, string, amount, effects, cond, enum:a|b, list:<type>, and the named types under 'types'. A trailing '?' marks an optional parameter.",
-    "card_kinds: fields a card of that kind may carry beyond the common ones (id, kind, abilities, errata, notes)."
+    "card_kinds: fields a card of that kind may carry beyond the common ones (id, kind, abilities, errata, notes).",
+    "Inside a player selector's 'where', conditions are evaluated for the candidate player; 'self' still means the ability's owner."
   ],
   "enums": {
     "faction": [
@@ -102,6 +103,36 @@
       "ship_combat",
       "skill_test",
       "delivery_roll"
+    ],
+    "card_kind": [
+      "cargo",
+      "crew",
+      "gear",
+      "mod",
+      "job",
+      "bounty",
+      "ship",
+      "special",
+      "ship_sheet",
+      "character",
+      "contact",
+      "patrol",
+      "player_board"
+    ],
+    "contact_class": [
+      "white",
+      "green",
+      "yellow",
+      "orange"
+    ],
+    "sheet_role": [
+      "ship_goal",
+      "flipped",
+      "starter"
+    ],
+    "card_side": [
+      "front",
+      "back"
     ]
   },
   "types": {
@@ -173,7 +204,12 @@
         "in_your_space",
         "chosen_in_your_space"
       ],
-      "enum": "faction"
+      "enum": "faction",
+      "objects": {
+        "within": {
+          "distance": "int"
+        }
+      }
     },
     "opponent": {
       "objects": {
@@ -198,6 +234,25 @@
           "droid": "bool?",
           "name": "string?",
           "self": "bool?"
+        }
+      }
+    },
+    "goal_progress": {
+      "objects": {
+        "count": {
+          "event": "event",
+          "filter": "cond?",
+          "times": "int"
+        },
+        "state": {
+          "cond": "cond"
+        },
+        "on_event": {
+          "event": "event",
+          "filter": "cond?"
+        },
+        "step": {
+          "step": "step"
         }
       }
     }
@@ -240,7 +295,8 @@
       "filter": "cond?"
     },
     "goal": {
-      "kind": "enum:personal|ship"
+      "kind": "enum:personal|ship",
+      "progress": "goal_progress"
     },
     "setup": {}
   },
@@ -267,7 +323,8 @@
     "asset_gained",
     "damage_suffered",
     "cargo_delivered",
-    "reward_gained"
+    "reward_gained",
+    "contact_delivered"
   ],
   "conditions": {
     "all": {
@@ -357,6 +414,20 @@
     },
     "delivering": {
       "trait": "trait?"
+    },
+    "same_space": {},
+    "planet_markers": {
+      "min": "int",
+      "faction": "faction?"
+    },
+    "moving_into": {
+      "what": "enum:patrol|maelstrom"
+    },
+    "gained": {
+      "type": "list:card_type"
+    },
+    "recovered": {
+      "target": "damage_target"
     }
   },
   "effects": {
@@ -528,7 +599,9 @@
       "patrol": "patrol_sel",
       "who": "player_sel?"
     },
-    "encounter.contact": {},
+    "encounter.contact": {
+      "where": "space_sel?"
+    },
     "encounter.space": {
       "deck": "string"
     },
@@ -603,7 +676,8 @@
     "custom": {
       "handler": "custom_handler",
       "params": "object?"
-    }
+    },
+    "move.no_stop": {}
   },
   "outcome": {
     "faces": "list:face?",
@@ -627,8 +701,8 @@
   ],
   "card_fields": {
     "id": "string",
-    "kind": "card_type",
-    "abilities": "list:ability",
+    "kind": "card_kind",
+    "abilities": "list:ability?",
     "errata": "string?",
     "notes": "list:string?"
   },
@@ -664,6 +738,34 @@
       "cannot_buy_on": "nullable:space_id",
       "delivery_check": "nullable:delivery_check",
       "reward": "effects"
+    },
+    "ship_sheet": {
+      "market_card": "nullable:string",
+      "sides": "list:ship_side"
+    },
+    "character": {
+      "ground_combat": "int",
+      "health": "int",
+      "skills": "list:skill",
+      "setup": "character_setup",
+      "sides": "list:character_side"
+    },
+    "contact": {
+      "class": "contact_class",
+      "faction": "nullable:faction",
+      "droid": "bool",
+      "databank": "int"
+    },
+    "patrol": {
+      "faction": "faction",
+      "level": "int",
+      "combat": "nullable:int",
+      "reward": "effects"
+    },
+    "player_board": {
+      "color": "string",
+      "slots": "list:slot",
+      "fame_track": "fame_track"
     }
   },
   "field_types": {
@@ -674,6 +776,41 @@
     "delivery_check": {
       "success": "list:face",
       "else_databank": "int"
+    },
+    "slot": {
+      "types": "list:card_type",
+      "count": "int"
+    },
+    "ship_stats": {
+      "hyperdrive": "int",
+      "ship_combat": "int",
+      "hull": "int"
+    },
+    "ship_side": {
+      "image": "string",
+      "role": "sheet_role",
+      "cost": "nullable:int",
+      "slots": "list:slot",
+      "stats": "ship_stats",
+      "traits": "list:trait",
+      "abilities": "list:ability"
+    },
+    "character_side": {
+      "image": "string",
+      "side": "card_side",
+      "abilities": "list:ability"
+    },
+    "character_setup": {
+      "databank": "int",
+      "reputation": "list:rep_setup"
+    },
+    "rep_setup": {
+      "faction": "faction_sel",
+      "state": "rep_state"
+    },
+    "fame_track": {
+      "min": "int",
+      "max": "int"
     }
   },
   "ability_fields": {

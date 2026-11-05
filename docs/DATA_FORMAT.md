@@ -42,7 +42,17 @@ Every card has `id`, `kind`, `abilities`, and the fields of its kind in `registr
 | crew | as gear, plus `skills`, optional `faction`, `droid` |
 | cargo | as gear, plus `destination`, `cannot_buy_on` (space ids), `delivery_check` (`{ success, else_databank }` for ILLEGAL cargo), `reward` (effects) |
 
-Further kinds (job, bounty, ship, encounter, databank, character, ship sheet, AI) are added to the registry as their decks are encoded.
+| ship_sheet | `market_card` (the market card that buys it, or `null` for the starter sheet), `sides`: each with `image`, `role` (`ship_goal`, `flipped`, `starter`), `cost`, `slots`, `stats` (`hyperdrive`, `ship_combat`, `hull`), `traits`, `abilities` |
+| character | `ground_combat`, `health`, `skills`, `setup` (`databank` number and starting `reputation` list; faction `"choice"` for Lando), `sides`: front and back, each with `image` and `abilities` |
+| contact | `class` (white, green, yellow, orange), `faction` or `null`, `droid`, `databank` (the card resolved on encounter, R-12.15) |
+| patrol | `faction`, `level`, `combat` (`null` for level 4, R-11.6), `reward` (effects) |
+| player_board | `color`, `slots`, `fame_track` (`min`, `max`) |
+
+A slot is `{ "types": ["job", "bounty"], "count": 2 }`: `types` lists the asset types the slot accepts ("job or bounty"), `count` how many such slots. Two-sided cards keep their abilities on each side; their text keys start with the side (`"front.upper.0"`, `"sides.1.text.0"`). Goals are abilities with a `goal` timing whose `progress` is a count of events, a state, an event with a condition, or a step ability (`EFFECTS.md` §3.5).
+
+The validator also checks consistency between sets: contact tokens per class match the contact spaces on the map (R-12.4), and each faction has one patrol token of each level (R-11.3).
+
+Further kinds (job, bounty, ship, encounter, databank, AI) are added to the registry as their decks are encoded.
 
 Player-facing text never appears in card data (`DECISIONS.md` §3). An ability's `text` is a key relative to the card: `"text.0"` resolves to `"<card id>.text.0"` in the pack's localization file. Icons stay as `{PLACEHOLDERS}`.
 

@@ -12,7 +12,9 @@ Checks, for every pack manifest (data/packs/<id>/pack.json):
   - every ability, effect, condition, timing, amount and selector is known to the registry,
     with all required parameters and no unknown ones ("unknown effect type" is an error);
   - space ids (destinations, "cannot buy on") exist on the pack's map or a dependency's map;
-  - every ability text key exists in the pack's English localization.
+  - every ability text key exists in the pack's English localization;
+  - consistency between sets: contact tokens per class match the contact spaces on the pack's map
+    (R-12.4), and each faction has exactly one patrol token of each level 1 to 4 (R-11.3).
 Exit code 1 on any error. The rules are documented in docs/DATA_FORMAT.md.
 """
 from __future__ import annotations
@@ -168,10 +170,19 @@ class Validator:
             return self.err(path, f"unknown or unsupported card kind {kind!r}")
         spec = dict(self.r["card_fields"], **self.r["card_kinds"][kind])
         self.check_params(card, spec, path, f"card {kind}")
-        for i, ab in enumerate(card.get("abilities") or []):
+        for apath, ab in iter_abilities(card, path):
             key = ab.get("text") if isinstance(ab, dict) else None
             if key and f"{card_id}.{key}" not in self.loc:
-                self.err(f"{path}.abilities[{i}]", f"text key {card_id}.{key} not in the English localization")
+                self.err(apath, f"text key {card_id}.{key} not in the English localization")
+
+
+def iter_abilities(card: dict, path: str):
+    """Abilities on the card and on each side of two-sided cards (characters, ship sheets)."""
+    for i, ab in enumerate(card.get("abilities") or []):
+        yield f"{path}.abilities[{i}]", ab
+    for s, side in enumerate(card.get("sides") or []):
+        for i, ab in enumerate(side.get("abilities") or [] if isinstance(side, dict) else []):
+            yield f"{path}.sides[{s}].abilities[{i}]", ab
 
 
 def load_json(path: Path, v: Validator):
@@ -187,6 +198,29 @@ def load_json(path: Path, v: Validator):
 def map_spaces(map_file: Path) -> set[str]:
     d = json.loads(map_file.read_text(encoding="utf-8"))
     return {s["id"] for p in d["pieces"] for s in p["spaces"]}
+
+
+def check_consistency(v: Validator, pid: str, cards: list[dict], map_file: str | None):
+    contacts = [c for c in cards if c.get("kind") == "contact"]
+    if contacts and map_file:
+        d = json.loads((ROOT / map_file).read_text(encoding="utf-8"))
+        spaces: dict[str, int] = {}
+        for p in d["pieces"]:
+            for cs in p["contact_spaces"]:
+                spaces[cs["class"]["color"]] = spaces.get(cs["class"]["color"], 0) + 1
+        tokens: dict[str, int] = {}
+        for c in contacts:
+            tokens[c["class"]] = tokens.get(c["class"], 0) + 1
+        for cls in sorted(set(spaces) | set(tokens)):
+            if spaces.get(cls, 0) != tokens.get(cls, 0):
+                v.err(f"pack {pid}", f"{tokens.get(cls, 0)} {cls} contact tokens but {spaces.get(cls, 0)} {cls} "
+                                     f"contact spaces on the map (R-12.4)")
+    patrols = [c for c in cards if c.get("kind") == "patrol"]
+    if patrols:
+        for f in v.r["enums"]["faction"]:
+            levels = sorted(c.get("level") for c in patrols if c.get("faction") == f)
+            if levels != [1, 2, 3, 4]:
+                v.err(f"pack {pid}", f"{f} patrol levels {levels}, expected [1, 2, 3, 4] (R-11.3)")
 
 
 def validate(packs_dir: Path, registry_file: Path, only: str | None = None) -> list[str]:
@@ -216,6 +250,7 @@ def validate(packs_dir: Path, registry_file: Path, only: str | None = None) -> l
         loc_file = m.get("localization", {}).get("en")
         loc = load_json(ROOT / loc_file, v) if loc_file else None
         v.loc = (loc or {}).get("strings", {})
+        pack_cards: list[dict] = []
         for cf in m.get("cards", []):
             d = load_json(ROOT / cf, v)
             if not d:
@@ -231,6 +266,8 @@ def validate(packs_dir: Path, registry_file: Path, only: str | None = None) -> l
                     v.err(path, f"duplicate card id (also in {seen_ids[cid]})")
                 seen_ids[cid] = cf
                 v.check_card(card, path, cid)
+                pack_cards.append(card)
+        check_consistency(v, pid, pack_cards, m.get("map"))
     return v.errors
 
 

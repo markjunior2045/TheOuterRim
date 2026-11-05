@@ -1,0 +1,184 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "contacts",
+  "source": "data/transcription/contacts/base-contacts.json",
+  "cards": [
+    {
+      "id": "base-contact-02-4-lom",
+      "kind": "contact",
+      "class": "green",
+      "faction": null,
+      "droid": true,
+      "databank": 2
+    },
+    {
+      "id": "base-contact-03-bib-fortuna",
+      "kind": "contact",
+      "class": "green",
+      "faction": "hutt",
+      "droid": false,
+      "databank": 3
+    },
+    {
+      "id": "base-contact-04-black-krrsantan",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": "hutt",
+      "droid": false,
+      "databank": 4
+    },
+    {
+      "id": "base-contact-05-black-sun-agent",
+      "kind": "contact",
+      "class": "white",
+      "faction": "syndicate",
+      "droid": false,
+      "databank": 5
+    },
+    {
+      "id": "base-contact-06-boshek",
+      "kind": "contact",
+      "class": "green",
+      "faction": null,
+      "droid": false,
+      "databank": 6
+    },
+    {
+      "id": "base-contact-07-chewbacca",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": null,
+      "droid": false,
+      "databank": 7
+    },
+    {
+      "id": "base-contact-08-dengar",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": null,
+      "droid": false,
+      "databank": 8
+    },
+    {
+      "id": "base-contact-09-doctor-evazan",
+      "kind": "contact",
+      "class": "white",
+      "faction": null,
+      "droid": false,
+      "databank": 9
+    },
+    {
+      "id": "base-contact-10-garindan",
+      "kind": "contact",
+      "class": "white",
+      "faction": "imperial",
+      "droid": false,
+      "databank": 10
+    },
+    {
+      "id": "base-contact-11-grand-admiral-thrawn",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": "imperial",
+      "droid": false,
+      "databank": 11
+    },
+    {
+      "id": "base-contact-12-greedo",
+      "kind": "contact",
+      "class": "green",
+      "faction": "hutt",
+      "droid": false,
+      "databank": 12
+    },
+    {
+      "id": "base-contact-13-hera-syndulla",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": "rebel",
+      "droid": false,
+      "databank": 13
+    },
+    {
+      "id": "base-contact-14-hondo-ohnaka",
+      "kind": "contact",
+      "class": "green",
+      "faction": null,
+      "droid": false,
+      "databank": 14
+    },
+    {
+      "id": "base-contact-15-ig-rm-droid",
+      "kind": "contact",
+      "class": "green",
+      "faction": "syndicate",
+      "droid": true,
+      "databank": 15
+    },
+    {
+      "id": "base-contact-16-k-2so",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": "imperial",
+      "droid": true,
+      "databank": 16
+    },
+    {
+      "id": "base-contact-17-leia-organa",
+      "kind": "contact",
+      "class": "green",
+      "faction": "rebel",
+      "droid": false,
+      "databank": 17
+    },
+    {
+      "id": "base-contact-18-lobot",
+      "kind": "contact",
+      "class": "white",
+      "faction": null,
+      "droid": false,
+      "databank": 18
+    },
+    {
+      "id": "base-contact-19-maz-kanata",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": null,
+      "droid": false,
+      "databank": 19
+    },
+    {
+      "id": "base-contact-20-ponda-baba",
+      "kind": "contact",
+      "class": "white",
+      "faction": null,
+      "droid": false,
+      "databank": 20
+    },
+    {
+      "id": "base-contact-21-saw-gerrera",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": "rebel",
+      "droid": false,
+      "databank": 21
+    },
+    {
+      "id": "base-contact-22-w1-le",
+      "kind": "contact",
+      "class": "white",
+      "faction": null,
+      "droid": true,
+      "databank": 22
+    },
+    {
+      "id": "base-contact-23-ziton-moj",
+      "kind": "contact",
+      "class": "yellow",
+      "faction": "syndicate",
+      "droid": false,
+      "databank": 23
+    }
+  ]
+}

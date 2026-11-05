@@ -32,7 +32,8 @@ def card_id(card: dict) -> str | None:
     if "image" in card:
         return card["image"]
     sides = card.get("sides") or []
-    return sides[0].get("image") if sides else None
+    # Two-sided sheets: the id is the image name without "-back", whichever side is listed first.
+    return sides[0]["image"].removesuffix("-back") if sides else None
 
 
 def flatten(value, prefix: str, out: dict):

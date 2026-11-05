@@ -34,7 +34,21 @@ GOOD_CARGO = {
     "patrol_icon": None, "cannot_buy_on": "kessel", "destination": "kessel", "delivery_check": None,
     "reward": [{"op": "credits.gain", "amount": 5000}], "abilities": [],
 }
-LOC = {"test-gear-00.text.0": "Gain +1.", "test-gear-00.text.1": "Action: ..."}
+LOC = {"test-gear-00.text.0": "Gain +1.", "test-gear-00.text.1": "Action: ...",
+       "test-character-00.front.upper.0": "Gain +2 {HYPERDRIVE}."}
+GOOD_CHARACTER = {
+    "id": "test-character-00", "kind": "character", "ground_combat": 3, "health": 4, "skills": ["piloting"],
+    "setup": {"databank": 91, "reputation": [{"faction": "hutt", "state": "neg"}]},
+    "sides": [
+        {"image": "test-character-00", "side": "front", "abilities": [
+            {"text": "front.upper.0", "timing": {"type": "passive"},
+             "effects": [{"op": "stat.modify", "stat": "hyperdrive", "by": 2}]}]},
+        {"image": "test-character-00-back", "side": "back", "abilities": [
+            {"timing": {"type": "goal", "kind": "personal",
+                        "progress": {"count": {"event": "combat_won", "times": 3}}},
+             "effects": [{"op": "fame.gain", "amount": 1}, {"op": "sheet.flip", "sheet": "character"}]}]},
+    ],
+}
 
 
 class ValidateDataTests(unittest.TestCase):
@@ -121,6 +135,29 @@ class ValidateDataTests(unittest.TestCase):
     def test_unknown_custom_handler(self):
         self.assert_error(self.mutate(lambda c: c["abilities"][0]["effects"].append({"op": "custom", "handler": "magic"})),
                           "unknown custom handler 'magic'")
+
+    def test_two_sided_card_passes(self):
+        self.assertEqual(self.run_with([GOOD_CHARACTER]), [])
+
+    def test_unknown_effect_on_card_side(self):
+        self.assert_error(self.mutate(lambda c: c["sides"][1]["abilities"][0]["effects"].append({"op": "jedi.mind_trick"}),
+                                      GOOD_CHARACTER), "unknown effect type 'jedi.mind_trick'")
+
+    def test_bad_goal_progress(self):
+        self.assert_error(self.mutate(lambda c: c["sides"][1]["abilities"][0]["timing"].update(progress={"someday": {}}),
+                                      GOOD_CHARACTER), "is not a valid goal_progress")
+
+    def test_missing_text_key_on_card_side(self):
+        self.assert_error([GOOD_CHARACTER], "test-character-00.front.upper.0 not in the English localization",
+                          loc={"test-gear-00.text.0": "x"})
+
+    def test_contact_classes_must_match_map(self):
+        token = {"id": "test-contact-00", "kind": "contact", "class": "orange", "faction": None, "droid": False, "databank": 2}
+        self.assert_error([token], "1 orange contact tokens but 0 orange contact spaces")
+
+    def test_patrol_levels_per_faction(self):
+        patrol = {"id": "test-patrol-00", "kind": "patrol", "faction": "hutt", "level": 1, "combat": 3, "reward": []}
+        self.assert_error([patrol], "hutt patrol levels [1], expected [1, 2, 3, 4]")
 
     def test_unknown_dependency(self):
         self.assert_error([GOOD_CARD], "depends on unknown pack 'mandalorian'", depends=["mandalorian"])

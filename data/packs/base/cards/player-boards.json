@@ -1,0 +1,104 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "player-boards",
+  "source": "data/transcription/player-boards/base-player-boards.json",
+  "cards": [
+    {
+      "id": "base-player-board-green",
+      "kind": "player_board",
+      "color": "green",
+      "slots": [
+        {
+          "types": [
+            "gear"
+          ],
+          "count": 2
+        },
+        {
+          "types": [
+            "job",
+            "bounty"
+          ],
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12
+      }
+    },
+    {
+      "id": "base-player-board-red",
+      "kind": "player_board",
+      "color": "red",
+      "slots": [
+        {
+          "types": [
+            "gear"
+          ],
+          "count": 2
+        },
+        {
+          "types": [
+            "job",
+            "bounty"
+          ],
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12
+      }
+    },
+    {
+      "id": "base-player-board-yellow",
+      "kind": "player_board",
+      "color": "yellow",
+      "slots": [
+        {
+          "types": [
+            "gear"
+          ],
+          "count": 2
+        },
+        {
+          "types": [
+            "job",
+            "bounty"
+          ],
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12
+      }
+    },
+    {
+      "id": "base-player-board-white",
+      "kind": "player_board",
+      "color": "white",
+      "slots": [
+        {
+          "types": [
+            "gear"
+          ],
+          "count": 2
+        },
+        {
+          "types": [
+            "job",
+            "bounty"
+          ],
+          "count": 2
+        }
+      ],
+      "fame_track": {
+        "min": 0,
+        "max": 12
+      }
+    }
+  ]
+}
