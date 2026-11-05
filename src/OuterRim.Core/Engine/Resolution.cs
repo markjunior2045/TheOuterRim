@@ -272,6 +272,10 @@ namespace OuterRim.Core.Engine
                 var frame = state.Stack[state.Stack.Count - 1];
                 context.Caller = state.Stack.Count > 1 ? state.Stack[state.Stack.Count - 2] : null;
                 var result = ResolutionHandlers.Get(frame.Handler).Step(context, frame);
+                if (Rules.Victory.Check(state, events))
+                {
+                    return; // R-18.8: the game ends the moment a player reaches the fame requirement.
+                }
                 switch (result.Kind)
                 {
                     case StepResult.StepKind.Continue:

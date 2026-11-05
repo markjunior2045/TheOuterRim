@@ -268,6 +268,108 @@ namespace OuterRim.Core.Engine
         public bool BecameDefeated { get; }
     }
 
+    /// <summary>Credits spent (a payment, R-9.8) or lost (as much as possible).</summary>
+    public sealed class CreditsLostEvent : GameEvent
+    {
+        public CreditsLostEvent(string playerId, int amount, bool spent)
+        {
+            PlayerId = playerId;
+            Amount = amount;
+            Spent = spent;
+        }
+
+        public string PlayerId { get; }
+
+        public int Amount { get; }
+
+        public bool Spent { get; }
+    }
+
+    public sealed class ReputationChangedEvent : GameEvent
+    {
+        public ReputationChangedEvent(string playerId, Faction faction, Reputation from, Reputation to)
+        {
+            PlayerId = playerId;
+            Faction = faction;
+            From = from;
+            To = to;
+        }
+
+        public string PlayerId { get; }
+
+        public Faction Faction { get; }
+
+        public Reputation From { get; }
+
+        public Reputation To { get; }
+    }
+
+    public sealed class FameChangedEvent : GameEvent
+    {
+        public FameChangedEvent(string playerId, int change, int total)
+        {
+            PlayerId = playerId;
+            Change = change;
+            Total = total;
+        }
+
+        public string PlayerId { get; }
+
+        public int Change { get; }
+
+        public int Total { get; }
+    }
+
+    /// <summary>R-8.8: the player became defeated (standee laid down).</summary>
+    public sealed class PlayerDefeatedEvent : GameEvent
+    {
+        public PlayerDefeatedEvent(string playerId)
+        {
+            PlayerId = playerId;
+        }
+
+        public string PlayerId { get; }
+    }
+
+    /// <summary>R-8.10: the player is no longer defeated (standee stood up).</summary>
+    public sealed class PlayerRecoveredEvent : GameEvent
+    {
+        public PlayerRecoveredEvent(string playerId)
+        {
+            PlayerId = playerId;
+        }
+
+        public string PlayerId { get; }
+    }
+
+    /// <summary>R-8.8.2, R-15.89: all secrets discarded unrevealed.</summary>
+    public sealed class SecretsDiscardedEvent : GameEvent
+    {
+        public SecretsDiscardedEvent(string playerId, IReadOnlyList<string> cards)
+        {
+            PlayerId = playerId;
+            Cards = cards;
+        }
+
+        public string PlayerId { get; }
+
+        public IReadOnlyList<string> Cards { get; }
+    }
+
+    /// <summary>R-18.8: the game is over. Tiebreak is true when several players reached the requirement together (R-18.16).</summary>
+    public sealed class GameWonEvent : GameEvent
+    {
+        public GameWonEvent(string playerId, bool tiebreak)
+        {
+            PlayerId = playerId;
+            Tiebreak = tiebreak;
+        }
+
+        public string PlayerId { get; }
+
+        public bool Tiebreak { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

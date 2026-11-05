@@ -31,6 +31,9 @@ namespace OuterRim.Core.Model
         /// <summary>Character card id (data/packs/*/cards/characters.json); empty until characters are chosen.</summary>
         public string CharacterId { get; set; } = "";
 
+        /// <summary>Secret encounter cards the player holds facedown (R-15.82); they take no slot (R-15.90).</summary>
+        public List<string> Secrets { get; set; } = new List<string>();
+
         /// <summary>Crew card ids the player holds (R-15.2); their skills count for tests (R-6.6).</summary>
         public List<string> Crew { get; set; } = new List<string>();
 

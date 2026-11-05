@@ -5,6 +5,7 @@ using OuterRim.Core.Content;
 using OuterRim.Core.Dice;
 using OuterRim.Core.Model;
 using OuterRim.Core.Random;
+using OuterRim.Core.Rules;
 
 namespace OuterRim.Core.Engine
 {
@@ -202,6 +203,34 @@ namespace OuterRim.Core.Engine
         /// <summary>Validates and applies a command. A rejected command changes nothing.</summary>
         public static CommandResult Execute(GameContent content, GameState state, Command command)
         {
+            var result = ExecuteCore(content, state, command);
+            if (result.Accepted)
+            {
+                var events = new List<GameEvent>(result.Events);
+                AfterCommand(state, events);
+                return CommandResult.Ok(events);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Checks that run once a command has fully resolved: victory (R-18.8), and the end of the turn of a
+        /// current player defeated during it, once the action or step in progress is over (R-8.8.4).
+        /// </summary>
+        private static void AfterCommand(GameState state, List<GameEvent> events)
+        {
+            if (Victory.Check(state, events))
+            {
+                return;
+            }
+            if (state.TurnEndsAfterStep && state.Stack.Count == 0 && state.Pending == null)
+            {
+                EndTurn(state, events);
+            }
+        }
+
+        private static CommandResult ExecuteCore(GameContent content, GameState state, Command command)
+        {
             if (state.Phase != GamePhase.Playing)
             {
                 return CommandResult.Rejected("The game is not in progress.");
@@ -249,6 +278,10 @@ namespace OuterRim.Core.Engine
         /// </summary>
         public static CommandResult StartResolution(GameContent content, GameState state, Frame frame)
         {
+            if (state.Phase != GamePhase.Playing)
+            {
+                return CommandResult.Rejected("The game is not in progress.");
+            }
             if (state.Pending != null || state.Stack.Count > 0)
             {
                 return CommandResult.Rejected("R-21.12: another resolution is in progress.");
@@ -257,6 +290,7 @@ namespace OuterRim.Core.Engine
             var events = new List<GameEvent>();
             state.Stack.Add(frame);
             Resolver.Run(content, state, events);
+            AfterCommand(state, events);
             return CommandResult.Ok(events);
         }
 
@@ -358,8 +392,8 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected("R-4.8: a defeated player must recover damage.");
             }
-            player.Credits += PlanningCredits;
-            var events = new List<GameEvent> { new CreditsGainedEvent(player.Id, PlanningCredits) };
+            var events = new List<GameEvent>();
+            PlayerRules.GainCredits(player, PlanningCredits, events);
             StartStep(state, TurnStep.Action, events);
             return CommandResult.Ok(events);
         }
@@ -554,6 +588,7 @@ namespace OuterRim.Core.Engine
         /// <summary>R-4.4: the turn ends and the player to the left begins theirs; a new round starts with the first player.</summary>
         internal static void EndTurn(GameState state, List<GameEvent> events)
         {
+            state.TurnEndsAfterStep = false;
             events.Add(new TurnEndedEvent(state.CurrentPlayerId));
             int next = (state.SeatOf(state.CurrentPlayerId) + 1) % state.Players.Count;
             state.CurrentPlayerId = state.Players[next].Id;

@@ -112,8 +112,10 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered:** `Combat` (damage of a roll R-7.11, tie to the attacker R-7.13, combat type between players R-7.5, combat values, health, hull, damage with cap and defeat flag R-8.2 to R-8.4) and the combat as a resolution frame (`rules.combat`): attacker rolls, defender rolls (the game rolls for patrols and card enemies, `DECISIONS.md` §4.2), winner, the caller's winning or losing effect before damage (R-7.13, R-8.15), damage to the character or ship (only players take damage, R-7.14); a level-4 patrol rolls nothing, always wins and defeats the ship (R-11.6); a defeated player cannot be attacked (R-8.12). Windows for combat abilities are marked for the effect engine. 106 tests.
 - The consequences of becoming defeated (R-8.8) come in T1.7.
 
-### T1.7 — Damage, defeat, reputation, fame, victory · `TODO` (T1.6)
+### T1.7 — Damage, defeat, reputation, fame, victory · `DONE` (2026-11-05)
 - **Tests:** R-8 invariants; reputation clamping (R-10.5, R-10.6); fame floor; victory tiebreak (R-18.16).
+- **Delivered:** `PlayerRules`: credits (spend needs the full amount, lose takes what there is, R-9.8), reputation (gain, lose, set, R-10.5 to R-10.7), fame (floor 0 R-18.14, most famous with ties R-18.17), damage with the defeat procedure (lose 3,000 or all, discard all secrets, the current player's turn ends once the action or step in progress finishes, R-8.8, R-15.89) and recovery that ends defeat outside planning (R-8.10). `Victory`: checked after every resolution step and command; simultaneous winners broken by credits, then by seat farthest clockwise from the first player (R-18.8, R-18.16). Combat damage goes through the same rules. Players hold secrets (ids only until encounter decks exist). Save format 0.5. 124 tests.
+- Fame from assets ("you have X additional fame", R-18.15) is added by the effect engine.
 
 ### T1.8 — Patrols · `TODO` (T1.3, T1.6)
 - Setup, spawning, movement toward the player with path and direction rules, forced encounters (R-11).
@@ -219,6 +221,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.7 done: credits, reputation, fame, defeat procedure, victory with tiebreak; game rolls for enemies with labelled rolls; save format 0.5. |
 | 2026-11-05 | T1.6 done: combat as a resolution frame, five steps, tie to attacker, win before damage, level-4 patrols. |
 | 2026-11-05 | T1.5 done: skill tests (levels, thresholds, choice of skill) as a resolution frame; characters loaded; save format 0.4. |
 | 2026-11-05 | T1.4 done: turn loop, planning options, movement with stops, encounter step choice; save format 0.3. |

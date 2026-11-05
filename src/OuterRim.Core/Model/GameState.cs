@@ -43,6 +43,12 @@ namespace OuterRim.Core.Model
         /// <summary>Fame needed to win (R-3.1, R-18.9).</summary>
         public int FameRequirement { get; set; } = 10;
 
+        /// <summary>The winner once the game has ended (R-18.8).</summary>
+        public string WinnerId { get; set; } = "";
+
+        /// <summary>R-8.8.4: the current player was defeated; their turn ends when the current action or step finishes.</summary>
+        public bool TurnEndsAfterStep { get; set; }
+
         /// <summary>Rules logic in progress, innermost last. Empty between commands unless a decision is pending.</summary>
         public List<Frame> Stack { get; set; } = new List<Frame>();
 

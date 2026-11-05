@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.4",
+  "format": "outer-rim-save/0.5",
   "packs": [
     {
       "id": "base",
@@ -36,6 +36,7 @@
         "shipDamage": 0,
         "defeated": false,
         "characterId": "",
+        "secrets": [],
         "crew": [],
         "spaceId": "lothal",
         "shipSheetId": "base-ship-g9-rigger",
@@ -57,6 +58,7 @@
         "shipDamage": 0,
         "defeated": false,
         "characterId": "",
+        "secrets": [],
         "crew": [],
         "spaceId": "tatooine",
         "shipSheetId": "base-ship-g9-rigger",
@@ -78,6 +80,7 @@
         "shipDamage": 0,
         "defeated": false,
         "characterId": "",
+        "secrets": [],
         "crew": [],
         "spaceId": "naboo",
         "shipSheetId": "base-ship-g9-rigger",
@@ -121,6 +124,8 @@
       }
     ],
     "fameRequirement": 10,
+    "winnerId": "",
+    "turnEndsAfterStep": false,
     "stack": [
       {
         "handler": "test.tie_parent",

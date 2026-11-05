@@ -159,13 +159,7 @@ namespace OuterRim.Core.Engine
 
         private static void Hurt(ResolutionContext ctx, PlayerState player, CombatType type, int amount)
         {
-            bool wasDefeated = player.Defeated;
-            int placed = Combat.Suffer(ctx.Content, player, type, amount);
-            if (amount > 0)
-            {
-                ctx.Events.Add(new DamageSufferedEvent(player.Id, type == CombatType.Ground ? "character" : "ship",
-                    amount, placed, player.Defeated && !wasDefeated));
-            }
+            PlayerRules.SufferDamage(ctx.Content, ctx.State, player, type, amount, ctx.Events);
         }
 
         private static string Encode(IEnumerable<DieFace> faces)
