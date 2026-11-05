@@ -22,6 +22,8 @@ Rule IDs (`R-x.y`) refer to `RULES.md`. Decisions live in `DECISIONS.md`. No tim
 
 ## Roadmap (owner decision, 2026-11-04)
 
+Summary with status: `ROADMAP.md`.
+
 The phases below group tasks by subject; this is the order they are worked in:
 
 1. **Patterns:** T2.1, the inventory of objects, effects, conditions, targets and timings, from the 242 base cards plus the `[UB]` extension points in `RULES.md`. The expansion cards are not transcribed for this.

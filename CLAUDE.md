@@ -9,6 +9,7 @@ Repository root: `C:\TheOuterRimProject\TheOuterRim` (this folder).
 | Path | Content |
 |---|---|
 | `docs/DECISIONS.md` | Structural decisions. A guide, not a rulebook. |
+| `docs/ROADMAP.md` | Short roadmap: stages and status. |
 | `docs/PLAN.md` | Task plan (T0.1, T0.2, ...). Each task has a "Done when". |
 | `docs/RULES.md` | Single source of truth for game rules. Rule IDs are `R-x.y`. |
 | `docs/MAP_FORMAT.md` | Map graph format (`data/map/`). |
