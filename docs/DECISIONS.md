@@ -76,6 +76,10 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Reputation subsections: the player **cannot choose** one. The subsection that applies to their game state when the card is drawn is resolved (`RULES.md` R-15.77; Living Rules, "Encounter Cards"). The interface shows every subsection of the player's section, with only the applicable one active and the others dimmed, so the player sees what their reputation gained or cost them.
 - A split deck per planet would be a house rule; it is not planned.
 
+### 4.2 Digital adaptations of table conventions (Decided)
+
+- **Dice for enemies (2026-11-05):** a player rolls only their own dice (skill tests and their side of a combat). For a patrol, contact or card enemy the game rolls; the "player to the left rolls" convention of the board game (`RULES.md` R-7.9, R-7.12) does not apply, and R-7.20 becomes moot. Combat results are unchanged: the enemy's dice still count as the defender's roll.
+
 ## 5. Engine, tools and conventions (Decided)
 
 - Unity 6.6 now, moving to 6.7 LTS when it is released.

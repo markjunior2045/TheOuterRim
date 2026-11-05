@@ -140,12 +140,14 @@ namespace OuterRim.Core.Tests
         }
 
         [Fact]
-        public void R7_9_ThePlayerToTheLeft_RollsForACardEnemy()
+        public void R7_9_TheGameRolls_ForCardEnemiesAndPatrols()
         {
+            // Digital adaptation (DECISIONS §4.2): no player rolls for an enemy; players roll only their own dice.
             var r = Fight(Game(2), "ground", "npc", "test.enemy");
-            Assert.Equal("p2", r.Events.OfType<CombatRolledEvent>().Single(e => e.Side == "defender").RollerId);
-            var solo = Fight(Game(2, players: 1), "ground", "npc", "test.enemy");
-            Assert.Equal("p1", solo.Events.OfType<CombatRolledEvent>().Single(e => e.Side == "defender").RollerId);
+            Assert.Null(r.Events.OfType<CombatRolledEvent>().Single(e => e.Side == "defender").RollerId);
+            Assert.Equal("p1", r.Events.OfType<CombatRolledEvent>().Single(e => e.Side == "attacker").RollerId);
+            var patrol = Fight(Game(2), "ship", "patrol", "hutt", "5");
+            Assert.Null(patrol.Events.OfType<CombatRolledEvent>().Single(e => e.Side == "defender").RollerId);
         }
 
         [Fact]

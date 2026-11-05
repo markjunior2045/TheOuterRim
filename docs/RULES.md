@@ -343,6 +343,8 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-7.19** "Gain +X" followed by an icon (`{GROUND_COMBAT}`, `{HEALTH}`, `{SHIP_COMBAT}`, `{HULL}`, `{HYPERDRIVE}`): adds to the matching value. These are passive while the player holds the card, and they **stack**.
 - **R-7.20** The player to the left, while rolling for a contact, patrol or card enemy, **cannot use any of their own combat abilities**.
 
+> Digital adaptation (owner decision, 2026-11-05, `DECISIONS.md` §4.2): the game rolls the dice of patrols, contacts and card enemies; no player rolls for them. R-7.9 and R-7.12 keep their meaning for who the defender is and the order of abilities; R-7.20 no longer arises.
+
 ---
 
 ## 8. Damage and defeat
@@ -1157,6 +1159,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | Note after R-7.20: the game rolls for patrols, contacts and card enemies (digital adaptation, owner decision). |
 | 2026-11-05 | §26.1: decision commands as built in T1.2 (`ChooseOption`, `ResolveTie`, `ChooseOrder`, keyed by decision id). |
 | 2026-11-05 | R-25.15 to R-25.17: Bossk, GX1 Short Hauler and YV-666 goals (owner clarifications from T2.4). |
 | 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded; map geometry read into `data/map/`. |

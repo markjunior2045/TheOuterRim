@@ -86,9 +86,9 @@ namespace OuterRim.Core.Engine
                     var faces = Decode(frame.Get("defender_faces"));
                     int damage = Combat.DamageOf(faces);
                     frame.Set("defender_damage", damage);
-                    // R-7.9, R-7.12: for a patrol, contact or card enemy, the player to the left rolls.
-                    string roller = defenderPlayer != null ? defenderPlayer.Id : PlayerToTheLeft(state, attacker.Id);
-                    ctx.Events.Add(new CombatRolledEvent("defender", roller, faces, damage));
+                    // A player rolls their own dice; for a patrol, contact or card enemy the game rolls
+                    // (digital adaptation of R-7.9 and R-7.12, DECISIONS §4.2).
+                    ctx.Events.Add(new CombatRolledEvent("defender", defenderPlayer?.Id, faces, damage));
                     frame.Step = 5;
                     return StepResult.Continue(); // window: result changes, roller first
                 }
@@ -145,12 +145,6 @@ namespace OuterRim.Core.Engine
                 ctx.Events.Add(new DamageSufferedEvent(player.Id, type == CombatType.Ground ? "character" : "ship",
                     amount, placed, player.Defeated && !wasDefeated));
             }
-        }
-
-        /// <summary>R-4.4: the player to the left is the next one in turn order; alone, a player rolls for the enemy too.</summary>
-        internal static string PlayerToTheLeft(GameState state, string playerId)
-        {
-            return state.Players[(state.SeatOf(playerId) + 1) % state.Players.Count].Id;
         }
 
         private static string Encode(IEnumerable<DieFace> faces)

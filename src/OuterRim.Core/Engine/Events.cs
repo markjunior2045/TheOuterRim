@@ -196,7 +196,7 @@ namespace OuterRim.Core.Engine
     /// <summary>One side's roll and its damage (R-7.10 to R-7.12).</summary>
     public sealed class CombatRolledEvent : GameEvent
     {
-        public CombatRolledEvent(string side, string rollerId, IReadOnlyList<DieFace> faces, int damage)
+        public CombatRolledEvent(string side, string? rollerId, IReadOnlyList<DieFace> faces, int damage)
         {
             Side = side;
             RollerId = rollerId;
@@ -207,8 +207,11 @@ namespace OuterRim.Core.Engine
         /// <summary>attacker or defender.</summary>
         public string Side { get; }
 
-        /// <summary>The player who physically rolls: for a patrol or card enemy, the player to the left (R-7.9).</summary>
-        public string RollerId { get; }
+        /// <summary>
+        /// The player who rolled; null when the game rolled for a patrol, contact or card enemy
+        /// (digital adaptation of R-7.9, DECISIONS §4.2).
+        /// </summary>
+        public string? RollerId { get; }
 
         public IReadOnlyList<DieFace> Faces { get; }
 
