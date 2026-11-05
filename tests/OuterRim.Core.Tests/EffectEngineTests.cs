@@ -368,9 +368,8 @@ namespace OuterRim.Core.Tests
         private static readonly Dictionary<string, string> Pending = new Dictionary<string, string>
         {
             // T2.3b: triggers, replacements and dice windows
-            ["move.no_stop"] = "T2.3b", ["test.skill_grant"] = "T2.3b",
-            ["custom"] = "T2.3b", ["limit.trait"] = "T2.3b", ["slot.modify"] = "T2.3b", ["rule.modify"] = "T2.3b",
-            ["asset.take"] = "T2.3b",
+            ["move.no_stop"] = "T2.3b", 
+            ["custom"] = "T2.3b", 
             // T2.3c: goals
             ["cond:gained"] = "T2.3c", ["cond:recovered"] = "T2.3c",
             // T2.6: encounters and contacts

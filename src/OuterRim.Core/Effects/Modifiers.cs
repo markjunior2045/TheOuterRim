@@ -37,6 +37,29 @@ namespace OuterRim.Core.Effects
         }
 
         /// <summary>
+        /// Whether a held card changes a core rule for the player (EFFECTS.md §3.1 "rule.modify"):
+        /// "no_reputation_loss_on_patrol_win" (IG-2000), "not_forced_to_encounter_negative_patrols" (Valorous).
+        /// </summary>
+        public static bool HasRule(GameContent content, GameState state, PlayerState player, string rule)
+        {
+            foreach (var ability in AbilitySources.Of(content, player))
+            {
+                if (ability.TimingType != "passive" || !Conditions.Eval(content, state, player, ability.Ability["condition"]))
+                {
+                    continue;
+                }
+                foreach (JObject effect in (JArray)ability.Ability["effects"]!)
+                {
+                    if ((string?)effect["op"] == "rule.modify" && (string?)effect["rule"] == rule)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Dice the opponent of <paramref name="player"/> rolls fewer in a combat of this type
         /// ("During ground combat, your opponent rolls 1 fewer die": Plastoid Armor, Maneuvering Thrusters).
         /// </summary>

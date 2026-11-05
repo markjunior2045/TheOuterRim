@@ -106,6 +106,7 @@ namespace OuterRim.Core.Engine
                         if (!Conditions.Eval(ctx.Content, ctx.State, player, timing["filter"], null, context)) continue;
                         if (!Conditions.Eval(ctx.Content, ctx.State, player, a.Ability["condition"], null, context)) continue;
                         if (!FrameContext.CostPayable(ctx.Content, player, a.Ability)) continue;
+                        if ((string?)a.Ability["limit"] == "once_per_turn" && ctx.State.UsedAbilities.Contains("turn:" + a.Key)) continue;
                         keys.Add(a.Key);
                     }
                     if (keys.Count == 0)
@@ -149,7 +150,7 @@ namespace OuterRim.Core.Engine
                         return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, player.Id, "rules.use_ability",
                             new[] { new DecisionOption("yes", key), new DecisionOption("no", key) }, "use"));
                     }
-                    return Run(frame, player, ability);
+                    return Run(frame, player, ability, ctx.State);
                 }
                 default:
                 {
@@ -159,14 +160,18 @@ namespace OuterRim.Core.Engine
                     {
                         return StepResult.Continue();
                     }
-                    return Run(frame, player, ability);
+                    return Run(frame, player, ability, ctx.State);
                 }
             }
         }
 
-        private static StepResult Run(Frame frame, PlayerState player, AbilityRef ability)
+        private static StepResult Run(Frame frame, PlayerState player, AbilityRef ability, GameState? state = null)
         {
             frame.Step = 2;
+            if (state != null && (string?)ability.Ability["limit"] == "once_per_turn")
+            {
+                state.UsedAbilities.Add("turn:" + ability.Key); // R-21.6
+            }
             var use = new Frame(EffectHandlers.Ability);
             use.Set("owner", player.Id);
             use.Set("card", ability.CardId);

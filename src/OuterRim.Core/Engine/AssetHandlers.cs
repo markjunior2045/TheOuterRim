@@ -28,12 +28,11 @@ namespace OuterRim.Core.Engine
                 Traits = frame.Vars.TryGetValue("traits", out var t) && t.Length > 0 ? new List<string>(t.Split(',')) : new List<string>(),
             };
             bool forced = frame.Vars.TryGetValue("forced", out var f) && f == "true";
-            var slots = Assets.SlotsOf(ctx.Content, player);
             switch (frame.Step)
             {
                 case 0:
                 {
-                    if (Assets.Fits(slots, Assets.KindsOf(player.Assets, asset)))
+                    if (Assets.Valid(ctx.Content, player, Assets.With(player.Assets, asset)))
                     {
                         Gain(ctx, player, asset);
                         return StepResult.Done();
@@ -41,7 +40,7 @@ namespace OuterRim.Core.Engine
                     var options = new List<DecisionOption>();
                     foreach (var a in player.Assets)
                     {
-                        if (Assets.Fits(slots, Assets.KindsOf(player.Assets, asset, a)))
+                        if (Assets.Valid(ctx.Content, player, Assets.With(player.Assets, asset, a)))
                         {
                             options.Add(new DecisionOption(a.CardId, a.CardId));
                         }

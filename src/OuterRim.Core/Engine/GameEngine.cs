@@ -567,7 +567,10 @@ namespace OuterRim.Core.Engine
             {
                 if (player.Reputation.Get(p.Faction) == Reputation.Negative)
                 {
-                    hostile.Add(p.Faction);
+                    if (!Modifiers.HasRule(content, state, player, "not_forced_to_encounter_negative_patrols"))
+                    {
+                        hostile.Add(p.Faction); // R-4.14, unless Valorous
+                    }
                 }
             }
             string handler;
@@ -650,7 +653,8 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected("R-4.11: each Action ability once per action step.");
             }
-            if (step == "encounter" && MustEncounterPatrol(state, player))
+            if (step == "encounter" && MustEncounterPatrol(state, player)
+                && !Modifiers.HasRule(content, state, player, "not_forced_to_encounter_negative_patrols"))
             {
                 return CommandResult.Rejected("R-4.17: a player who must encounter a patrol cannot use an Encounter ability.");
             }

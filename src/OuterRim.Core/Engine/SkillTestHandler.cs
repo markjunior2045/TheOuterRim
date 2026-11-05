@@ -45,9 +45,10 @@ namespace OuterRim.Core.Engine
                     return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, player.Id, "rules.choose_skill", options, "skill"));
                 }
                 case 1:
-                    // Before the test: abilities that grant a skill for this test (T2.3).
+                    // Before the test: "before you perform a skill test" abilities (Doctor Aphra, Hired Help).
                     frame.Step = 2;
-                    return StepResult.Continue();
+                    return StepResult.Call(TriggersHandler.For("test_before", player.Id,
+                        new Dictionary<string, string> { ["skill"] = frame.Get("skill") }));
                 case 2:
                 {
                     var faces = DiceRoller.Roll(ctx.State.Random, SkillTests.Dice);

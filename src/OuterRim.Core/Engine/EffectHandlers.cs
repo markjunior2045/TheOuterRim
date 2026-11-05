@@ -32,7 +32,10 @@ namespace OuterRim.Core.Engine
             "if", "choice", "may", "to", "test", "combat",
             "credits.gain", "credits.spend", "credits.lose", "fame.gain", "fame.lose", "rep.gain", "rep.lose",
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
-            "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard",
+            "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard", "asset.take",
+            "test.skill_grant",
+            // Passive rule changes read by the rules that check them.
+            "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
             "damage.cap",
             // Passive-only ops, read as queries by Modifiers or by the rules that check them.
@@ -55,6 +58,7 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new SufferDamageHandler());
             ResolutionHandlers.Register(new EffectDiceRollHandler());
             ResolutionHandlers.Register(new AssetDiscardHandler());
+            ResolutionHandlers.Register(new AssetTakeHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -183,6 +187,8 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(EffectDiceRollHandler.HandlerId, frame, nodePath));
                 case "asset.discard":
                     return StepResult.Call(EffectHandlers.Child(AssetDiscardHandler.HandlerId, frame, nodePath));
+                case "asset.take":
+                    return StepResult.Call(EffectHandlers.Child(AssetTakeHandler.HandlerId, frame, nodePath));
                 case "damage.suffer":
                 {
                     // Through the damage frame, so caps and "would be defeated" replacements apply.
@@ -295,6 +301,18 @@ namespace OuterRim.Core.Engine
                         events.Add(new SheetFlippedEvent(owner.Id, "ship", 0));
                     }
                     return true;
+                case "test.skill_grant":
+                    // R-6.8: one more instance for the skill test about to be rolled.
+                    for (int i = state.Stack.Count - 1; i >= 0; i--)
+                    {
+                        if (state.Stack[i].Handler == SkillTests.Handler)
+                        {
+                            var test = state.Stack[i];
+                            test.Set("granted", (test.Vars.ContainsKey("granted") ? test.GetInt("granted") : 0) + 1);
+                            return true;
+                        }
+                    }
+                    return false;
                 case "planet.marker":
                     // R-25.14: a marker for Jyn Erso's goal, one per planet.
                     foreach (var m in state.PlanetMarkers)

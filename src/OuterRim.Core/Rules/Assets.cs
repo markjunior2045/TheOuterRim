@@ -39,9 +39,112 @@ namespace OuterRim.Core.Rules
         /// <summary>All slots of a player: player board plus the faceup side of the ship sheet (R-14.2).</summary>
         public static List<SlotSpec> SlotsOf(GameContent content, PlayerState player)
         {
+            return SlotsOf(content, player, player.Assets);
+        }
+
+        /// <summary>
+        /// Board and ship slots, plus slots added by held assets ("You can also have 1 cargo in this slot":
+        /// Smuggling Compartment; R-14.15).
+        /// </summary>
+        public static List<SlotSpec> SlotsOf(GameContent content, PlayerState player, IEnumerable<AssetState> held)
+        {
             var slots = new List<SlotSpec>(content.BoardSlots);
             slots.AddRange(content.ShipSide(player.ShipSideId).Slots);
+            foreach (var a in held)
+            {
+                foreach (var effect in PassiveEffects(content, a, "slot.modify"))
+                {
+                    slots.Add(new SlotSpec(new[] { (string)effect["slot"]! }, (int)effect["capacity"]!));
+                }
+            }
             return slots;
+        }
+
+        private static IEnumerable<Newtonsoft.Json.Linq.JObject> PassiveEffects(GameContent content, AssetState a, string op)
+        {
+            if (!content.HasCard(a.CardId) || !(content.Card(a.CardId)["abilities"] is Newtonsoft.Json.Linq.JArray abilities))
+            {
+                yield break;
+            }
+            foreach (Newtonsoft.Json.Linq.JObject ability in abilities)
+            {
+                if ((string?)ability["timing"]?["type"] != "passive") continue;
+                foreach (Newtonsoft.Json.Linq.JObject e in (Newtonsoft.Json.Linq.JArray)ability["effects"]!)
+                {
+                    if ((string?)e["op"] == op) yield return e;
+                }
+            }
+        }
+
+        /// <summary>Slot types an asset may occupy: its kind, or the types its card names (Smuggling Compartment: cargo or mod).</summary>
+        public static IReadOnlyList<string> TypesOf(GameContent content, AssetState a)
+        {
+            if (content.HasCard(a.CardId) && content.Card(a.CardId)["slot"] is Newtonsoft.Json.Linq.JArray slot)
+            {
+                var types = new List<string>();
+                foreach (var t in slot) types.Add((string)t!);
+                return types;
+            }
+            return new[] { a.Kind };
+        }
+
+        /// <summary>Traits of an asset: from the card data when loaded, else those recorded when it was gained.</summary>
+        public static List<string> TraitsOf(GameContent content, AssetState a)
+        {
+            var traits = new List<string>(a.Traits);
+            if (content.HasCard(a.CardId) && content.Card(a.CardId)["traits"] is Newtonsoft.Json.Linq.JArray arr)
+            {
+                foreach (var t in arr)
+                {
+                    if (!traits.Contains((string)t!)) traits.Add((string)t!);
+                }
+            }
+            return traits;
+        }
+
+        /// <summary>
+        /// Whether a set of assets is legal for the player: every asset fits a slot (R-14.13 to R-14.17)
+        /// and no trait limit printed on a held card is exceeded ("Limit 1 ARMOR per character").
+        /// </summary>
+        public static bool Valid(GameContent content, PlayerState player, IReadOnlyList<AssetState> assets)
+        {
+            var types = new List<IReadOnlyList<string>>();
+            foreach (var a in assets) types.Add(TypesOf(content, a));
+            if (!Fits(SlotsOf(content, player, assets), types))
+            {
+                return false;
+            }
+            var limits = new Dictionary<string, int>();
+            foreach (var a in assets)
+            {
+                foreach (var effect in PassiveEffects(content, a, "limit.trait"))
+                {
+                    var trait = (string)effect["trait"]!;
+                    int max = (int)effect["max"]!;
+                    limits[trait] = limits.TryGetValue(trait, out var m) ? Math.Min(m, max) : max;
+                }
+            }
+            foreach (var kv in limits)
+            {
+                int n = 0;
+                foreach (var a in assets)
+                {
+                    if (TraitsOf(content, a).Contains(kv.Key)) n++;
+                }
+                if (n > kv.Value) return false;
+            }
+            return true;
+        }
+
+        public static List<AssetState> With(IEnumerable<AssetState> assets, AssetState? extra = null, AssetState? without = null)
+        {
+            var list = new List<AssetState>();
+            foreach (var a in assets)
+            {
+                if (!ReferenceEquals(a, without)) list.Add(a);
+            }
+            if (extra != null) list.Add(extra);
+            return list;
         }
 
         /// <summary>
@@ -49,6 +152,14 @@ namespace OuterRim.Core.Rules
         /// type, with slot capacities respected. Placement is free (R-14.17), so only this matters.
         /// </summary>
         public static bool Fits(IReadOnlyList<SlotSpec> slots, IReadOnlyList<string> assetKinds)
+        {
+            var types = new List<IReadOnlyList<string>>();
+            foreach (var k in assetKinds) types.Add(new[] { k });
+            return Fits(slots, types);
+        }
+
+        /// <summary>As <see cref="Fits(IReadOnlyList{SlotSpec}, IReadOnlyList{string})"/>, each asset accepting several slot types.</summary>
+        public static bool Fits(IReadOnlyList<SlotSpec> slots, IReadOnlyList<IReadOnlyList<string>> assetKinds)
         {
             var units = new List<IReadOnlyList<string>>();
             foreach (var s in slots)
@@ -77,11 +188,11 @@ namespace OuterRim.Core.Rules
             return true;
         }
 
-        private static bool Augment(int asset, IReadOnlyList<string> kinds, List<IReadOnlyList<string>> units, int[] owner, bool[] seen)
+        private static bool Augment(int asset, IReadOnlyList<IReadOnlyList<string>> kinds, List<IReadOnlyList<string>> units, int[] owner, bool[] seen)
         {
             for (int u = 0; u < units.Count; u++)
             {
-                if (seen[u] || !Contains(units[u], kinds[asset]))
+                if (seen[u] || !Overlaps(units[u], kinds[asset]))
                 {
                     continue;
                 }
@@ -91,6 +202,15 @@ namespace OuterRim.Core.Rules
                     owner[u] = asset;
                     return true;
                 }
+            }
+            return false;
+        }
+
+        private static bool Overlaps(IReadOnlyList<string> slot, IReadOnlyList<string> asset)
+        {
+            foreach (var t in asset)
+            {
+                if (Contains(slot, t)) return true;
             }
             return false;
         }
@@ -126,7 +246,7 @@ namespace OuterRim.Core.Rules
 
         public static bool AllFit(GameContent content, PlayerState player)
         {
-            return Fits(SlotsOf(content, player), KindsOf(player.Assets));
+            return Valid(content, player, player.Assets);
         }
 
         /// <summary>Discards an asset (R-14.6 allows it only when a rule or ability does, or to open a slot).</summary>
