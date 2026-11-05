@@ -466,80 +466,144 @@
               "condition": null,
               "effects": [
                 {
-                  "op": "may",
-                  "effects": [
-                    {
-                      "op": "choice",
-                      "options": [
-                        [
-                          {
-                            "op": "if",
-                            "cond": {
-                              "cond": "rep",
-                              "faction": "hutt",
-                              "in": [
-                                "pos"
-                              ]
-                            },
-                            "then": [
-                              {
-                                "op": "rep.lose",
-                                "faction": "hutt",
-                                "amount": 2
-                              },
-                              {
-                                "op": "fame.gain",
-                                "amount": 1
-                              }
-                            ]
-                          }
-                        ],
-                        [
-                          {
-                            "op": "if",
-                            "cond": {
-                              "cond": "rep",
-                              "faction": "imperial",
-                              "in": [
-                                "pos"
-                              ]
-                            },
-                            "then": [
-                              {
-                                "op": "rep.lose",
-                                "faction": "imperial",
-                                "amount": 2
-                              },
-                              {
-                                "op": "fame.gain",
-                                "amount": 1
-                              }
-                            ]
-                          }
-                        ],
-                        [
-                          {
-                            "op": "if",
-                            "cond": {
-                              "cond": "rep",
-                              "faction": "syndicate",
-                              "in": [
-                                "pos"
-                              ]
-                            },
-                            "then": [
-                              {
-                                "op": "rep.lose",
-                                "faction": "syndicate",
-                                "amount": 2
-                              },
-                              {
-                                "op": "fame.gain",
-                                "amount": 1
-                              }
-                            ]
-                          }
+                  "op": "if",
+                  "cond": {
+                    "cond": "any",
+                    "of": [
+                      {
+                        "cond": "rep",
+                        "faction": "hutt",
+                        "in": [
+                          "pos"
                         ]
+                      },
+                      {
+                        "cond": "rep",
+                        "faction": "imperial",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      {
+                        "cond": "rep",
+                        "faction": "syndicate",
+                        "in": [
+                          "pos"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "may",
+                      "effects": [
+                        {
+                          "op": "choice",
+                          "options": [
+                            [
+                              {
+                                "op": "if",
+                                "cond": {
+                                  "cond": "rep",
+                                  "faction": "hutt",
+                                  "in": [
+                                    "pos"
+                                  ]
+                                },
+                                "then": [
+                                  {
+                                    "op": "rep.lose",
+                                    "faction": "hutt",
+                                    "amount": 2
+                                  },
+                                  {
+                                    "op": "fame.gain",
+                                    "amount": 1
+                                  }
+                                ]
+                              }
+                            ],
+                            [
+                              {
+                                "op": "if",
+                                "cond": {
+                                  "cond": "rep",
+                                  "faction": "imperial",
+                                  "in": [
+                                    "pos"
+                                  ]
+                                },
+                                "then": [
+                                  {
+                                    "op": "rep.lose",
+                                    "faction": "imperial",
+                                    "amount": 2
+                                  },
+                                  {
+                                    "op": "fame.gain",
+                                    "amount": 1
+                                  }
+                                ]
+                              }
+                            ],
+                            [
+                              {
+                                "op": "if",
+                                "cond": {
+                                  "cond": "rep",
+                                  "faction": "syndicate",
+                                  "in": [
+                                    "pos"
+                                  ]
+                                },
+                                "then": [
+                                  {
+                                    "op": "rep.lose",
+                                    "faction": "syndicate",
+                                    "amount": 2
+                                  },
+                                  {
+                                    "op": "fame.gain",
+                                    "amount": 1
+                                  }
+                                ]
+                              }
+                            ]
+                          ]
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "may",
+                          "effects": [
+                            {
+                              "op": "to",
+                              "cost": [
+                                {
+                                  "op": "asset.discard",
+                                  "filter": {
+                                    "asset": {
+                                      "type": [
+                                        "crew"
+                                      ]
+                                    }
+                                  },
+                                  "count": 1
+                                }
+                              ],
+                              "then": [
+                                {
+                                  "op": "credits.gain",
+                                  "amount": 3000
+                                },
+                                {
+                                  "op": "rep.gain",
+                                  "faction": "syndicate"
+                                }
+                              ]
+                            }
+                          ]
+                        }
                       ]
                     }
                   ],
