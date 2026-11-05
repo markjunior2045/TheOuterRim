@@ -64,6 +64,22 @@ namespace OuterRim.Core.Engine
             }
         }
 
+        /// <summary>
+        /// R-16.43, R-11.13: reveal the new top card after a card was bought or gained through an effect; with a
+        /// patrol icon, the frame that moves that patrol toward the buyer (no Jyn redirect: not a market action).
+        /// </summary>
+        internal static Frame? RevealTop(ResolutionContext ctx, MarketDeck deck, string buyer)
+        {
+            if (deck.Cards.Count == 0) return null;
+            ctx.Events.Add(new MarketCardRevealedEvent(deck.Deck, deck.Cards[0]));
+            if (!(ctx.Content.Card(deck.Cards[0])["patrol_icon"] is JObject icon)) return null;
+            var move = new Frame(Patrols.MoveHandler);
+            move.Set("faction", (string)icon["faction"]!);
+            move.Set("distance", (int)icon["distance"]!);
+            move.Set("toward_player", buyer);
+            return move;
+        }
+
         /// <summary>Price of the top card after bartering, or a rejection reason (R-16.22, R-16.31 to R-16.39, R-15.6).</summary>
         internal static string? Check(GameContent content, GameState state, PlayerState player, string deck, IReadOnlyList<string> barterIds,
             out int price)

@@ -36,6 +36,7 @@ namespace OuterRim.Core.Engine
             "test.skill_grant", "move.no_stop", "custom", "cargo.deliver", "cargo.discard", "turn.end", "step.end", "unless",
             "asset.gain_embedded", "encounter.space", "player.choose", "credits.take", "turn.additional",
             "move.player", "move.player_direct", "move.patrol", "move.patrol_direct", "encounter.patrol",
+            "market.buy", "market.take", "encounter_deck.peek", "damage.prevent",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -48,6 +49,8 @@ namespace OuterRim.Core.Engine
         public static readonly HashSet<string> CustomImplemented = new HashSet<string>(StringComparer.Ordinal)
         {
             "tractor_beam", "patrol_redirect", "used_ship_for_sale",
+            "double_or_nothing", "dice_gamble", "side_bets", "name_a_number", "lose_any_reputation",
+            "buy_any_sheet", "replace_with_starter", "pay_for_goal", "patrol_hunt",
         };
 
         public static void Register()
@@ -78,6 +81,10 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new MoveDirectHandler());
             ResolutionHandlers.Register(new MovePatrolEffectHandler());
             ResolutionHandlers.Register(new EncounterPatrolEffectHandler());
+            ResolutionHandlers.Register(new MarketEffectBuyHandler());
+            ResolutionHandlers.Register(new MarketTakeHandler());
+            ResolutionHandlers.Register(new CustomFrameHandler());
+            ResolutionHandlers.Register(new EncounterPeekHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -144,6 +151,7 @@ namespace OuterRim.Core.Engine
                 if (frame.Vars.TryGetValue("ret." + key, out var v))
                 {
                     frame.Set("out." + key, v);
+                    frame.Set("ctx." + key, v); // later effects of the same list see it ("that patrol")
                     frame.Vars.Remove("ret." + key);
                 }
             }
@@ -276,6 +284,14 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(MovePatrolEffectHandler.HandlerId, frame, nodePath));
                 case "encounter.patrol":
                     return StepResult.Call(EffectHandlers.Child(EncounterPatrolEffectHandler.HandlerId, frame, nodePath));
+                case "market.buy":
+                    return StepResult.Call(EffectHandlers.Child(MarketEffectBuyHandler.HandlerId, frame, nodePath));
+                case "market.take":
+                    return StepResult.Call(EffectHandlers.Child(MarketTakeHandler.HandlerId, frame, nodePath));
+                case "encounter_deck.peek":
+                    return StepResult.Call(EffectHandlers.Child(EncounterPeekHandler.HandlerId, frame, nodePath));
+                case "custom" when CustomFrameHandler.Handlers.Contains((string)node["handler"]!):
+                    return StepResult.Call(EffectHandlers.Child(CustomFrameHandler.HandlerId, frame, nodePath));
                 case "encounter.space":
                 {
                     // "Resolve another Takodana encounter card" (Takodana-5).
@@ -423,6 +439,20 @@ namespace OuterRim.Core.Engine
                     outcome.Values["last_faction"] = Patrols.Id(faction.Value);
                     return target.Reputation.Get(faction.Value) != before; // R-21.4: "lose X to ..." needs a real loss
                 }
+                case "damage.prevent":
+                {
+                    // R-8.6, R-7.13: the win effect resolves before damage, so it lowers the damage still to come.
+                    for (int i = state.Stack.Count - 1; i >= 0; i--)
+                    {
+                        var combat = state.Stack[i];
+                        if (combat.Handler != Combat.Handler || combat.Get("attacker") != owner.Id) continue;
+                        int d = combat.GetInt("defender_damage");
+                        int prevent = node["amount"] is JObject all && all["all"] != null ? d : Amount();
+                        combat.Set("defender_damage", System.Math.Max(0, d - prevent));
+                        return true;
+                    }
+                    return false;
+                }
                 case "turn.additional":
                     // R-5.14: a full turn after this one; none while already in an additional turn.
                     if (!state.InAdditionalTurn && !state.AdditionalTurn)
@@ -440,7 +470,9 @@ namespace OuterRim.Core.Engine
                 case "damage.recover":
                     foreach (var part in Targets((string)node["target"]!))
                     {
-                        int amount = node["amount"] is JObject all && all["all"] != null ? int.MaxValue : Amount();
+                        // "Recover up to N": recovering is never worse, so the full N.
+                        int amount = node["amount"] is JObject all && all["all"] != null ? int.MaxValue
+                            : Targeting.UpTo(node["amount"]) ?? Amount();
                         PlayerRules.RecoverDamage(content, state, target, part, amount, events);
                     }
                     return true;

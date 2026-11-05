@@ -787,6 +787,40 @@ namespace OuterRim.Core.Engine
         public string PlayerId { get; }
     }
 
+    /// <summary>R-16.45: cards revealed (or searched) from a market deck by an effect, top first.</summary>
+    public sealed class MarketCardsRevealedEvent : GameEvent
+    {
+        public MarketCardsRevealedEvent(string playerId, string deck, IReadOnlyList<string> cards)
+        {
+            PlayerId = playerId;
+            Deck = deck;
+            Cards = cards;
+        }
+
+        public string PlayerId { get; }
+
+        public string Deck { get; }
+
+        public IReadOnlyList<string> Cards { get; }
+    }
+
+    /// <summary>A player secretly looked at the top card of an encounter deck (only they see the card).</summary>
+    public sealed class EncounterCardPeekedEvent : GameEvent
+    {
+        public EncounterCardPeekedEvent(string playerId, string deck, string cardId)
+        {
+            PlayerId = playerId;
+            Deck = deck;
+            CardId = cardId;
+        }
+
+        public string PlayerId { get; }
+
+        public string Deck { get; }
+
+        public string CardId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

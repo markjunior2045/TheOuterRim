@@ -54,7 +54,14 @@ namespace OuterRim.Core.Engine
                     // Step 1: the attacker rolls dice equal to their combat value (R-7.10), less any
                     // "your opponent rolls fewer dice" of the defender.
                     int fewer = defenderPlayer != null ? Modifiers.OpponentFewer(content, state, defenderPlayer, frame.Get("type")) : 0;
-                    var faces = DiceRoller.Roll(state.Random, System.Math.Max(0, frame.GetInt("attacker_value") - fewer));
+                    var faces = new List<DieFace>(DiceRoller.Roll(state.Random, System.Math.Max(0, frame.GetInt("attacker_value") - fewer)));
+                    if (frame.Vars.TryGetValue("attacker_add", out var add))
+                    {
+                        // "During the combat, you add 1 {CRIT}" (Maelstrom-8): results added to the roll.
+                        var parts = add.Split(':');
+                        var face = parts[0] == "crit" ? DieFace.Crit : parts[0] == "hit" ? DieFace.Hit : parts[0] == "focus" ? DieFace.Focus : DieFace.Blank;
+                        for (int k = 0; k < int.Parse(parts[1], CultureInfo.InvariantCulture); k++) faces.Add(face);
+                    }
                     frame.Set("attacker_faces", DicePool.Encode(faces));
                     frame.Step = 2;
                     // Rerolls and result changes: the attacker (who rolled) first, then the defender (R-7.10, R-7.11).

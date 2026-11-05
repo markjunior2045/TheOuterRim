@@ -134,6 +134,7 @@ namespace OuterRim.Core.Engine
                     ? token.Combat.Value.ToString(CultureInfo.InvariantCulture)
                     : Combat.Infinite);
                 combat.Set("outcome", PatrolOutcomeHandler.HandlerId);
+                if (frame.Vars.TryGetValue("attacker_add", out var add)) combat.Set("attacker_add", add);
                 frame.Step = 1;
                 return StepResult.Call(combat);
             }

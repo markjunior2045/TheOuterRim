@@ -410,7 +410,14 @@ namespace OuterRim.Core.Engine
             var owner = ctx.State.FindPlayer(frame.Get("owner"))!;
             if (frame.Step == 1)
             {
-                Assets.Discard(ctx.Content, ctx.State, owner, Assets.Find(owner, frame.Get("pick"))!, "effect", ctx.Events);
+                var asset = Assets.Find(owner, frame.Get("pick"));
+                if (asset == null)
+                {
+                    Encounters.DiscardSecret(ctx.Content, ctx.State, owner, frame.Get("pick"), ctx.Events);
+                    return StepResult.Done();
+                }
+                ctx.Return("cost", asset.Cost.ToString(System.Globalization.CultureInfo.InvariantCulture)); // "credits equal to its cost"
+                Assets.Discard(ctx.Content, ctx.State, owner, asset, "effect", ctx.Events);
                 return StepResult.Done();
             }
             var filter = (JObject)node["filter"]!["asset"]!;
@@ -418,6 +425,10 @@ namespace OuterRim.Core.Engine
             foreach (var a in owner.Assets)
             {
                 if (Selectors.AssetMatches(ctx.Content, a, filter)) options.Add(new DecisionOption(a.CardId, a.CardId));
+            }
+            if (filter["type"] is JArray types && types.ToString().Contains("\"secret\""))
+            {
+                foreach (var s in owner.Secrets) options.Add(new DecisionOption(Encounters.SecretCard(s), "secret"));
             }
             if (options.Count == 0)
             {

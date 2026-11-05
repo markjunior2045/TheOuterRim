@@ -339,6 +339,13 @@ namespace OuterRim.Core.Engine
                     var encounter = new Frame(Patrols.EncounterHandler);
                     encounter.Set("target", frame.Get("target"));
                     encounter.Set("player", owner.Id);
+                    if (node["bonus"] is JArray bonus)
+                    {
+                        foreach (JObject b in bonus)
+                        {
+                            if ((string?)b["op"] == "dice.add") encounter.Set("attacker_add", (string)b["face"]! + ":" + (int)b["count"]!);
+                        }
+                    }
                     return StepResult.Call(encounter);
                 }
                 default:
