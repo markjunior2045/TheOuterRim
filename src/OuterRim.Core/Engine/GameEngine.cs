@@ -140,10 +140,7 @@ namespace OuterRim.Core.Engine
                     ShipSideId = side.Id,
                 });
             }
-            foreach (Faction f in new[] { Faction.Rebel, Faction.Syndicate, Faction.Imperial, Faction.Hutt })
-            {
-                state.Patrols.Add(new PatrolState { Faction = f, Level = 1, SpaceId = content.Map.SpawnSpace(f) });
-            }
+            Patrols.Setup(content, state);
 
             var log = new List<GameEvent>();
             string first = RollForFirstPlayer(state, log);

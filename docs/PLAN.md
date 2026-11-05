@@ -117,9 +117,11 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Delivered:** `PlayerRules`: credits (spend needs the full amount, lose takes what there is, R-9.8), reputation (gain, lose, set, R-10.5 to R-10.7), fame (floor 0 R-18.14, most famous with ties R-18.17), damage with the defeat procedure (lose 3,000 or all, discard all secrets, the current player's turn ends once the action or step in progress finishes, R-8.8, R-15.89) and recovery that ends defeat outside planning (R-8.10). `Victory`: checked after every resolution step and command; simultaneous winners broken by credits, then by seat farthest clockwise from the first player (R-18.8, R-18.16). Combat damage goes through the same rules. Players hold secrets (ids only until encounter decks exist). Save format 0.5. 124 tests.
 - Fame from assets ("you have X additional fame", R-18.15) is added by the effect engine.
 
-### T1.8 — Patrols · `TODO` (T1.3, T1.6)
+### T1.8 — Patrols · `DONE` (2026-11-05; movement reading awaiting owner confirmation)
 - Setup, spawning, movement toward the player with path and direction rules, forced encounters (R-11).
 - **Tests:** one per rule in R-11.12 to R-11.29; always exactly one patrol per faction.
+- **Delivered:** patrol tokens loaded from `patrols.json`; patrol stacks in the state (R-3.7, save format 0.6); elimination and spawning (R-11.8 to R-11.10); direct moves (R-11.23); movement toward the current player as a resolution frame (`rules.patrol_move`) with the current player choosing among destinations (R-11.15 to R-11.22, reading noted in `RULES.md` after R-11.24); the real patrol encounter replaces the stub: ship combat at the token's value, win gives the reward, costs 1 reputation and replaces the patrol, loss lets the player push it to an adjacent space, all before damage (R-11.6, R-11.7, R-11.25, R-11.29). 141 tests.
+- The trigger of patrol movement (market icons on buying, R-11.12 to R-11.14) comes with the market (T2.5).
 
 ### T1.9 — Assets, slots, ships · `TODO` (T1.1)
 - Slots, rearranging, forced discard, rotating assets, ship purchase and barter hooks (R-14, R-17).
@@ -221,6 +223,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.8 done: patrol stacks, spawning, movement toward the player with the player's choice, real patrol encounters; save format 0.6. |
 | 2026-11-05 | T1.7 done: credits, reputation, fame, defeat procedure, victory with tiebreak; game rolls for enemies with labelled rolls; save format 0.5. |
 | 2026-11-05 | T1.6 done: combat as a resolution frame, five steps, tie to attacker, win before damage, level-4 patrols. |
 | 2026-11-05 | T1.5 done: skill tests (levels, thresholds, choice of skill) as a resolution frame; characters loaded; save format 0.4. |

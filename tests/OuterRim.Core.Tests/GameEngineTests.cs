@@ -19,7 +19,7 @@ namespace OuterRim.Core.Tests
             var list = new List<PlayerSetup>();
             for (int i = 0; i < players; i++)
             {
-                list.Add(new PlayerSetup("p" + (i + 1), "Player " + (i + 1), colors[i], StartSpaces[i], TestContent.G9Rigger));
+                list.Add(new PlayerSetup("p" + (i + 1), "Player " + (i + 1), colors[i], StartSpaces[i], TestContent.G9Rigger, "base-character-0" + i));
             }
             return new GameSetup(seed, list, new[] { new PackRef("base", "0.1.0") });
         }

@@ -35,6 +35,29 @@ namespace OuterRim.Core.Content
         public int Hull { get; }
     }
 
+    /// <summary>A patrol token: combat value (null for level 4, R-11.6) and reward (R-11.4).</summary>
+    public sealed class PatrolToken
+    {
+        public PatrolToken(OuterRim.Core.Model.Faction faction, int level, int? combat, int rewardCredits, int rewardFame)
+        {
+            Faction = faction;
+            Level = level;
+            Combat = combat;
+            RewardCredits = rewardCredits;
+            RewardFame = rewardFame;
+        }
+
+        public OuterRim.Core.Model.Faction Faction { get; }
+
+        public int Level { get; }
+
+        public int? Combat { get; }
+
+        public int RewardCredits { get; }
+
+        public int RewardFame { get; }
+    }
+
     /// <summary>A character card: the values the rules read (data/packs/*/cards/characters.json).</summary>
     public sealed class CharacterCard
     {
@@ -93,6 +116,56 @@ namespace OuterRim.Core.Content
         }
 
         private readonly Dictionary<string, string> _names = new Dictionary<string, string>(StringComparer.Ordinal);
+        private readonly Dictionary<string, PatrolToken> _patrols = new Dictionary<string, PatrolToken>(StringComparer.Ordinal);
+
+        public void AddPatrols(IEnumerable<PatrolToken> tokens)
+        {
+            foreach (var t in tokens)
+            {
+                _patrols[t.Faction + "/" + t.Level] = t;
+            }
+        }
+
+        public PatrolToken PatrolToken(OuterRim.Core.Model.Faction faction, int level)
+        {
+            return _patrols.TryGetValue(faction + "/" + level, out var t)
+                ? t
+                : throw new KeyNotFoundException("No " + faction + " patrol token of level " + level + ".");
+        }
+
+        /// <summary>Reads the patrol tokens of a card data file (format outer-rim-data/0.1).</summary>
+        public static List<PatrolToken> ReadPatrols(string json)
+        {
+            var root = JObject.Parse(json);
+            var result = new List<PatrolToken>();
+            foreach (JObject card in (JArray)root["cards"]!)
+            {
+                if ((string?)card["kind"] != "patrol")
+                {
+                    continue;
+                }
+                int credits = 0, fame = 0;
+                foreach (JObject e in (JArray)card["reward"]!)
+                {
+                    var op = (string)e["op"]!;
+                    if (op == "credits.gain")
+                    {
+                        credits += (int)e["amount"]!;
+                    }
+                    else if (op == "fame.gain")
+                    {
+                        fame += (int)e["amount"]!;
+                    }
+                    else
+                    {
+                        throw new FormatException("Unsupported patrol reward '" + op + "'.");
+                    }
+                }
+                var faction = OuterRim.Core.Rules.Patrols.Parse((string)card["faction"]!);
+                result.Add(new PatrolToken(faction, (int)card["level"]!, (int?)card["combat"], credits, fame));
+            }
+            return result;
+        }
 
         /// <summary>
         /// Loads display names ("&lt;card id&gt;.name") from a pack's strings file (format outer-rim-loc/0.1).

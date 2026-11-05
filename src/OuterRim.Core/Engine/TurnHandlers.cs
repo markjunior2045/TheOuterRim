@@ -6,13 +6,15 @@ namespace OuterRim.Core.Engine
     {
         public const string EncounterStep = "turn.encounter_step";
         public const string EncounterSpace = "encounter.space";
-        public const string EncounterPatrol = "encounter.patrol";
+        public const string EncounterPatrol = Rules.Patrols.EncounterHandler;
 
         public static void Register()
         {
             ResolutionHandlers.Register(new EncounterStepHandler());
             ResolutionHandlers.Register(new EncounterSpaceStub());
-            ResolutionHandlers.Register(new EncounterPatrolStub());
+            ResolutionHandlers.Register(new PatrolEncounterHandler());
+            ResolutionHandlers.Register(new PatrolOutcomeHandler());
+            ResolutionHandlers.Register(new PatrolMoveHandler());
             ResolutionHandlers.Register(new SkillTestHandler());
             ResolutionHandlers.Register(new CombatHandler());
         }
@@ -53,16 +55,5 @@ namespace OuterRim.Core.Engine
             }
         }
 
-        /// <summary>STUB until patrol combat is built (PLAN T1.6, T1.8): a ship combat against the patrol.</summary>
-        private sealed class EncounterPatrolStub : IResolutionHandler
-        {
-            public string Id => EncounterPatrol;
-
-            public StepResult Step(ResolutionContext context, Frame frame)
-            {
-                context.Events.Add(new EncounterResolvedEvent(context.State.CurrentPlayerId, "patrol", frame.Get("target")));
-                return StepResult.Done();
-            }
-        }
     }
 }

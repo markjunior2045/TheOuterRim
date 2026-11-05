@@ -40,6 +40,9 @@ namespace OuterRim.Core.Model
         /// <summary>Patrols on the map: always one per faction (R-11.9).</summary>
         public List<PatrolState> Patrols { get; set; } = new List<PatrolState>();
 
+        /// <summary>Facedown patrol tokens per faction, top first (R-3.7).</summary>
+        public List<PatrolStack> PatrolStacks { get; set; } = new List<PatrolStack>();
+
         /// <summary>Fame needed to win (R-3.1, R-18.9).</summary>
         public int FameRequirement { get; set; } = 10;
 
@@ -106,6 +109,14 @@ namespace OuterRim.Core.Model
         public int Level { get; set; } = 1;
 
         public string SpaceId { get; set; } = "";
+    }
+
+    /// <summary>A faction's stack of facedown patrol tokens, by level, top first (R-3.7).</summary>
+    public sealed class PatrolStack
+    {
+        public Faction Faction { get; set; }
+
+        public List<int> Levels { get; set; } = new List<int>();
     }
 
     /// <summary>A content pack used by a game: id and version (DECISIONS §7).</summary>

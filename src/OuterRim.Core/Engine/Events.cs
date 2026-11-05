@@ -370,6 +370,60 @@ namespace OuterRim.Core.Engine
         public bool Tiebreak { get; }
     }
 
+    /// <summary>A patrol moved (R-11.15) or was moved directly (R-11.23).</summary>
+    public sealed class PatrolMovedEvent : GameEvent
+    {
+        public PatrolMovedEvent(Faction faction, string from, string to, bool direct)
+        {
+            Faction = faction;
+            From = from;
+            To = to;
+            Direct = direct;
+        }
+
+        public Faction Faction { get; }
+
+        public string From { get; }
+
+        public string To { get; }
+
+        public bool Direct { get; }
+    }
+
+    /// <summary>R-11.8: a defeated patrol is removed from the game.</summary>
+    public sealed class PatrolEliminatedEvent : GameEvent
+    {
+        public PatrolEliminatedEvent(Faction faction, int level, string spaceId)
+        {
+            Faction = faction;
+            Level = level;
+            SpaceId = spaceId;
+        }
+
+        public Faction Faction { get; }
+
+        public int Level { get; }
+
+        public string SpaceId { get; }
+    }
+
+    /// <summary>R-11.10: the next patrol of a faction enters the map next to its stack.</summary>
+    public sealed class PatrolSpawnedEvent : GameEvent
+    {
+        public PatrolSpawnedEvent(Faction faction, int level, string spaceId)
+        {
+            Faction = faction;
+            Level = level;
+            SpaceId = spaceId;
+        }
+
+        public Faction Faction { get; }
+
+        public int Level { get; }
+
+        public string SpaceId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {
