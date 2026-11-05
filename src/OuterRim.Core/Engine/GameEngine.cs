@@ -465,17 +465,18 @@ namespace OuterRim.Core.Engine
                 {
                     return CommandResult.Rejected("R-5.11: entering the Maelstrom ends movement.");
                 }
-                if (!last && StopsMovement(state, player, next))
+                if (!last && StopsMovement(state, player, next) && !MoveHandler.MayPassPatrols(null, content, player))
                 {
                     return CommandResult.Rejected("R-5.20: entering a patrol's space without positive reputation with it ends movement.");
                 }
                 at = next;
             }
-            var from = player.SpaceId;
-            player.SpaceId = at;
-            var events = new List<GameEvent> { new PlayerMovedEvent(player.Id, from, new List<string>(path), false) };
-            StartStep(state, TurnStep.Action, events);
-            return CommandResult.Ok(events);
+            // Walk the path one space at a time: abilities may act on entering a space (Han Solo, Tractor Beam).
+            var frame = new Frame(MoveHandler.HandlerId);
+            frame.Set("player", player.Id);
+            frame.Set("path", string.Join(",", path));
+            frame.Set("from", player.SpaceId);
+            return StartResolution(content, state, frame);
         }
 
         /// <summary>R-5.20: a patrol whose faction the player is not positive with stops movement.</summary>

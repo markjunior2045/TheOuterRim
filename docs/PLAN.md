@@ -153,8 +153,12 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - Passive "Gain +X" bonuses read as queries for hyperdrive, ground and ship combat, health and hull (R-5.19, R-7.19), including conditional and scaled ones.
 - `UseAbilityCommand` for "Planning:", "Action:" and "Encounter:" abilities (R-4.7, R-4.8, R-4.11, R-4.16, R-4.17), with condition and credit-cost checks. Characters carry their faceup side; IG-88 is marked as a droid in the data. Save format 0.8. 179 tests.
 
-#### T2.3b — Triggers, replacements, dice windows · `TODO`
-- "When" and "after" triggers, replacement effects ("would be defeated", "would fail", damage caps), dice windows in skill tests, combat and delivery rolls (reroll, turn, add, cancel, fewer dice), effects with a duration, choices of faction and player, rule modifiers and slot changes.
+#### T2.3b — Triggers, replacements, dice windows · `DONE` (2026-11-05)
+- **Dice windows** after every roll in skill tests and combat: the roller, then the opponent, may change the roll (R-7.10 to R-7.12); mandatory abilities apply at once (Ion Cannon), optional ones are offered only when they can act, until the player passes. Reroll, turn, add and cancel with die selection; per-die flags for added, turned and cancelled results (R-7.15 to R-7.17); limits once per window, combat, test or turn (R-21.6); "your opponent rolls fewer dice".
+- **Damage frame:** caps (IQA-11), then "when you would become defeated ... instead" (IG-88 back, Hound's Tooth), then defeat (R-8.8). Combat damage carries the combat context.
+- **Triggers:** generic dispatcher with ordering of simultaneous abilities (R-21.10): after winning a combat (Ketsu back), before a skill test (Doctor Aphra, R-6.8), on entering a patrol's space (Han Solo back, Slave I), when another player enters your space (Tractor Beam).
+- **Movement one space at a time,** so those abilities can act; a patrol not let through still ends the movement (R-5.20).
+- **Other effects:** taking an asset from another player (IG-88), discarding a chosen asset, rolling dice with outcomes, trait limits (one ARMOR), assets that name their slot types and add capacity (Smuggling Compartment), rule changes (IG-2000, Valorous), redirecting a patrol (Jyn Erso back). 213 tests.
 
 #### T2.3c — Goals · `TODO`
 - Personal and ship goals: event counters with goal tokens, states, events with a condition, step goals; completing and flipping (R-18.1 to R-18.7).
@@ -237,6 +241,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.3b done: dice windows, damage replacements, triggers, step-by-step movement, asset and rule effects. |
 | 2026-11-05 | T2.3 split into a, b, c; T2.3a done: effect interpreter, passive bonuses, step abilities; save format 0.8. |
 | 2026-11-05 | T1.9 done: assets and slots, gaining and discarding, ship supply and purchase with barter. Phase 1 (core) complete; save format 0.7. |
 | 2026-11-05 | T1.8 done: patrol stacks, spawning, movement toward the player with the player's choice, real patrol encounters; save format 0.6. |

@@ -33,7 +33,7 @@ namespace OuterRim.Core.Engine
             "credits.gain", "credits.spend", "credits.lose", "fame.gain", "fame.lose", "rep.gain", "rep.lose",
             "damage.suffer", "damage.recover", "card.discard_self", "sheet.flip", "planet.marker",
             "dice.reroll", "dice.turn", "dice.cancel", "dice.add", "dice.roll", "asset.discard", "asset.take",
-            "test.skill_grant",
+            "test.skill_grant", "move.no_stop", "custom",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -59,6 +59,7 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new EffectDiceRollHandler());
             ResolutionHandlers.Register(new AssetDiscardHandler());
             ResolutionHandlers.Register(new AssetTakeHandler());
+            ResolutionHandlers.Register(new MoveHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -313,6 +314,15 @@ namespace OuterRim.Core.Engine
                         }
                     }
                     return false;
+                case "move.no_stop":
+                {
+                    // "You do not have to end your movement in that space" (Han Solo, Slave I).
+                    var move = MoveHandler.Nearest(state);
+                    move?.Set("no_stop", "1");
+                    return move != null;
+                }
+                case "custom":
+                    return Custom(ctx, owner, node);
                 case "planet.marker":
                     // R-25.14: a marker for Jyn Erso's goal, one per planet.
                     foreach (var m in state.PlanetMarkers)
@@ -327,6 +337,24 @@ namespace OuterRim.Core.Engine
                     return true;
                 default:
                     throw new NotSupportedException("Effect '" + op + "' is not implemented yet (PLAN T2.3b, T2.3c, T2.5, T2.6).");
+            }
+        }
+
+        /// <summary>Card-specific rules (EFFECTS.md §8) that need no decision once triggered.</summary>
+        private static bool Custom(ResolutionContext ctx, PlayerState owner, JObject node)
+        {
+            string handler = (string)node["handler"]!;
+            switch (handler)
+            {
+                case "tractor_beam":
+                {
+                    // Shadow Caster: "When another player moves into your space, you may force them to end their movement."
+                    var move = MoveHandler.Nearest(ctx.State);
+                    move?.Set("forced_stop", "1");
+                    return move != null;
+                }
+                default:
+                    throw new NotSupportedException("Custom handler '" + handler + "' is not implemented yet.");
             }
         }
 

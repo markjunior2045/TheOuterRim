@@ -19,7 +19,25 @@ namespace OuterRim.Core.Engine
             {
                 case 0:
                 {
-                    var target = ctx.State.FindPlayer(ctx.State.CurrentPlayerId)!;
+                    // Jyn Erso (back): "When a patrol within 3 spaces of you would move during your market
+                    // action, you may move the patrol toward another player instead of toward you."
+                    var current = ctx.State.FindPlayer(ctx.State.CurrentPlayerId)!;
+                    frame.Step = 2;
+                    if (ctx.State.Players.Count > 1 && CanRedirect(ctx, current, patrol))
+                    {
+                        var choices = new List<DecisionOption> { new DecisionOption(current.Id, "rules.toward_you") };
+                        foreach (var p in ctx.State.Players)
+                        {
+                            if (p.Id != current.Id) choices.Add(new DecisionOption(p.Id, p.Id));
+                        }
+                        return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, current.Id, "rules.patrol_redirect", choices, "toward"));
+                    }
+                    frame.Set("toward", current.Id);
+                    return StepResult.Continue();
+                }
+                case 2:
+                {
+                    var target = ctx.State.FindPlayer(frame.Get("toward"))!;
                     var ends = Patrols.Destinations(ctx.Content.Map, patrol.SpaceId, target.SpaceId, frame.GetInt("distance"));
                     frame.Step = 1;
                     if (ends.Count == 1)
@@ -44,6 +62,24 @@ namespace OuterRim.Core.Engine
                     return StepResult.Done();
                 }
             }
+        }
+
+        /// <summary>Whether the current player may send this patrol toward someone else (Jyn Erso back, within 3 spaces).</summary>
+        private static bool CanRedirect(ResolutionContext ctx, PlayerState player, PatrolState patrol)
+        {
+            foreach (var a in Effects.AbilitySources.Of(ctx.Content, player))
+            {
+                var timing = a.Ability["timing"]!;
+                if ((string?)timing["type"] != "replacement" || (string?)timing["event"] != "patrol_would_move") continue;
+                foreach (Newtonsoft.Json.Linq.JObject e in (Newtonsoft.Json.Linq.JArray)a.Ability["effects"]!)
+                {
+                    if ((string?)e["handler"] != "patrol_redirect") continue;
+                    int within = (int?)e["params"]?["within"] ?? 3;
+                    int d = ctx.Content.Map.Distance(player.SpaceId, patrol.SpaceId);
+                    if (d >= 0 && d <= within) return true;
+                }
+            }
+            return false;
         }
     }
 
