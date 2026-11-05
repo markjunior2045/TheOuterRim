@@ -34,8 +34,9 @@ namespace OuterRim.Core.Engine
         public string Color { get; }
 
         /// <summary>
-        /// Starting planet (R-3.15.b). Comes from the character's starting databank card once character
-        /// setup is built; given directly until then.
+        /// Leave empty for the normal setup: the starting planet comes from the character's starting
+        /// databank card (R-3.15). Set it only to place a player directly (tests, scenarios); that skips
+        /// the character's setup line (starting card and reputation).
         /// </summary>
         public string StartSpaceId { get; }
 
@@ -108,7 +109,11 @@ namespace OuterRim.Core.Engine
                 {
                     throw new ArgumentException("Duplicate player id " + p.Id, nameof(setup));
                 }
-                if (!content.Map.Contains(p.StartSpaceId) || !content.Map[p.StartSpaceId].IsPlanet)
+                if (p.StartSpaceId.Length == 0 && p.CharacterId.Length == 0)
+                {
+                    throw new ArgumentException("R-3.11: " + p.Id + " needs a character (or a start space for a scenario).", nameof(setup));
+                }
+                if (p.StartSpaceId.Length > 0 && (!content.Map.Contains(p.StartSpaceId) || !content.Map[p.StartSpaceId].IsPlanet))
                 {
                     throw new ArgumentException("R-3.15.b: " + p.Id + " must start on a planet, not '" + p.StartSpaceId + "'.", nameof(setup));
                 }
@@ -169,14 +174,85 @@ namespace OuterRim.Core.Engine
                 log.Add(new CreditsGainedEvent(player.Id, StartingCredits[i]));
             }
 
+            // R-3.15: character setup, for players placed by their starting card.
+            var choices = new List<string>();
+            for (int i = 0; i < state.Players.Count; i++)
+            {
+                var player = state.Players[(firstSeat + i) % state.Players.Count];
+                var ps = Find(setup, player.Id);
+                if (ps.StartSpaceId.Length == 0 && CharacterSetup(content, state, player, log))
+                {
+                    choices.Add(player.Id);
+                }
+            }
+
             state.Phase = GamePhase.Playing;
             state.Round = 1;
             state.CurrentPlayerId = first;
             state.Step = TurnStep.Planning;
             log.Add(new TurnStartedEvent(first, 1));
             log.Add(new StepStartedEvent(first, TurnStep.Planning));
+            // Starting reputation "with the faction of your choice" (Lando) is asked before the first turn.
+            for (int i = choices.Count - 1; i >= 0; i--)
+            {
+                var frame = new Frame(TurnHandlers.ChooseStartingReputation);
+                frame.Set("player", choices[i]);
+                state.Stack.Add(frame);
+            }
+            if (state.Stack.Count > 0)
+            {
+                Resolver.Run(content, state, log);
+            }
             events = log;
             return state;
+        }
+
+        private static PlayerSetup Find(GameSetup setup, string id)
+        {
+            foreach (var p in setup.Players)
+            {
+                if (p.Id == id) return p;
+            }
+            throw new KeyNotFoundException(id);
+        }
+
+        /// <summary>
+        /// R-3.15: take a random card of the character's starting databank number (R-13.3; each card goes to
+        /// one player), put its asset in a slot (cargo, or job or bounty), start on its planet, and apply the
+        /// starting reputation (R-10.7). Returns true when the reputation faction is the player's choice.
+        /// </summary>
+        private static bool CharacterSetup(GameContent content, GameState state, PlayerState player, List<GameEvent> log)
+        {
+            var character = content.Card(player.CharacterId);
+            var setupLine = (Newtonsoft.Json.Linq.JObject)character["setup"]!;
+            int number = (int)setupLine["databank"]!;
+            var candidates = content.DatabankCards(number);
+            foreach (var p in state.Players)
+            {
+                foreach (var a in p.Assets) candidates.Remove(a.CardId);
+            }
+            if (candidates.Count == 0)
+            {
+                throw new InvalidOperationException("No card #" + number + " left in the databank.");
+            }
+            var cardId = candidates[state.Random.NextInt(candidates.Count)];
+            var card = content.Card(cardId);
+            player.Assets.Add(new AssetState { CardId = cardId, Kind = (string)card["asset_kind"]!, Cost = 0 });
+            player.SpaceId = (string)card["starting_planet"]!;
+            log.Add(new StartingCardDrawnEvent(player.Id, cardId, player.SpaceId));
+            bool choice = false;
+            foreach (Newtonsoft.Json.Linq.JObject rep in (Newtonsoft.Json.Linq.JArray)setupLine["reputation"]!)
+            {
+                var faction = (string)rep["faction"]!;
+                var value = (string)rep["state"]! == "pos" ? Reputation.Positive : (string)rep["state"]! == "neg" ? Reputation.Negative : Reputation.Neutral;
+                if (faction == "choice")
+                {
+                    choice = true;
+                    continue;
+                }
+                PlayerRules.SetReputation(player, Patrols.Parse(faction), value, log);
+            }
+            return choice;
         }
 
         /// <summary>R-3.11: everyone rolls six dice; most hits plus crits goes first; tied players reroll.</summary>

@@ -49,7 +49,7 @@ namespace OuterRim.Core.Tests
             content.AddNames(Repo.Read("data/packs/base/loc/en.json"));
             content.AddPatrols(Content.GameContent.ReadPatrols(Repo.Read("data/packs/base/cards/patrols.json")));
             content.SetBoardSlots(Repo.Read("data/packs/base/cards/player-boards.json"));
-            foreach (var file in new[] { "market-gear", "market-cargo", "characters", "ship-sheets" })
+            foreach (var file in new[] { "market-gear", "market-cargo", "characters", "ship-sheets", "databank-starting" })
             {
                 content.AddCards(Repo.Read("data/packs/base/cards/" + file + ".json"));
             }

@@ -196,6 +196,10 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Batches (Unfinished Business):** after the base game, same split; decide first which image version to read from (`DECISIONS.md` §9).
 - **Done per batch when:** the JSON parses, every card in the deck is present, and the batch is reviewed. Validation against the data schema comes once T2.2 exists.
 
+### T2.9 — Character setup from the starting cards · `DONE` (2026-11-05)
+- R-3.15: each player, in turn order, takes a random card of their character's starting databank number (#90, #91, #92; one card per player, R-13.3), puts its asset in a slot, starts on its planet and applies the starting reputation; Lando's "faction of your choice" is a decision before the first turn.
+- **Delivered:** `data/packs/base/cards/databank-starting.json` (10 cards: planet, asset kind, destination, reward; bounty and job details come with the databank in T2.6); `GameContent.DatabankCards`; setup in `GameEngine.NewGame`. A start space given in `PlayerSetup` places the player directly and skips the setup line (tests, scenarios). 227 tests.
+
 ---
 
 ## Phase 3 — Playable
@@ -242,6 +246,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T2.9 added and done: character setup from the starting databank cards (R-3.15). |
 | 2026-11-05 | T2.3c done: personal and ship goals; T2.3 complete; save format 0.9. |
 | 2026-11-05 | T2.3b done: dice windows, damage replacements, triggers, step-by-step movement, asset and rule effects. |
 | 2026-11-05 | T2.3 split into a, b, c; T2.3a done: effect interpreter, passive bonuses, step abilities; save format 0.8. |

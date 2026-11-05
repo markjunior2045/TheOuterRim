@@ -6,6 +6,7 @@ namespace OuterRim.Core.Engine
     {
         public const string EncounterStep = "turn.encounter_step";
         public const string AbilityStep = "turn.ability_step";
+        public const string ChooseStartingReputation = "setup.starting_reputation";
         public const string EncounterSpace = "encounter.space";
         public const string EncounterPatrol = Rules.Patrols.EncounterHandler;
 
@@ -13,6 +14,7 @@ namespace OuterRim.Core.Engine
         {
             ResolutionHandlers.Register(new EncounterStepHandler());
             ResolutionHandlers.Register(new AbilityStepHandler());
+            ResolutionHandlers.Register(new StartingReputationHandler());
             EffectHandlers.Register();
             ResolutionHandlers.Register(new EncounterSpaceStub());
             ResolutionHandlers.Register(new PatrolEncounterHandler());
@@ -23,6 +25,29 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new BuyShipHandler());
             ResolutionHandlers.Register(new SkillTestHandler());
             ResolutionHandlers.Register(new CombatHandler());
+        }
+
+        /// <summary>Lando's setup: positive reputation "with the faction of your choice" (R-3.15.c).</summary>
+        private sealed class StartingReputationHandler : IResolutionHandler
+        {
+            public string Id => ChooseStartingReputation;
+
+            public StepResult Step(ResolutionContext context, Frame frame)
+            {
+                var player = context.State.FindPlayer(frame.Get("player"))!;
+                if (frame.Step == 0)
+                {
+                    frame.Step = 1;
+                    var options = new System.Collections.Generic.List<DecisionOption>();
+                    foreach (var f in new[] { "rebel", "imperial", "hutt", "syndicate" })
+                    {
+                        options.Add(new DecisionOption(f, "faction." + f));
+                    }
+                    return StepResult.Await(context.Ask(DecisionKind.ChooseOption, player.Id, "setup.starting_reputation", options, "faction"));
+                }
+                Rules.PlayerRules.SetReputation(player, Rules.Patrols.Parse(frame.Get("faction")), Model.Reputation.Positive, context.Events);
+                return StepResult.Done();
+            }
         }
 
         /// <summary>Runs a step ability, then moves on: a planning ability leads to the action step (R-4.7), an encounter ability ends the turn (R-4.16).</summary>

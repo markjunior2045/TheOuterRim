@@ -12,7 +12,8 @@
     "data/packs/base/cards/player-boards.json",
     "data/packs/base/cards/contacts.json",
     "data/packs/base/cards/characters.json",
-    "data/packs/base/cards/ship-sheets.json"
+    "data/packs/base/cards/ship-sheets.json",
+    "data/packs/base/cards/databank-starting.json"
   ],
   "localization": {
     "en": "data/packs/base/loc/en.json"

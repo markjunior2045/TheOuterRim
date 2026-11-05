@@ -47,6 +47,7 @@ Every card has `id`, `kind`, `abilities`, and the fields of its kind in `registr
 | contact | `class` (white, green, yellow, orange), `faction` or `null`, `droid`, `databank` (the card resolved on encounter, R-12.15) |
 | patrol | `faction`, `level`, `combat` (`null` for level 4, R-11.6), `reward` (effects) |
 | player_board | `color`, `slots`, `fame_track` (`min`, `max`) |
+| starting_asset | databank cards #90 to #92: `number`, `variant`, `starting_planet`, `asset_kind` (cargo, job, bounty), `destination`, `reward` (R-3.15) |
 
 A slot is `{ "types": ["job", "bounty"], "count": 2 }`: `types` lists the asset types the slot accepts ("job or bounty"), `count` how many cards of those types fit. `count` is the number of printed boxes with that label: "CREW" printed three times is `{ "types": ["crew"], "count": 3 }`. A box printed "X2" holds two cards (R-14.14) and counts as 2; in the base game only Slave I (the flipped Firespray-31 Patrol Craft) prints one, "MOD X2" (checked against the physical sheet, 2026-11-05). Since placement is free (R-14.17), separate boxes and an "X2" box behave the same. Two-sided cards keep their abilities on each side; their text keys start with the side (`"front.upper.0"`, `"sides.1.text.0"`). Goals are abilities with a `goal` timing whose `progress` is a count of events, a state, an event with a condition, or a step ability (`EFFECTS.md` §3.5).
 

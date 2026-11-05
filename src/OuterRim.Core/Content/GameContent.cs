@@ -215,6 +215,24 @@ namespace OuterRim.Core.Content
             }
         }
 
+        /// <summary>
+        /// Databank cards of a number (R-13.1 to R-13.3): every loaded card with that "number", in id order.
+        /// A number may have several cards; resolving it picks one at random.
+        /// </summary>
+        public List<string> DatabankCards(int number)
+        {
+            var ids = new List<string>();
+            foreach (var kv in _cards)
+            {
+                if ((int?)kv.Value["number"] == number && kv.Value["kind"] != null)
+                {
+                    ids.Add(kv.Key);
+                }
+            }
+            ids.Sort(StringComparer.Ordinal);
+            return ids;
+        }
+
         public bool HasCard(string id)
         {
             return _cards.ContainsKey(id);

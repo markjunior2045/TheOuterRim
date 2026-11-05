@@ -1,0 +1,181 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "databank-starting",
+  "source": "data/transcription/databank/base-databank.json",
+  "cards": [
+    {
+      "id": "base-databank-090a",
+      "kind": "starting_asset",
+      "number": 90,
+      "variant": "a",
+      "starting_planet": "ryloth",
+      "asset_kind": "bounty",
+      "destination": null,
+      "reward": [],
+      "abilities": [],
+      "notes": [
+        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
+      ]
+    },
+    {
+      "id": "base-databank-090b",
+      "kind": "starting_asset",
+      "number": 90,
+      "variant": "b",
+      "starting_planet": "mon-calamari",
+      "asset_kind": "bounty",
+      "destination": null,
+      "reward": [],
+      "abilities": [],
+      "notes": [
+        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
+      ]
+    },
+    {
+      "id": "base-databank-090c",
+      "kind": "starting_asset",
+      "number": 90,
+      "variant": "c",
+      "starting_planet": "takodana",
+      "asset_kind": "bounty",
+      "destination": null,
+      "reward": [],
+      "abilities": [],
+      "notes": [
+        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
+      ]
+    },
+    {
+      "id": "base-databank-090d",
+      "kind": "starting_asset",
+      "number": 90,
+      "variant": "d",
+      "starting_planet": "cantonica",
+      "asset_kind": "bounty",
+      "destination": null,
+      "reward": [],
+      "abilities": [],
+      "notes": [
+        "Bounty details (target, combat, rewards) are encoded with the databank (PLAN T2.6)."
+      ]
+    },
+    {
+      "id": "base-databank-091a",
+      "kind": "starting_asset",
+      "number": 91,
+      "variant": "a",
+      "starting_planet": "nal-hutta",
+      "asset_kind": "cargo",
+      "destination": "ring-of-kafrene",
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-091b",
+      "kind": "starting_asset",
+      "number": 91,
+      "variant": "b",
+      "starting_planet": "ring-of-kafrene",
+      "asset_kind": "cargo",
+      "destination": "nal-hutta",
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-091c",
+      "kind": "starting_asset",
+      "number": 91,
+      "variant": "c",
+      "starting_planet": "lothal",
+      "asset_kind": "cargo",
+      "destination": "tatooine",
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        }
+      ],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-092a",
+      "kind": "starting_asset",
+      "number": 92,
+      "variant": "a",
+      "starting_planet": "ord-mantell",
+      "asset_kind": "job",
+      "destination": "nal-hutta",
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 4000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": [],
+      "notes": [
+        "The job's encounter test is encoded with the databank (PLAN T2.6)."
+      ]
+    },
+    {
+      "id": "base-databank-092b",
+      "kind": "starting_asset",
+      "number": 92,
+      "variant": "b",
+      "starting_planet": "tatooine",
+      "asset_kind": "job",
+      "destination": "takodana",
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 4000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": [],
+      "notes": [
+        "The job's encounter test is encoded with the databank (PLAN T2.6)."
+      ]
+    },
+    {
+      "id": "base-databank-092c",
+      "kind": "starting_asset",
+      "number": 92,
+      "variant": "c",
+      "starting_planet": "kessel",
+      "asset_kind": "job",
+      "destination": "ord-mantell",
+      "reward": [
+        {
+          "op": "credits.gain",
+          "amount": 5000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        }
+      ],
+      "abilities": [],
+      "notes": [
+        "The job's encounter test is encoded with the databank (PLAN T2.6)."
+      ]
+    }
+  ]
+}

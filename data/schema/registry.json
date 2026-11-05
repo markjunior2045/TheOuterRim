@@ -117,7 +117,8 @@
       "character",
       "contact",
       "patrol",
-      "player_board"
+      "player_board",
+      "starting_asset"
     ],
     "contact_class": [
       "white",
@@ -767,6 +768,14 @@
       "color": "string",
       "slots": "list:slot",
       "fame_track": "fame_track"
+    },
+    "starting_asset": {
+      "number": "int",
+      "variant": "string",
+      "starting_planet": "space_id",
+      "asset_kind": "enum:cargo|job|bounty",
+      "destination": "nullable:space_id",
+      "reward": "effects"
     }
   },
   "field_types": {

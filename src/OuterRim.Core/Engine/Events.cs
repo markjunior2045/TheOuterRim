@@ -617,6 +617,23 @@ namespace OuterRim.Core.Engine
         public int Needed { get; }
     }
 
+    /// <summary>R-3.15: a player's starting databank card; they start on its planet.</summary>
+    public sealed class StartingCardDrawnEvent : GameEvent
+    {
+        public StartingCardDrawnEvent(string playerId, string cardId, string spaceId)
+        {
+            PlayerId = playerId;
+            CardId = cardId;
+            SpaceId = spaceId;
+        }
+
+        public string PlayerId { get; }
+
+        public string CardId { get; }
+
+        public string SpaceId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {
