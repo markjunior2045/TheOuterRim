@@ -1,0 +1,1263 @@
+{
+  "format": "outer-rim-map/0.1",
+  "pack": "base",
+  "notes": [
+    "Read from the [Mod 01] map images (T0.5). Owner visual check pending.",
+    "pos: approximate centre, normalised to the piece image (x / width, y / height).",
+    "Ports: L1 = left upper, L2 = left lower, R1 = right upper, R2 = right lower. Placing piece B to the right of piece A joins A.R1 to B.L1 and A.R2 to B.L2 (R-5.2). An edge to a port continues on the neighbouring piece; a port with no neighbour is a dead end.",
+    "patrol_stacks are where facedown patrol tokens wait (R-3.7); they are not spaces. The space a stack connects to is where its patrols spawn (R-5.3, R-11.10) and where the level-1 patrol starts (R-3.5, R-3.6).",
+    "Contact space class from the pips under each portrait frame: white 1, green 2, yellow 3 (R-12.3).",
+    "Planet faction from the icon on the planet; Cantonica, the Ring of Kafrene and Takodana have none (R-5.5).",
+    "The small moon drawn beside Nal Hutta is art, not a space."
+  ],
+  "pieces": [
+    {
+      "id": "endcap-rebel-syndicate",
+      "image": "base-endcap-rebel-syndicate",
+      "spaces": [],
+      "contact_spaces": [],
+      "patrol_stacks": [
+        {
+          "id": "stack-rebel",
+          "factions": [
+            "rebel"
+          ],
+          "pos": [
+            0.348,
+            0.1727
+          ]
+        },
+        {
+          "id": "stack-syndicate",
+          "factions": [
+            "syndicate"
+          ],
+          "pos": [
+            0.348,
+            0.8136
+          ]
+        }
+      ],
+      "ports": {
+        "R1": [
+          1.0,
+          0.1864
+        ],
+        "R2": [
+          1.0,
+          0.8182
+        ]
+      },
+      "edges": [
+        [
+          "stack-rebel",
+          "R1"
+        ],
+        [
+          "stack-syndicate",
+          "R2"
+        ]
+      ]
+    },
+    {
+      "id": "tile-cantonica-ord-mantell",
+      "image": "base-map-tile-cantonica-ord-mantell",
+      "spaces": [
+        {
+          "id": "cantonica",
+          "type": "planet",
+          "name": "Cantonica",
+          "faction": null,
+          "pos": [
+            0.3278,
+            0.2613
+          ]
+        },
+        {
+          "id": "ord-mantell",
+          "type": "planet",
+          "name": "Ord Mantell",
+          "faction": "syndicate",
+          "pos": [
+            0.7167,
+            0.7666
+          ]
+        },
+        {
+          "id": "nav-cantonica-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.0878,
+            0.2831
+          ]
+        },
+        {
+          "id": "nav-cantonica-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1833,
+            0.5706
+          ]
+        },
+        {
+          "id": "nav-cantonica-3",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.4289,
+            0.4747
+          ]
+        },
+        {
+          "id": "nav-cantonica-4",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.7833,
+            0.4443
+          ]
+        }
+      ],
+      "contact_spaces": [
+        {
+          "planet": "cantonica",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.55,
+            0.27
+          ]
+        },
+        {
+          "planet": "cantonica",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.6806,
+            0.2787
+          ]
+        },
+        {
+          "planet": "ord-mantell",
+          "class": {
+            "color": "white",
+            "pips": 1
+          },
+          "pos": [
+            0.3333,
+            0.6969
+          ]
+        },
+        {
+          "planet": "ord-mantell",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.4722,
+            0.6969
+          ]
+        }
+      ],
+      "patrol_stacks": [],
+      "ports": {
+        "L1": [
+          0.0222,
+          0.331
+        ],
+        "L2": [
+          0.1028,
+          0.7796
+        ],
+        "R1": [
+          0.9778,
+          0.3267
+        ],
+        "R2": [
+          0.8972,
+          0.7927
+        ]
+      },
+      "edges": [
+        [
+          "L1",
+          "nav-cantonica-1"
+        ],
+        [
+          "nav-cantonica-1",
+          "cantonica"
+        ],
+        [
+          "cantonica",
+          "nav-cantonica-3"
+        ],
+        [
+          "L2",
+          "nav-cantonica-2"
+        ],
+        [
+          "nav-cantonica-2",
+          "nav-cantonica-3"
+        ],
+        [
+          "nav-cantonica-3",
+          "nav-cantonica-4"
+        ],
+        [
+          "nav-cantonica-3",
+          "ord-mantell"
+        ],
+        [
+          "nav-cantonica-4",
+          "R1"
+        ],
+        [
+          "ord-mantell",
+          "R2"
+        ]
+      ]
+    },
+    {
+      "id": "tile-lothal-mon-calamari",
+      "image": "base-map-tile-lothal-mon-calamari",
+      "spaces": [
+        {
+          "id": "mon-calamari",
+          "type": "planet",
+          "name": "Mon Calamari",
+          "faction": "rebel",
+          "pos": [
+            0.6944,
+            0.2302
+          ]
+        },
+        {
+          "id": "lothal",
+          "type": "planet",
+          "name": "Lothal",
+          "faction": "imperial",
+          "pos": [
+            0.3111,
+            0.8103
+          ]
+        },
+        {
+          "id": "nav-lothal-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1456,
+            0.2901
+          ]
+        },
+        {
+          "id": "nav-lothal-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.225,
+            0.5018
+          ]
+        },
+        {
+          "id": "nav-lothal-3",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8083,
+            0.5663
+          ]
+        },
+        {
+          "id": "nav-lothal-4",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8833,
+            0.2901
+          ]
+        }
+      ],
+      "contact_spaces": [
+        {
+          "planet": "mon-calamari",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.3167,
+            0.2394
+          ]
+        },
+        {
+          "planet": "mon-calamari",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.45,
+            0.2394
+          ]
+        },
+        {
+          "planet": "lothal",
+          "class": {
+            "color": "white",
+            "pips": 1
+          },
+          "pos": [
+            0.5167,
+            0.663
+          ]
+        },
+        {
+          "planet": "lothal",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.65,
+            0.663
+          ]
+        }
+      ],
+      "patrol_stacks": [],
+      "ports": {
+        "L1": [
+          0.0222,
+          0.3039
+        ],
+        "L2": [
+          0.1,
+          0.7827
+        ],
+        "R1": [
+          0.9778,
+          0.2947
+        ],
+        "R2": [
+          0.8972,
+          0.7919
+        ]
+      },
+      "edges": [
+        [
+          "L1",
+          "nav-lothal-1"
+        ],
+        [
+          "nav-lothal-1",
+          "nav-lothal-2"
+        ],
+        [
+          "nav-lothal-2",
+          "mon-calamari"
+        ],
+        [
+          "nav-lothal-2",
+          "lothal"
+        ],
+        [
+          "L2",
+          "lothal"
+        ],
+        [
+          "mon-calamari",
+          "nav-lothal-4"
+        ],
+        [
+          "nav-lothal-4",
+          "R1"
+        ],
+        [
+          "mon-calamari",
+          "nav-lothal-3"
+        ],
+        [
+          "nav-lothal-3",
+          "R2"
+        ]
+      ]
+    },
+    {
+      "id": "tile-kessel",
+      "image": "base-map-tile-kessel",
+      "spaces": [
+        {
+          "id": "kessel",
+          "type": "planet",
+          "name": "Kessel",
+          "faction": "syndicate",
+          "pos": [
+            0.4861,
+            0.4656
+          ]
+        },
+        {
+          "id": "maelstrom",
+          "type": "maelstrom",
+          "name": "The Maelstrom",
+          "faction": null,
+          "pos": [
+            0.3028,
+            0.5558
+          ]
+        },
+        {
+          "id": "nav-kessel-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1667,
+            0.5994
+          ]
+        },
+        {
+          "id": "nav-kessel-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.3556,
+            0.8196
+          ]
+        },
+        {
+          "id": "nav-kessel-3",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.5211,
+            0.0999
+          ]
+        },
+        {
+          "id": "nav-kessel-4",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.6333,
+            0.6518
+          ]
+        },
+        {
+          "id": "nav-kessel-5",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.6933,
+            0.2328
+          ]
+        },
+        {
+          "id": "nav-kessel-6",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.7289,
+            0.807
+          ]
+        },
+        {
+          "id": "nav-kessel-7",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.81,
+            0.5403
+          ]
+        }
+      ],
+      "contact_spaces": [
+        {
+          "planet": "kessel",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.1833,
+            0.291
+          ]
+        },
+        {
+          "planet": "kessel",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.3139,
+            0.2716
+          ]
+        }
+      ],
+      "patrol_stacks": [],
+      "ports": {
+        "L1": [
+          0.025,
+          0.3346
+        ],
+        "L2": [
+          0.1028,
+          0.8341
+        ],
+        "R1": [
+          0.975,
+          0.3249
+        ],
+        "R2": [
+          0.8972,
+          0.8361
+        ]
+      },
+      "edges": [
+        [
+          "L1",
+          "nav-kessel-1"
+        ],
+        [
+          "L2",
+          "nav-kessel-2"
+        ],
+        [
+          "nav-kessel-1",
+          "maelstrom"
+        ],
+        [
+          "maelstrom",
+          "kessel"
+        ],
+        [
+          "nav-kessel-1",
+          "nav-kessel-2"
+        ],
+        [
+          "nav-kessel-2",
+          "nav-kessel-6"
+        ],
+        [
+          "kessel",
+          "nav-kessel-3"
+        ],
+        [
+          "nav-kessel-3",
+          "nav-kessel-5"
+        ],
+        [
+          "nav-kessel-5",
+          "nav-kessel-4"
+        ],
+        [
+          "nav-kessel-4",
+          "nav-kessel-7"
+        ],
+        [
+          "nav-kessel-7",
+          "nav-kessel-6"
+        ],
+        [
+          "nav-kessel-7",
+          "R1"
+        ],
+        [
+          "nav-kessel-6",
+          "R2"
+        ]
+      ]
+    },
+    {
+      "id": "tile-tatooine-nal-hutta",
+      "image": "base-map-tile-tatooine-nal-hutta",
+      "spaces": [
+        {
+          "id": "tatooine",
+          "type": "planet",
+          "name": "Tatooine",
+          "faction": "hutt",
+          "pos": [
+            0.6944,
+            0.2226
+          ]
+        },
+        {
+          "id": "nal-hutta",
+          "type": "planet",
+          "name": "Nal Hutta",
+          "faction": "hutt",
+          "pos": [
+            0.6222,
+            0.7885
+          ]
+        },
+        {
+          "id": "nav-tatooine-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.0861,
+            0.2737
+          ]
+        },
+        {
+          "id": "nav-tatooine-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1722,
+            0.8163
+          ]
+        },
+        {
+          "id": "nav-tatooine-3",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.225,
+            0.4453
+          ]
+        },
+        {
+          "id": "nav-tatooine-4",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.5944,
+            0.4731
+          ]
+        },
+        {
+          "id": "nav-tatooine-5",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.7556,
+            0.5009
+          ]
+        },
+        {
+          "id": "nav-tatooine-6",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8056,
+            0.7421
+          ]
+        },
+        {
+          "id": "nav-tatooine-7",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.85,
+            0.3247
+          ]
+        }
+      ],
+      "contact_spaces": [
+        {
+          "planet": "tatooine",
+          "class": {
+            "color": "white",
+            "pips": 1
+          },
+          "pos": [
+            0.3389,
+            0.2597
+          ]
+        },
+        {
+          "planet": "tatooine",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.4722,
+            0.2597
+          ]
+        },
+        {
+          "planet": "nal-hutta",
+          "class": {
+            "color": "white",
+            "pips": 1
+          },
+          "pos": [
+            0.2667,
+            0.6494
+          ]
+        },
+        {
+          "planet": "nal-hutta",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.4,
+            0.6494
+          ]
+        }
+      ],
+      "patrol_stacks": [],
+      "ports": {
+        "L1": [
+          0.0222,
+          0.3247
+        ],
+        "L2": [
+          0.1,
+          0.8117
+        ],
+        "R1": [
+          0.9778,
+          0.32
+        ],
+        "R2": [
+          0.8972,
+          0.8163
+        ]
+      },
+      "edges": [
+        [
+          "L1",
+          "nav-tatooine-1"
+        ],
+        [
+          "nav-tatooine-1",
+          "nav-tatooine-3"
+        ],
+        [
+          "nav-tatooine-3",
+          "nav-tatooine-4"
+        ],
+        [
+          "nav-tatooine-4",
+          "tatooine"
+        ],
+        [
+          "nav-tatooine-4",
+          "nav-tatooine-5"
+        ],
+        [
+          "nav-tatooine-4",
+          "nal-hutta"
+        ],
+        [
+          "nav-tatooine-5",
+          "nav-tatooine-6"
+        ],
+        [
+          "nav-tatooine-6",
+          "R2"
+        ],
+        [
+          "tatooine",
+          "nav-tatooine-7"
+        ],
+        [
+          "nav-tatooine-7",
+          "R1"
+        ],
+        [
+          "L2",
+          "nav-tatooine-2"
+        ],
+        [
+          "nav-tatooine-2",
+          "nal-hutta"
+        ]
+      ]
+    },
+    {
+      "id": "tile-ryloth-naboo",
+      "image": "base-map-tile-ryloth-naboo",
+      "spaces": [
+        {
+          "id": "ryloth",
+          "type": "planet",
+          "name": "Ryloth",
+          "faction": "rebel",
+          "pos": [
+            0.1778,
+            0.2388
+          ]
+        },
+        {
+          "id": "naboo",
+          "type": "planet",
+          "name": "Naboo",
+          "faction": "imperial",
+          "pos": [
+            0.7,
+            0.7363
+          ]
+        },
+        {
+          "id": "nav-ryloth-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1722,
+            0.796
+          ]
+        },
+        {
+          "id": "nav-ryloth-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.3,
+            0.5721
+          ]
+        },
+        {
+          "id": "nav-ryloth-3",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.4222,
+            0.4328
+          ]
+        },
+        {
+          "id": "nav-ryloth-4",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.5361,
+            0.5871
+          ]
+        },
+        {
+          "id": "nav-ryloth-5",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.6917,
+            0.3781
+          ]
+        },
+        {
+          "id": "nav-ryloth-6",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8361,
+            0.2736
+          ]
+        }
+      ],
+      "contact_spaces": [
+        {
+          "planet": "ryloth",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.4111,
+            0.2488
+          ]
+        },
+        {
+          "planet": "ryloth",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.55,
+            0.2488
+          ]
+        },
+        {
+          "planet": "naboo",
+          "class": {
+            "color": "white",
+            "pips": 1
+          },
+          "pos": [
+            0.3278,
+            0.7761
+          ]
+        },
+        {
+          "planet": "naboo",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.4667,
+            0.7761
+          ]
+        }
+      ],
+      "patrol_stacks": [],
+      "ports": {
+        "L1": [
+          0.0222,
+          0.3134
+        ],
+        "L2": [
+          0.1,
+          0.8358
+        ],
+        "R1": [
+          0.9778,
+          0.3184
+        ],
+        "R2": [
+          0.8972,
+          0.8259
+        ]
+      },
+      "edges": [
+        [
+          "L1",
+          "ryloth"
+        ],
+        [
+          "ryloth",
+          "nav-ryloth-3"
+        ],
+        [
+          "nav-ryloth-3",
+          "nav-ryloth-5"
+        ],
+        [
+          "nav-ryloth-3",
+          "nav-ryloth-2"
+        ],
+        [
+          "nav-ryloth-2",
+          "nav-ryloth-1"
+        ],
+        [
+          "nav-ryloth-1",
+          "L2"
+        ],
+        [
+          "nav-ryloth-2",
+          "nav-ryloth-4"
+        ],
+        [
+          "nav-ryloth-4",
+          "naboo"
+        ],
+        [
+          "nav-ryloth-5",
+          "nav-ryloth-6"
+        ],
+        [
+          "nav-ryloth-6",
+          "R1"
+        ],
+        [
+          "naboo",
+          "R2"
+        ]
+      ]
+    },
+    {
+      "id": "tile-ring-of-kafrene-takodana",
+      "image": "base-map-tile-ring-of-kafrene-takodana",
+      "spaces": [
+        {
+          "id": "ring-of-kafrene",
+          "type": "planet",
+          "name": "The Ring of Kafrene",
+          "faction": null,
+          "pos": [
+            0.1833,
+            0.2139
+          ]
+        },
+        {
+          "id": "takodana",
+          "type": "planet",
+          "name": "Takodana",
+          "faction": null,
+          "pos": [
+            0.6278,
+            0.7442
+          ]
+        },
+        {
+          "id": "nav-takodana-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1528,
+            0.5218
+          ]
+        },
+        {
+          "id": "nav-takodana-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.4306,
+            0.5346
+          ]
+        },
+        {
+          "id": "nav-takodana-3",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.675,
+            0.5175
+          ]
+        },
+        {
+          "id": "nav-takodana-4",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.7139,
+            0.2481
+          ]
+        },
+        {
+          "id": "nav-takodana-5",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8278,
+            0.6287
+          ]
+        },
+        {
+          "id": "nav-takodana-6",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8528,
+            0.3636
+          ]
+        }
+      ],
+      "contact_spaces": [
+        {
+          "planet": "ring-of-kafrene",
+          "class": {
+            "color": "white",
+            "pips": 1
+          },
+          "pos": [
+            0.4056,
+            0.2566
+          ]
+        },
+        {
+          "planet": "ring-of-kafrene",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.5389,
+            0.2566
+          ]
+        },
+        {
+          "planet": "takodana",
+          "class": {
+            "color": "green",
+            "pips": 2
+          },
+          "pos": [
+            0.2833,
+            0.7442
+          ]
+        },
+        {
+          "planet": "takodana",
+          "class": {
+            "color": "yellow",
+            "pips": 3
+          },
+          "pos": [
+            0.4167,
+            0.7442
+          ]
+        }
+      ],
+      "patrol_stacks": [],
+      "ports": {
+        "L1": [
+          0.0222,
+          0.3593
+        ],
+        "L2": [
+          0.1,
+          0.8041
+        ],
+        "R1": [
+          0.9778,
+          0.3678
+        ],
+        "R2": [
+          0.8972,
+          0.8084
+        ]
+      },
+      "edges": [
+        [
+          "L1",
+          "ring-of-kafrene"
+        ],
+        [
+          "ring-of-kafrene",
+          "nav-takodana-4"
+        ],
+        [
+          "ring-of-kafrene",
+          "nav-takodana-2"
+        ],
+        [
+          "nav-takodana-1",
+          "nav-takodana-2"
+        ],
+        [
+          "nav-takodana-1",
+          "L2"
+        ],
+        [
+          "nav-takodana-2",
+          "nav-takodana-3"
+        ],
+        [
+          "nav-takodana-2",
+          "takodana"
+        ],
+        [
+          "nav-takodana-3",
+          "nav-takodana-5"
+        ],
+        [
+          "nav-takodana-5",
+          "R2"
+        ],
+        [
+          "nav-takodana-4",
+          "nav-takodana-6"
+        ],
+        [
+          "nav-takodana-6",
+          "R1"
+        ]
+      ]
+    },
+    {
+      "id": "endcap-empire-hutt",
+      "image": "base-endcap-empire-hutt",
+      "spaces": [],
+      "contact_spaces": [],
+      "patrol_stacks": [
+        {
+          "id": "stack-hutt",
+          "factions": [
+            "hutt"
+          ],
+          "pos": [
+            0.6336,
+            0.1818
+          ]
+        },
+        {
+          "id": "stack-imperial",
+          "factions": [
+            "imperial"
+          ],
+          "pos": [
+            0.6336,
+            0.8091
+          ]
+        }
+      ],
+      "ports": {
+        "L1": [
+          0.0,
+          0.1864
+        ],
+        "L2": [
+          0.0,
+          0.8182
+        ]
+      },
+      "edges": [
+        [
+          "stack-hutt",
+          "L1"
+        ],
+        [
+          "stack-imperial",
+          "L2"
+        ]
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "standard",
+      "rule": "R-3.2",
+      "pieces": [
+        "endcap-rebel-syndicate",
+        "tile-cantonica-ord-mantell",
+        "tile-lothal-mon-calamari",
+        "tile-kessel",
+        "tile-tatooine-nal-hutta",
+        "tile-ryloth-naboo",
+        "tile-ring-of-kafrene-takodana",
+        "endcap-empire-hutt"
+      ]
+    }
+  ]
+}

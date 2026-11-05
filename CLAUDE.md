@@ -11,6 +11,7 @@ Repository root: `C:\TheOuterRimProject\TheOuterRim` (this folder).
 | `docs/DECISIONS.md` | Structural decisions. A guide, not a rulebook. |
 | `docs/PLAN.md` | Task plan (T0.1, T0.2, ...). Each task has a "Done when". |
 | `docs/RULES.md` | Single source of truth for game rules. Rule IDs are `R-x.y`. |
+| `docs/MAP_FORMAT.md` | Map graph format (`data/map/`). |
 | `docs/EFFECTS.md` | Inventory of card objects, timings and effect primitives (T2.1). Sets the card data format. |
 | `docs/sources/` | Raw text of the rulebooks used to write `RULES.md`. |
 | `src/OuterRim.Core/` | Rules core. The only copy of the core source. |
@@ -41,6 +42,8 @@ Run from the repository root.
 - Install the Python tool dependencies: `pip install -r tools/requirements.txt`
 - Prepare reading copies of card images for a transcription batch (written to the git-ignored `artifacts/transcription-work/`; the source folder is never modified):
   `python tools/prepare_transcription_images.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted --deck base/market/gear [--only 0-4]`
+- Validate the map graph and draw review overlays (written to the git-ignored `artifacts/map-review/`):
+  `python tools/validate_map.py --review C:\TheOuterRimProject\RawGameFiles\sorted`
 - Transcribe a batch of cards into `data/transcription/` (format in `docs/TRANSCRIPTION_FORMAT.md`): Claude Code command `/transcribe <deck> [range]`, for example `/transcribe base/market/gear 0-9`.
 
 ## Architecture rules

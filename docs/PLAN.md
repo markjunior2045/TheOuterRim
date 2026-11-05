@@ -66,11 +66,12 @@ The phases below group tasks by subject; this is the order they are worked in:
   - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode tests and get a pass/fail exit code, and query the scene.
 - **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue.
 
-### T0.5 — Map geometry · `TODO` (T0.3)
-- **Does:** JSON for spaces, paths and contact spaces (with class) for each map tile and endcap; the standard layout (R-3.2) and the Core Worlds variant `[UB]`; schema and validator.
-- **Done when:** the validator passes and graph tests hold.
-- **Tests:** counts per tile match the physical board; every path is symmetric; every space is reachable; the two Core Worlds spaces are not adjacent (R-5.4).
-- **Needs from the owner:** a visual check of the result against the board.
+### T0.5 — Map geometry · `REVIEW` (2026-11-05, owner visual check pending)
+- **Does:** JSON for spaces, paths and contact spaces (with class) for each map tile and endcap; the standard layout (R-3.2) and the Core Worlds variant `[UB]`; format and validator.
+- **Delivered:** `data/map/base-map.json`, `data/map/expansion-map.json` (format `docs/MAP_FORMAT.md`), `tools/validate_map.py` (checks, plus overlays of the graph on the art in `artifacts/map-review/`).
+- **Result:** standard layout 11 planets, 34 navpoints, the Maelstrom, 53 edges, 22 contact spaces (6 white, 7 green, 9 yellow, matching the 22 base contacts); Core Worlds layout adds 2 Core Worlds spaces and 4 navpoints. Every tile order is connected (R-3.3); Core Worlds not adjacent (R-5.4).
+- **Done when:** the validator passes and graph tests hold. Graph tests in C# come with T1.3.
+- **Needs from the owner:** a visual check of the overlays against the board.
 
 ---
 
@@ -202,6 +203,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T0.5 map geometry delivered for review: `data/map/`, `docs/MAP_FORMAT.md`, `tools/validate_map.py`. |
 | 2026-11-05 | Patrol tokens (16) and player boards (4) transcribed, format 0.10; four boards and the die now extracted from [Mod 01]. Map tiles (T0.5) next, before closing T2.1. |
 | 2026-11-04 | T2.1 draft: `docs/EFFECTS.md` (objects, timings, primitives, conditions, 13 custom handlers, `[UB]` extension points, base coverage); two open questions for the owner. |
 | 2026-11-04 | Roadmap section added (owner decision): patterns (T2.1) → data → core → V0 → Unity prototype with TTS scans → polish. Expansion transcription deferred to the Unfinished Business pack; T2.1 covers `[UB]` through extension points. T3.3 uses full scans. Phase 1 uses real data where it exists. |

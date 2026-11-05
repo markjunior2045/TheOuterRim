@@ -1,0 +1,195 @@
+{
+  "format": "outer-rim-map/0.1",
+  "pack": "expansion",
+  "notes": [
+    "Read from the [Mod 01] map images (T0.5). Owner visual check pending.",
+    "pos: approximate centre, normalised to the piece image (x / width, y / height).",
+    "Ports: L1 = left upper, L2 = left lower, R1 = right upper, R2 = right lower. Placing piece B to the right of piece A joins A.R1 to B.L1 and A.R2 to B.L2 (R-5.2). An edge to a port continues on the neighbouring piece; a port with no neighbour is a dead end.",
+    "patrol_stacks are where facedown patrol tokens wait (R-3.7); they are not spaces. The space a stack connects to is where its patrols spawn (R-5.3, R-11.10) and where the level-1 patrol starts (R-3.5, R-3.6).",
+    "Core Worlds endcaps replace the base endcaps (R-3.4). Their spaces are planets for all purposes (R-5.9) but get no contact token in setup (R-3.9); they carry {ACROSS_THE_CORE}, not a faction (R-5.7).",
+    "The two Core Worlds spaces are not adjacent (R-5.4); crossing between them is a card effect (R-5.24 to R-5.28), not an edge.",
+    "The [Mod 01] endcap images are photo scans with background and neighbouring tokens visible at the edges."
+  ],
+  "pieces": [
+    {
+      "id": "endcap-spinward-core",
+      "image": "expansion-endcap-spinward-core",
+      "spaces": [
+        {
+          "id": "spinward-core",
+          "type": "core_worlds",
+          "name": "Spinward Core",
+          "faction": null,
+          "pos": [
+            0.4039,
+            0.8
+          ]
+        },
+        {
+          "id": "nav-spinward-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.8078,
+            0.2227
+          ]
+        },
+        {
+          "id": "nav-spinward-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.7589,
+            0.4591
+          ]
+        }
+      ],
+      "contact_spaces": [],
+      "patrol_stacks": [
+        {
+          "id": "stack-rebel-syndicate",
+          "factions": [
+            "rebel",
+            "syndicate"
+          ],
+          "pos": [
+            0.3794,
+            0.2818
+          ]
+        }
+      ],
+      "ports": {
+        "R1": [
+          1.0,
+          0.2382
+        ],
+        "R2": [
+          1.0,
+          0.7473
+        ]
+      },
+      "edges": [
+        [
+          "stack-rebel-syndicate",
+          "nav-spinward-1"
+        ],
+        [
+          "nav-spinward-1",
+          "R1"
+        ],
+        [
+          "nav-spinward-1",
+          "nav-spinward-2"
+        ],
+        [
+          "nav-spinward-2",
+          "spinward-core"
+        ],
+        [
+          "nav-spinward-2",
+          "R2"
+        ]
+      ]
+    },
+    {
+      "id": "endcap-trailing-core",
+      "image": "expansion-endcap-trailing-core",
+      "spaces": [
+        {
+          "id": "trailing-core",
+          "type": "core_worlds",
+          "name": "Trailing Core",
+          "faction": null,
+          "pos": [
+            0.5339,
+            0.8091
+          ]
+        },
+        {
+          "id": "nav-trailing-1",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.1948,
+            0.2227
+          ]
+        },
+        {
+          "id": "nav-trailing-2",
+          "type": "navpoint",
+          "name": null,
+          "faction": null,
+          "pos": [
+            0.2441,
+            0.4636
+          ]
+        }
+      ],
+      "contact_spaces": [],
+      "patrol_stacks": [
+        {
+          "id": "stack-hutt-imperial",
+          "factions": [
+            "hutt",
+            "imperial"
+          ],
+          "pos": [
+            0.6202,
+            0.2727
+          ]
+        }
+      ],
+      "ports": {
+        "L1": [
+          0.0,
+          0.2382
+        ],
+        "L2": [
+          0.0,
+          0.7473
+        ]
+      },
+      "edges": [
+        [
+          "stack-hutt-imperial",
+          "nav-trailing-1"
+        ],
+        [
+          "nav-trailing-1",
+          "L1"
+        ],
+        [
+          "nav-trailing-1",
+          "nav-trailing-2"
+        ],
+        [
+          "nav-trailing-2",
+          "trailing-core"
+        ],
+        [
+          "nav-trailing-2",
+          "L2"
+        ]
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "core-worlds",
+      "rule": "R-3.4",
+      "pieces": [
+        "endcap-spinward-core",
+        "tile-cantonica-ord-mantell",
+        "tile-lothal-mon-calamari",
+        "tile-kessel",
+        "tile-tatooine-nal-hutta",
+        "tile-ryloth-naboo",
+        "tile-ring-of-kafrene-takodana",
+        "endcap-trailing-core"
+      ]
+    }
+  ]
+}

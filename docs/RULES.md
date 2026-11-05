@@ -1146,7 +1146,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 11. **Which patrols start on which navpoints** in the standard layout, by space name.
 12. **Player board**: its slots (gear, job or bounty, and any others) and tracks. The rules name the slots but never say how many there are.
 
-**Status (2026-11-05):** items 1 to 7, 9 and 12 are transcribed for the base game in `data/transcription/` (format in `TRANSCRIPTION_FORMAT.md`); the expansion half of each is still to do. The player board has 2 `GEAR` slots and 2 dual `JOB OR BOUNTY` slots. Items 8 (ambitions) and the expansion parts are pending. Items 10 and 11 (map) are the first real blocker for a playable prototype (`PLAN.md` T0.5).
+**Status (2026-11-05):** items 1 to 7, 9 and 12 are transcribed for the base game in `data/transcription/` (format in `TRANSCRIPTION_FORMAT.md`); the expansion half of each is still to do. The player board has 2 `GEAR` slots and 2 dual `JOB OR BOUNTY` slots. Items 8 (ambitions) and the expansion parts are pending. Items 10 and 11 (map) are read into `data/map/` (format `MAP_FORMAT.md`, `PLAN.md` T0.5), pending the owner's visual check.
 
 ---
 
@@ -1154,7 +1154,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
-| 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded. |
+| 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded; map geometry read into `data/map/`. |
 | 2026-11-04 | R-9.8 spending versus losing credits and R-25.14 Jyn Erso's planet markers (owner clarifications from the T2.1 effect inventory). |
 | 2026-11-04 | Review after the base game transcription: R-12.3 pip counts per class; R-14.19 trait examples; R-24 implementation note aligned with the transcription format (printed text kept, errata applied at mapping); ship sheet count explained in §2.1; §27 gains the player board and a status line. Earlier the same day: R-15.32 reworded (italic job skills are certainly tested; owner clarification) and R-15.92 added ("Wanted" jobs hunt players). |
 | 2026-11-04 | Section 13 implementation note: databank lists combine all active content packs; version count comes from card data, not pips. |
