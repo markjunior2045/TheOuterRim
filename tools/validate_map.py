@@ -140,7 +140,8 @@ def check_layout(pieces, layout) -> tuple[list[str], list[str]]:
     for pid in order:
         for c in pieces[pid]["contact_spaces"]:
             contacts[c["class"]["color"]] += 1
-    edges = sum(len(v) for k, v in adj.items() if info[k]["type"] != "patrol_stack") // 2
+    edges = sum(1 for k, v in adj.items() if info[k]["type"] != "patrol_stack"
+                for m in v if info[m]["type"] != "patrol_stack") // 2
     report.append(f"layout {layout['id']} ({layout['rule']}): " + ", ".join(f"{n} {t}" for t, n in sorted(types.items()))
                   + f"; {edges} space-to-space edges; contact spaces " + ", ".join(f"{n} {c}" for c, n in sorted(contacts.items())))
     report.append("  patrol spawn: " + ", ".join(f"{f} -> {spawn.get(f)}" for f in ("rebel", "syndicate", "imperial", "hutt")))

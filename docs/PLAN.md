@@ -71,7 +71,7 @@ The phases below group tasks by subject; this is the order they are worked in:
 ### T0.5 — Map geometry · `DONE` (2026-11-05, overlays checked by the owner)
 - **Does:** JSON for spaces, paths and contact spaces (with class) for each map tile and endcap; the standard layout (R-3.2) and the Core Worlds variant `[UB]`; format and validator.
 - **Delivered:** `data/map/base-map.json`, `data/map/expansion-map.json` (format `docs/MAP_FORMAT.md`), `tools/validate_map.py` (checks, plus overlays of the graph on the art in `artifacts/map-review/`).
-- **Result:** standard layout 11 planets, 34 navpoints, the Maelstrom, 53 edges, 22 contact spaces (6 white, 7 green, 9 yellow, matching the 22 base contacts); Core Worlds layout adds 2 Core Worlds spaces and 4 navpoints. Every tile order is connected (R-3.3); Core Worlds not adjacent (R-5.4).
+- **Result:** standard layout 11 planets, 34 navpoints, the Maelstrom, 51 paths, 22 contact spaces (6 white, 7 green, 9 yellow, matching the 22 base contacts); Core Worlds layout adds 2 Core Worlds spaces and 4 navpoints. Every tile order is connected (R-3.3); Core Worlds not adjacent (R-5.4).
 - **Done when:** the validator passes and graph tests hold. Graph tests in C# come with T1.3.
 
 ---
@@ -91,8 +91,10 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 - **Done when:** a scripted effect can pause, wait, resume, and survive a save/load while paused.
 - **Delivered:** resolution stack in the state (`Frame`: handler id, step, ordinal-sorted variables), `IResolutionHandler` and its registry, `GameEngine.StartResolution`; `PendingDecision` with three kinds (choose option, resolve tie, choose order) and their answer commands; checks for the right player (R-15.35, R-21.13), decision id, option and full order (R-21.10); no new resolution while one runs (R-21.12). Save format `outer-rim-save/0.2`; the golden save is paused mid-effect. 37 tests.
 
-### T1.3 — Map graph · `TODO` (T0.5, T1.1)
+### T1.3 — Map graph · `DONE` (2026-11-05)
 - Adjacency, shortest distance, "nearest" with ties, no counting through the Core Worlds (R-5.2, R-5.29 to R-5.33).
+- **Delivered:** `MapLoader` (reads `data/map/*.json` text, assembles any piece order, joins ports, finds patrol spawn spaces) and `MapGraph` (spaces with type and faction, contact spaces with stable ids, adjacency, distance, "within N", "nearest" returning every tied candidate for the current player to choose, optional exclusion of Core Worlds transit). The graph is static data rebuilt from packs and layout, never saved.
+- **Tests (16):** board counts (11 planets, 34 navpoints, Maelstrom, 51 paths; 59 with the Core Worlds), contact classes, planet factions, symmetric paths, reachability, 50 random tile orders (R-3.3), spawn spaces (R-3.5, R-3.6), Core Worlds not adjacent (R-5.4), distance, same-space nearest (R-5.31), ties (R-5.30), no transit through the Core Worlds (R-5.33). The edge count also corrected the Python map validator, which had counted the patrol stack links.
 
 ### T1.4 — Turn loop, planning step, movement · `TODO` (T1.2, T1.3)
 - Turn order and the three steps (R-4); movement with patrol and Maelstrom interruption and "directly" moves (R-5.11 to R-5.23).
@@ -212,6 +214,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.3 done: map graph in the core; T0.5 count corrected to 51 paths (the Python validator had counted stack links). |
 | 2026-11-05 | T1.2 done: resolution stack, pending decisions (option, tie, order), save while paused; save format 0.2. |
 | 2026-11-05 | T1.1 done: state, commands, events, seeded RNG, dice, save/load with golden file. |
 | 2026-11-05 | T2.4 base done: patrols, player boards, contacts, characters and ship sheets encoded and validated; cross-set consistency checks. |
