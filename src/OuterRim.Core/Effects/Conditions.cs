@@ -23,6 +23,8 @@ namespace OuterRim.Core.Effects
             "credits_at_least", "most_famous", "more_fame_than", "same_space", "other_player_in_space", "in_patrol_space",
             "ship_cost_at_least", "ship_trait", "planet_markers", "not_defeated", "no_damage", "player_count",
             "combat", "delivering", "moving_into", "gained", "recovered",
+            // Planet conditions, evaluated by the contact effects for each planet (ContactEffectHandler).
+            "within_patrol",
         };
 
         /// <param name="context">What is happening, for conditions about it: "combat_type" (ground, ship),
@@ -76,7 +78,12 @@ namespace OuterRim.Core.Effects
                     return subject.CharacterId.Length > 0 && content.Name(subject.CharacterId).StartsWith((string)c["name"]!, StringComparison.Ordinal);
                 case "rep":
                 {
+                    // "If that player has {REP_POS} Imperial reputation" (Saw Gerrera): the chosen player.
                     var target = subject;
+                    if (c["player"] is JValue who && context != null && context.TryGetValue((string)who!, out var whoId))
+                    {
+                        target = state.FindPlayer(whoId) ?? subject;
+                    }
                     var faction = Selectors.Faction(content, state, target, c["faction"]!);
                     if (faction == null) return false;
                     var states = new List<string>();
@@ -266,6 +273,11 @@ namespace OuterRim.Core.Effects
             if (o["per"] is JObject per)
             {
                 return (int)per["each"]! * Counter(you, (string)per["counter"]!);
+            }
+            if (o["less_per"] is JObject less)
+            {
+                // 4-LOM: "Reduce this by 1,000 for each bounty you have."
+                return Math.Max(0, (int)less["base"]! - (int)less["each"]! * Counter(you, (string)less["counter"]!));
             }
             throw new NotSupportedException("Amount " + amount.ToString(Newtonsoft.Json.Formatting.None) + " is not implemented yet (PLAN T2.3b).");
         }

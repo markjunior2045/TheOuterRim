@@ -111,6 +111,7 @@ namespace OuterRim.Core.Tests
                 s.FindPlayer("p1")!.ShipSideId = "base-ship-g9-rigger-back"; // G-1A: ship combat 3
                 Hold(s, "base-market-gear-07", "mod");
                 Fight(s, "ship", 1);
+                if (s.Pending?.Prompt != "rules.dice_window") continue; // no blank: nothing to offer
                 var before = DicePool.Decode(Faces(s, "attacker_faces"));
                 if (before.Count(d => d.Face == DieFace.Blank) < 1) { continue; }
                 Answer(s, Ability(s));
@@ -170,17 +171,23 @@ namespace OuterRim.Core.Tests
         [Fact]
         public void Lando_MayRerollOneDie_AfterRollingForATest()
         {
-            var s = Game(Lando, 3);
-            var test = new Frame(SkillTests.Handler);
-            test.Set("player", "p1");
-            test.Set("skills", "stealth");
-            GameEngine.StartResolution(C, s, test);
-            Assert.Equal("rules.dice_window", s.Pending!.Prompt);
-            Answer(s, "base-character-01#sides[0].abilities[0]");
-            Assert.Equal("effects.choose_die", s.Pending!.Prompt);
-            var r = Answer(s, "1");
-            Assert.Contains(r.Events, e => e is DiceModifiedEvent m && m.Op == "dice.reroll");
-            Assert.Single(r.Events.OfType<SkillTestRolledEvent>());
+            for (ulong seed = 0; seed < 50; seed++)
+            {
+                var s = Game(Lando, seed);
+                var test = new Frame(SkillTests.Handler);
+                test.Set("player", "p1");
+                test.Set("skills", "stealth");
+                GameEngine.StartResolution(C, s, test);
+                Assert.Equal("rules.dice_window", s.Pending!.Prompt);
+                Answer(s, "base-character-01#sides[0].abilities[0]");
+                Assert.Equal("effects.choose_die", s.Pending!.Prompt);
+                var r = Answer(s, "1");
+                Assert.Single(r.Events.OfType<SkillTestRolledEvent>());
+                if (!r.Events.Any(e => e is DiceModifiedEvent)) continue; // rerolled the same face: no change to report
+                Assert.Contains(r.Events, e => e is DiceModifiedEvent m && m.Op == "dice.reroll");
+                return;
+            }
+            Assert.Fail("No seed changed the rerolled die.");
         }
 
         // ---- mandatory abilities on the opponent's dice ---------------------------------------------------

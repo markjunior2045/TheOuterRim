@@ -39,6 +39,11 @@ namespace OuterRim.Core.Engine
                     frame.Set("queue", string.Join("|", queue));
                     frame.Set("current", cargo);
                     var card = ctx.Content.Card(cargo);
+                    if ((string?)card["kind"] == "bounty")
+                    {
+                        frame.Step = 0;
+                        return StepResult.Call(DeliverBountyHandler.For(player.Id, cargo)); // R-16.4
+                    }
                     if (card["delivery_check"] is JObject check)
                     {
                         // R-16.3: roll one die before delivering.

@@ -37,6 +37,8 @@ namespace OuterRim.Core.Engine
             "asset.gain_embedded", "encounter.space", "player.choose", "credits.take", "turn.additional",
             "move.player", "move.player_direct", "move.patrol", "move.patrol_direct", "encounter.patrol",
             "market.buy", "market.take", "encounter_deck.peek", "damage.prevent",
+            "contact.discard_token", "contact.relocate_self", "contact.place_facedown", "contact.look", "contact.move",
+            "encounter.contact", "bounty.deliver",
             // Passive rule changes read by the rules that check them.
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
@@ -50,7 +52,7 @@ namespace OuterRim.Core.Engine
         {
             "tractor_beam", "patrol_redirect", "used_ship_for_sale",
             "double_or_nothing", "dice_gamble", "side_bets", "name_a_number", "lose_any_reputation",
-            "buy_any_sheet", "replace_with_starter", "pay_for_goal", "patrol_hunt",
+            "buy_any_sheet", "replace_with_starter", "pay_for_goal", "patrol_hunt", "look_and_exchange",
         };
 
         public static void Register()
@@ -85,6 +87,13 @@ namespace OuterRim.Core.Engine
             ResolutionHandlers.Register(new MarketTakeHandler());
             ResolutionHandlers.Register(new CustomFrameHandler());
             ResolutionHandlers.Register(new EncounterPeekHandler());
+            ResolutionHandlers.Register(new ContactEncounterHandler());
+            ResolutionHandlers.Register(new BountyOutcomeHandler());
+            ResolutionHandlers.Register(new DeliverBountyHandler());
+            ResolutionHandlers.Register(new PlaceContactHandler());
+            ResolutionHandlers.Register(new ContactEffectHandler());
+            ResolutionHandlers.Register(new LookAndExchangeHandler());
+            ResolutionHandlers.Register(new BountyDeliverEffectHandler());
         }
 
         /// <summary>A frame that runs the effect list at <paramref name="path"/> of a card for its owner.</summary>
@@ -290,6 +299,17 @@ namespace OuterRim.Core.Engine
                     return StepResult.Call(EffectHandlers.Child(MarketTakeHandler.HandlerId, frame, nodePath));
                 case "encounter_deck.peek":
                     return StepResult.Call(EffectHandlers.Child(EncounterPeekHandler.HandlerId, frame, nodePath));
+                case "contact.discard_token":
+                case "contact.relocate_self":
+                case "contact.place_facedown":
+                case "contact.look":
+                case "contact.move":
+                case "encounter.contact":
+                    return StepResult.Call(EffectHandlers.Child(ContactEffectHandler.HandlerId, frame, nodePath));
+                case "bounty.deliver":
+                    return StepResult.Call(EffectHandlers.Child(BountyDeliverEffectHandler.HandlerId, frame, nodePath));
+                case "custom" when (string)node["handler"]! == "look_and_exchange":
+                    return StepResult.Call(EffectHandlers.Child(LookAndExchangeHandler.HandlerId, frame, nodePath));
                 case "custom" when CustomFrameHandler.Handlers.Contains((string)node["handler"]!):
                     return StepResult.Call(EffectHandlers.Child(CustomFrameHandler.HandlerId, frame, nodePath));
                 case "encounter.space":
@@ -711,6 +731,20 @@ namespace OuterRim.Core.Engine
                 }
                 case 1:
                 {
+                    var owner = ctx.State.FindPlayer(frame.Get("owner"))!;
+                    if (frame.Get("ret.passed") != "true" && node["buy_pass"] != null && !frame.Vars.ContainsKey("bought")
+                        && owner.Credits >= (int)node["buy_pass"]!)
+                    {
+                        frame.Set("bought", "asked");
+                        return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, owner.Id, "effects.buy_pass",
+                            new[] { new DecisionOption("yes", "yes"), new DecisionOption("no", "no") }, "buy"));
+                    }
+                    if (frame.Vars.TryGetValue("buy", out var buy) && buy == "yes")
+                    {
+                        frame.Vars.Remove("buy");
+                        PlayerRules.TrySpend(owner, (int)node["buy_pass"]!, ctx.Events);
+                        frame.Set("ret.passed", "true");
+                    }
                     string branch = frame.Get("ret.passed") == "true" ? "pass" : "fail";
                     frame.Step = 2;
                     if (node[branch] is JArray)

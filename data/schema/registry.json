@@ -121,7 +121,8 @@
       "player_board",
       "starting_asset",
       "cargo_check",
-      "encounter"
+      "encounter",
+      "contact_card"
     ],
     "contact_class": [
       "white",
@@ -303,7 +304,12 @@
         "factor": "int",
         "of": "enum:spent|cost|named|chosen"
       },
-      "all": {}
+      "all": {},
+      "less_per": {
+        "base": "int",
+        "each": "int",
+        "counter": "string"
+      }
     }
   },
   "timings": {
@@ -490,7 +496,8 @@
       "skill": "list:skill",
       "player": "player_sel?",
       "pass": "effects?",
-      "fail": "effects?"
+      "fail": "effects?",
+      "buy_pass": "int?"
     },
     "combat": {
       "type": "combat_type",
@@ -749,7 +756,8 @@
     "dice_gamble",
     "lose_any_reputation",
     "patrol_hunt",
-    "look_and_exchange"
+    "look_and_exchange",
+    "evazan"
   ],
   "card_fields": {
     "id": "string",
@@ -879,6 +887,11 @@
       "deck": "encounter_deck",
       "number": "int",
       "sections": "list:encounter_section",
+      "asset": "nullable:string"
+    },
+    "contact_card": {
+      "number": "int",
+      "effects": "effects",
       "asset": "nullable:string"
     }
   },

@@ -152,6 +152,7 @@ namespace OuterRim.Core.Engine
             Patrols.Setup(content, state);
             Market.Setup(content, state);
             Encounters.Setup(content, state);
+            Contacts.Setup(content, state);
             // R-3.16.d: unused ship sheets form the supply. There are four starter sheets (R-2.1).
             foreach (var sheet in content.ShipSheetIds())
             {
@@ -707,7 +708,17 @@ namespace OuterRim.Core.Engine
                     {
                         return CommandResult.Rejected("R-4.14: you must encounter the patrol you have negative reputation with.");
                     }
-                    return CommandResult.Rejected("Contacts are not on the map yet (PLAN T2.6).");
+                    var tokens = Contacts.OnPlanet(state, player.SpaceId);
+                    if (tokens.Count == 0)
+                    {
+                        return CommandResult.Rejected("R-4.13: there is no contact in your space.");
+                    }
+                    if (!string.IsNullOrEmpty(command.TargetId) && !tokens.Exists(t => t.Id == command.TargetId))
+                    {
+                        return CommandResult.Rejected("R-12.10: that contact is not on your planet.");
+                    }
+                    handler = Contacts.EncounterHandler; // R-12.17: the token is chosen before it is turned faceup
+                    break;
             }
             var frame = new Frame(TurnHandlers.EncounterStep);
             frame.Set("handler", handler);
@@ -882,6 +893,16 @@ namespace OuterRim.Core.Engine
             foreach (var id in cargo)
             {
                 var asset = Assets.Find(player, id);
+                if (asset != null && asset.Kind == "bounty" && content.HasCard(id))
+                {
+                    var token = Contacts.CapturedOn(state, id);
+                    if (token == null) return CommandResult.Rejected("R-16.4: no contact is captured on " + id + ".");
+                    if ((string?)content.Card(id)["capture_destination"] != player.SpaceId)
+                        return CommandResult.Rejected("R-16.4: a captured contact is delivered on the planet named on its bounty.");
+                    if (token.CapturedThisTurn)
+                        return CommandResult.Rejected("R-16.7: a contact captured in this turn's encounter step is delivered on a later turn.");
+                    continue;
+                }
                 if (asset == null || asset.Kind != "cargo" || !content.HasCard(id))
                 {
                     return CommandResult.Rejected("You hold no cargo " + id + ".");
@@ -928,6 +949,7 @@ namespace OuterRim.Core.Engine
             {
                 foreach (var a in p.Assets) a.GainedThisEncounter = false;
             }
+            foreach (var t in state.Contacts) t.CapturedThisTurn = false;
             events.Add(new TurnEndedEvent(state.CurrentPlayerId));
             if (state.AdditionalTurn)
             {

@@ -260,6 +260,7 @@ namespace OuterRim.Core.Rules
             player.Assets.Remove(asset);
             events.Add(new AssetDiscardedEvent(player.Id, asset.CardId, asset.Kind, reason));
             Market.ReturnToDeck(content, state, asset.CardId);
+            Contacts.OnDiscarded(content, state, player, asset);
         }
 
         public static AssetState? Find(PlayerState player, string cardId)

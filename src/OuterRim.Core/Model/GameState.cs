@@ -52,6 +52,12 @@ namespace OuterRim.Core.Model
         /// <summary>The six market decks, top card first; the top card is faceup (R-16.42).</summary>
         public List<MarketDeck> MarketDecks { get; set; } = new List<MarketDeck>();
 
+        /// <summary>Every contact token and where it is (R-12).</summary>
+        public List<ContactToken> Contacts { get; set; } = new List<ContactToken>();
+
+        /// <summary>Tokens waiting to return to the map, nearest to their player (R-15.11, R-15.45).</summary>
+        public List<TokenPlacement> TokensToPlace { get; set; } = new List<TokenPlacement>();
+
         /// <summary>Encounter decks, facedown, top card first (R-15.72, R-15.73).</summary>
         public List<MarketDeck> EncounterDecks { get; set; } = new List<MarketDeck>();
 
@@ -130,6 +136,43 @@ namespace OuterRim.Core.Model
         public int Level { get; set; } = 1;
 
         public string SpaceId { get; set; } = "";
+    }
+
+    /// <summary>
+    /// A contact token (R-12): on a planet (<see cref="SpaceId"/>, in <see cref="Slot"/>, a contact space id or
+    /// the planet id for the planet space itself), captured on a bounty card, discarded beside the map (its
+    /// crew is in play), or removed from the game.
+    /// </summary>
+    public sealed class ContactToken
+    {
+        public string Id { get; set; } = "";
+
+        public string SpaceId { get; set; } = "";
+
+        public string Slot { get; set; } = "";
+
+        public bool FaceUp { get; set; }
+
+        /// <summary>The bounty card it is captured on (R-15.52), or "".</summary>
+        public string Bounty { get; set; } = "";
+
+        /// <summary>R-16.7: captured in this turn's encounter step, so not deliverable until a later turn.</summary>
+        public bool CapturedThisTurn { get; set; }
+
+        /// <summary>Discarded beside the map (R-15.57): its crew card is held by a player.</summary>
+        public bool Pool { get; set; }
+
+        public bool Removed { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public bool OnMap => SpaceId.Length > 0 && Bounty.Length == 0 && !Pool && !Removed;
+    }
+
+    public sealed class TokenPlacement
+    {
+        public string TokenId { get; set; } = "";
+
+        public string PlayerId { get; set; } = "";
     }
 
     /// <summary>A market deck: card ids, top first (R-16.41, R-16.42).</summary>

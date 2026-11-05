@@ -242,6 +242,21 @@ namespace OuterRim.Core.Content
             return ids;
         }
 
+        /// <summary>Every contact token (cards of kind "contact"), in id order.</summary>
+        public List<string> ContactTokenIds()
+        {
+            var ids = new List<string>();
+            lock (_lock)
+            {
+                foreach (var kv in _cards)
+                {
+                    if ((string?)kv.Value["kind"] == "contact") ids.Add(kv.Key);
+                }
+            }
+            ids.Sort(StringComparer.Ordinal);
+            return ids;
+        }
+
         /// <summary>Ids of the encounter decks in play, in order.</summary>
         public List<string> EncounterDeckIds()
         {

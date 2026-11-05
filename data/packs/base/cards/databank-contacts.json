@@ -1,0 +1,2119 @@
+{
+  "format": "outer-rim-data/0.1",
+  "pack": "base",
+  "file": "databank-contacts",
+  "source": "data/transcription/databank/base-databank.json",
+  "cards": [
+    {
+      "id": "base-databank-002",
+      "kind": "contact_card",
+      "number": 2,
+      "effects": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": {
+                    "less_per": {
+                      "base": 3000,
+                      "each": 1000,
+                      "counter": "bounties"
+                    }
+                  }
+                }
+              ],
+              "then": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-002-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-003",
+      "kind": "contact_card",
+      "number": 3,
+      "effects": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 2000
+                }
+              ],
+              "then": [
+                {
+                  "op": "player.choose",
+                  "who": "any",
+                  "effects": [
+                    {
+                      "op": "choice",
+                      "options": [
+                        [
+                          {
+                            "op": "rep.gain",
+                            "faction": "hutt",
+                            "player": "participant"
+                          }
+                        ],
+                        [
+                          {
+                            "op": "rep.lose",
+                            "faction": "hutt",
+                            "player": "participant"
+                          }
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "contact.relocate_self",
+          "planet": "tatooine"
+        }
+      ],
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-databank-004",
+      "kind": "contact_card",
+      "number": 4,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "any",
+            "of": [
+              {
+                "cond": "has_asset",
+                "filter": {
+                  "asset": {
+                    "type": [
+                      "bounty"
+                    ]
+                  }
+                },
+                "min": 1
+              },
+              {
+                "cond": "has_asset",
+                "filter": {
+                  "asset": {
+                    "type": [
+                      "job"
+                    ]
+                  }
+                },
+                "min": 1
+              }
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 1000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ],
+              "else": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "rep_count",
+                    "state": "neg",
+                    "min": 1
+                  },
+                  "then": [
+                    {
+                      "op": "combat",
+                      "type": "ground",
+                      "opponent": {
+                        "npc": {
+                          "value": 4,
+                          "name_key": "Black Krrsantan"
+                        }
+                      },
+                      "win": [
+                        {
+                          "op": "contact.discard_token"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "if",
+              "cond": {
+                "cond": "rep_count",
+                "state": "neg",
+                "min": 1
+              },
+              "then": [
+                {
+                  "op": "combat",
+                  "type": "ground",
+                  "opponent": {
+                    "npc": {
+                      "value": 4,
+                      "name_key": "Black Krrsantan"
+                    }
+                  },
+                  "win": [
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-004-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-005",
+      "kind": "contact_card",
+      "number": 5,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "syndicate",
+            "in": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "test",
+              "skill": [
+                "stealth"
+              ],
+              "fail": [
+                {
+                  "op": "damage.suffer",
+                  "target": "character",
+                  "amount": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "syndicate",
+            "in": [
+              "pos",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "influence"
+                  ],
+                  "pass": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ],
+                  "buy_pass": 2000
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-005-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-006",
+      "kind": "contact_card",
+      "number": 6,
+      "effects": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 2000
+                }
+              ],
+              "then": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-006-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-007",
+      "kind": "contact_card",
+      "number": 7,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "is_character",
+            "name": "Han Solo"
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 4000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-007-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-008",
+      "kind": "contact_card",
+      "number": 8,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep_count",
+            "state": "neg",
+            "min": 1
+          },
+          "then": [
+            {
+              "op": "combat",
+              "type": "ground",
+              "opponent": {
+                "npc": {
+                  "value": 5,
+                  "name_key": "Dengar"
+                }
+              },
+              "win": [
+                {
+                  "op": "fame.gain",
+                  "amount": 1
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ],
+              "lose": [
+                {
+                  "op": "contact.place_facedown"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "contact.place_facedown"
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-databank-009",
+      "kind": "contact_card",
+      "number": 9,
+      "effects": [
+        {
+          "op": "test",
+          "skill": [
+            "strength"
+          ],
+          "fail": [
+            {
+              "op": "damage.suffer",
+              "target": "character",
+              "amount": 2
+            }
+          ]
+        },
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 2000
+                }
+              ],
+              "then": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-009-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-010",
+      "kind": "contact_card",
+      "number": 10,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "any",
+            "of": [
+              {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg"
+                ]
+              },
+              {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos"
+                ]
+              }
+            ]
+          },
+          "then": [
+            {
+              "op": "test",
+              "skill": [
+                "stealth"
+              ],
+              "pass": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "asset.gain_embedded"
+                        },
+                        {
+                          "op": "contact.discard_token"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "fail": [
+                {
+                  "op": "move.patrol_direct",
+                  "patrol": "imperial",
+                  "to": "your_space"
+                },
+                {
+                  "op": "encounter.patrol",
+                  "patrol": "imperial"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 2000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-010-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-011",
+      "kind": "contact_card",
+      "number": 11,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "imperial",
+            "in": [
+              "pos",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "contact.discard_token"
+                },
+                {
+                  "op": "asset.gain_embedded"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "imperial",
+            "in": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "combat",
+              "type": "ground",
+              "opponent": {
+                "npc": {
+                  "value": 4,
+                  "name_key": "Deathtroopers"
+                }
+              },
+              "win": [
+                {
+                  "op": "damage.prevent",
+                  "amount": 2
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-011-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-012",
+      "kind": "contact_card",
+      "number": 12,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "hutt",
+            "in": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "test",
+              "skill": [
+                "stealth"
+              ],
+              "fail": [
+                {
+                  "op": "damage.suffer",
+                  "target": "character",
+                  "amount": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "hutt",
+            "in": [
+              "pos",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "influence"
+                  ],
+                  "pass": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ],
+                  "buy_pass": 2000
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-012-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-013",
+      "kind": "contact_card",
+      "number": 13,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "any",
+            "of": [
+              {
+                "cond": "rep",
+                "faction": "imperial",
+                "in": [
+                  "neg"
+                ]
+              },
+              {
+                "cond": "rep",
+                "faction": "rebel",
+                "in": [
+                  "pos"
+                ]
+              }
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 2000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ],
+              "else": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "rebel"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 2000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "rebel"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-013-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-014",
+      "kind": "contact_card",
+      "number": 14,
+      "effects": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 3000
+                }
+              ],
+              "then": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-014-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-015",
+      "kind": "contact_card",
+      "number": 15,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "syndicate",
+            "in": [
+              "neg"
+            ]
+          },
+          "then": [
+            {
+              "op": "test",
+              "skill": [
+                "stealth"
+              ],
+              "fail": [
+                {
+                  "op": "damage.suffer",
+                  "target": "character",
+                  "amount": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "syndicate",
+            "in": [
+              "pos",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-015-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-016",
+      "kind": "contact_card",
+      "number": 16,
+      "effects": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "test",
+              "skill": [
+                "tech"
+              ],
+              "pass": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ],
+              "fail": [
+                {
+                  "op": "if",
+                  "cond": {
+                    "cond": "any",
+                    "of": [
+                      {
+                        "cond": "rep",
+                        "faction": "rebel",
+                        "in": [
+                          "pos"
+                        ]
+                      },
+                      {
+                        "cond": "rep",
+                        "faction": "imperial",
+                        "in": [
+                          "neg"
+                        ]
+                      }
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "damage.suffer",
+                      "target": "character",
+                      "amount": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-016-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-017",
+      "kind": "contact_card",
+      "number": 17,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "rebel",
+            "in": [
+              "pos",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "contact.discard_token"
+                },
+                {
+                  "op": "asset.gain_embedded"
+                }
+              ],
+              "else": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "to",
+                      "cost": [
+                        {
+                          "op": "credits.spend",
+                          "amount": 2000
+                        }
+                      ],
+                      "then": [
+                        {
+                          "op": "rep.gain",
+                          "faction": "rebel"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 2000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "rep.gain",
+                      "faction": "rebel"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-017-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-018",
+      "kind": "contact_card",
+      "number": 18,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "is_character",
+            "name": "Lando Calrissian"
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 2000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-018-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-019",
+      "kind": "contact_card",
+      "number": 19,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "rep",
+            "faction": "imperial",
+            "in": [
+              "neg",
+              "neu"
+            ]
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "to",
+                  "cost": [
+                    {
+                      "op": "credits.spend",
+                      "amount": 4000
+                    }
+                  ],
+                  "then": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ]
+                }
+              ],
+              "else": [
+                {
+                  "op": "contact.relocate_self",
+                  "planet": "takodana"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "contact.relocate_self",
+              "planet": "takodana"
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-019-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-020",
+      "kind": "contact_card",
+      "number": 20,
+      "effects": [
+        {
+          "op": "test",
+          "skill": [
+            "strength"
+          ],
+          "fail": [
+            {
+              "op": "damage.suffer",
+              "target": "character",
+              "amount": 2
+            }
+          ]
+        },
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "credits.spend",
+                  "amount": 3000
+                }
+              ],
+              "then": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-020-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-021",
+      "kind": "contact_card",
+      "number": 21,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "is_character",
+            "name": "Jyn Erso"
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "if",
+              "cond": {
+                "cond": "any",
+                "of": [
+                  {
+                    "cond": "rep",
+                    "faction": "rebel",
+                    "in": [
+                      "neg"
+                    ]
+                  },
+                  {
+                    "cond": "rep",
+                    "faction": "imperial",
+                    "in": [
+                      "pos"
+                    ]
+                  }
+                ]
+              },
+              "then": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "stealth"
+                  ],
+                  "fail": [
+                    {
+                      "op": "damage.suffer",
+                      "target": "character",
+                      "amount": 2
+                    }
+                  ]
+                }
+              ],
+              "else": [
+                {
+                  "op": "may",
+                  "effects": [
+                    {
+                      "op": "test",
+                      "skill": [
+                        "influence"
+                      ],
+                      "pass": [
+                        {
+                          "op": "asset.gain_embedded"
+                        },
+                        {
+                          "op": "contact.discard_token"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-021-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-022",
+      "kind": "contact_card",
+      "number": 22,
+      "effects": [
+        {
+          "op": "if",
+          "cond": {
+            "cond": "is_character",
+            "name": "Lando Calrissian"
+          },
+          "then": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "asset.gain_embedded"
+                },
+                {
+                  "op": "contact.discard_token"
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "op": "may",
+              "effects": [
+                {
+                  "op": "test",
+                  "skill": [
+                    "tech"
+                  ],
+                  "pass": [
+                    {
+                      "op": "asset.gain_embedded"
+                    },
+                    {
+                      "op": "contact.discard_token"
+                    }
+                  ],
+                  "buy_pass": 3000
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": "base-databank-022-asset",
+      "abilities": []
+    },
+    {
+      "id": "base-databank-023",
+      "kind": "contact_card",
+      "number": 23,
+      "effects": [
+        {
+          "op": "may",
+          "effects": [
+            {
+              "op": "to",
+              "cost": [
+                {
+                  "op": "rep.lose",
+                  "faction": "syndicate"
+                }
+              ],
+              "then": [
+                {
+                  "op": "choice",
+                  "options": [
+                    [
+                      {
+                        "op": "credits.gain",
+                        "amount": 5000
+                      }
+                    ],
+                    [
+                      {
+                        "op": "credits.take",
+                        "amount": {
+                          "up_to": {
+                            "max": 5000
+                          }
+                        },
+                        "from": {
+                          "choose": {
+                            "who": "other",
+                            "where": {
+                              "cond": "more_fame_than",
+                              "player": "self"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "asset": null,
+      "abilities": []
+    },
+    {
+      "id": "base-databank-002-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-002",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "tactics"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "ground_combat",
+              "by": 1
+            }
+          ]
+        }
+      ],
+      "droid": true,
+      "traits": []
+    },
+    {
+      "id": "base-databank-004-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-004",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "strength"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "combat_start",
+            "filter": {
+              "cond": "combat",
+              "type": "ground"
+            }
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "credits.spend",
+              "amount": 2000
+            }
+          ],
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "ground_combat",
+              "by": 2,
+              "duration": "this_combat"
+            }
+          ]
+        }
+      ],
+      "faction": "hutt",
+      "traits": []
+    },
+    {
+      "id": "base-databank-005-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-005",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "stealth"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "reward.modify",
+              "asset": "job",
+              "by": 2000
+            }
+          ]
+        }
+      ],
+      "faction": "syndicate",
+      "traits": []
+    },
+    {
+      "id": "base-databank-006-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-006",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "piloting"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "delivery_roll"
+            ],
+            "filter": {
+              "cond": "all",
+              "of": [
+                {
+                  "cond": "delivering",
+                  "trait": "illegal"
+                },
+                {
+                  "cond": "not",
+                  "of": {
+                    "cond": "dice_result",
+                    "face": [
+                      "hit"
+                    ],
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          },
+          "optional": true,
+          "effects": [
+            {
+              "op": "dice.reroll",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-007-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-007",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "piloting",
+        "strength"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "health",
+              "by": 1
+            },
+            {
+              "op": "stat.modify",
+              "stat": "hull",
+              "by": 2
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-009-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-009",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "tech"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "combat_start",
+            "filter": {
+              "cond": "combat",
+              "type": "ground"
+            }
+          },
+          "effects": [
+            {
+              "op": "custom",
+              "handler": "evazan"
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-010-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-010",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "knowledge"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "cost": [
+            {
+              "op": "credits.spend",
+              "amount": 1000
+            }
+          ],
+          "effects": [
+            {
+              "op": "contact.look",
+              "where": "any_space",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "faction": "imperial",
+      "traits": []
+    },
+    {
+      "id": "base-databank-011-asset",
+      "kind": "job",
+      "embedded_in": "base-databank-011",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        {
+          "options": [
+            "influence"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "strength"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "tactics"
+          ],
+          "certain": false
+        }
+      ],
+      "destination": {
+        "space": {
+          "id": "lothal"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 48
+        }
+      ],
+      "reward": [
+        {
+          "op": "rep.lose",
+          "faction": "rebel"
+        },
+        {
+          "op": "credits.gain",
+          "amount": 7000
+        },
+        {
+          "op": "fame.gain",
+          "amount": 1
+        },
+        {
+          "op": "rep.gain",
+          "faction": "imperial"
+        }
+      ],
+      "end": "remove",
+      "traits": [],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-012-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-012",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "stealth"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "ground_combat"
+            ]
+          },
+          "optional": true,
+          "cost": [
+            {
+              "op": "credits.spend",
+              "amount": 1000
+            }
+          ],
+          "effects": [
+            {
+              "op": "dice.add",
+              "face": "hit",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "faction": "hutt",
+      "traits": []
+    },
+    {
+      "id": "base-databank-013-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-013",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "piloting"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "not",
+            "of": {
+              "cond": "on_space",
+              "type": "maelstrom"
+            }
+          },
+          "effects": [
+            {
+              "op": "test",
+              "skill": [
+                "tech"
+              ],
+              "pass": [
+                {
+                  "op": "move.player",
+                  "distance": 1
+                }
+              ],
+              "fail": [
+                {
+                  "op": "damage.suffer",
+                  "target": "ship",
+                  "amount": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "faction": "rebel",
+      "traits": []
+    },
+    {
+      "id": "base-databank-014-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-014",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "influence"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "reward.modify",
+              "asset": "cargo",
+              "by": 2000
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-015-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-015",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "strength"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "effects": [
+            {
+              "op": "stat.modify",
+              "stat": "health",
+              "by": 2
+            }
+          ]
+        }
+      ],
+      "faction": "syndicate",
+      "droid": true,
+      "traits": []
+    },
+    {
+      "id": "base-databank-016-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-016",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "strength"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "passive"
+          },
+          "condition": {
+            "cond": "combat",
+            "type": "ground"
+          },
+          "effects": [
+            {
+              "op": "damage.crit_value",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "faction": "imperial",
+      "droid": true,
+      "traits": []
+    },
+    {
+      "id": "base-databank-017-asset",
+      "kind": "job",
+      "embedded_in": "base-databank-017",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        {
+          "options": [
+            "stealth"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "ship_combat"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "piloting"
+          ],
+          "certain": false
+        },
+        {
+          "options": [
+            "ground_combat"
+          ],
+          "certain": true
+        }
+      ],
+      "destination": {
+        "patrol_space": {
+          "faction": "imperial"
+        }
+      },
+      "cannot_buy_on": null,
+      "encounter": [
+        {
+          "op": "databank.resolve",
+          "number": 47
+        }
+      ],
+      "reward": [
+        {
+          "op": "rep.lose",
+          "faction": "imperial"
+        },
+        {
+          "op": "fame.gain",
+          "amount": 2
+        },
+        {
+          "op": "rep.gain",
+          "faction": "rebel"
+        }
+      ],
+      "end": "remove",
+      "notes": [
+        "'If you have {REP_NEG} Imperial reputation you may resolve this card instead of encountering the Imperial patrol' (R-4.14 exception, T2.6 part 4)."
+      ],
+      "traits": [],
+      "abilities": []
+    },
+    {
+      "id": "base-databank-018-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-018",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "tech"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "trigger",
+            "event": "planning_credits"
+          },
+          "effects": [
+            {
+              "op": "credits.gain",
+              "amount": {
+                "per": {
+                  "each": 1000,
+                  "counter": "rep_pos"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-019-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-019",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "influence",
+        "knowledge"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "skill_test"
+            ]
+          },
+          "optional": true,
+          "limit": "once_per_turn",
+          "effects": [
+            {
+              "op": "dice.reroll",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-020-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-020",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "strength"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "window",
+            "window": "dice_modify",
+            "scope": [
+              "ground_combat"
+            ],
+            "filter": {
+              "cond": "dice_result",
+              "face": [
+                "focus"
+              ],
+              "min": 2
+            }
+          },
+          "effects": [
+            {
+              "op": "combat.auto_win"
+            }
+          ]
+        }
+      ],
+      "traits": []
+    },
+    {
+      "id": "base-databank-021-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-021",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "tactics"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "action"
+          },
+          "condition": {
+            "cond": "other_player_in_space"
+          },
+          "effects": [
+            {
+              "op": "player.choose",
+              "who": "other",
+              "where": {
+                "cond": "same_space"
+              },
+              "effects": [
+                {
+                  "op": "choice",
+                  "options": [
+                    [
+                      {
+                        "op": "damage.suffer",
+                        "target": "character",
+                        "amount": 2,
+                        "player": "participant"
+                      },
+                      {
+                        "op": "if",
+                        "cond": {
+                          "cond": "rep",
+                          "faction": "imperial",
+                          "in": [
+                            "pos"
+                          ],
+                          "player": "participant"
+                        },
+                        "then": [
+                          {
+                            "op": "damage.suffer",
+                            "target": "character",
+                            "amount": 1,
+                            "player": "participant"
+                          }
+                        ]
+                      }
+                    ],
+                    [
+                      {
+                        "op": "damage.suffer",
+                        "target": "ship",
+                        "amount": 2,
+                        "player": "participant"
+                      },
+                      {
+                        "op": "if",
+                        "cond": {
+                          "cond": "rep",
+                          "faction": "imperial",
+                          "in": [
+                            "pos"
+                          ],
+                          "player": "participant"
+                        },
+                        "then": [
+                          {
+                            "op": "damage.suffer",
+                            "target": "ship",
+                            "amount": 1,
+                            "player": "participant"
+                          }
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "faction": "rebel",
+      "traits": []
+    },
+    {
+      "id": "base-databank-022-asset",
+      "kind": "crew",
+      "embedded_in": "base-databank-022",
+      "cost": 0,
+      "patrol_icon": null,
+      "skills": [
+        "influence"
+      ],
+      "abilities": [
+        {
+          "text": "text.0",
+          "timing": {
+            "type": "step",
+            "step": "encounter"
+          },
+          "effects": [
+            {
+              "op": "market.extra_action"
+            }
+          ]
+        }
+      ],
+      "droid": true,
+      "traits": []
+    }
+  ]
+}

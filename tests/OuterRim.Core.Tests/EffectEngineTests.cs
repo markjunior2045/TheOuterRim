@@ -368,16 +368,19 @@ namespace OuterRim.Core.Tests
         private static readonly Dictionary<string, string> Pending = new Dictionary<string, string>
         {
             // T2.6: encounters, contacts, jobs and databank procedures
-            ["encounter.contact"] = "T2.6", ["contact.look"] = "T2.6",
+            
             ["job.complete"] = "T2.6", ["databank.resolve"] = "T2.6",
             ["custom:wanted"] = "T2.6", ["custom:sabacc"] = "T2.6", ["custom:reward_for_fame"] = "T2.6",
             // Left over from T2.5 (market), built with T2.6
             ["market.extra_action"] = "T2.6", ["custom:stolen_jewels"] = "T2.6", ["custom:undercover_agent"] = "T2.6",
             ["custom:dejarik"] = "T2.6", ["custom:chromium_hull"] = "T2.6",
             // T2.6: encounter card sections and their embedded assets
-            ["asset.gain_databank"] = "T2.6", ["bounty.deliver"] = "T2.6", ["cond:within_patrol"] = "T2.6",
-            ["contact.move"] = "T2.6", 
-            ["custom:look_and_exchange"] = "T2.6", 
+            // T2.6: crew abilities from the contact cards
+            ["combat.auto_win"] = "T2.6", ["cond:dice_result"] = "T2.6", ["custom:evazan"] = "T2.6",
+            ["damage.crit_value"] = "T2.6", ["reward.modify"] = "T2.6",
+            ["asset.gain_databank"] = "T2.6", 
+            
+            
             
             
             
@@ -403,7 +406,7 @@ namespace OuterRim.Core.Tests
                 }
             }
             foreach (var file in new[] { "market-gear", "market-cargo", "market-job", "market-bounty", "market-luxury", "market-ship",
-                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting", "databank-cargo-check",
+                "characters", "ship-sheets", "patrols", "contacts", "player-boards", "databank-starting", "databank-cargo-check", "databank-contacts",
                 "encounter-cantonica-ord-mantell", "encounter-kessel-maelstrom", "encounter-lothal-mon-calamari", "encounter-navpoint", "encounter-ring-of-kafrene-takodana", "encounter-ryloth-naboo", "encounter-tatooine-nal-hutta" })
             {
                 Walk(JObject.Parse(Repo.Read("data/packs/base/cards/" + file + ".json")));

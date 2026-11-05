@@ -15,8 +15,7 @@ namespace OuterRim.Core.Tests
         private static readonly Content.GameContent C = TestContent.Base;
 
         /// <summary>Effects still planned (PLAN T2.6 parts 3 and 4): a section that reaches one is skipped, not failed.</summary>
-        internal static readonly string[] Planned = { "contact", "bounty.deliver", "databank", "sabacc",
-            "look_and_exchange", "test.pass", "within_patrol", "cargo.deliver" };
+        internal static readonly string[] Planned = { "databank", "sabacc", "test.pass" };
 
         internal static readonly HashSet<string> Skipped = new HashSet<string>();
 
@@ -108,6 +107,71 @@ namespace OuterRim.Core.Tests
             {
                 System.IO.File.WriteAllLines(report, Skipped.OrderBy(x => x)); // what is still planned, for review
             }
+        }
+
+        /// <summary>Every contact card resolves when its token is encountered, for both ways of answering.</summary>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void EveryContact_Resolves(bool accept)
+        {
+            var problems = new List<string>();
+            foreach (var token in C.ContactTokenIds())
+            {
+                foreach (var rep in new[] { Reputation.Positive, Reputation.Neutral, Reputation.Negative })
+                {
+                    foreach (var character in new[] { "base-character-00", "base-character-01" })
+                    {
+                        for (ulong seed = 0; seed < 3; seed++)
+                        {
+                            try
+                            {
+                                Contact(token, rep, accept, seed, character);
+                            }
+                            catch (NotSupportedException e) when (Planned.Any(p => e.Message.Contains(p)))
+                            {
+                                Skipped.Add(token + ": " + e.Message);
+                            }
+                            catch (Exception e)
+                            {
+                                problems.Add(token + " " + rep + " " + character + " " + (accept ? "accept" : "decline") + ": " + e.GetType().Name + ": " + e.Message);
+                            }
+                        }
+                    }
+                }
+            }
+            Assert.True(problems.Count == 0, string.Join(Environment.NewLine, problems.Distinct()));
+        }
+
+        private static void Contact(string token, Reputation rep, bool accept, ulong seed, string character)
+        {
+            var s = GameEngine.NewGame(C, new GameSetup(seed, new[]
+            {
+                new PlayerSetup("p1", "One", "green", "kessel", TestContent.G9Rigger, character),
+                new PlayerSetup("p2", "Two", "red", "tatooine", TestContent.G9Rigger, "base-character-03"),
+            }, new[] { new PackRef("base", "0.1.0") }), out _);
+            s.CurrentPlayerId = "p1";
+            var p1 = s.FindPlayer("p1")!;
+            p1.Credits = 20000;
+            foreach (Faction f in new[] { Faction.Rebel, Faction.Imperial, Faction.Hutt, Faction.Syndicate }) p1.Reputation.Set(f, rep);
+            foreach (var p in s.Patrols) p.SpaceId = "nav-tatooine-1";
+            var t = Contacts.Token(s, token);
+            p1.SpaceId = t.SpaceId;
+            GameEngine.Execute(C, s, new MoveCommand("p1", new string[0]));
+            GameEngine.Execute(C, s, new EndActionStepCommand("p1"));
+            var r = GameEngine.Execute(C, s, new EncounterCommand("p1", EncounterKind.Contact, token));
+            Assert.True(r.Accepted, r.Reason);
+            for (int guard = 0; s.Pending != null && guard < 60; guard++)
+            {
+                var pick = s.Pending.Options[0].Id;
+                foreach (var o in s.Pending.Options)
+                {
+                    if (accept ? o.Id == "yes" || o.Id == "avoid" : o.Id == "no" || o.Id == "pass" || o.Id == "none" || o.Id == "decline" || o.Id == "penalty") pick = o.Id;
+                }
+                var a = GameEngine.Execute(C, s, new ChooseOptionCommand(s.Pending.PlayerId, s.Pending.Id, pick));
+                Assert.True(a.Accepted, a.Reason);
+            }
+            Assert.True(s.Pending == null || s.Step == TurnStep.Planning, "still waiting: " + s.Pending?.Prompt);
         }
     }
 }

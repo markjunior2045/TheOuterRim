@@ -263,11 +263,16 @@ namespace OuterRim.Core.Engine
         {
             var context = new ResolutionContext(content, state, events);
             int steps = 0;
-            while (state.Stack.Count > 0 && state.Pending == null)
+            while ((state.Stack.Count > 0 || state.TokensToPlace.Count > 0) && state.Pending == null)
             {
                 if (++steps > MaxSteps)
                 {
                     throw new InvalidOperationException("Resolution did not finish after " + MaxSteps + " steps.");
+                }
+                if (state.TokensToPlace.Count > 0
+                    && (state.Stack.Count == 0 || state.Stack[state.Stack.Count - 1].Handler != Contacts.PlaceHandler))
+                {
+                    state.Stack.Add(new Frame(Contacts.PlaceHandler));
                 }
                 var frame = state.Stack[state.Stack.Count - 1];
                 context.Caller = state.Stack.Count > 1 ? state.Stack[state.Stack.Count - 2] : null;

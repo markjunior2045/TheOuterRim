@@ -821,6 +821,123 @@ namespace OuterRim.Core.Engine
         public string CardId { get; }
     }
 
+    /// <summary>R-12.16: a contact token was turned faceup.</summary>
+    public sealed class ContactRevealedEvent : GameEvent
+    {
+        public ContactRevealedEvent(string playerId, string tokenId)
+        {
+            PlayerId = playerId;
+            TokenId = tokenId;
+        }
+
+        public string PlayerId { get; }
+
+        public string TokenId { get; }
+    }
+
+    /// <summary>R-12.9: a player secretly looked at a token (only they see which one it is).</summary>
+    public sealed class ContactLookedEvent : GameEvent
+    {
+        public ContactLookedEvent(string playerId, string tokenId)
+        {
+            PlayerId = playerId;
+            TokenId = tokenId;
+        }
+
+        public string PlayerId { get; }
+
+        public string TokenId { get; }
+    }
+
+    /// <summary>A token was placed on a planet; <see cref="FaceUpId"/> is its id when faceup, "" when facedown.</summary>
+    public sealed class ContactPlacedEvent : GameEvent
+    {
+        public ContactPlacedEvent(string tokenId, string planet, string faceUpId)
+        {
+            TokenId = tokenId;
+            Planet = planet;
+            FaceUpId = faceUpId;
+        }
+
+        public string TokenId { get; }
+
+        public string Planet { get; }
+
+        public string FaceUpId { get; }
+    }
+
+    public sealed class ContactsExchangedEvent : GameEvent
+    {
+        public ContactsExchangedEvent(string first, string second)
+        {
+            First = first;
+            Second = second;
+        }
+
+        public string First { get; }
+
+        public string Second { get; }
+    }
+
+    /// <summary>"Discard X's token": beside the map while its crew is held (R-15.11).</summary>
+    public sealed class ContactDiscardedEvent : GameEvent
+    {
+        public ContactDiscardedEvent(string tokenId)
+        {
+            TokenId = tokenId;
+        }
+
+        public string TokenId { get; }
+    }
+
+    public sealed class ContactCapturedEvent : GameEvent
+    {
+        public ContactCapturedEvent(string playerId, string tokenId, string bounty)
+        {
+            PlayerId = playerId;
+            TokenId = tokenId;
+            Bounty = bounty;
+        }
+
+        public string PlayerId { get; }
+
+        public string TokenId { get; }
+
+        public string Bounty { get; }
+    }
+
+    public sealed class ContactEliminatedEvent : GameEvent
+    {
+        public ContactEliminatedEvent(string playerId, string tokenId, string bounty)
+        {
+            PlayerId = playerId;
+            TokenId = tokenId;
+            Bounty = bounty;
+        }
+
+        public string PlayerId { get; }
+
+        public string TokenId { get; }
+
+        public string Bounty { get; }
+    }
+
+    public sealed class BountyDeliveredEvent : GameEvent
+    {
+        public BountyDeliveredEvent(string playerId, string bounty, string tokenId)
+        {
+            PlayerId = playerId;
+            Bounty = bounty;
+            TokenId = tokenId;
+        }
+
+        public string PlayerId { get; }
+
+        public string Bounty { get; }
+
+        public string TokenId { get; }
+    }
+
     /// <summary>The engine paused and waits for a player's answer.</summary>
     public sealed class DecisionRequestedEvent : GameEvent
     {

@@ -50,7 +50,7 @@ namespace OuterRim.Core.Tests
             content.AddPatrols(Content.GameContent.ReadPatrols(Repo.Read("data/packs/base/cards/patrols.json")));
             content.SetBoardSlots(Repo.Read("data/packs/base/cards/player-boards.json"));
             foreach (var file in new[] { "market-gear", "market-cargo", "market-job", "market-bounty", "market-luxury", "market-ship",
-                "characters", "ship-sheets", "databank-starting", "databank-cargo-check",
+                "characters", "ship-sheets", "databank-starting", "databank-cargo-check", "contacts", "databank-contacts",
                 "encounter-cantonica-ord-mantell", "encounter-kessel-maelstrom", "encounter-lothal-mon-calamari", "encounter-navpoint", "encounter-ring-of-kafrene-takodana", "encounter-ryloth-naboo", "encounter-tatooine-nal-hutta" })
             {
                 content.AddCards(Repo.Read("data/packs/base/cards/" + file + ".json"));
