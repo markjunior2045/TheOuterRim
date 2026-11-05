@@ -45,6 +45,26 @@ try:
 except ImportError:  # pragma: no cover
     sys.exit("numpy is required: python -m pip install numpy")
 
+def _decode_with_opencv(path: Path) -> Image.Image | None:
+    """Fallback for PNGs that Pillow rejects but libpng only warns about.
+
+    Some (Mod 02) uploads (player boards 1, 2 and 4) carry an iCCP chunk with a
+    bad CRC: Pillow refuses the file, OpenCV decodes the pixels fine.
+    """
+    try:
+        import cv2
+    except ImportError:
+        return None
+    arr = cv2.imdecode(np.fromfile(str(path), dtype=np.uint8), cv2.IMREAD_UNCHANGED)
+    if arr is None:
+        return None
+    if arr.ndim == 2:
+        return Image.fromarray(arr)
+    if arr.shape[2] == 4:
+        return Image.fromarray(cv2.cvtColor(arr, cv2.COLOR_BGRA2RGBA))
+    return Image.fromarray(cv2.cvtColor(arr, cv2.COLOR_BGR2RGB))
+
+
 MODS = {
     "mod01": {"workshop_id": "1790581987", "label": "[Mod 01]",
               "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1790581987"},
@@ -186,6 +206,12 @@ TOKENS = {  # hash: (pack, folder, name)
     "efb70fca": ("expansion", "tokens", "debt-2"),
     "8d0ab2a2": ("expansion", "tokens", "debt-3"),
     "161075ff": ("expansion", "tokens", "debt-4"),
+    # Readable since the OpenCV fallback (bad iCCP CRC). Named by frame colour.
+    "8ab23018": ("base", "player-boards", "player-board-green"),
+    "97335e9a": ("base", "player-boards", "player-board-red"),
+    "9fa48d9a": ("base", "player-boards", "player-board-yellow"),
+    "d521160a": ("base", "player-boards", "player-board-white"),
+    "dc47704f": ("base", "tokens", "dice"),
 }
 
 MAP_TILES = {  # [Mod 01] token nickname -> file name
@@ -264,7 +290,7 @@ class Mod:
                         im.load()
                         img = im.copy()
                 except Exception:
-                    img = None
+                    img = _decode_with_opencv(p)
             self._img_cache[url] = img
         return self._img_cache[url]
 
@@ -669,19 +695,9 @@ def main(argv=None) -> int:
                 nickname=o["nickname"], path=o["path"])
             unsorted.append(f"{kind} '{o['nickname']}' ({h}) at '{o['path'] or 'table'}'")
 
-    # Dice and readable player boards only exist in (Mod 02).
-    for o in m2.objects:
-        img = m2.image(o["front"])
-        if img is None:
-            continue
-        if o["name"] == "Custom_Dice":
-            W.save(img, "base/tokens/base-dice.png", id="base-dice", pack="base",
-                   category="tokens", side="texture", source="mod02", source_url=o["front"])
-        elif o["nickname"].startswith("Player") and o["nickname"].endswith("Board") \
-                and o["nickname"][7:8] in "1234":
-            sid = f"base-player-board-{o['nickname'][7]}"
-            W.save(img, f"base/player-boards/{sid}.png", id=sid, pack="base",
-                   category="player-boards", side="front", source="mod02", source_url=o["front"])
+    # Dice and the four player boards come from [Mod 01] (TOKENS above). (Mod 02)
+    # was the fallback while Pillow could not read them; its boards are two
+    # near-identical blue variants, so they are no longer extracted.
 
     # ---- 7. Review images, manifest, report, credits ----------------------
     rev_dir = out / "_review"

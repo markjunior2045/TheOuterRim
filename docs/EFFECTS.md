@@ -51,7 +51,7 @@ This document sets the card data format for T2.2 (schema) and the work list for 
 | Ship sheet | 2 sides (ship goal / flipped, or two starter sides); cost, slots, hyperdrive, ship combat, hull; goal or named ability | abilities, goal |
 | AI card | steps with "first that applies" or "all that apply" items | AI script (§5.5) |
 
-**Slots** come from the player board and the ship sheet: cargo, mod, crew, gear, job, bounty and dual slots ("cargo or mod", "crew or bounty"). Slot capacity can be changed by abilities (Weapon Specialist on Takodana-0, Smuggling Compartment-8).
+**Slots** come from the player board and the ship sheet. The player board (all four colours alike) has 2 `GEAR` slots and 2 dual `JOB OR BOUNTY` slots, a fame track 0–12 and four reputation tracks. Ship sheets add cargo, mod and crew slots, dual slots ("cargo or mod", "crew or bounty") and, on IG-2000, a bounty slot. Slot capacity can be changed by abilities (Weapon Specialist on Takodana-0, Smuggling Compartment-8).
 
 **Traits** found: ILLEGAL, WEAPON, ARMOR, FAVOR, SHIP, STARTER SHIP. The droid icon (`{DROID}`) is an icon on crew, contacts and characters, not a trait, but effects test it the same way ("non-droid", "a droid crew").
 

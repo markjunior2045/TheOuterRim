@@ -55,7 +55,7 @@ The phases below group tasks by subject; this is the order they are worked in:
   1. Resolution is ample (cards 875–1340 px wide).
   2. The art crop works with a fixed rectangle per card type.
   3. Printed text is legible; transcription from the images works (see T2.8 pilot). Photos of the physical cards are only needed to settle doubts.
-  4. Missing: [Mod 01] ambition sheets 91–94 (dead links), dice and player boards (`.rawt`). Fallback: (Mod 02) for all of them.
+  4. Missing: [Mod 01] ambition sheets 91–94 (dead links); fallback (Mod 02). Dice and the four player boards were thought missing but were PNGs with a corrupt colour profile chunk; read with OpenCV since 2026-11-04 and taken from [Mod 01].
 - Image sources per component: `DECISIONS.md` §3.1.
 
 ### T0.4 — Unity project and CLI wiring · `TODO` (T0.2)

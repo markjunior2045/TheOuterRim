@@ -58,6 +58,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Source per component (from the extraction pilot, 2026-11-04):
   - **Map tiles:** [Mod 01]. (Mod 02)'s map is a fan-made layout based on the board game, not the original.
   - **Cards, ship sheets, patrols, characters, standees:** [Mod 01]. It has equal or higher resolution in every category, and (Mod 02) is missing 12 patrol and 6 ship images from its cache.
+  - **Player boards and dice:** [Mod 01] (four colours: green, red, yellow, white). Their PNGs have a corrupt colour profile chunk that Pillow rejects; the extractor decodes them with OpenCV (2026-11-04). Until then the (Mod 02) copies were used as a fallback.
   - **Ambition sheets:** (Mod 02). [Mod 01] has only 4 of 8; the other 4 links are dead in the mod itself.
   - **Names and categories** (deck names, contact classes, patrol and ship names): (Mod 02), used as an index and matched to [Mod 01] images.
 - [Mod 01] keeps base game and expansion in separate decks, which is used to split content into the two packs.
