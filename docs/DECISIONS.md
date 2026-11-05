@@ -107,6 +107,8 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Cards, the map graph and saves are JSON with a format version number; cards and rules have stable IDs. The map is a graph (spaces, positions, paths) kept separate from its art.
 - Content comes in **packs** with a manifest (id, version, dependencies, cards, characters, ships, rule hooks). In an online room all players must have the same packs and versions; a save records the packs it used.
 - Networking sits behind a simple interface (send command, receive event), so the connection type can change without touching the rules.
+- **JSON library (2026-11-05):** Newtonsoft.Json in the core: Unity ships it as `com.unity.nuget.newtonsoft-json` (declared in the core's `package.json`, referenced by its `.asmdef`), and the test project uses the same library from NuGet. `System.Text.Json` is not available on Unity's .NET Standard 2.1.
+- **Random numbers (2026-11-05):** the core uses its own PCG32 generator, not `System.Random`, so the same seed gives the same game in .NET and in Unity; its state is part of the save.
 - **Game data (2026-11-05):** card data is a tree of effect primitives (`DATA_FORMAT.md`), checked against one registry (`data/schema/registry.json`) that the Python validator reads now and the C# loader reads later. Card ids are the image ids from the extraction. Card text lives only in localization files; the English file is generated from the transcriptions.
 - Before V1, define the **full inventory** of card types, effect types and components of the base game; implement one slice at a time.
 

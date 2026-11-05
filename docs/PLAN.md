@@ -80,9 +80,11 @@ The phases below group tasks by subject; this is the order they are worked in:
 
 Verified with `dotnet test`. Uses real card and map data where it already exists (T2.2, T0.5); fictional content only fills gaps.
 
-### T1.1 — State, commands, events, RNG, save/load · `TODO` (T0.2)
+### T1.1 — State, commands, events, RNG, save/load · `DONE` (2026-11-05)
 - **Done when:** state round-trips through save/load unchanged; the same seed always gives the same results; saves carry a format version and the list of content packs.
 - **Tests:** round-trip equality; seeded determinism; a golden save file.
+- **Delivered:** `GameRandom` (PCG32, pinned to the reference values; state saved as hex); `GameState`, `PlayerState`, `ReputationTrack`; `GameEngine.NewGame` (first player by dice R-3.11, neutral reputation, credits by turn order R-3.11.g) and `Execute` with the first commands (planning: gain credits, recover damage; R-4.5, R-4.6, R-4.8); `DiceRoller` (R-6.1); `SaveSerializer` (format `outer-rim-save/0.1`, packs, rejects unknown formats and fields); golden save `tests/OuterRim.Core.Tests/Golden/save-0.1.json`. 26 tests.
+- JSON via Newtonsoft.Json (`DECISIONS.md` §7).
 
 ### T1.2 — Pending decisions and ties · `TODO` (T1.1)
 - **Does:** pausing the engine to ask a player for a choice mid-effect (`RULES.md` §26.2), including `ChooseOption` and `ResolveTie` (R-5.30, R-21.10, R-21.13).
@@ -209,6 +211,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T1.1 done: state, commands, events, seeded RNG, dice, save/load with golden file. |
 | 2026-11-05 | T2.4 base done: patrols, player boards, contacts, characters and ship sheets encoded and validated; cross-set consistency checks. |
 | 2026-11-05 | T2.2 done (owner approved the format). |
 | 2026-11-05 | T2.2 delivered for review: data format, registry, base pack manifest, localization builder, validator and tests; gear and cargo encoded. |

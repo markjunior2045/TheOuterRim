@@ -39,6 +39,7 @@ Rules for both: never version them, never copy them into the repository, never m
 Run from the repository root.
 
 - Run all tests: `dotnet test`
+- Regenerate the golden save after an intended save format change (bump `SaveSerializer.Format` first): set `OUTERRIM_UPDATE_GOLDEN=1` and run `dotnet test`
 - Build only: `dotnet build`
 - Unity and Unity CLI commands: to be added in T0.4.
 - Install the Python tool dependencies: `pip install -r tools/requirements.txt`

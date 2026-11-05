@@ -1,0 +1,78 @@
+{
+  "format": "outer-rim-save/0.1",
+  "packs": [
+    {
+      "id": "base",
+      "version": "0.1.0"
+    }
+  ],
+  "state": {
+    "seed": 12345,
+    "random": {
+      "state": "3673fc23f6c4c11d",
+      "increment": "000000000000006d"
+    },
+    "packs": [
+      {
+        "id": "base",
+        "version": "0.1.0"
+      }
+    ],
+    "phase": "playing",
+    "players": [
+      {
+        "id": "p1",
+        "name": "Player 1",
+        "color": "green",
+        "credits": 6000,
+        "fame": 0,
+        "reputation": {
+          "rebel": "neutral",
+          "imperial": "neutral",
+          "hutt": "neutral",
+          "syndicate": "neutral"
+        },
+        "characterDamage": 0,
+        "shipDamage": 0,
+        "defeated": false
+      },
+      {
+        "id": "p2",
+        "name": "Player 2",
+        "color": "red",
+        "credits": 8000,
+        "fame": 3,
+        "reputation": {
+          "rebel": "positive",
+          "imperial": "neutral",
+          "hutt": "negative",
+          "syndicate": "neutral"
+        },
+        "characterDamage": 2,
+        "shipDamage": 0,
+        "defeated": false
+      },
+      {
+        "id": "p3",
+        "name": "Player 3",
+        "color": "yellow",
+        "credits": 6000,
+        "fame": 0,
+        "reputation": {
+          "rebel": "neutral",
+          "imperial": "neutral",
+          "hutt": "neutral",
+          "syndicate": "neutral"
+        },
+        "characterDamage": 0,
+        "shipDamage": 0,
+        "defeated": false
+      }
+    ],
+    "firstPlayerId": "p3",
+    "round": 1,
+    "currentPlayerId": "p3",
+    "step": "action",
+    "fameRequirement": 10
+  }
+}
