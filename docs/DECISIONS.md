@@ -86,7 +86,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Claude Code for development, in small tasks, each with a done criterion and a test.
 - Claude Code drives Unity through the **Unity CLI** and the `com.unity.pipeline` package (both beta/experimental). An MCP server is only considered if the CLI proves insufficient.
 - No up-front technical spike in Unity.
-- UI technology (UI Toolkit, uGUI, or plain 3D objects): **adopted in T0.4 (2026-11-06):** UI Toolkit for everything on screen, world-space sprites for the board (`docs/UI.md`). Changing it later is acceptable.
+- UI technology (UI Toolkit, uGUI, or plain 3D objects) and the screen layout: **decided by the owner in a UI phase in the Project chat** (`PLAN.md` T3.0, brief in `docs/UI.md`). Direction given on 2026-11-06: the game as it looks on the table (`Other\Board.png`, `Other\PlayerBoard.png`), not an application with panels. Changing the technology later is acceptable.
 - Version control: **plain Git, no LFS**. One branch per task. `CLAUDE.md` at the repository root.
 - **Language:** all project documents, code and identifiers are written in English, and all file names are in English. Other languages exist only as in-game translations. Conversations with the assistant are in Brazilian Portuguese.
 - **Folder layout:**

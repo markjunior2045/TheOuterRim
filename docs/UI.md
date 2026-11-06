@@ -1,95 +1,46 @@
-# UI.md — Outer Rim digital: screen layout
+# UI.md — Outer Rim digital: user interface
 
-**Status: draft, awaiting the owner's review (`PLAN.md` T0.4).** Once approved, each screen task (T3.6 to T3.9) fills its part and may adjust it; changes of substance come back here.
+**Status: not decided.** The interface is decided by the owner in a dedicated phase held in the claude.ai Project chat (`PLAN.md` T3.0). When it ends, this file is replaced by the decisions and the screen tasks (T3.6 to T3.10) start from them. Until then nothing below is a decision: it is the brief for that phase.
 
-What this document fixes: where things sit on screen and how the player interacts. What it does not fix: the visual style. The prototype shows the Tabletop Simulator scans as they are (`DECISIONS.md` §3, prototype exception); frames, fonts and colours come with the card templates after V1.
+An earlier draft (an application layout with side panels) was set aside on 2026-11-06: the owner wants something closer to the game on the table.
 
-Target resolution 1920×1080; it must stay usable at 1366×768 (panels shrink, card zoom covers more of the board).
+## 1. References from the owner
 
-## Technology (suggested, confirmed in T0.4)
+In `C:\TheOuterRimProject\Other\` (not in the repository):
 
-- **On screen** (panels, dialogs, cards, menus, log): UI Toolkit.
-- **Board** (map pieces, standees, patrols, contact tokens, patrol stacks): sprites in world space, orthographic camera with pan and zoom.
-- Every input becomes a core command sent through the session's command channel (`DECISIONS.md` §7); the views only follow the events and the player view (`PLAN.md` T3.4).
+- `Board.png` — the Tabletop Simulator table: the map as a semicircular arc on a starfield, endcaps with the patrol stacks at both ends, the six market decks in a row in the middle, the encounter decks inside the arc near their planets, standees and patrols on the map, dice and tokens around.
+- `PlayerBoard.png` — one player's area as the physical components: the ship sheet (cargo, mod and crew slots, hyperdrive, ship combat, hull), the player board (fame track 0 to 12, the four reputation sliders, gear slots, job or bounty slots) and the character card.
 
-## 1. Game screen
+## 2. What the interface must show and let the player do
 
-```
-┌───────────────────────────────────────────────────────────────────────────────────────────┐
-│ Round 12 · ▶ Player 2 — Ketsu Onyo · [Planning] › Action › Encounter · Fame goal 10  [≡] │ top bar
-├──────────────┬───────────────────────────────────────────────────────────┬────────────────┤
-│ PLAYERS      │                                                           │ MARKET         │
-│ ┌──────────┐ │                                                           │ ┌────┐ ┌────┐  │
-│ │▶ P2 Ketsu│ │                                                           │ │gear│ │carg│  │
-│ │ 8,000  ★3│ │                    BOARD (pan / zoom)                     │ └────┘ └────┘  │
-│ │ ♥ 1/4 ⛭0/5│ │                                                           │ ┌────┐ ┌────┐  │
-│ │ rep ▲ ● ▼ ●│ │   map arc, standees, patrols with level, contact tokens, │ │job │ │bnty│  │
-│ │ [asset][asset]│ │  reachable spaces highlighted in the planning step    │ └────┘ └────┘  │
-│ │ goal ●●○ │ │                                                           │ ┌────┐ ┌────┐  │
-│ └──────────┘ │                                                           │ │lux │ │ship│  │
-│ ┌──────────┐ │                                                           │ └────┘ └────┘  │
-│ │  P1 Lando│ │                                                           ├────────────────┤
-│ │ (compact)│ │                                                           │ LOG            │
-│ └──────────┘ │                                                           │ P2 moves to    │
-│ ┌──────────┐ │                                                           │ Kessel.        │
-│ │  P3 Bot  │ │                                                           │ Hutt Patrol    │
-│ └──────────┘ │                                                           │ Lvl 2 (Game)…  │
-├──────────────┴───────────────────────────────────────────────────────────┴────────────────┤
-│ ACTIONS: [Gain 2,000] [Recover damage] (click a highlighted space to move) [Use ability ▾] │ action bar
-│          DICE: ⚀ ⚀ ⚀                                                                        │
-└───────────────────────────────────────────────────────────────────────────────────────────┘
-```
+From the rules core, which already plays the whole base game (`PLAN.md` T3.1):
 
-| Area | Size at 1080p | Content |
-|---|---|---|
-| Top bar | 48 px | round, acting player, the three steps with the current one marked, fame requirement, menu (save, load, quit) |
-| Players (left) | 320 px | one panel per player in turn order. The acting player's panel is open: character card (faceup side, click to zoom), ship sheet, credits, fame, reputation with the four factions, damage against health and against hull, assets in their slots, goal tokens, number of secrets, defeated mark. The others are compact (name, character, credits, fame, damage) and open on click. |
-| Board (centre) | the rest | the map; pieces as in the state; in the planning step, spaces reachable this move are highlighted and a click picks the path (`PLAN.md` T3.4); hovering a contact, patrol or player shows a tooltip |
-| Market (right, top) | 360 px wide | the six decks with their faceup top card; in the action step, buy and discard buttons appear on the decks the player may use |
-| Log (right, bottom) | 360 px wide | game log lines from the presentation layer (`PLAN.md` T3.3), newest last, scrollable |
-| Action bar | 140 px | the commands available now for the step (planning options; market, deliver, trade, abilities, end step; the encounter choices), and the dice tray |
+- **The map:** 11 planets, 34 navpoints, the Maelstrom, 51 paths (`data/map/`, with a normalised position for every space, contact space and patrol stack on its piece image). The pieces are segments of an arc; their placement in the assembled map is still to be recorded (T3.6).
+- **On the map:** each player's ship, the four patrols with their level, contact tokens (facedown or faceup) on the planets' contact spaces, the patrol stacks.
+- **Market:** six decks, top card faceup; discard up to two from one deck, buy one with barter (R-16).
+- **Encounter decks:** seven, one per pair of spaces; when a card is drawn, only the player's section is shown, every subsection visible and the applicable one active (`DECISIONS.md` §4.1).
+- **Databank cards** resolving (contacts, jobs, cargo checks), **ship sheets** and their supply, **character cards** (two sides).
+- **Each player:** credits, fame against the requirement, reputation with four factions, character damage against health, ship damage against hull, assets in slots, goal tokens, secrets (hidden from the others), defeated.
+- **Turn flow:** the three steps (planning, action, encounter) and what can be done in each.
+- **Decisions:** about 120 kinds of question the rules ask mid-effect (choose an option, resolve a tie, choose an order), sometimes to a player who is not the current one (`RULES.md` §26.2).
+- **Dice:** rolls with windows to reroll, turn or add results; the core decides the result, the screen animates toward it (`DECISIONS.md` §7).
+- **The game log**, trades between players (T3.2), save and load, the new-game setup, the victory screen.
+- **V1 seats:** 1 to 4, each human on the same screen or a bot; private information (secrets, peeked cards) must not show to the other humans (`DECISIONS.md` §8).
 
-## 2. Decisions and cards
+## 3. Constraints already decided
 
-- **Decision dialog:** every `PendingDecision` opens one dialog over the board, with the question and its options. Options that are cards show the card; options that are spaces highlight them on the board and can be clicked there; "choose order" is a list the player reorders. A decision for a player who is not the acting one names that player in the dialog's title.
-- **Card zoom:** hovering any card (market, assets, decision options) shows it at full readable size next to the cursor; a right-click pins it until closed.
-- **Encounter card:** when drawn, it opens large in the centre with only the player's section shown; every subsection of that section is visible, the one that applies is active, the others dimmed (`DECISIONS.md` §4.1). The resolution then goes on through decision dialogs.
-- **Databank cards and contacts:** a databank card resolving opens like an encounter card; a contact token turns faceup on the board.
-- **Dice:** rolled in the tray with a short animation toward the result the core already decided (`DECISIONS.md` §7); dice windows (reroll, turn, add) are decision dialogs pointing at the dice.
+- Windows PC, Unity 6.6 with URP; mixed 2D and 3D, nearly all art 2D (`DECISIONS.md` §4, §5).
+- The prototype and V1 show the Tabletop scans as they are, English only; card templates with recreated frame and translatable text come after V1 (`DECISIONS.md` §3). The layout decided now is the one the final game keeps; the templates, animations and sound change its finish, not its arrangement.
+- Known animations: the ship moving space by space; dice rolling. Patrols moving is planned too.
+- The interface only reads the state and sends commands; every rule stays in the core.
 
-## 3. Hot-seat hand-off
+## 4. Questions for the phase
 
-```
-┌──────────────────────────────────────────────┐
-│                                              │
-│        Pass the game to Player 3             │
-│        Doctor Aphra                          │
-│                                              │
-│        [ I am Player 3 — continue ]          │
-│                                              │
-└──────────────────────────────────────────────┘
-```
-
-Covers the whole screen when the player who must act changes and private information would show (secrets, a peeked card, a decision only that player sees). Not shown between turns when there is nothing private, nor for bot seats.
-
-## 4. New game
-
-```
-┌────────────────────────────────────────────────────────────┐
-│ NEW GAME                                                   │
-│ Seat 1  [Human ▾]  [Ketsu Onyo ▾]      Ship [G9 Rigger ▾]  │
-│ Seat 2  [Bot   ▾]  [Random     ▾]      Ship [G-1A      ▾]  │
-│ Seat 3  [Empty ▾]                                          │
-│ Seat 4  [Empty ▾]                                          │
-│ Fame requirement [10]   Seed [random]                      │
-│                       [Load game]  [Start]                 │
-└────────────────────────────────────────────────────────────┘
-```
-
-Characters show their card on hover. Two seats cannot take the same character (R-3.11). After the game: a victory screen with the final fame of everyone and the tiebreak when it applied (R-18.16), then back here.
-
-## Open points for the owner
-
-1. The left/right split (players left, market and log right): or players along the bottom, like seats around a table?
-2. Compact panels for the other players: is name, character, credits, fame and damage enough at a glance, or should their reputation also show?
-3. Hand-off screen only when private information would show (above), or before every human turn for simplicity?
+1. **Camera:** a flat view from above, or a tilted table in perspective as in `Board.png`? Can the player pan, zoom, rotate?
+2. **Player areas:** the acting player's board docked on screen (as in `PlayerBoard.png`) and the others minimised, or every board on the table around the map?
+3. **Pieces:** flat tokens and standees (the scans), or simple 3D models standing on the map?
+4. **Cards:** how a card is read (zoom on hover, a larger view), how decks and hands sit on the table, how an encounter card opens.
+5. **What sits above the table:** decision questions, the log, the menu, the step indicator — overlays, or part of the table?
+6. **Hot-seat:** a hand-off screen only when private information would show, or before every human turn?
+7. **Resolution and scaling:** 1920×1080 as the reference; the smallest size to support.
+8. **UI technology:** UI Toolkit, uGUI or world-space objects (cards and boards as objects on the table); can be left to the implementation once the look is set.

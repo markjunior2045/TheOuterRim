@@ -249,19 +249,17 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 
 1. Remove the Unity unknowns first (T0.4).
 2. Close the last base game rule the core lacks (T3.2, trading).
-3. Put everything the screen needs and can be tested without Unity into plain C#, checked by `dotnet test` and the V0 games (T3.3, T3.4), plus the images (T3.5).
+3. Put everything the screen needs and can be tested without Unity into plain C#, checked by `dotnet test` and the V0 games (T3.3, T3.4), plus the images (T3.5). Meanwhile the owner decides the interface in its own phase (T3.0).
 4. Build the screen one layer at a time, so a full game is playable from T3.7 on, first with text, then with cards (T3.6 to T3.9).
 5. Check the client the way V0 checked the core: bots play every seat through the real interface (T3.10).
 
-### T0.4 — Unity project, CLI wiring, session shell · `REVIEW` (2026-11-06; waiting on the owner's review of `docs/UI.md`)
+### T0.4 — Unity project, CLI wiring, session shell · `DONE` (2026-11-06; the screen layout moved to T3.0)
 - **Does:**
   - Create the Unity 6.6 project in `unity/` (URP). Consume the core as a local package (one copy of the source). Install the Unity CLI and `com.unity.pipeline`. Document the commands in `CLAUDE.md`.
   - Add a session shell: one component owns the `GameState` and `GameContent`, sends commands through a command channel interface (local now, network later, `DECISIONS.md` §7) and hands the events to the views. Load the base pack from `data/` with `PackLoader`.
-  - Choose the UI technology (moved here from T3.3, so every later task builds on it). Suggested: UI Toolkit for everything on screen (panels, dialogs, cards, menus); sprites in world space for the board (map, standees, patrols, tokens), with an orthographic camera.
-  - Screen layout, in `docs/UI.md`: a wireframe of the game screen (board, player panels, market, decision dialog, log, card zoom), the hot-seat hand-off screen and the new-game screen, at 1920×1080 with a minimum of 1366×768. Reviewed by the owner before T3.6. Visual style is not decided here: the prototype shows the scans as they are, and the look comes with the templates after V1 (`DECISIONS.md` §3). Each later task fills its part of the layout and may adjust it.
+  - The UI technology and the screen layout were planned here; on 2026-11-06 the owner moved them to their own phase (T3.0).
 - **Done when:**
   - a scene starts a seeded game through the shell and shows the current player and step as text;
-  - the owner has approved the screen layout in `docs/UI.md`;
   - the same test file passes under `dotnet test` and under Unity's EditMode runner;
   - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode and PlayMode tests and get a pass/fail exit code, and query the scene.
 - **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue. This task comes first because the CLI is beta: if it cannot do this, the way of working changes.
@@ -271,8 +269,12 @@ The core already plays the whole base game, so V1 is no longer "one card of each
   - Shared tests: `tests/OuterRim.Core.SharedTests` (NUnit 3, a local package Unity tests) also run under `dotnet test` through `tests/OuterRim.Core.NUnitTests`. One plays a seeded 30-round V0 game and checks the save's SHA-256: .NET and Unity's Mono reach the same state (`DECISIONS.md` §7).
   - Unity tests: 4 EditMode (2 shared, 2 session), 1 PlayMode (the Boot scene shows round 1, the acting player and the planning step). `tools/unity_tests.py` runs them through the open Editor or in batch mode and exits 0 or 1; checked with a deliberately failing test. A deliberate compile error came back from `script recompile_status` with file and line; the scene was read with `scene get_hierarchy`.
   - CLI findings, in `CLAUDE.md`: the Hub must be running and signed in for package downloads (the CLI's own sign-in is not enough); an Editor started in batch mode without `-quit` serves the Pipeline commands without a window.
-  - `docs/UI.md`: screen layout draft with three open points for the owner.
-  - Not done: a throwaway visual check of the UI technology needs the images, which come in T3.5; T3.6 to T3.8 confirm the choice as they build on it, and changing it then is still acceptable.
+  - `docs/UI.md`: a first layout draft (application panels) was set aside by the owner, who wants something closer to the game on the table; the file is now the brief for T3.0.
+
+### T3.0 — UI decisions (owner, in the claude.ai Project chat) · `TODO`
+- **Why:** the interface must look like the game on the table (owner, 2026-11-06; references in `Other\Board.png` and `Other\PlayerBoard.png`), and the owner decides it in its own phase, outside Claude Code.
+- **Does:** answers the questions in `docs/UI.md` §4 (camera, player areas, pieces, cards, overlays, hot-seat, resolution, UI technology) and fixes the layout of the game screen, the hand-off screen, the new-game screen and the victory screen.
+- **Done when:** `docs/UI.md` holds the decisions in place of the brief, and `DECISIONS.md` §4 and this plan are updated to match. The screen tasks T3.6 to T3.10 wait on it; T3.2 to T3.5 do not depend on it and go on meanwhile.
 
 ### T3.2 — Trade action and credit trades (core) · `TODO`
 - **Why:** the only base game rule not built (`RULES.md` §16.2, R-9.6, R-9.7, R-14.11, R-15.91). Without it there is no table talk to support in a game between friends.
@@ -301,7 +303,7 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 - **Does:** `tools/build_assets.py` reads `RawGameFiles/sorted/base` (never writing there) and writes resized copies into `unity/Assets/Art/base/`: JPEG for cards, sheets and map tiles, PNG with transparency for standees and tokens, one manifest with the card id per file. `CREDITS.md` is copied. Same input gives the same files.
 - **Done when:** every card, sheet, token, standee and map piece the base pack uses has an image (test), the set stays under a budget fixed in the task (about 100 MB), and a card scan stays legible at the size the card zoom shows it.
 
-### T3.6 — Board · `TODO` (T0.4, T3.5)
+### T3.6 — Board · `TODO` (T0.4, T3.0, T3.5)
 - **Does:** the map from the layout and the piece art. The pieces are segments of an arc and `MAP_FORMAT.md` has no placement for them yet: add each piece's position and rotation per layout (read from the saved object transforms of [Mod 01] in `RawGameFiles`, or measured), with a validator check that joined ports meet; standees, patrols with their level, patrol stacks and contact tokens placed by `pos` (`MAP_FORMAT.md`); pan and zoom. The ship moves space by space along its path; patrols move the same way (the two known animations, `DECISIONS.md` §4, plus patrols). The view follows the events; on load it rebuilds from the state.
 - **Done when:** a PlayMode test plays a seeded game's first rounds and the pieces stand where the state says after each event.
 
@@ -334,7 +336,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 | Decision | Decide at |
 |---|---|
 | Expansion card images: [Mod 01] or (Mod 02) | before the first Unfinished Business transcription batch |
-| UI technology for cards, panels and menus | T0.4 |
+| UI technology and screen layout | T3.0 (owner, Project chat) |
 | Unity MCP server | only if the CLI proves insufficient |
 | Offer/accept flow for trades (R-9.6, R-16.8) | T3.2 |
 
@@ -344,6 +346,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | T0.4 done. New T3.0: the owner decides the interface in its own phase in the Project chat; the screen tasks T3.6 to T3.10 wait on it. The first layout draft was set aside; `docs/UI.md` is now the brief. |
 | 2026-11-05 | Prototype phase replanned after T3.1 (owner request): V1 becomes the whole base game on one PC (hot-seat and bot seats, save and load); new tasks T3.2 trading (missing core rule), T3.3 interface text, T3.4 interface queries and player view, T3.5 processed images; screen tasks T3.6 to T3.10 with an autoplay check; T0.4 moved into the phase, chooses the UI technology and sets the screen layout (`docs/UI.md`, owner review); online play moved first after V1. |
 | 2026-11-05 | T3.1 done: V0 with random bots in the core and a terminal runner; 12 engine defects found and fixed; save format 0.15. |
 | 2026-11-05 | T2.6 done: encounter decks, contacts, databank procedures, jobs, crew rules; every base game effect built; save format 0.14. |
