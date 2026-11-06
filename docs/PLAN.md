@@ -30,7 +30,7 @@ The phases below group tasks by subject; this is the order they are worked in:
 2. **Data:** T2.2 (schema), T0.5 (map geometry), T2.4 (small data sets: patrols, player board, sheets).
 3. **Core:** Phase 1, using real data wherever it already exists.
 4. **V0:** T3.1, seeded automated games in a terminal.
-5. **Prototype:** T0.4 (Unity), then T3.2 to T3.5, adding one feature at a time. The prototype shows the TTS scans as they are (`DECISIONS.md` §3, prototype exception).
+5. **Prototype (V1):** T0.4 (Unity), T3.2 (trading, the last core rule), T3.3 to T3.5 (interface text, queries and images in plain C# and tools), then T3.6 to T3.10 on screen. V1 is the whole base game on one PC, shown with the TTS scans as they are (`DECISIONS.md` §3 prototype exception, §8). Replanned on 2026-11-05.
 6. **After V1:** see the last section. Templates, translation, animation and sound come only once the game works.
 
 ---
@@ -60,13 +60,8 @@ The phases below group tasks by subject; this is the order they are worked in:
   4. Missing: [Mod 01] ambition sheets 91–94 (dead links); fallback (Mod 02). Dice and the four player boards were thought missing but were PNGs with a corrupt colour profile chunk; read with OpenCV since 2026-11-04 and taken from [Mod 01].
 - Image sources per component: `DECISIONS.md` §3.1.
 
-### T0.4 — Unity project and CLI wiring · `TODO` (T0.2)
-- **Does:** create the Unity 6.6 project (URP by default); consume the core assembly (one copy of the source); install the Unity CLI and `com.unity.pipeline`; document the commands in `CLAUDE.md`.
-- **Done when:**
-  - a trivial core class is called from a Unity script;
-  - the same test file passes under `dotnet test` and under Unity's EditMode runner;
-  - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode tests and get a pass/fail exit code, and query the scene.
-- **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue.
+### T0.4 — Unity project and CLI wiring · `TODO`
+- Moved to Phase 3 as the first task of the prototype, with a session shell and the UI technology choice (replan of 2026-11-05).
 
 ### T0.5 — Map geometry · `DONE` (2026-11-05, overlays checked by the owner)
 - **Does:** JSON for spaces, paths and contact spaces (with class) for each map tile and endcap; the standard layout (R-3.2) and the Core Worlds variant `[UB]`; format and validator.
@@ -248,26 +243,79 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
   - 11 and 12 are settled by the engine once the operation in progress has finished (`SettleHandler`, after every command); readings confirmed by the owner as R-25.24 to R-25.26.
 - **Not done:** the random bot needs about 300 rounds to win; no strategy (bots come after V1). The runner is not tuned for speed (about 7.5 minutes for 1,000 games in Release on 16 cores).
 
-### T3.2 — Unity: map and movement · `TODO` (T0.4, T1.4)
-- Show the map, pick a destination, animate the ship from start to end space.
+### Prototype phase: how it is planned (replanned 2026-11-05, after T3.1)
 
-### T3.3 — Unity: first card object · `TODO` (T0.4, T2.2)
-- One Job card object: the core reads the card data, the interface shows the card's full TTS scan (prototype exception, `DECISIONS.md` §3). Three sample cards.
-- The UI technology for cards is chosen here; changing it later is acceptable.
-- The template version (recreated frame and text, cropped art, English and Portuguese) comes after V1.
+The core already plays the whole base game, so V1 is no longer "one card of each type": it is the **whole base game on one PC** (`DECISIONS.md` §8). Showing every card costs little more than showing one, because every card is drawn the same way (its scan) and every choice is a `PendingDecision` with options. What is left is a thin Unity client over the core, built in this order:
 
-### T3.4 — Unity: remaining V1 interface · `TODO` (T3.2, T3.3)
-- Ship choice, one character, one card of each type, one contact, one encounter (`DECISIONS.md` §8).
-- Encounter cards show every subsection of the player's section, with only the applicable one active (`DECISIONS.md` §4.1).
+1. Remove the Unity unknowns first (T0.4).
+2. Close the last base game rule the core lacks (T3.2, trading).
+3. Put everything the screen needs and can be tested without Unity into plain C#, checked by `dotnet test` and the V0 games (T3.3, T3.4), plus the images (T3.5).
+4. Build the screen one layer at a time, so a full game is playable from T3.7 on, first with text, then with cards (T3.6 to T3.9).
+5. Check the client the way V0 checked the core: bots play every seat through the real interface (T3.10).
 
-### T3.5 — V1 · `TODO` (T3.4)
-- Done when the decided V1 items in `DECISIONS.md` §8 are met.
+### T0.4 — Unity project, CLI wiring, session shell · `TODO` (T0.2)
+- **Does:**
+  - Create the Unity 6.6 project in `unity/` (URP). Consume the core as a local package (one copy of the source). Install the Unity CLI and `com.unity.pipeline`. Document the commands in `CLAUDE.md`.
+  - Add a session shell: one component owns the `GameState` and `GameContent`, sends commands through a command channel interface (local now, network later, `DECISIONS.md` §7) and hands the events to the views. Load the base pack from `data/` with `PackLoader`.
+  - Choose the UI technology (moved here from T3.3, so every later task builds on it). Suggested: UI Toolkit for everything on screen (panels, dialogs, cards, menus); sprites in world space for the board (map, standees, patrols, tokens), with an orthographic camera.
+- **Done when:**
+  - a scene starts a seeded game through the shell and shows the current player and step as text;
+  - the same test file passes under `dotnet test` and under Unity's EditMode runner;
+  - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode and PlayMode tests and get a pass/fail exit code, and query the scene.
+- **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue. This task comes first because the CLI is beta: if it cannot do this, the way of working changes.
+
+### T3.2 — Trade action and credit trades (core) · `TODO`
+- **Why:** the only base game rule not built (`RULES.md` §16.2, R-9.6, R-9.7, R-14.11, R-15.91). Without it there is no table talk to support in a game between friends.
+- **Does:** the trade action in the action step with players in your space (R-16.8 to R-16.14: credits and tradeable cards, uneven trades allowed, only with the current player when several share the space); credit trades with the current player at any time (R-9.6). Flow: one side offers, the other accepts or refuses (a `PendingDecision` for them); nothing is binding beyond what changes hands at once (R-9.7). Secrets cannot be traded (R-15.91). Slots are settled after the trade (R-14.18).
+- **Decides:** the offer/accept flow (deferred decision, now due).
+- **Done when:** one test per rule; the random bot offers and answers trades; V0 runs keep passing with a new invariant: trades create and destroy no credits and no cards.
+
+### T3.3 — Interface text (plain C#) · `TODO` (T3.1)
+- **Why:** the core raises about 120 decision prompts, all localization keys with no text yet, and its events have no readable form (the V0 log prints field names).
+- **Does:**
+  - `data/ui/en.json`: the text of every prompt, option kind, step, event and rules term (player-facing, so in a localization file; Portuguese later fills the same keys).
+  - A presentation assembly with no engine references (`src/OuterRim.Presentation/`, its own `.asmdef`, compiled by the tests like the core): for a decision, the question and a label for each option (card, space, player, faction, die face and amount ids resolved to names); for an event, a log line ("Ketsu Onyo (Player 1) wins the combat against Hutt Patrol Lvl 2 (Game)", `DECISIONS.md` §4.2).
+  - The terminal's `--log` uses it.
+- **Done when:** a coverage test finds no prompt the core can raise and no event type without text; a V0 run of 100 games formats every decision and event without a missing key.
+
+### T3.4 — Interface queries (plain C#) · `TODO` (T3.1)
+- **Why:** the screen must know what can be clicked, and on one shared screen it must not show what a player may not see.
+- **Does:**
+  - Available commands for whoever must act, grouped by step (moves, planning options, market decks, deliveries, abilities, encounters, trades), each one known to be accepted. Built on the bot's candidates checked against a copy of the state.
+  - Reachable spaces with their paths for the move command (hyperdrive, Maelstrom and patrol stops, R-5.11 to R-5.20), so a click on the map picks a path.
+  - A player view: the state as one player may see it. Other players' secrets and deck orders are hidden, facedown contacts are hidden unless that player looked at them (the state records who looked, if it does not yet). The same view is what an online client will receive.
+- **Done when:** over V0 games, every listed command is accepted and every accepted bot command was listed; no view contains another player's secret ids; a query answers in under 50 ms on a 4-player state (the core gets tuned here if needed). The random bot switches to the available-commands list.
+
+### T3.5 — Processed images in the repository · `TODO`
+- **Why:** the base game scans are about 1.1 GB of PNG in `RawGameFiles`; plain Git without LFS cannot hold them as they are (`DECISIONS.md` §3, §5).
+- **Does:** `tools/build_assets.py` reads `RawGameFiles/sorted/base` (never writing there) and writes resized copies into `unity/Assets/Art/base/`: JPEG for cards, sheets and map tiles, PNG with transparency for standees and tokens, one manifest with the card id per file. `CREDITS.md` is copied. Same input gives the same files.
+- **Done when:** every card, sheet, token, standee and map piece the base pack uses has an image (test), the set stays under a budget fixed in the task (about 100 MB), and a card scan stays legible at the size the card zoom shows it.
+
+### T3.6 — Board · `TODO` (T0.4, T3.5)
+- **Does:** the map from the layout and the piece art; standees, patrols with their level, patrol stacks and contact tokens placed by `pos` (`MAP_FORMAT.md`); pan and zoom. The ship moves space by space along its path; patrols move the same way (the two known animations, `DECISIONS.md` §4, plus patrols). The view follows the events; on load it rebuilds from the state.
+- **Done when:** a PlayMode test plays a seeded game's first rounds and the pieces stand where the state says after each event.
+
+### T3.7 — Turn flow, player panels and decisions · `TODO` (T3.3, T3.4, T3.6)
+- **Does:** a panel per player (credits, fame and requirement, reputation, damage against health and hull, assets in their slots, goals with their tokens, defeated); the step controls (planning options, end the action step, the encounter choices); moving by clicking a reachable space; one generic decision dialog for the three decision kinds, with the text from T3.3; the game log; dice shown with a short roll animation toward the result the core already decided (`DECISIONS.md` §7).
+- **Done when:** the owner plays a whole game against a bot in Unity, with cards still shown by name. **First milestone: the game is playable on screen.**
+
+### T3.8 — Cards on screen · `TODO` (T3.5, T3.7)
+- **Does:** one card view for every card, showing its full scan (prototype exception, `DECISIONS.md` §3), with zoom. Used by: the six market decks with their top card faceup, discard and buy with barter selection; each player's assets in their slots; the encounter card with only the player's section shown and the applicable subsection active (§4.1); databank cards as they resolve; contact tokens turned faceup; secrets hidden from the others; character cards and ship sheets with the faceup side.
+- **Done when:** every card kind of the base pack has been seen in a game, and card ids in the decisions show the card instead of its name.
+
+### T3.9 — Game setup, seats, save and load · `TODO` (T3.7)
+- **Does:** a new-game screen (1 to 4 seats, each human or random bot, character, starter ship side, optional seed, fame requirement); hot-seat play on one screen: when the acting player changes and private information would show, a hand-off screen asks for the next player; bot seats act with a short delay; save and load from a menu (core save format, pack check, `DECISIONS.md` §6); the victory screen with the tiebreak (R-18.16).
+- **Done when:** a game saved in the middle of a decision loads and goes on identically; a 2-human, 1-bot game runs start to finish.
+
+### T3.10 — Interface autoplay and V1 · `TODO` (T3.8, T3.9)
+- **Does:** an autoplay mode where bots play every seat through the real views at high speed; a batch-mode run of seeded games, failing on any exception, any decision the interface cannot show, or any invariant broken (T3.1 checker). Then the owner's V1 check.
+- **Done when:** 50 seeded autoplay games finish without a failure, and the owner has played one full game hot-seat and one against bots. V1 is then reached (`DECISIONS.md` §8).
 
 ---
 
 ## After V1 (not yet broken into tasks)
 
-Official solo mode → general bot → host and room code (relay behind the network interface) → *Unfinished Business* pack (transcription T2.8, then its content) → polish: card templates with recreated frame and text (`DECISIONS.md` §3), Portuguese, better graphics and animations → Spanish → sound and music.
+Online play (host and room code, relay behind the command channel, the player view of T3.4 as what each client receives) → official solo mode (encode the AI smuggler deck, then its rules) → a better bot → *Unfinished Business* pack (transcription T2.8, then its content) → polish: card templates with recreated frame and text (`DECISIONS.md` §3), Portuguese, better graphics and animations, random map layout in the setup screen (R-3.3) → Spanish → sound and music.
 
 ---
 
@@ -276,10 +324,9 @@ Official solo mode → general bot → host and room code (relay behind the netw
 | Decision | Decide at |
 |---|---|
 | Expansion card images: [Mod 01] or (Mod 02) | before the first Unfinished Business transcription batch |
-| UI technology for cards | T3.3 |
-| UI technology for panels and menus | first screen UI task |
+| UI technology for cards, panels and menus | T0.4 |
 | Unity MCP server | only if the CLI proves insufficient |
-| Offer/accept flow for credit trades (R-9.6) | when trading reaches the UI |
+| Offer/accept flow for trades (R-9.6, R-16.8) | T3.2 |
 
 ---
 
@@ -287,6 +334,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | Prototype phase replanned after T3.1 (owner request): V1 becomes the whole base game on one PC (hot-seat and bot seats, save and load); new tasks T3.2 trading (missing core rule), T3.3 interface text, T3.4 interface queries and player view, T3.5 processed images; screen tasks T3.6 to T3.10 with an autoplay check; T0.4 moved into the phase and chooses the UI technology; online play moved first after V1. |
 | 2026-11-05 | T3.1 done: V0 with random bots in the core and a terminal runner; 12 engine defects found and fixed; save format 0.15. |
 | 2026-11-05 | T2.6 done: encounter decks, contacts, databank procedures, jobs, crew rules; every base game effect built; save format 0.14. |
 | 2026-11-05 | T2.5 done: market decks and action, deliver action with databank #1, extra fame; four decks encoded; save format 0.11. |

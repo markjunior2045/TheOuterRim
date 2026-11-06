@@ -1,6 +1,6 @@
 # DECISIONS.md — Outer Rim digital
 
-Last updated: 2026-11-05 (simulation in the core, T3.1)
+Last updated: 2026-11-05 (V1 replanned; simulation in the core, T3.1)
 
 Personal, non-commercial project: a digital version of the *Star Wars: Outer Rim* board game, built in Unity with Claude Code, to play with friends on PC.
 
@@ -86,7 +86,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - Claude Code for development, in small tasks, each with a done criterion and a test.
 - Claude Code drives Unity through the **Unity CLI** and the `com.unity.pipeline` package (both beta/experimental). An MCP server is only considered if the CLI proves insufficient.
 - No up-front technical spike in Unity.
-- UI technology (UI Toolkit, uGUI, or plain 3D objects) is chosen when the first UI objects are built. Changing it later is acceptable.
+- UI technology (UI Toolkit, uGUI, or plain 3D objects) is chosen in `PLAN.md` T0.4, before the first screen is built (suggested: UI Toolkit on screen, world-space sprites for the board). Changing it later is acceptable.
 - Version control: **plain Git, no LFS**. One branch per task. `CLAUDE.md` at the repository root.
 - **Language:** all project documents, code and identifiers are written in English, and all file names are in English. Other languages exist only as in-game translations. Conversations with the assistant are in Brazilian Portuguese.
 - **Folder layout:**
@@ -124,19 +124,17 @@ Details (full card lists, animations, screens) live in their own documents as th
 
 ## 8. V1
 
-Decided:
-- Choose between the two starting ships.
-- Move around the map, with distance set by the chosen ship.
-- An initial map, ready to use.
-- At least one of each kind of interaction: one card of each type, one contact, one encounter.
-- One character.
+Decided (replanned 2026-11-05, at the owner's request after V0; replaces the earlier "one of each" list):
+- **The whole base game on one PC.** Every base card, contact, encounter, patrol and rule plays, since the core already does (T3.1). Shown with the TTS scans (prototype exception, §3), English only.
+- 1 to 4 seats; each seat a human on the same screen (hot-seat, with a hand-off screen before private information shows) or the random bot.
+- Choose the character and the starter ship side (G9 Rigger or G-1A Starfighter); standard map (R-3.2).
+- Save and resume a game midway, even in the middle of a decision (§6).
+- Animations: the ship and patrols moving space by space, dice rolling toward the core's result (§4).
+- Done when an autoplay run through the interface passes and the owner has played one full game hot-seat and one against bots (`PLAN.md` T3.10).
 
-Suggested (not confirmed):
-- Save and load already in V1.
-- ~~A screenless "V0": the core running in a terminal with automated test games.~~ Done in T3.1 (2026-11-05).
-- First end-to-end test: one Job card (data from the card file, full scan shown, three sample cards). The template version with English and Portuguese text comes after V1 (section 3).
-- Official solo mode before the general bot.
-- Online connection through Unity Relay (free at this scale), behind the network interface.
+Not in V1: online play (first after V1; the command channel and the player view are built in V1 so it plugs in), official solo mode, a better bot, card templates, Portuguese, sound and music, random map layout, the expansion.
+
+Why the change: the old list (one card of each type, one contact, one encounter) was set before the rules core existed. Now every card is drawn the same way and every choice goes through one decision type, so showing all of them costs about what showing one does, and a partial game would hide interface gaps that only a full game shows.
 
 ## 9. Open
 

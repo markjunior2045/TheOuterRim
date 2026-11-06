@@ -2,7 +2,7 @@
 
 Short view of where the project is going. Task details live in `PLAN.md`; decisions in `DECISIONS.md`. Order set by the owner on 2026-11-04.
 
-Last updated: 2026-11-05 (V0 done).
+Last updated: 2026-11-05 (V0 done; prototype replanned).
 
 Status: `Done` · `Next` · `To do` · `Later`.
 
@@ -18,8 +18,8 @@ Status: `Done` · `Next` · `To do` · `Later`.
 | 6 | Core | rules engine in plain C#, tested with `dotnet test` | Done |
 | 7 | Effects and content | effect engine; market, encounters, databank and secrets playable in the core | Done (base) |
 | 8 | V0 | seeded bot games in a terminal, checking every rule invariant | Done |
-| 9 | Prototype (V1) | Unity project; map, movement and cards on screen with the Tabletop scans | **Next** |
-| 10 | After V1 | solo mode, bots, online play, *Unfinished Business* | Later |
+| 9 | Prototype (V1) | the whole base game playable in Unity on one PC, with the Tabletop scans | **Next** |
+| 10 | After V1 | online play, solo mode, a better bot, *Unfinished Business* | Later |
 | 11 | Polish | card templates, Portuguese, graphics, animation, Spanish, sound | Last |
 
 ## Sub-steps
@@ -70,16 +70,22 @@ Status: `Done` · `Next` · `To do` · `Later`.
 - T3.1 terminal game with a random bot; 1,000 seeded games without a crash or a broken invariant — Done (the games found 12 engine defects, all fixed)
 
 ### 9. Prototype (V1) · Next
-- T0.4 Unity project, core as a local package, Unity CLI wiring
-- T3.2 map and movement on screen
-- T3.3 first card object (data from the card file, full scan shown)
-- T3.4 remaining V1 interface: ship choice, one character, one card of each type, one contact, one encounter
-- T3.5 V1 complete (`DECISIONS.md` §8)
+V1 is the whole base game on one PC: 1 to 4 seats, human (same screen) or bot, save and load, every card shown as its scan, English only (`DECISIONS.md` §8).
+- T0.4 Unity project, CLI wiring, session shell, UI technology
+- T3.2 trade action and credit trades (the last base game rule the core lacks)
+- T3.3 interface text: prompts, option labels, game log (plain C#)
+- T3.4 interface queries: available commands, reachable spaces, player view (plain C#)
+- T3.5 processed images in the repository, within a size budget
+- T3.6 board: map, pieces, ship and patrol movement
+- T3.7 turn flow, player panels, decision dialog, log, dice — first full game on screen
+- T3.8 cards on screen: market, assets, encounters, databank, contacts
+- T3.9 game setup, hot-seat and bot seats, save and load, victory
+- T3.10 autoplay through the interface; owner plays V1
 
 ### 10. After V1 · Later
-- Official solo mode (AI decks)
-- General bot
-- Online play: host and room code, relay behind the network interface
+- Online play: host and room code, relay behind the command channel
+- Official solo mode (AI smuggler deck)
+- A better bot
 - *Unfinished Business*: transcription, data and content
 
 ### 11. Polish · Last
