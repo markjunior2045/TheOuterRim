@@ -19,6 +19,7 @@ namespace OuterRim.Core.Engine
     {
         public const string HandlerId = "effects.market_session";
         private const string Done = "done";
+        private const string Cancel = "cancel";
 
         public string Id => HandlerId;
 
@@ -34,6 +35,13 @@ namespace OuterRim.Core.Engine
             if (frame.Vars.TryGetValue("barter_pick", out var bp))
             {
                 frame.Vars.Remove("barter_pick");
+                if (bp == Cancel)
+                {
+                    // Back to the market menu with nothing bartered: a choice of barter can make the price unpayable.
+                    frame.Vars.Remove("barter");
+                    frame.Vars.Remove("buy_deck");
+                    return StepResult.Continue();
+                }
                 if (bp != Done)
                 {
                     frame.Set("barter", frame.Vars.TryGetValue("barter", out var b) && b.Length > 0 ? b + "," + bp : bp);
@@ -120,6 +128,7 @@ namespace OuterRim.Core.Engine
                 frame.Set("barter_pick", Done);
                 return StepResult.Continue();
             }
+            options.Add(new DecisionOption(Cancel, "effects.barter_cancel"));
             return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, owner.Id, "effects.barter", options, "barter_pick"));
         }
     }

@@ -123,6 +123,7 @@ namespace OuterRim.Core.Simulation
                     }
                     CommandResult? accepted = null;
                     var reasons = new List<string>();
+                    var credits = Invariants.Credits(state);
                     foreach (var command in bot.Candidates(content, state))
                     {
                         last = command;
@@ -154,6 +155,7 @@ namespace OuterRim.Core.Simulation
                     Report(options, state, accepted.Events);
                     problems = monitor.After(last!, accepted);
                     problems.AddRange(Invariants.Check(content, state));
+                    problems.AddRange(Invariants.CreditsFollowEvents(credits, state, accepted.Events));
                     if (options.SaveCheckEvery > 0 && result.Commands % options.SaveCheckEvery == 0)
                     {
                         problems.AddRange(SaveRoundTrip(state));

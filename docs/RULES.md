@@ -387,7 +387,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-9.7** Any agreement that cannot be fulfilled immediately and completely is **non-binding**. Future promises can be broken.
 - **R-9.8** **Spending versus losing** (owner clarification). "Spend X" is a payment: the player must have the full amount, otherwise they cannot choose it. This includes "unless you spend X" and "unless you lose X" offered as a way out of a penalty. "Lose X" imposed as an effect removes as much as the player has, down to 0 (R-21.5). The rulebooks do not state this explicitly; it follows from R-21.4 and R-21.5.
 
-> Implementation: R-9.6 and R-9.7 assume verbal negotiation between people. In a digital game this becomes an explicit credit transfer through the UI, with no enforceable contract. **[?]** Decide whether there is an offer/accept channel or whether transfers are one-sided.
+> Implementation (T3.2, reading awaiting the owner in `REVIEW.md`): R-9.6 and R-9.7 assume talk between people. Digitally: credits are **given**, one-sided, at any moment of the current player's turn between them and another player (R-16.15, R-16.16); swapping credits for credits is only a net gift, and nothing promised is enforced (R-9.7). The trade action (R-16.8) is an **offer** the partner accepts or refuses; see `REVIEW.md`.
 
 ---
 
@@ -1173,6 +1173,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | Note after R-9.7: digital form of credit trades and the trade action (T3.2); the `[?]` is replaced by a reading in `REVIEW.md`. |
 | 2026-11-05 | R-25.24 to R-25.26: owner answers to the T3.1 review (health or hull going down, Chromium Hull, Ketsu Onyo's range). |
 | 2026-11-05 | §26.3: implementation note on how the V0 games check the invariants (T3.1). |
 | 2026-11-05 | Note after R-11.24: graph reading of patrol movement "toward the player" (T1.8), confirmed by the owner with the Learn to Play wording. |

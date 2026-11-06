@@ -167,8 +167,10 @@ namespace OuterRim.Core.Tests
             s.Pending = new PendingDecision { Id = 99, Kind = DecisionKind.ChooseOption, PlayerId = s.Players[1].Id,
                 Options = new List<DecisionOption> { new DecisionOption("a", "a"), new DecisionOption("b", "b") } };
             var answers = bot.Candidates(C, s);
-            Assert.Equal(2, answers.Count);
-            Assert.All(answers, c => Assert.Equal(s.Players[1].Id, Assert.IsType<ChooseOptionCommand>(c).PlayerId));
+            // The answers, plus now and then a gift of credits, which may interrupt a decision (R-16.16).
+            Assert.Equal(2, answers.OfType<ChooseOptionCommand>().Count());
+            Assert.All(answers, c => Assert.True(c is ChooseOptionCommand || c is GiveCreditsCommand));
+            Assert.All(answers, c => Assert.Equal(s.Players[1].Id, c.PlayerId));
         }
     }
 }

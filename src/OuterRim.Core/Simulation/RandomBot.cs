@@ -55,6 +55,7 @@ namespace OuterRim.Core.Simulation
                         break;
                     case TurnStep.Action:
                         Action(player, list);
+                        Trade(state, player, list);
                         break;
                     default:
                         Encounter(state, player, list);
@@ -62,6 +63,7 @@ namespace OuterRim.Core.Simulation
                 }
                 Abilities(content, player, list);
             }
+            Gift(state, player, list);
             _rng.Shuffle(list);
             return list;
         }
@@ -140,6 +142,35 @@ namespace OuterRim.Core.Simulation
                 _rng.Shuffle(deliverable);
                 list.Add(new DeliverCommand(player.Id, deliverable));
             }
+        }
+
+        /// <summary>R-16.8: an offer to each player in the space, of random credits and cards both ways.</summary>
+        private void Trade(GameState state, PlayerState player, List<Command> list)
+        {
+            foreach (var partner in state.Players)
+            {
+                if (partner.Id == player.Id || partner.SpaceId != player.SpaceId) continue;
+                list.Add(new OfferTradeCommand(player.Id, partner.Id, RandomCredits(player), RandomSubset(player.Assets),
+                    RandomCredits(partner), RandomSubset(partner.Assets)));
+            }
+        }
+
+        /// <summary>R-16.15: now and then, credits handed to or from the current player (rarely, so games still move on).</summary>
+        private void Gift(GameState state, PlayerState actor, List<Command> list)
+        {
+            if (state.Players.Count < 2 || actor.Credits < 1000 || _rng.NextInt(20) != 0) return;
+            string to = state.CurrentPlayerId;
+            if (to == actor.Id)
+            {
+                var others = state.Players.FindAll(p => p.Id != actor.Id);
+                to = others[_rng.NextInt(others.Count)].Id;
+            }
+            list.Add(new GiveCreditsCommand(actor.Id, to, 1000 * (1 + _rng.NextInt(actor.Credits / 1000))));
+        }
+
+        private int RandomCredits(PlayerState player)
+        {
+            return _rng.NextInt(3) == 0 ? 1000 * _rng.NextInt(player.Credits / 1000 + 1) : 0;
         }
 
         /// <summary>R-4.13: the space, a patrol, a contact, a job, a bounty against crew, or another player.</summary>

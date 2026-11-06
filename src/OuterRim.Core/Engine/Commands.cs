@@ -136,6 +136,50 @@ namespace OuterRim.Core.Engine
         public IReadOnlyList<string> Cargo { get; }
     }
 
+    /// <summary>
+    /// R-9.6, R-16.15: gives credits to another player, one of the two being the current player. Not an action;
+    /// accepted at any moment of the turn, even while a decision is pending (R-16.16).
+    /// </summary>
+    public sealed class GiveCreditsCommand : Command
+    {
+        public GiveCreditsCommand(string playerId, string toPlayerId, int amount) : base(playerId)
+        {
+            ToPlayerId = toPlayerId;
+            Amount = amount;
+        }
+
+        public string ToPlayerId { get; }
+
+        public int Amount { get; }
+    }
+
+    /// <summary>
+    /// The trade action (R-16.8): the current player offers credits and cards to a player in their space and asks
+    /// for credits and cards in return. The partner accepts or refuses; either way the action is used (R-4.9).
+    /// </summary>
+    public sealed class OfferTradeCommand : Command
+    {
+        public OfferTradeCommand(string playerId, string partnerId, int giveCredits, IReadOnlyList<string>? giveCards,
+            int takeCredits, IReadOnlyList<string>? takeCards) : base(playerId)
+        {
+            PartnerId = partnerId;
+            GiveCredits = giveCredits;
+            GiveCards = giveCards ?? new string[0];
+            TakeCredits = takeCredits;
+            TakeCards = takeCards ?? new string[0];
+        }
+
+        public string PartnerId { get; }
+
+        public int GiveCredits { get; }
+
+        public IReadOnlyList<string> GiveCards { get; }
+
+        public int TakeCredits { get; }
+
+        public IReadOnlyList<string> TakeCards { get; }
+    }
+
     /// <summary>Base for answers to a <see cref="PendingDecision"/>.</summary>
     public abstract class AnswerCommand : Command
     {

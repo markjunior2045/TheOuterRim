@@ -143,6 +143,45 @@ namespace OuterRim.Core.Simulation
             return errors;
         }
 
+        /// <summary>Each player's credits, to compare across a command with <see cref="CreditsFollowEvents"/>.</summary>
+        public static Dictionary<string, int> Credits(GameState state)
+        {
+            var credits = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var p in state.Players) credits[p.Id] = p.Credits;
+            return credits;
+        }
+
+        /// <summary>
+        /// Credits change only through their events: gained, lost or spent, and handed between players. Trades
+        /// and gifts (R-9.6, R-16.8, R-16.15) therefore create and destroy no credits, and the interface can show
+        /// every change.
+        /// </summary>
+        public static List<string> CreditsFollowEvents(Dictionary<string, int> before, GameState state, IReadOnlyList<GameEvent> events)
+        {
+            var expected = new Dictionary<string, int>(before, StringComparer.Ordinal);
+            foreach (var e in events)
+            {
+                switch (e)
+                {
+                    case CreditsGainedEvent g: expected[g.PlayerId] += g.Amount; break;
+                    case CreditsLostEvent l: expected[l.PlayerId] -= l.Amount; break;
+                    case CreditsGivenEvent t:
+                        expected[t.FromId] -= t.Amount;
+                        expected[t.ToId] += t.Amount;
+                        break;
+                }
+            }
+            var errors = new List<string>();
+            foreach (var p in state.Players)
+            {
+                if (expected[p.Id] != p.Credits)
+                {
+                    errors.Add("Credits: " + p.Id + " has " + p.Credits + ", but the events account for " + expected[p.Id] + ".");
+                }
+            }
+            return errors;
+        }
+
         private static void Place(Dictionary<string, string> seen, string card, string where, List<string> errors)
         {
             if (seen.TryGetValue(card, out var first))

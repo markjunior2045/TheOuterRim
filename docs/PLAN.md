@@ -276,11 +276,18 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 - **Does:** answers the questions in `docs/UI.md` §4 (camera, player areas, pieces, cards, overlays, hot-seat, resolution, UI technology) and fixes the layout of the game screen, the hand-off screen, the new-game screen and the victory screen.
 - **Done when:** `docs/UI.md` holds the decisions in place of the brief, and `DECISIONS.md` §4 and this plan are updated to match. The screen tasks T3.6 to T3.10 wait on it; T3.2 to T3.5 do not depend on it and go on meanwhile.
 
-### T3.2 — Trade action and credit trades (core) · `TODO`
+### T3.2 — Trade action and credit trades (core) · `DONE` (2026-11-06; readings in `REVIEW.md` items 1 to 3)
 - **Why:** the only base game rule not built (`RULES.md` §16.2, R-9.6, R-9.7, R-14.11, R-15.91). Without it there is no table talk to support in a game between friends.
 - **Does:** the trade action in the action step with players in your space (R-16.8 to R-16.14: credits and tradeable cards, uneven trades allowed, only with the current player when several share the space); credit trades with the current player at any time (R-9.6). Flow: one side offers, the other accepts or refuses (a `PendingDecision` for them); nothing is binding beyond what changes hands at once (R-9.7). Secrets cannot be traded (R-15.91). Slots are settled after the trade (R-14.18).
 - **Decides:** the offer/accept flow (deferred decision, now due).
 - **Done when:** one test per rule; the random bot offers and answers trades; V0 runs keep passing with a new invariant: trades create and destroy no credits and no cards.
+- **Delivered:**
+  - `GiveCreditsCommand` (R-9.6, R-16.15, R-16.16: one-sided, accepted at any moment of the turn, even while a decision waits) and `OfferTradeCommand` (R-16.8 to R-16.14) with the `rules.trade` frame: the partner accepts or refuses, everything changes hands at once, a captured contact goes with its bounty (R-16.13), a rotated asset keeps its orientation (R-14.11), received cards count as gained, slots are settled after (R-14.18). An accepted trade that can no longer be paid in full falls through (R-9.7). Events: `CreditsGiven`, `TradeOffered`, `TradeAnswered`, `TradeFailed`, `AssetTraded`.
+  - The random bot offers trades to players in its space and now and then gives credits.
+  - New V0 invariant, for every command: each player's credits change exactly as the credit events say (gained, lost or spent, given). This covers "trades create no credits", and every change is visible to the interface. Cards in one place only was already checked.
+  - Found by the trading games and fixed: an extra market action (Doctor Aphra, W1-LE) could reach a barter choice with no option left; it now always offers to cancel the purchase.
+  - V0 with trading (seeds 1 to 1,000, Release, 412 s): every game sound, credit accounting included; 999 ended with a winner (average 328 rounds), 1 reached the 1,000-round limit.
+  - Tests: `TradeTests` (13, one per rule). The shared cross-runtime test's hash was updated for the new bot; Unity agrees (5/5). 363 xUnit + 2 NUnit tests.
 
 ### T3.3 — Interface text (plain C#) · `TODO` (T3.1)
 - **Why:** the core raises about 120 decision prompts, all localization keys with no text yet, and its events have no readable form (the V0 log prints field names).
@@ -346,6 +353,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | T3.2 done: trade action and credit gifts in the core, bot trades, credit accounting invariant; readings in `REVIEW.md`. Next without the owner: T3.3; the owner holds T3.0 (UI) in the Project chat. |
 | 2026-11-06 | T0.4 done. New T3.0: the owner decides the interface in its own phase in the Project chat; the screen tasks T3.6 to T3.10 wait on it. The first layout draft was set aside; `docs/UI.md` is now the brief. |
 | 2026-11-05 | Prototype phase replanned after T3.1 (owner request): V1 becomes the whole base game on one PC (hot-seat and bot seats, save and load); new tasks T3.2 trading (missing core rule), T3.3 interface text, T3.4 interface queries and player view, T3.5 processed images; screen tasks T3.6 to T3.10 with an autoplay check; T0.4 moved into the phase, chooses the UI technology and sets the screen layout (`docs/UI.md`, owner review); online play moved first after V1. |
 | 2026-11-05 | T3.1 done: V0 with random bots in the core and a terminal runner; 12 engine defects found and fixed; save format 0.15. |

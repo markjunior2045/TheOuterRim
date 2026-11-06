@@ -356,6 +356,10 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected("Unknown player " + command.PlayerId + ".");
             }
+            if (command is GiveCreditsCommand give)
+            {
+                return Trades.GiveCredits(state, player, give); // R-16.15, R-16.16: at any moment of the turn
+            }
             if (state.Pending != null)
             {
                 return command is AnswerCommand answer
@@ -391,6 +395,8 @@ namespace OuterRim.Core.Engine
                     return MarketBuy(content, state, player, buy);
                 case DeliverCommand deliver:
                     return Deliver(content, state, player, deliver.Cargo);
+                case OfferTradeCommand trade:
+                    return Trades.Offer(content, state, player, trade);
                 default:
                     return CommandResult.Rejected("Command not supported yet: " + command.GetType().Name + ".");
             }

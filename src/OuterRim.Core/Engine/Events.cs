@@ -50,6 +50,101 @@ namespace OuterRim.Core.Engine
         public int Amount { get; }
     }
 
+    /// <summary>Credits handed from one player to another (R-16.15, or as part of a trade).</summary>
+    public sealed class CreditsGivenEvent : GameEvent
+    {
+        public CreditsGivenEvent(string fromId, string toId, int amount)
+        {
+            FromId = fromId;
+            ToId = toId;
+            Amount = amount;
+        }
+
+        public string FromId { get; }
+
+        public string ToId { get; }
+
+        public int Amount { get; }
+    }
+
+    /// <summary>The current player offered a trade (R-16.8); the partner is asked.</summary>
+    public sealed class TradeOfferedEvent : GameEvent
+    {
+        public TradeOfferedEvent(string playerId, string partnerId, int giveCredits, IReadOnlyList<string> giveCards,
+            int takeCredits, IReadOnlyList<string> takeCards)
+        {
+            PlayerId = playerId;
+            PartnerId = partnerId;
+            GiveCredits = giveCredits;
+            GiveCards = giveCards;
+            TakeCredits = takeCredits;
+            TakeCards = takeCards;
+        }
+
+        public string PlayerId { get; }
+
+        public string PartnerId { get; }
+
+        public int GiveCredits { get; }
+
+        public IReadOnlyList<string> GiveCards { get; }
+
+        public int TakeCredits { get; }
+
+        public IReadOnlyList<string> TakeCards { get; }
+    }
+
+    /// <summary>The partner accepted or refused the offered trade.</summary>
+    public sealed class TradeAnsweredEvent : GameEvent
+    {
+        public TradeAnsweredEvent(string playerId, string partnerId, bool accepted)
+        {
+            PlayerId = playerId;
+            PartnerId = partnerId;
+            Accepted = accepted;
+        }
+
+        public string PlayerId { get; }
+
+        public string PartnerId { get; }
+
+        public bool Accepted { get; }
+    }
+
+    /// <summary>An accepted trade could not be paid in full any more, so nothing changed hands (R-9.7, R-16.11).</summary>
+    public sealed class TradeFailedEvent : GameEvent
+    {
+        public TradeFailedEvent(string playerId, string partnerId)
+        {
+            PlayerId = playerId;
+            PartnerId = partnerId;
+        }
+
+        public string PlayerId { get; }
+
+        public string PartnerId { get; }
+    }
+
+    /// <summary>A card changed hands in a trade (R-16.12); a captured contact goes with its bounty (R-16.13).</summary>
+    public sealed class AssetTradedEvent : GameEvent
+    {
+        public AssetTradedEvent(string fromId, string toId, string cardId, string kind)
+        {
+            FromId = fromId;
+            ToId = toId;
+            CardId = cardId;
+            Kind = kind;
+        }
+
+        public string FromId { get; }
+
+        public string ToId { get; }
+
+        public string CardId { get; }
+
+        public string Kind { get; }
+    }
+
     /// <summary>R-8.4: damage tokens above a health or hull that went down were removed.</summary>
     public sealed class ExcessDamageRemovedEvent : GameEvent
     {

@@ -80,6 +80,8 @@ Details (full card lists, animations, screens) live in their own documents as th
 
 - **Dice for enemies (2026-11-05):** a player rolls only their own dice (skill tests and their side of a combat). For a patrol, contact or card enemy the game rolls; the "player to the left rolls" convention of the board game (`RULES.md` R-7.9, R-7.12) does not apply, and R-7.20 becomes moot. Combat results are unchanged: the enemy's dice still count as the defender's roll. Events and the interface name who rolled: the character and player for a player ("Ketsu Onyo (Player 1)"), the enemy followed by "(Game)" otherwise ("Hutt Patrol Lvl 2 (Game)", "TIE fighters (Game)").
 
+- **Trading (2026-11-06, T3.2; readings in `REVIEW.md`):** the table talk of R-9.6 and R-16.8 becomes two commands: giving credits (one-sided, any time in the current player's turn) and the trade action as an offer the partner accepts or refuses.
+
 ## 5. Engine, tools and conventions (Decided)
 
 - Unity 6.6 now (6000.6.8f1 since 2026-11-06, URP), moving to 6.7 LTS when it is released.
