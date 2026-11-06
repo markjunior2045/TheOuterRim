@@ -787,6 +787,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-18.5** Goal tokens may be placed on the character card or ship sheet to track progress. On flipping the card, discard its goal tokens.
 - **R-18.6** Completing a personal goal awards 1 fame, as stated on the card.
 - **R-18.7** If a card does not use the specific wording "complete this job", it does **not** count toward Doctor Aphra's personal goal.
+  > Owner decision (2026-11-05): gaining a job's reward is completing it. "Claim this reward" (Wanted-9, Wanted-10, Legendary Game of Sabacc-7) and winning a sabacc game for a job's reward (Low Stakes Game of Sabacc, the job on Nal Hutta-1) count as completing the job, for Doctor Aphra-5's goal, Sy Snootles-4 and every other "complete a job" effect. The engine follows this decision rather than the sentence above.
 
 ### 18.2 Fame
 
@@ -1171,6 +1172,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 | 2026-11-05 | Note after R-7.20: the game rolls for patrols, contacts and card enemies (digital adaptation, owner decision). |
 | 2026-11-05 | §26.1: decision commands as built in T1.2 (`ChooseOption`, `ResolveTie`, `ChooseOrder`, keyed by decision id). |
 | 2026-11-05 | R-25.15 to R-25.17: Bossk, GX1 Short Hauler and YV-666 goals (owner clarifications from T2.4). |
+| 2026-11-05 | Note after R-18.7: gaining a job's reward completes it (owner decision). |
 | 2026-11-05 | R-25.18 to R-25.23: owner answers to the T2.6 review (effect purchases optional, "choose a player", sabacc rewards, Black Sun Agent, Doctor Evazan, effect movement and contact slots). |
 | 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded; map geometry read into `data/map/`. |
 | 2026-11-04 | R-9.8 spending versus losing credits and R-25.14 Jyn Erso's planet markers (owner clarifications from the T2.1 effect inventory). |

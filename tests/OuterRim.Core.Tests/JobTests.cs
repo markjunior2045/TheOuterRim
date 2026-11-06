@@ -15,11 +15,11 @@ namespace OuterRim.Core.Tests
         private const string LowStakes = "base-encounter-tatooine-nal-hutta-01-asset";
         private const string Wanted = "base-market-bounty-09";
 
-        private static GameState Game(string space, ulong seed = 171)
+        private static GameState Game(string space, ulong seed = 171, string character = "base-character-00")
         {
             var s = GameEngine.NewGame(C, new GameSetup(seed, new[]
             {
-                new PlayerSetup("p1", "One", "green", "kessel", TestContent.G9Rigger, "base-character-00"),
+                new PlayerSetup("p1", "One", "green", "kessel", TestContent.G9Rigger, character),
                 new PlayerSetup("p2", "Two", "red", "tatooine", TestContent.G9Rigger, "base-character-03"),
             }, new[] { new PackRef("base", "0.1.0") }), out _);
             s.CurrentPlayerId = "p1";
@@ -173,7 +173,7 @@ namespace OuterRim.Core.Tests
                 if (r.Events.OfType<CombatResolvedEvent>().Single().Winner != "attacker") continue;
                 Assert.Equal(credits + 5000, P(s, "p1").Credits);
                 Assert.Equal(2, P(s, "p1").Fame);
-                Assert.False(r.Events.OfType<JobCompletedEvent>().Single().Completed); // claimed, not "completed" (R-18.7)
+                Assert.True(r.Events.OfType<JobCompletedEvent>().Single().Completed); // claiming the reward completes it (R-18.7, owner)
                 Assert.Contains(Wanted, Market.Deck(s, "bounty").Cards);
                 return;
             }
@@ -223,6 +223,22 @@ namespace OuterRim.Core.Tests
                 return;
             }
             Assert.Fail("No seed completed the heist.");
+        }
+
+        [Fact]
+        public void R18_7_ClaimingAJobsReward_CountsForDoctorAphrasGoal()
+        {
+            for (ulong seed = 0; seed < 80; seed++)
+            {
+                var s = Game("tatooine", seed, "base-character-05");
+                P(s, "p2").Reputation.Hutt = Reputation.Negative;
+                Hold(s, Wanted);
+                var r = TestHelpers.DeclineAll(C, s, Attempt(s, Wanted));
+                if (r.Events.OfType<CombatResolvedEvent>().Single().Winner != "attacker") continue;
+                Assert.Equal(1, Goals.Tokens(P(s, "p1"), "base-character-05#sides[0].abilities[1]")); // owner decision: claimed = completed
+                return;
+            }
+            Assert.Fail("No seed won the Wanted combat.");
         }
     }
 }

@@ -67,7 +67,8 @@ namespace OuterRim.Core.Engine
     /// Attempting a job (R-15.29 to R-15.39) as the turn's encounter: its "Encounter" effects run; "complete
     /// this job" gives the reward and the card is removed or discarded (R-15.37); otherwise, or if the player
     /// is defeated during it (R-15.39), the job fails and the card is kept (R-15.38). "Claim this reward" (Wanted,
-    /// sabacc) gives the reward without counting as completing the job (R-18.7). Vars: "player", "target" (job).
+    /// sabacc) also completes the job: gaining a job's reward is completing it (R-18.7, owner decision). Vars:
+    /// "player", "target" (job).
     /// </summary>
     internal sealed class JobAttemptHandler : IResolutionHandler
     {
@@ -97,7 +98,16 @@ namespace OuterRim.Core.Engine
                         frame.Step = 9;
                         var lost = Assets.Find(player, job);
                         if (lost != null) Assets.Discard(ctx.Content, state, player, lost, "sabacc_lost", ctx.Events);
-                        return StepResult.Continue();
+                        // The winner gained the job's reward, so they completed it (R-18.7, owner decision).
+                        var winnerId = frame.Get("given_away");
+                        ctx.Events.Add(new JobCompletedEvent(winnerId, job, true));
+                        int credits = 0;
+                        foreach (JObject e in (JArray)card["reward"]!)
+                        {
+                            if ((string?)e["op"] == "credits.gain" && e["amount"]!.Type == JTokenType.Integer) credits += (int)e["amount"]!;
+                        }
+                        return StepResult.Call(TriggersHandler.For("job_completed", winnerId,
+                            new Dictionary<string, string> { ["reward_credits"] = credits.ToString(CultureInfo.InvariantCulture) }));
                     }
                     bool done = frame.Vars.ContainsKey("completed") || frame.Vars.ContainsKey("claimed");
                     bool defeatedFails = player.Defeated && !frame.Vars.ContainsKey("keep_on_defeat"); // R-15.39, R-25.10
@@ -133,9 +143,8 @@ namespace OuterRim.Core.Engine
                             Assets.Discard(ctx.Content, state, player, asset, "job_completed", ctx.Events);
                         }
                     }
-                    ctx.Events.Add(new JobCompletedEvent(player.Id, job, frame.Vars.ContainsKey("completed")));
-                    if (!frame.Vars.ContainsKey("completed")) return StepResult.Continue();
-                    // R-18.7: only "complete this job" counts for goals; Sy Snootles may trade the credits for fame.
+                    ctx.Events.Add(new JobCompletedEvent(player.Id, job, true));
+                    // R-18.7 (owner decision): every job whose reward was gained counts, for goals and Sy Snootles.
                     return StepResult.Call(TriggersHandler.For("job_completed", player.Id,
                         new Dictionary<string, string> { ["reward_credits"] = gained.ToString(CultureInfo.InvariantCulture) }));
                 }
@@ -404,7 +413,7 @@ namespace OuterRim.Core.Engine
                     }
                     var jobId = FrameContext.Of(frame).TryGetValue("job", out var j) ? j : "";
                     if (jobId.Length == 0) return StepResult.Done();
-                    job?.Set("given_away", "1");
+                    job?.Set("given_away", winner.Id);
                     return StepResult.Call(EffectHandlers.ListFrame(winner.Id, jobId, "reward"));
                 }
                 default:
