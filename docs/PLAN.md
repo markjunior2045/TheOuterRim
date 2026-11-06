@@ -350,7 +350,7 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 - **Done when:** every card kind of the base pack has been seen in a game, and card ids in the decisions show the card instead of its name.
 
 ### T3.9 — Game setup, seats, save and load · `TODO` (T3.7)
-- **Does:** a new-game screen (1 to 4 seats, each human or random bot, character, starter ship side, optional seed, fame requirement); hot-seat play on one screen: when the acting player changes and private information would show, a hand-off screen asks for the next player; bot seats act with a short delay; save and load from a menu (core save format, pack check, `DECISIONS.md` §6); the victory screen with the tiebreak (R-18.16).
+- **Does:** a new-game screen (1 to 4 seats, each human or random bot, character, starter ship side, optional seed, fame requirement); hot-seat play on one screen: when the acting player changes and private information would show, a hand-off screen asks for the next player; bot seats act with a short delay, except that a bot answers a credit request at once; the 15-second credit request clock keeps running behind the hand-off screen (`DECISIONS.md` §4.2); save and load from a menu (core save format, pack check, `DECISIONS.md` §6); the victory screen with the tiebreak (R-18.16).
 - **Done when:** a game saved in the middle of a decision loads and goes on identically; a 2-human, 1-bot game runs start to finish.
 
 ### T3.10 — Interface autoplay and V1 · `TODO` (T3.8, T3.9)
@@ -379,6 +379,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | Owner confirmed the rest of `REVIEW.md` item 9 (the credit request clock runs behind the hand-off screen; a bot seat answers at once): moved to `DECISIONS.md` §4.2 and T3.9. |
 | 2026-11-06 | T3.2d done: open credit requests are not saved (owner decision); save format 0.17. |
 | 2026-11-06 | T3.2c done: owner answers on credit requests (15-second timeout refuses automatically; other readings confirmed); the interface's part goes to T3.7; new reading `REVIEW.md` item 9. |
 | 2026-11-06 | T3.2b done: owner answers on trading applied (credit requests with accept or refuse, a refused or failed offer keeps the trade action, traded cards gained); new readings in `REVIEW.md` items 4 to 8. |
