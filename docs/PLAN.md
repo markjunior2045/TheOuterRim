@@ -312,6 +312,10 @@ The core already plays the whole base game, so V1 is no longer "one card of each
   - V0 (seeds 1 to 1,000, Release, 355 s): every game sound; 999 ended with a winner (average 336 rounds), 1 reached the 1,000-round limit.
   - New reading for the owner: `REVIEW.md` item 9 (the clock on load and during a hand-off).
 
+### T3.2d — Open credit requests are not saved (core) · `DONE` (2026-11-06)
+- **Why:** owner answer to part of `REVIEW.md` item 9: leaving or saving the game while a request is open does not save the request.
+- **Does / delivered:** `GameState.CreditRequests` is left out of the save (`NextCreditRequestId` stays, so ids never repeat across loads); save format 0.17, golden save regenerated; the save test now checks that a loaded game has no open request and that nothing moved. The cross-runtime hash was updated (the save no longer holds the field). 379 xUnit + 2 NUnit tests; V0 (seeds 1 to 1,000, Release): every game sound, the same games as T3.2c (999 won, 1 at the round limit).
+
 ### T3.3 — Interface text (plain C#) · `TODO` (T3.1)
 - **Why:** the core raises about 120 decision prompts, all localization keys with no text yet, and its events have no readable form (the V0 log prints field names).
 - **Does:**
@@ -375,6 +379,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | T3.2d done: open credit requests are not saved (owner decision); save format 0.17. |
 | 2026-11-06 | T3.2c done: owner answers on credit requests (15-second timeout refuses automatically; other readings confirmed); the interface's part goes to T3.7; new reading `REVIEW.md` item 9. |
 | 2026-11-06 | T3.2b done: owner answers on trading applied (credit requests with accept or refuse, a refused or failed offer keeps the trade action, traded cards gained); new readings in `REVIEW.md` items 4 to 8. |
 | 2026-11-06 | T3.2 done: trade action and credit gifts in the core, bot trades, credit accounting invariant; readings in `REVIEW.md`. Next without the owner: T3.3; the owner holds T3.0 (UI) in the Project chat. |

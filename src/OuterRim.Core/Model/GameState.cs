@@ -94,10 +94,12 @@ namespace OuterRim.Core.Model
         /// <summary>
         /// Open credit requests (R-9.6, R-16.15), oldest first. They sit beside the resolution stack, not on it:
         /// an unanswered request holds nothing up, and every request is withdrawn when the turn ends.
+        /// Not saved (owner decision, DECISIONS §4.2): a game saved or left with a request open loads without it.
         /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
         public List<CreditRequest> CreditRequests { get; set; } = new List<CreditRequest>();
 
-        /// <summary>Id for the next credit request; ids never repeat within a game.</summary>
+        /// <summary>Id for the next credit request; saved, so ids never repeat within a game, across loads too.</summary>
         public int NextCreditRequestId { get; set; } = 1;
 
         public PlayerState? FindPlayer(string id)

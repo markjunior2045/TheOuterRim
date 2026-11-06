@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.16",
+  "format": "outer-rim-save/0.17",
   "packs": [
     {
       "id": "base",
@@ -652,7 +652,6 @@
       "resultVar": "winner"
     },
     "nextDecisionId": 2,
-    "creditRequests": [],
     "nextCreditRequestId": 1
   }
 }

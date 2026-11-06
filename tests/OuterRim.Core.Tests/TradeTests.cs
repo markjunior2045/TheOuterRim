@@ -381,14 +381,17 @@ namespace OuterRim.Core.Tests
         }
 
         [Fact]
-        public void R16_15_AnOpenRequest_IsSaved()
+        public void R16_15_AnOpenRequest_IsNotSaved_AndIdsDoNotRepeatAfterALoad()
         {
             var s = Game();
             Request(s, "p1", "p2", CreditRequestKind.Send, 1000);
+            int id = s.CreditRequests.Single().Id;
             var copy = Persistence.SaveSerializer.Load(Persistence.SaveSerializer.Save(s));
-            Assert.Equal(CreditRequestKind.Send, copy.CreditRequests.Single().Kind);
-            Assert.True(GameEngine.Execute(C, copy, new AnswerCreditRequestCommand("p2", copy.CreditRequests[0].Id, true)).Accepted);
-            Assert.Equal(11000, copy.FindPlayer("p2")!.Credits);
+            Assert.Empty(copy.CreditRequests); // the request is gone, nothing moved
+            Assert.False(GameEngine.Execute(C, copy, new AnswerCreditRequestCommand("p2", id, true)).Accepted);
+            Assert.Equal(10000, copy.FindPlayer("p2")!.Credits);
+            Assert.True(GameEngine.Execute(C, copy, new RequestCreditsCommand("p1", "p2", CreditRequestKind.Send, 1000)).Accepted);
+            Assert.True(copy.CreditRequests.Single().Id > id);
         }
 
         [Fact]
