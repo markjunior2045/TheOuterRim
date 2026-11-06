@@ -1,0 +1,11 @@
+{
+  "name": "com.outerrim.core.sharedtests",
+  "version": "0.1.0",
+  "displayName": "Outer Rim Core shared tests",
+  "description": "NUnit tests of the rules core that run both under dotnet test (tests/OuterRim.Core.NUnitTests) and under Unity's Test Runner.",
+  "unity": "6000.0",
+  "dependencies": {
+    "com.outerrim.core": "0.1.0",
+    "com.unity.test-framework": "1.8.0"
+  }
+}

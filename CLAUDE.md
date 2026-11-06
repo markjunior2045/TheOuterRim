@@ -21,7 +21,7 @@ Repository root: `C:\TheOuterRimProject\TheOuterRim` (this folder).
 | `tests/OuterRim.Core.Tests/` | xUnit project that compiles the core source files directly. |
 | `data/` | Game data (JSON). |
 | `tools/` | Scripts, and the V0 terminal runner (`tools/OuterRim.Terminal/`, compiles the core sources like the tests). |
-| `unity/` | Unity project (created in T0.4). |
+| `unity/` | Unity project (Unity 6.6, URP). Client scripts in `unity/Assets/Scripts/`, scenes built from code. |
 | `artifacts/` | .NET build output. Git-ignored. |
 
 Read `docs/DECISIONS.md` and `docs/PLAN.md` before starting a task.
@@ -46,7 +46,11 @@ Run from the repository root.
   `dotnet run --project tools/OuterRim.Terminal -c Release -- --games 1000 --seed 1`
   One game with its full command and event log: `dotnet run --project tools/OuterRim.Terminal -- --seed 42`
   (`--help` lists the options: players, round limit, parallel jobs, rejected-command check.)
-- Unity and Unity CLI commands: to be added in T0.4.
+- Unity (editor 6000.6.8f1, project in `unity/`). The Unity Hub must be running and signed in, or the Editor cannot download packages.
+  - Unity tests with a pass/fail exit code (uses the open Editor if one has the project, otherwise batch mode): `python tools/unity_tests.py [--mode editmode|playmode|all] [--batch]`
+  - Start an Editor without a window, for the commands below (in the background; stop it with `unity command editor quit`):
+    `"C:\Program Files\Unity\Hub\Editor\6000.6.8f1\Editor\Unity.exe" -batchmode -projectPath unity -logFile <file>`
+  - With an Editor open on the project (run from `unity/`): `unity command script recompile`, then `unity command script recompile_status --result-only` (compiler errors with file and line); `unity command console get`; `unity command scene get_hierarchy --result-only`; `unity command editor invoke_menu --path "Outer Rim/Build Boot Scene"` (scenes are built from code by `Assets/Scripts/Editor/SceneBuilder.cs`); `unity command test run --mode all`. `unity command` with no argument lists every command.
 - Install the Python tool dependencies: `pip install -r tools/requirements.txt`
 - Prepare reading copies of card images for a transcription batch (written to the git-ignored `artifacts/transcription-work/`; the source folder is never modified):
   `python tools/prepare_transcription_images.py --sorted C:\TheOuterRimProject\RawGameFiles\sorted --deck base/market/gear [--only 0-4]`
@@ -61,6 +65,8 @@ Run from the repository root.
 - `src/OuterRim.Core/` must never reference `UnityEngine`. Its `.asmdef` has `noEngineReferences: true`.
 - Unity consumes the core as a local package (`file:../../src/OuterRim.Core` in `unity/Packages/manifest.json`). Do not copy core files into `unity/`.
 - The tests compile the same files by glob; do not add a `.csproj` inside `src/`.
+- Tests that must also pass under Unity are NUnit 3 and live in `tests/OuterRim.Core.SharedTests/` (a local Unity package, listed in `testables`); `tests/OuterRim.Core.NUnitTests/` runs them under `dotnet test`. The rest of the core tests are xUnit.
+- Unity's client code lives in `unity/Assets/Scripts/` (`OuterRim.Client` assembly). It reads the state and sends commands through `GameSession`; it never changes the state itself.
 - Build output goes to `artifacts/`. Nothing under `src/` or `unity/` may contain `bin/` or `obj/`.
 - Core code must compile under Unity: C# 9 and .NET Standard 2.1 APIs only. Implicit usings are off, so every core file declares its own `using`s.
 - The core receives commands, returns events, uses seeded randomness and has serializable state.

@@ -1,0 +1,16 @@
+{
+    "name": "OuterRim.Client",
+    "rootNamespace": "OuterRim.Client",
+    "references": [
+        "OuterRim.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

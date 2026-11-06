@@ -253,11 +253,11 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 4. Build the screen one layer at a time, so a full game is playable from T3.7 on, first with text, then with cards (T3.6 to T3.9).
 5. Check the client the way V0 checked the core: bots play every seat through the real interface (T3.10).
 
-### T0.4 — Unity project, CLI wiring, session shell · `TODO` (T0.2)
+### T0.4 — Unity project, CLI wiring, session shell · `REVIEW` (2026-11-06; waiting on the owner's review of `docs/UI.md`)
 - **Does:**
   - Create the Unity 6.6 project in `unity/` (URP). Consume the core as a local package (one copy of the source). Install the Unity CLI and `com.unity.pipeline`. Document the commands in `CLAUDE.md`.
   - Add a session shell: one component owns the `GameState` and `GameContent`, sends commands through a command channel interface (local now, network later, `DECISIONS.md` §7) and hands the events to the views. Load the base pack from `data/` with `PackLoader`.
-  - Choose the UI technology (moved here from T3.3, so every later task builds on it). Suggested: UI Toolkit for everything on screen (panels, dialogs, cards, menus); sprites in world space for the board (map, standees, patrols, tokens), with an orthographic camera. A throwaway test scene checks the choice: one map tile, one card scan with zoom, one decision dialog.
+  - Choose the UI technology (moved here from T3.3, so every later task builds on it). Suggested: UI Toolkit for everything on screen (panels, dialogs, cards, menus); sprites in world space for the board (map, standees, patrols, tokens), with an orthographic camera.
   - Screen layout, in `docs/UI.md`: a wireframe of the game screen (board, player panels, market, decision dialog, log, card zoom), the hot-seat hand-off screen and the new-game screen, at 1920×1080 with a minimum of 1366×768. Reviewed by the owner before T3.6. Visual style is not decided here: the prototype shows the scans as they are, and the look comes with the templates after V1 (`DECISIONS.md` §3). Each later task fills its part of the layout and may adjust it.
 - **Done when:**
   - a scene starts a seeded game through the shell and shows the current player and step as text;
@@ -265,6 +265,14 @@ The core already plays the whole base game, so V1 is no longer "one card of each
   - the same test file passes under `dotnet test` and under Unity's EditMode runner;
   - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode and PlayMode tests and get a pass/fail exit code, and query the scene.
 - **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue. This task comes first because the CLI is beta: if it cannot do this, the way of working changes.
+- **Delivered:**
+  - Unity 6000.6.8f1 installed with the CLI; project `unity/` from the Universal 3D (URP) template, trimmed of packages we do not use (analytics, purchasing, Plastic, navigation, timeline, XR). The core, the shared tests and `com.unity.pipeline` 0.10.0-exp.1 are in the manifest.
+  - `OuterRim.Client`: `GameSession` (state, content, local `ICommandChannel`), `ContentLocator` (base pack from the repository's `data/`), `BootView` (UI Toolkit label: round, acting player, step). `SceneBuilder` builds the Boot scene and the panel settings (1920×1080 reference) from code.
+  - Shared tests: `tests/OuterRim.Core.SharedTests` (NUnit 3, a local package Unity tests) also run under `dotnet test` through `tests/OuterRim.Core.NUnitTests`. One plays a seeded 30-round V0 game and checks the save's SHA-256: .NET and Unity's Mono reach the same state (`DECISIONS.md` §7).
+  - Unity tests: 4 EditMode (2 shared, 2 session), 1 PlayMode (the Boot scene shows round 1, the acting player and the planning step). `tools/unity_tests.py` runs them through the open Editor or in batch mode and exits 0 or 1; checked with a deliberately failing test. A deliberate compile error came back from `script recompile_status` with file and line; the scene was read with `scene get_hierarchy`.
+  - CLI findings, in `CLAUDE.md`: the Hub must be running and signed in for package downloads (the CLI's own sign-in is not enough); an Editor started in batch mode without `-quit` serves the Pipeline commands without a window.
+  - `docs/UI.md`: screen layout draft with three open points for the owner.
+  - Not done: a throwaway visual check of the UI technology needs the images, which come in T3.5; T3.6 to T3.8 confirm the choice as they build on it, and changing it then is still acceptable.
 
 ### T3.2 — Trade action and credit trades (core) · `TODO`
 - **Why:** the only base game rule not built (`RULES.md` §16.2, R-9.6, R-9.7, R-14.11, R-15.91). Without it there is no table talk to support in a game between friends.

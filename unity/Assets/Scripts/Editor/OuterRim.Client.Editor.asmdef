@@ -1,0 +1,18 @@
+{
+    "name": "OuterRim.Client.Editor",
+    "rootNamespace": "OuterRim.Client.Editor",
+    "references": [
+        "OuterRim.Client"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
