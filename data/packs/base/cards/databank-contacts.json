@@ -60,7 +60,7 @@
               "then": [
                 {
                   "op": "player.choose",
-                  "who": "any",
+                  "who": "other",
                   "effects": [
                     {
                       "op": "choice",

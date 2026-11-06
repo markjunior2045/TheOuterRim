@@ -730,7 +730,7 @@
                       "faction": "chosen_token",
                       "player": {
                         "choose": {
-                          "who": "any"
+                          "who": "other"
                         }
                       }
                     }

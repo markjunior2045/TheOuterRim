@@ -53,8 +53,8 @@ namespace OuterRim.Core.Engine
                         }
                     }
                     if (source != "top") ctx.Events.Add(new MarketCardsRevealedEvent(owner.Id, deck.Deck, seen));
-                    bool mandatory = source == "top" && (bool?)node["free"] == true; // "you buy the top card ... for free"
-                    if (!mandatory || options.Count == 0) options.Add(new DecisionOption(None, "effects.buy_none"));
+                    // R-25.18: buying through an effect is always optional, even "you buy the top card ... for free".
+                    options.Add(new DecisionOption(None, "effects.buy_none"));
                     if (options.Count == 1)
                     {
                         frame.Set("pick", options[0].Id);

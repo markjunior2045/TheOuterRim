@@ -1093,6 +1093,12 @@ Points the Living Rules handles case by case. The implementation of the correspo
 - **R-25.15 Bossk:** his personal goal needs at least 1 mod and at least 2 gear, and the combined cost of **all** his mods and gear must be at least 15,000. Two mods and one gear never qualify, whatever their cost; two mods and two gear may (owner clarification).
 - **R-25.16 GX1 Short Hauler:** the ship goal is met by gaining a crew while already holding 2 crew; the player keeps all 3 crew, as the sheet says (owner clarification).
 - **R-25.17 YV-666 Light Freighter:** recovering ship damage follows the normal rules; each time the player recovers at least 1 damage from this ship they **may** spend 7,000 to gain 1 fame and flip the sheet (owner clarification).
+- **R-25.18 Buying through an effect:** it is always optional. "You buy the top card of the {DECK_CARGO} market deck for free" (Lothal-6) means the player **may** buy it (owner clarification).
+- **R-25.19 "Choose a player":** it means **another** player. In a two-player game it is always the other player; when only one player qualifies, they are chosen without a prompt. The players hunted by Navpoint-6 and Navpoint-5 (secret) are other players with `{REP_NEG}` reputation with that patrol (owner clarification).
+- **R-25.20 Sabacc (#40):** whoever wins under the card gains the reward, as each #40 card states. With the Low Stakes Game of Sabacc job (Nal Hutta-1), the reward's "Then discard this card" discards the job whoever wins; the Legendary Game of Sabacc-7 is discarded only when the active player claims it, as printed (owner clarification).
+- **R-25.21 Black Sun Agent (crew, #5):** while held, every job its player completes that has a reward gives 2,000 credits more (owner clarification).
+- **R-25.22 Doctor Evazan (crew, #9):** at the start of a ground combat its player chooses {HIT}, {CRIT} or {FOCUS}; during that combat each **player** in it may turn up to 2 of their blank dice to that result. Enemies the game rolls for do not (owner clarification).
+- **R-25.23 Effect movement and contact slots:** "move up to N spaces" outside the planning step follows the patrol and Maelstrom rules (R-5.12, R-5.20). A token placed on a planet takes any empty slot, ignoring class, and Dengar's token may go to any empty contact space (owner clarifications). In Cantonica-2, several players may choose the same result.
 
 ---
 
@@ -1165,6 +1171,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 | 2026-11-05 | Note after R-7.20: the game rolls for patrols, contacts and card enemies (digital adaptation, owner decision). |
 | 2026-11-05 | §26.1: decision commands as built in T1.2 (`ChooseOption`, `ResolveTie`, `ChooseOrder`, keyed by decision id). |
 | 2026-11-05 | R-25.15 to R-25.17: Bossk, GX1 Short Hauler and YV-666 goals (owner clarifications from T2.4). |
+| 2026-11-05 | R-25.18 to R-25.23: owner answers to the T2.6 review (effect purchases optional, "choose a player", sabacc rewards, Black Sun Agent, Doctor Evazan, effect movement and contact slots). |
 | 2026-11-05 | §27 status: patrol tokens and player boards transcribed; player board slots recorded; map geometry read into `data/map/`. |
 | 2026-11-04 | R-9.8 spending versus losing credits and R-25.14 Jyn Erso's planet markers (owner clarifications from the T2.1 effect inventory). |
 | 2026-11-04 | Review after the base game transcription: R-12.3 pip counts per class; R-14.19 trait examples; R-24 implementation note aligned with the transcription format (printed text kept, errata applied at mapping); ship sheet count explained in §2.1; §27 gains the player board and a status line. Earlier the same day: R-15.32 reworded (italic job skills are certainly tested; owner clarification) and R-15.92 added ("Wanted" jobs hunt players). |

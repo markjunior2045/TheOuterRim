@@ -99,7 +99,9 @@ namespace OuterRim.Core.Tests
             int credits = P(s, "p1").Credits;
             MarketTop(s, "cargo", "base-market-cargo-04");
             Encounter(s, "base-encounter-lothal-mon-calamari-06"); // Lothal, Imperial positive
-            TestHelpers.DeclineAll(C, s, Answer(s, "no")); // do not deliver
+            Answer(s, "no"); // do not deliver
+            Assert.Equal(new[] { "base-market-cargo-04", "none" }, s.Pending!.Options.Select(o => o.Id)); // R-25.18: optional
+            TestHelpers.DeclineAll(C, s, Answer(s, "base-market-cargo-04"));
             Assert.Contains(P(s, "p1").Assets, a => a.CardId == "base-market-cargo-04");
             Assert.Equal(credits, P(s, "p1").Credits);
         }

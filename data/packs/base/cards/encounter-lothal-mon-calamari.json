@@ -921,7 +921,7 @@
               "effects": [
                 {
                   "op": "player.choose",
-                  "who": "any",
+                  "who": "other",
                   "effects": [
                     {
                       "op": "rep.gain",

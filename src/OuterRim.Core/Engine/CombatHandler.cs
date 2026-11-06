@@ -94,7 +94,7 @@ namespace OuterRim.Core.Engine
                     int fewer = Modifiers.OpponentFewer(content, state, attacker, frame.Get("type"));
                     int count = System.Math.Max(0, int.Parse(frame.Get("defender_value"), CultureInfo.InvariantCulture) - fewer);
                     var faces = new List<DieFace>(DiceRoller.Roll(state.Random, count));
-                    Combat.Evazan(frame, faces);
+                    if (defenderPlayer != null) Combat.Evazan(frame, faces); // R-25.22: players only, not the enemy the game rolls for
                     frame.Set("defender_faces", DicePool.Encode(faces));
                     frame.Step = 4;
                     // The defender (if a player) first, then the attacker (R-7.12).

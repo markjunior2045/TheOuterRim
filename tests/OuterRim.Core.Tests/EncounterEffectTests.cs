@@ -44,12 +44,11 @@ namespace OuterRim.Core.Tests
         }
 
         [Fact]
-        public void ChooseAPlayer_ThatPlayerGainsReputation_AndSuffersDamage()
+        public void R25_19_ChooseAPlayer_IsAnotherPlayer_WhoGainsReputation_AndSuffersDamage()
         {
             var s = Game("lothal");
             Encounter(s, "base-encounter-lothal-mon-calamari-07"); // Lothal: choose a player
-            Assert.Equal("effects.choose_player", s.Pending!.Prompt);
-            Answer(s, "p2");
+            Assert.Null(s.Pending); // R-25.19: another player; with two players, the other one without a prompt
             Assert.Equal(Reputation.Positive, P(s, "p2").Reputation.Rebel);
             Assert.Equal(2, P(s, "p2").CharacterDamage);
             Assert.Equal(0, P(s, "p1").CharacterDamage);

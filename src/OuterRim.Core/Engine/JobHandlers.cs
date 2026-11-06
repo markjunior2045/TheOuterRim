@@ -91,6 +91,14 @@ namespace OuterRim.Core.Engine
                 }
                 case 1:
                 {
+                    if (frame.Vars.ContainsKey("given_away"))
+                    {
+                        // The opponent won the reward: the job is discarded (R-25.20).
+                        frame.Step = 9;
+                        var lost = Assets.Find(player, job);
+                        if (lost != null) Assets.Discard(ctx.Content, state, player, lost, "sabacc_lost", ctx.Events);
+                        return StepResult.Continue();
+                    }
                     bool done = frame.Vars.ContainsKey("completed") || frame.Vars.ContainsKey("claimed");
                     bool defeatedFails = player.Defeated && !frame.Vars.ContainsKey("keep_on_defeat"); // R-15.39, R-25.10
                     if (!done || defeatedFails || frame.Vars.ContainsKey("discarded"))
@@ -387,8 +395,8 @@ namespace OuterRim.Core.Engine
                         return StepResult.Await(ctx.Ask(DecisionKind.ChooseOption, winner.Id, "custom.sabacc_reward",
                             new[] { new DecisionOption("credits", "custom.take_6000"), new DecisionOption("sheets", "custom.trade_sheets") }, "reward"));
                     }
-                    // A job's own reward (Low Stakes Game of Sabacc): the job is claimed if you win (R-15.37);
-                    // if your opponent wins, they gain the reward and you keep the job.
+                    // A job's own reward (Low Stakes Game of Sabacc, R-25.20): the winner gains it, and the reward's
+                    // "Then discard this card" discards the job whoever won.
                     if (winner.Id == owner.Id)
                     {
                         job?.Set("claimed", "1");
@@ -396,6 +404,7 @@ namespace OuterRim.Core.Engine
                     }
                     var jobId = FrameContext.Of(frame).TryGetValue("job", out var j) ? j : "";
                     if (jobId.Length == 0) return StepResult.Done();
+                    job?.Set("given_away", "1");
                     return StepResult.Call(EffectHandlers.ListFrame(winner.Id, jobId, "reward"));
                 }
                 default:

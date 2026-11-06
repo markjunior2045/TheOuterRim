@@ -153,7 +153,7 @@ namespace OuterRim.Core.Tests
                 var loser = P(s, won.LoserId);
                 Assert.Equal(1000 + 10000, winner.Credits);
                 Assert.Equal(1000, loser.Credits);
-                Assert.Equal(won.WinnerId == "p1", !P(s, "p1").Assets.Any(a => a.CardId == LowStakes));
+                Assert.DoesNotContain(P(s, "p1").Assets, a => a.CardId == LowStakes); // R-25.20: discarded whoever wins
                 return;
             }
             Assert.Fail("No game of sabacc had a winner.");

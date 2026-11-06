@@ -50,8 +50,8 @@ namespace OuterRim.Core.Rules
 
         /// <summary>R-7.11: each hit deals 1 damage, each crit 2; focus and blank deal nothing.</summary>
         /// <summary>
-        /// Doctor Evazan: "both players may turn up to 2 of their blank dice to the chosen result". Turning a blank
-        /// into a result is never worse, so up to 2 blanks of each roll are turned.
+        /// Doctor Evazan (R-25.22): "both players may turn up to 2 of their blank dice to the chosen result". Turning a
+        /// blank into a result is never worse, so up to 2 blanks of each player's roll are turned.
         /// </summary>
         public static void Evazan(Engine.Frame combat, List<DieFace> faces)
         {

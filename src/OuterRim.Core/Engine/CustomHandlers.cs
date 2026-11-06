@@ -338,7 +338,7 @@ namespace OuterRim.Core.Engine
                     var options = new List<string>();
                     foreach (var player in state.Players)
                     {
-                        if (player.Reputation.Get(faction) != Reputation.Negative) continue;
+                        if (player.Id == owner.Id || player.Reputation.Get(faction) != Reputation.Negative) continue; // R-25.19
                         if (here && player.SpaceId != owner.SpaceId) continue;
                         options.Add(player.Id);
                     }
