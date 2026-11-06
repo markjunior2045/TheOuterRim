@@ -294,7 +294,7 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 - **Done when:** every card, sheet, token, standee and map piece the base pack uses has an image (test), the set stays under a budget fixed in the task (about 100 MB), and a card scan stays legible at the size the card zoom shows it.
 
 ### T3.6 — Board · `TODO` (T0.4, T3.5)
-- **Does:** the map from the layout and the piece art; standees, patrols with their level, patrol stacks and contact tokens placed by `pos` (`MAP_FORMAT.md`); pan and zoom. The ship moves space by space along its path; patrols move the same way (the two known animations, `DECISIONS.md` §4, plus patrols). The view follows the events; on load it rebuilds from the state.
+- **Does:** the map from the layout and the piece art. The pieces are segments of an arc and `MAP_FORMAT.md` has no placement for them yet: add each piece's position and rotation per layout (read from the saved object transforms of [Mod 01] in `RawGameFiles`, or measured), with a validator check that joined ports meet; standees, patrols with their level, patrol stacks and contact tokens placed by `pos` (`MAP_FORMAT.md`); pan and zoom. The ship moves space by space along its path; patrols move the same way (the two known animations, `DECISIONS.md` §4, plus patrols). The view follows the events; on load it rebuilds from the state.
 - **Done when:** a PlayMode test plays a seeded game's first rounds and the pieces stand where the state says after each event.
 
 ### T3.7 — Turn flow, player panels and decisions · `TODO` (T3.3, T3.4, T3.6)
