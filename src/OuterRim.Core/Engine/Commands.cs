@@ -172,6 +172,21 @@ namespace OuterRim.Core.Engine
         public bool Accept { get; }
     }
 
+    /// <summary>
+    /// The interface reports that a credit request went unanswered for <see cref="Trades.RequestTimeoutSeconds"/>
+    /// seconds: it is refused automatically (owner decision, DECISIONS §4.2). Sent for either of the two players;
+    /// the core keeps no clock, so the interface times the request.
+    /// </summary>
+    public sealed class TimeOutCreditRequestCommand : Command
+    {
+        public TimeOutCreditRequestCommand(string playerId, int requestId) : base(playerId)
+        {
+            RequestId = requestId;
+        }
+
+        public int RequestId { get; }
+    }
+
     /// <summary>The player who made a credit request withdraws it before it is answered.</summary>
     public sealed class CancelCreditRequestCommand : Command
     {

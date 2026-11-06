@@ -365,6 +365,8 @@ namespace OuterRim.Core.Engine
                     return Trades.Answer(state, player, answerRequest);
                 case CancelCreditRequestCommand cancel:
                     return Trades.Cancel(state, player, cancel);
+                case TimeOutCreditRequestCommand timeOut:
+                    return Trades.TimeOut(state, player, timeOut);
             }
             if (state.Pending != null)
             {

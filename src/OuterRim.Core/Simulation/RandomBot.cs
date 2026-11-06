@@ -48,11 +48,13 @@ namespace OuterRim.Core.Simulation
             var player = state.FindPlayer(actor)!;
             if (state.CreditRequests.Count > 0)
             {
-                // R-9.6: the player asked accepts or refuses; now and then the requester withdraws it first.
+                // R-9.6: the player asked accepts or refuses; now and then the requester withdraws it first, or the
+                // 15 seconds run out (the interface's clock, played here as a command).
                 var open = state.CreditRequests[0];
                 list.Add(new AnswerCreditRequestCommand(open.ToId, open.Id, true));
                 list.Add(new AnswerCreditRequestCommand(open.ToId, open.Id, false));
                 if (_rng.NextInt(4) == 0) list.Add(new CancelCreditRequestCommand(open.FromId, open.Id));
+                if (_rng.NextInt(4) == 0) list.Add(new TimeOutCreditRequestCommand(open.ToId, open.Id));
                 _rng.Shuffle(list);
                 return list;
             }

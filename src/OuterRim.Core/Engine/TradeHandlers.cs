@@ -18,14 +18,21 @@ namespace OuterRim.Core.Engine
     {
         public const string Handler = "rules.trade";
 
+        /// <summary>
+        /// Owner decision (DECISIONS §4.2): a credit request unanswered for this many seconds disappears and is
+        /// refused automatically. The interface times it and sends <see cref="TimeOutCreditRequestCommand"/>.
+        /// </summary>
+        public const int RequestTimeoutSeconds = 15;
+
         /// <summary>R-4.9: the trade action, once per action step; marked used only by a trade carried out.</summary>
         public const string ActionKey = "action:trade";
 
         /// <summary>
         /// R-9.6, R-16.15: a credit request between the current player and another player, at any point of the
         /// turn, even in the middle of an ability, an encounter or a combat (R-16.16). Not an action; no shared
-        /// space. Reading in REVIEW.md: it holds nothing up, at most one is open between two players, and the payer
-        /// must have the amount when it is made.
+        /// space. Owner decisions (DECISIONS §4.2): it holds nothing up, at most one is open between the same two
+        /// players, and the payer must have the amount when it is made (so "Ask Credits" asks at most what the other
+        /// player has).
         /// </summary>
         internal static CommandResult Request(GameState state, PlayerState player, RequestCreditsCommand command)
         {
@@ -106,7 +113,26 @@ namespace OuterRim.Core.Engine
             return CommandResult.Ok(events);
         }
 
-        /// <summary>The requester withdraws an unanswered request (reading in REVIEW.md).</summary>
+        /// <summary>
+        /// No answer in <see cref="RequestTimeoutSeconds"/> seconds: the request is refused automatically. Either of
+        /// the two players' seats may report it (the interface keeps the clock).
+        /// </summary>
+        internal static CommandResult TimeOut(GameState state, PlayerState player, TimeOutCreditRequestCommand command)
+        {
+            var request = state.CreditRequests.Find(r => r.Id == command.RequestId);
+            if (request == null)
+            {
+                return CommandResult.Rejected("No open credit request " + command.RequestId + ".");
+            }
+            if (request.FromId != player.Id && request.ToId != player.Id)
+            {
+                return CommandResult.Rejected("Credit request " + request.Id + " is between " + request.FromId + " and " + request.ToId + ".");
+            }
+            state.CreditRequests.Remove(request);
+            return CommandResult.Ok(new GameEvent[] { new CreditRequestClosedEvent(request.Id, request.FromId, request.ToId, CreditRequestOutcome.TimedOut) });
+        }
+
+        /// <summary>The requester withdraws an unanswered request (owner decision, DECISIONS §4.2).</summary>
         internal static CommandResult Cancel(GameState state, PlayerState player, CancelCreditRequestCommand command)
         {
             var request = state.CreditRequests.Find(r => r.Id == command.RequestId);
@@ -124,7 +150,7 @@ namespace OuterRim.Core.Engine
 
         /// <summary>
         /// R-16.15: credits are exchanged during the current player's turn, so requests still open when it ends
-        /// expire (reading in REVIEW.md).
+        /// are cancelled automatically (owner decision, DECISIONS §4.2).
         /// </summary>
         internal static void ExpireRequests(GameState state, List<GameEvent> events)
         {

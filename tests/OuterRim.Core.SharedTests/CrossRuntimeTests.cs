@@ -21,7 +21,7 @@ namespace OuterRim.Core.SharedTests
         /// rules or the save format changes it on purpose: then update it from the dotnet run's failure message,
         /// and Unity must then agree.
         /// </summary>
-        private const string ExpectedSaveHash = "28f38b754d4cb73b76ebe6e6cbe40bdc0470a74f208a5366e64cced52ca26401";
+        private const string ExpectedSaveHash = "8534696c7f8320ac4da5c28b00d15d1015bdfc951d5db6f654db34af658a1ce0";
 
         private const ulong Seed = 2026;
         private const int Rounds = 30;

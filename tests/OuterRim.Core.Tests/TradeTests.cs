@@ -302,8 +302,31 @@ namespace OuterRim.Core.Tests
         {
             var s = Game();
             Assert.Contains("R-9.8", Request(s, "p1", "p2", CreditRequestKind.Send, 10001).Reason);
-            Assert.Contains("R-9.8", Request(s, "p1", "p2", CreditRequestKind.Ask, 10001).Reason);
             Assert.False(Request(s, "p1", "p2", CreditRequestKind.Ask, 0).Accepted);
+        }
+
+        [Fact]
+        public void R9_6_AskCredits_AsksAtMost_WhatTheOtherPlayerHas()
+        {
+            var s = Game();
+            P(s, "p2").Credits = 4000;
+            Assert.Contains("R-9.8", Request(s, "p1", "p2", CreditRequestKind.Ask, 5000).Reason);
+            Assert.True(Request(s, "p1", "p2", CreditRequestKind.Ask, 4000).Accepted);
+        }
+
+        [Fact]
+        public void R9_6_ARequestUnansweredFor15Seconds_IsRefusedAutomatically()
+        {
+            Assert.Equal(15, Trades.RequestTimeoutSeconds);
+            var s = Game();
+            Request(s, "p1", "p2", CreditRequestKind.Ask, 1000);
+            int id = s.CreditRequests.Single().Id;
+            Assert.False(GameEngine.Execute(C, s, new TimeOutCreditRequestCommand("p3", id)).Accepted); // not one of the two
+            var r = GameEngine.Execute(C, s, new TimeOutCreditRequestCommand("p1", id));
+            Assert.Contains(r.Events, e => e is CreditRequestClosedEvent c && c.Outcome == CreditRequestOutcome.TimedOut);
+            Assert.Empty(s.CreditRequests);
+            Assert.Equal(10000, P(s, "p2").Credits);
+            Assert.False(GameEngine.Execute(C, s, new AnswerCreditRequestCommand("p2", id, true)).Accepted); // too late
         }
 
         [Fact]
@@ -345,7 +368,7 @@ namespace OuterRim.Core.Tests
         }
 
         [Fact]
-        public void R16_15_OpenRequests_ExpireWhenTheTurnEnds()
+        public void R16_15_OpenRequests_AreCancelledAutomatically_WhenTheTurnEnds()
         {
             var s = Game();
             Request(s, "p1", "p2", CreditRequestKind.Ask, 1000);

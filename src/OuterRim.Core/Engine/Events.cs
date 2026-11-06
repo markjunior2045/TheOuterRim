@@ -93,7 +93,8 @@ namespace OuterRim.Core.Engine
     /// <summary>
     /// A credit request was closed. <see cref="Outcome"/>: accepted (a <see cref="CreditsGivenEvent"/> follows),
     /// refused, failed (accepted, but the payer no longer had the full amount, R-9.7), cancelled by the requester,
-    /// or expired at the end of the turn.
+    /// timed out (no answer in <see cref="Trades.RequestTimeoutSeconds"/> seconds: refused automatically), or
+    /// expired (cancelled automatically because the turn ended).
     /// </summary>
     public sealed class CreditRequestClosedEvent : GameEvent
     {
@@ -120,6 +121,7 @@ namespace OuterRim.Core.Engine
         Refused,
         Failed,
         Cancelled,
+        TimedOut,
         Expired,
     }
 

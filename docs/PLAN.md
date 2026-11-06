@@ -302,6 +302,16 @@ The core already plays the whole base game, so V1 is no longer "one card of each
   - V0 (seeds 1 to 1,000, Release): every game sound, credit accounting and the new request and trade checks included; 995 ended with a winner (average 337 rounds), 5 reached the 1,000-round limit (360 s).
   - Tests: `TradeTests` 26 (one per rule), `SimulationTests` +1 (the bot answers requests). The shared cross-runtime test's hash was updated for the new bot. 377 xUnit + 2 NUnit tests.
 
+### T3.2c — Credit request timeout (core) · `DONE` (2026-11-06)
+- **Why:** the owner answered `REVIEW.md` items 4 to 8: a request unanswered for 15 seconds is refused automatically; the other readings (non-blocking, one per pair, cancel, cancelled at the end of the turn, "Ask Credits" capped at the other player's credits) were confirmed.
+- **Does:** the timeout in the core, as a command the interface sends (the core has no clock); decisions moved to `RULES.md` and `DECISIONS.md` §4.2.
+- **Done when:** a test per decision; V0 of 1,000 games stays green.
+- **Delivered:**
+  - `Trades.RequestTimeoutSeconds = 15` and `TimeOutCreditRequestCommand` (sent for either of the two players), closing the request with the outcome `TimedOut` (refused automatically). The interface (T3.7) times the request; the bot plays the timeout now and then. No save format change.
+  - Tests: `TradeTests` +2 (timeout; "Ask Credits" capped at what the other player has). The shared cross-runtime test's hash was updated for the bot. 379 xUnit + 2 NUnit tests.
+  - V0 (seeds 1 to 1,000, Release, 355 s): every game sound; 999 ended with a winner (average 336 rounds), 1 reached the 1,000-round limit.
+  - New reading for the owner: `REVIEW.md` item 9 (the clock on load and during a hand-off).
+
 ### T3.3 — Interface text (plain C#) · `TODO` (T3.1)
 - **Why:** the core raises about 120 decision prompts, all localization keys with no text yet, and its events have no readable form (the V0 log prints field names).
 - **Does:**
@@ -328,7 +338,7 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 - **Done when:** a PlayMode test plays a seeded game's first rounds and the pieces stand where the state says after each event.
 
 ### T3.7 — Turn flow, player panels and decisions · `TODO` (T3.3, T3.4, T3.6)
-- **Does:** a panel per player (credits, fame and requirement, reputation, damage against health and hull, assets in their slots, goals with their tokens, defeated); the step controls (planning options, end the action step, the encounter choices); moving by clicking a reachable space; one generic decision dialog for the three decision kinds, with the text from T3.3; the game log; dice shown with a short roll animation toward the result the core already decided (`DECISIONS.md` §7).
+- **Does:** a panel per player (credits, fame and requirement, reputation, damage against health and hull, assets in their slots, goals with their tokens, defeated); the step controls (planning options, end the action step, the encounter choices); moving by clicking a reachable space; one generic decision dialog for the three decision kinds, with the text from T3.3; credit requests ("Ask Credits" / "Send Credits" to a chosen player, the notification to accept or refuse with a 15-second countdown that sends `TimeOutCreditRequestCommand`, cancel; `DECISIONS.md` §4.2) and trade offers; the game log; dice shown with a short roll animation toward the result the core already decided (`DECISIONS.md` §7).
 - **Done when:** the owner plays a whole game against a bot in Unity, with cards still shown by name. **First milestone: the game is playable on screen.**
 
 ### T3.8 — Cards on screen · `TODO` (T3.5, T3.7)
@@ -365,6 +375,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | T3.2c done: owner answers on credit requests (15-second timeout refuses automatically; other readings confirmed); the interface's part goes to T3.7; new reading `REVIEW.md` item 9. |
 | 2026-11-06 | T3.2b done: owner answers on trading applied (credit requests with accept or refuse, a refused or failed offer keeps the trade action, traded cards gained); new readings in `REVIEW.md` items 4 to 8. |
 | 2026-11-06 | T3.2 done: trade action and credit gifts in the core, bot trades, credit accounting invariant; readings in `REVIEW.md`. Next without the owner: T3.3; the owner holds T3.0 (UI) in the Project chat. |
 | 2026-11-06 | T0.4 done. New T3.0: the owner decides the interface in its own phase in the Project chat; the screen tasks T3.6 to T3.10 wait on it. The first layout draft was set aside; `docs/UI.md` is now the brief. |

@@ -2,7 +2,7 @@
 
 Short view of where the project is going. Task details live in `PLAN.md`; decisions in `DECISIONS.md`. Order set by the owner on 2026-11-04.
 
-Last updated: 2026-11-06 (T0.4, T3.2 and T3.2b done; next: T3.3, and the owner's UI phase T3.0).
+Last updated: 2026-11-06 (T0.4, T3.2, T3.2b and T3.2c done; next: T3.3, and the owner's UI phase T3.0).
 
 Status: `Done` · `Next` · `To do` · `Later`.
 
@@ -75,6 +75,7 @@ V1 is the whole base game on one PC: 1 to 4 seats, human (same screen) or bot, s
 - T3.0 UI decisions, by the owner in the Project chat (`docs/UI.md` is the brief) — screen tasks wait on it
 - T3.2 trade action and credit trades (the last base game rule the core lacks) — Done
 - T3.2b owner answers on trading: credit requests (ask / send, accept or refuse), a refused offer keeps the trade action — Done
+- T3.2c credit request timeout (15 seconds, refused automatically) — Done
 - T3.3 interface text: prompts, option labels, game log (plain C#)
 - T3.4 interface queries: available commands, reachable spaces, player view (plain C#)
 - T3.5 processed images in the repository, within a size budget

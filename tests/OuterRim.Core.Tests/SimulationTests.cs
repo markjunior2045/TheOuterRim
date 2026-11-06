@@ -184,7 +184,7 @@ namespace OuterRim.Core.Tests
             Assert.Equal(other, RandomBot.Actor(s));
             var candidates = bot.Candidates(C, s);
             Assert.Equal(2, candidates.OfType<AnswerCreditRequestCommand>().Count(c => c.PlayerId == other));
-            Assert.All(candidates, c => Assert.True(c is AnswerCreditRequestCommand || c is CancelCreditRequestCommand));
+            Assert.All(candidates, c => Assert.True(c is AnswerCreditRequestCommand || c is CancelCreditRequestCommand || c is TimeOutCreditRequestCommand));
         }
     }
 }
