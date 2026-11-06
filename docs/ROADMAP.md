@@ -71,7 +71,7 @@ Status: `Done` · `Next` · `To do` · `Later`.
 
 ### 9. Prototype (V1) · Next
 V1 is the whole base game on one PC: 1 to 4 seats, human (same screen) or bot, save and load, every card shown as its scan, English only (`DECISIONS.md` §8).
-- T0.4 Unity project, CLI wiring, session shell, UI technology
+- T0.4 Unity project, CLI wiring, session shell, UI technology and screen layout (`docs/UI.md`)
 - T3.2 trade action and credit trades (the last base game rule the core lacks)
 - T3.3 interface text: prompts, option labels, game log (plain C#)
 - T3.4 interface queries: available commands, reachable spaces, player view (plain C#)

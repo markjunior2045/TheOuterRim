@@ -257,9 +257,11 @@ The core already plays the whole base game, so V1 is no longer "one card of each
 - **Does:**
   - Create the Unity 6.6 project in `unity/` (URP). Consume the core as a local package (one copy of the source). Install the Unity CLI and `com.unity.pipeline`. Document the commands in `CLAUDE.md`.
   - Add a session shell: one component owns the `GameState` and `GameContent`, sends commands through a command channel interface (local now, network later, `DECISIONS.md` §7) and hands the events to the views. Load the base pack from `data/` with `PackLoader`.
-  - Choose the UI technology (moved here from T3.3, so every later task builds on it). Suggested: UI Toolkit for everything on screen (panels, dialogs, cards, menus); sprites in world space for the board (map, standees, patrols, tokens), with an orthographic camera.
+  - Choose the UI technology (moved here from T3.3, so every later task builds on it). Suggested: UI Toolkit for everything on screen (panels, dialogs, cards, menus); sprites in world space for the board (map, standees, patrols, tokens), with an orthographic camera. A throwaway test scene checks the choice: one map tile, one card scan with zoom, one decision dialog.
+  - Screen layout, in `docs/UI.md`: a wireframe of the game screen (board, player panels, market, decision dialog, log, card zoom), the hot-seat hand-off screen and the new-game screen, at 1920×1080 with a minimum of 1366×768. Reviewed by the owner before T3.6. Visual style is not decided here: the prototype shows the scans as they are, and the look comes with the templates after V1 (`DECISIONS.md` §3). Each later task fills its part of the layout and may adjust it.
 - **Done when:**
   - a scene starts a seeded game through the shell and shows the current player and step as text;
+  - the owner has approved the screen layout in `docs/UI.md`;
   - the same test file passes under `dotnet test` and under Unity's EditMode runner;
   - from the terminal, Claude Code can trigger a recompile and read compiler errors, run EditMode and PlayMode tests and get a pass/fail exit code, and query the scene.
 - **Note:** if a CLI step fails, record the workaround in `CLAUDE.md` and continue. This task comes first because the CLI is beta: if it cannot do this, the way of working changes.
@@ -334,7 +336,7 @@ Online play (host and room code, relay behind the command channel, the player vi
 
 | Date | Change |
 |---|---|
-| 2026-11-05 | Prototype phase replanned after T3.1 (owner request): V1 becomes the whole base game on one PC (hot-seat and bot seats, save and load); new tasks T3.2 trading (missing core rule), T3.3 interface text, T3.4 interface queries and player view, T3.5 processed images; screen tasks T3.6 to T3.10 with an autoplay check; T0.4 moved into the phase and chooses the UI technology; online play moved first after V1. |
+| 2026-11-05 | Prototype phase replanned after T3.1 (owner request): V1 becomes the whole base game on one PC (hot-seat and bot seats, save and load); new tasks T3.2 trading (missing core rule), T3.3 interface text, T3.4 interface queries and player view, T3.5 processed images; screen tasks T3.6 to T3.10 with an autoplay check; T0.4 moved into the phase, chooses the UI technology and sets the screen layout (`docs/UI.md`, owner review); online play moved first after V1. |
 | 2026-11-05 | T3.1 done: V0 with random bots in the core and a terminal runner; 12 engine defects found and fixed; save format 0.15. |
 | 2026-11-05 | T2.6 done: encounter decks, contacts, databank procedures, jobs, crew rules; every base game effect built; save format 0.14. |
 | 2026-11-05 | T2.5 done: market decks and action, deliver action with databank #1, extra fame; four decks encoded; save format 0.11. |
