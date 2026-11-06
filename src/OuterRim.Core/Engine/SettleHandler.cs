@@ -9,7 +9,7 @@ namespace OuterRim.Core.Engine
     /// each player from the current one in turn order:
     /// R-8.4: a character or ship never holds more damage than its health or hull, so tokens above a value
     /// that went down (a health bonus lost with its card) are removed; R-8.2, R-8.3: damage equal to the
-    /// value defeats the player (reading in docs/REVIEW.md); R-14.18: a player who lacks slots for all their
+    /// value defeats the player (R-25.24, owner decision); R-14.18: a player who lacks slots for all their
     /// assets discards assets of their choice. It repeats until nothing changes, since each step can undo
     /// another (discarding an ARMOR lowers health).
     /// </summary>

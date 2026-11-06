@@ -1100,6 +1100,9 @@ Points the Living Rules handles case by case. The implementation of the correspo
 - **R-25.21 Black Sun Agent (crew, #5):** while held, every job its player completes that has a reward gives 2,000 credits more (owner clarification).
 - **R-25.22 Doctor Evazan (crew, #9):** at the start of a ground combat its player chooses {HIT}, {CRIT} or {FOCUS}; during that combat each **player** in it may turn up to 2 of their blank dice to that result. Enemies the game rolls for do not (owner clarification).
 - **R-25.23 Effect movement and contact slots:** "move up to N spaces" outside the planning step follows the patrol and Maelstrom rules (R-5.12, R-5.20). A token placed on a planet takes any empty slot, ignoring class, and Dengar's token may go to any empty contact space (owner clarifications). In Cantonica-2, several players may choose the same result.
+- **R-25.24 Health or hull going down:** when a character's health or a ship's hull goes down (the gear, mod or crew that raised it is lost, such as Chewbacca's +health), damage above the new value is removed (R-8.4); if the damage is then equal to the new value, the player becomes defeated (R-8.2, R-8.3) (owner decision). The engine applies it once the operation in progress has finished.
+- **R-25.25 Chromium Hull (luxury-01):** "When you gain fame, gain 1 additional fame" adds 1 to each fame gain, whatever its size. Fame counted from held cards ("you have X additional fame", R-18.15) is not a gain (owner decision).
+- **R-25.26 Ketsu Onyo-0:** "a patrol or contact token that is within 3 spaces of you": Ketsu stays in her space and encounters a patrol up to 3 spaces away, or a contact on a planet up to 3 spaces away, counted along paths (R-5.29) (owner decision).
 
 ---
 
@@ -1141,7 +1144,7 @@ The engine must **pause** and ask for a decision in these cases, among others:
 - exactly one encounter resolved per turn (R-4.12);
 - each action performed at most once per action step (R-4.9).
 
-**Implementation note (T3.1):** `OuterRim.Core.Simulation.Invariants` and `InvariantMonitor` check these after every command of the V0 games (`tools/OuterRim.Terminal`). The damage and slot limits are checked once the operation in progress has finished (no decision pending), since a card may be choosing what to discard; the engine settles them at that point (R-8.4, R-14.18; reading in `REVIEW.md`). The encounter counted is the one chosen in the encounter step: an encounter a card resolves inside it is part of it. A turn may end before its encounter step (defeat, R-8.8; "end your turn" effects). The checker also verifies that a card is in one place only, that the resolution stack is empty unless a decision waits, and that the winner reached the fame requirement.
+**Implementation note (T3.1):** `OuterRim.Core.Simulation.Invariants` and `InvariantMonitor` check these after every command of the V0 games (`tools/OuterRim.Terminal`). The damage and slot limits are checked once the operation in progress has finished (no decision pending), since a card may be choosing what to discard; the engine settles them at that point (R-8.4, R-14.18, R-25.24). The encounter counted is the one chosen in the encounter step: an encounter a card resolves inside it is part of it. A turn may end before its encounter step (defeat, R-8.8; "end your turn" effects). The checker also verifies that a card is in one place only, that the resolution stack is empty unless a decision waits, and that the winner reached the fame requirement.
 
 ---
 
@@ -1170,6 +1173,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | R-25.24 to R-25.26: owner answers to the T3.1 review (health or hull going down, Chromium Hull, Ketsu Onyo's range). |
 | 2026-11-05 | §26.3: implementation note on how the V0 games check the invariants (T3.1). |
 | 2026-11-05 | Note after R-11.24: graph reading of patrol movement "toward the player" (T1.8), confirmed by the owner with the Learn to Play wording. |
 | 2026-11-05 | Note after R-7.20: the game rolls for patrols, contacts and card enemies (digital adaptation, owner decision). |

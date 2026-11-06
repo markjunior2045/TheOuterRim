@@ -245,7 +245,7 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
   10. `asset.take` "from your opponent" crashed, and combats against a chosen player did not name the opponent for their win and lose effects (Tatooine-Nal Hutta).
   11. R-14.18 was only enforced when gaining: losing a slot-giving asset (bartering Smuggling Compartment) left assets without slots.
   12. R-8.4: losing a health bonus with its card left more damage than health (Han Solo-4 losing Chewbacca).
-  - 11 and 12 are settled by the engine once the operation in progress has finished (`SettleHandler`, after every command); reading in `REVIEW.md`.
+  - 11 and 12 are settled by the engine once the operation in progress has finished (`SettleHandler`, after every command); readings confirmed by the owner as R-25.24 to R-25.26.
 - **Not done:** the random bot needs about 300 rounds to win; no strategy (bots come after V1). The runner is not tuned for speed (about 7.5 minutes for 1,000 games in Release on 16 cores).
 
 ### T3.2 — Unity: map and movement · `TODO` (T0.4, T1.4)
