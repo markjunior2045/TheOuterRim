@@ -167,10 +167,24 @@ namespace OuterRim.Core.Tests
             s.Pending = new PendingDecision { Id = 99, Kind = DecisionKind.ChooseOption, PlayerId = s.Players[1].Id,
                 Options = new List<DecisionOption> { new DecisionOption("a", "a"), new DecisionOption("b", "b") } };
             var answers = bot.Candidates(C, s);
-            // The answers, plus now and then a gift of credits, which may interrupt a decision (R-16.16).
+            // The answers, plus now and then a credit request, which may interrupt a decision (R-16.16).
             Assert.Equal(2, answers.OfType<ChooseOptionCommand>().Count());
-            Assert.All(answers, c => Assert.True(c is ChooseOptionCommand || c is GiveCreditsCommand));
+            Assert.All(answers, c => Assert.True(c is ChooseOptionCommand || c is RequestCreditsCommand));
             Assert.All(answers, c => Assert.Equal(s.Players[1].Id, c.PlayerId));
+        }
+
+        [Fact]
+        public void R9_6_TheBot_AnswersAnOpenCreditRequest_BeforeAnythingElse()
+        {
+            var bot = new RandomBot(1);
+            var s = NewGame();
+            var other = s.Players.First(p => p.Id != s.CurrentPlayerId).Id;
+            s.FindPlayer(other)!.Credits = 5000;
+            Assert.True(GameEngine.Execute(C, s, new RequestCreditsCommand(s.CurrentPlayerId, other, CreditRequestKind.Ask, 2000)).Accepted);
+            Assert.Equal(other, RandomBot.Actor(s));
+            var candidates = bot.Candidates(C, s);
+            Assert.Equal(2, candidates.OfType<AnswerCreditRequestCommand>().Count(c => c.PlayerId == other));
+            Assert.All(candidates, c => Assert.True(c is AnswerCreditRequestCommand || c is CancelCreditRequestCommand));
         }
     }
 }

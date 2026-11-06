@@ -91,6 +91,15 @@ namespace OuterRim.Core.Model
         /// <summary>Id for the next decision; ids never repeat within a game.</summary>
         public int NextDecisionId { get; set; } = 1;
 
+        /// <summary>
+        /// Open credit requests (R-9.6, R-16.15), oldest first. They sit beside the resolution stack, not on it:
+        /// an unanswered request holds nothing up, and every request is withdrawn when the turn ends.
+        /// </summary>
+        public List<CreditRequest> CreditRequests { get; set; } = new List<CreditRequest>();
+
+        /// <summary>Id for the next credit request; ids never repeat within a game.</summary>
+        public int NextCreditRequestId { get; set; } = 1;
+
         public PlayerState? FindPlayer(string id)
         {
             foreach (var p in Players)
@@ -128,6 +137,43 @@ namespace OuterRim.Core.Model
             }
             return -1;
         }
+    }
+
+    /// <summary>Which way the credits of a <see cref="CreditRequest"/> go.</summary>
+    public enum CreditRequestKind
+    {
+        /// <summary>"Ask Credits": the requester asks the other player to pay them the amount.</summary>
+        Ask,
+
+        /// <summary>"Send Credits": the requester offers to pay the other player the amount.</summary>
+        Send,
+    }
+
+    /// <summary>
+    /// A credit request between two players, one of them the current player (R-9.6, R-16.15). The other player
+    /// accepts or refuses it; on acceptance the credits move at once, or nothing does if the payer is short (R-9.7).
+    /// </summary>
+    public sealed class CreditRequest
+    {
+        public int Id { get; set; }
+
+        /// <summary>The player who made the request.</summary>
+        public string FromId { get; set; } = "";
+
+        /// <summary>The player who answers it.</summary>
+        public string ToId { get; set; } = "";
+
+        public CreditRequestKind Kind { get; set; }
+
+        public int Amount { get; set; }
+
+        /// <summary>The player who pays if it is accepted.</summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public string PayerId => Kind == CreditRequestKind.Ask ? ToId : FromId;
+
+        /// <summary>The player who is paid if it is accepted.</summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public string PayeeId => Kind == CreditRequestKind.Ask ? FromId : ToId;
     }
 
     /// <summary>A patrol token on the map (R-11).</summary>

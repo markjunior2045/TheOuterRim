@@ -387,7 +387,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-9.7** Any agreement that cannot be fulfilled immediately and completely is **non-binding**. Future promises can be broken.
 - **R-9.8** **Spending versus losing** (owner clarification). "Spend X" is a payment: the player must have the full amount, otherwise they cannot choose it. This includes "unless you spend X" and "unless you lose X" offered as a way out of a penalty. "Lose X" imposed as an effect removes as much as the player has, down to 0 (R-21.5). The rulebooks do not state this explicitly; it follows from R-21.4 and R-21.5.
 
-> Implementation (T3.2, reading awaiting the owner in `REVIEW.md`): R-9.6 and R-9.7 assume talk between people. Digitally: credits are **given**, one-sided, at any moment of the current player's turn between them and another player (R-16.15, R-16.16); swapping credits for credits is only a net gift, and nothing promised is enforced (R-9.7). The trade action (R-16.8) is an **offer** the partner accepts or refuses; see `REVIEW.md`.
+> Implementation (owner decision, 2026-11-06, T3.2b; digital form of R-9.6, R-16.15 and R-16.16, faithful to the rules, not a house rule): at any moment of the current player's turn, also while a decision, an encounter or a combat is pending (R-16.16), a player may send another player a **credit request**: "Ask Credits" (asks them for an amount) or "Send Credits" (offers them an amount). One of the two must be the current player. It is not an action and needs no shared space. The chosen player **accepts or refuses**; on acceptance the credits move at once, and if the payer no longer has the full amount, nothing changes hands (R-9.7). Promises stay non-binding (R-9.7). Details not set by the rules (the request holds nothing up, one open request per pair of players, the requester may cancel, open requests expire at the end of the turn, the payer must have the amount when it is made) are readings awaiting the owner in `REVIEW.md`. With the favors rule, see R-20.16.
 
 ---
 
@@ -696,6 +696,8 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-16.15** Credits and debt tokens may be exchanged with the current player at any point during their turn. This is **not an action** and does not require being in the same space.
 - **R-16.16** Such an exchange of credits or debt tokens **may interrupt** an ability, an encounter or a combat.
 
+> Implementation (owner decisions, 2026-11-06, T3.2b): the trade action is an **offer** of credits and cards, given and asked, to one player in the space; the partner accepts or refuses the **whole** offer, not single cards. Reading of R-16.8 and R-4.9: a **refused offer does not use the trade action**; the current player may make another offer, to the same or another player in the space. The action is used only when an offer is accepted and carried out; then no other trade in that action step. An accepted trade that falls through because one side no longer has what was offered (R-9.7) does not use the action either. Cards received in a trade, on either side, are **gained** (R-14.2): "when you gain" abilities and goals see them; afterwards each side settles its slots (R-14.18). Credits between players outside the trade action: the credit requests in the note after R-9.7.
+
 ### 16.3 Market action
 
 - **R-16.17** While on a planet (including a Core Worlds space), during the action step, the current player may perform a market action to buy an asset.
@@ -843,6 +845,7 @@ Order follows Appendix 1 of the Living Rules, which already folds in the expansi
 - **R-20.8** Players may offer credits, assets and debt tokens in exchange for a favor. Assets may only be exchanged if both players are in the same space.
 - **R-20.9** If several players offer to grant the favor, the requester chooses which offer to accept.
 - **R-20.10** Players may accept credits and debt tokens as an agreement **not** to grant a favor to someone, but such agreements are non-binding.
+- **R-20.16** [?] With the favors rule, **any pair of players** may exchange credits at any time, not only with the current player. Reading of R-16.15 together with R-20.8 and R-20.10: paying a player not to grant a favor implies credits between two players who are not the current player. The rulebooks do not state it; the reading is confirmed by the owner (2026-11-06). To be built with the expansion (credit requests between any two players), not before.
 
 ### 20.1 Debt tokens
 
@@ -1173,6 +1176,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | Owner decisions on trading (T3.2b): the note after R-9.7 now describes credit requests (Ask / Send, accept or refuse); note after R-16.16 on the trade action (a refused or failed offer does not use the action; traded cards are gained; the whole offer is accepted or refused); new R-20.16 [?] (with favors, credits between any two players; owner-confirmed reading, built with the expansion). |
 | 2026-11-06 | Note after R-9.7: digital form of credit trades and the trade action (T3.2); the `[?]` is replaced by a reading in `REVIEW.md`. |
 | 2026-11-05 | R-25.24 to R-25.26: owner answers to the T3.1 review (health or hull going down, Chromium Hull, Ketsu Onyo's range). |
 | 2026-11-05 | §26.3: implementation note on how the V0 games check the invariants (T3.1). |

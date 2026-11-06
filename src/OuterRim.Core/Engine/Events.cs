@@ -50,7 +50,7 @@ namespace OuterRim.Core.Engine
         public int Amount { get; }
     }
 
-    /// <summary>Credits handed from one player to another (R-16.15, or as part of a trade).</summary>
+    /// <summary>Credits handed from one player to another (an accepted credit request, R-16.15, or part of a trade).</summary>
     public sealed class CreditsGivenEvent : GameEvent
     {
         public CreditsGivenEvent(string fromId, string toId, int amount)
@@ -65,6 +65,62 @@ namespace OuterRim.Core.Engine
         public string ToId { get; }
 
         public int Amount { get; }
+    }
+
+    /// <summary>A credit request was made (R-9.6, R-16.15); <see cref="ToId"/> may accept or refuse it.</summary>
+    public sealed class CreditRequestedEvent : GameEvent
+    {
+        public CreditRequestedEvent(int requestId, string fromId, string toId, CreditRequestKind kind, int amount)
+        {
+            RequestId = requestId;
+            FromId = fromId;
+            ToId = toId;
+            Kind = kind;
+            Amount = amount;
+        }
+
+        public int RequestId { get; }
+
+        public string FromId { get; }
+
+        public string ToId { get; }
+
+        public CreditRequestKind Kind { get; }
+
+        public int Amount { get; }
+    }
+
+    /// <summary>
+    /// A credit request was closed. <see cref="Outcome"/>: accepted (a <see cref="CreditsGivenEvent"/> follows),
+    /// refused, failed (accepted, but the payer no longer had the full amount, R-9.7), cancelled by the requester,
+    /// or expired at the end of the turn.
+    /// </summary>
+    public sealed class CreditRequestClosedEvent : GameEvent
+    {
+        public CreditRequestClosedEvent(int requestId, string fromId, string toId, CreditRequestOutcome outcome)
+        {
+            RequestId = requestId;
+            FromId = fromId;
+            ToId = toId;
+            Outcome = outcome;
+        }
+
+        public int RequestId { get; }
+
+        public string FromId { get; }
+
+        public string ToId { get; }
+
+        public CreditRequestOutcome Outcome { get; }
+    }
+
+    public enum CreditRequestOutcome
+    {
+        Accepted,
+        Refused,
+        Failed,
+        Cancelled,
+        Expired,
     }
 
     /// <summary>The current player offered a trade (R-16.8); the partner is asked.</summary>
@@ -94,7 +150,7 @@ namespace OuterRim.Core.Engine
         public IReadOnlyList<string> TakeCards { get; }
     }
 
-    /// <summary>The partner accepted or refused the offered trade.</summary>
+    /// <summary>The partner accepted or refused the offered trade; a refusal leaves the trade action unused.</summary>
     public sealed class TradeAnsweredEvent : GameEvent
     {
         public TradeAnsweredEvent(string playerId, string partnerId, bool accepted)

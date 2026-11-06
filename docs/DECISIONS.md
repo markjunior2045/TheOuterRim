@@ -80,7 +80,11 @@ Details (full card lists, animations, screens) live in their own documents as th
 
 - **Dice for enemies (2026-11-05):** a player rolls only their own dice (skill tests and their side of a combat). For a patrol, contact or card enemy the game rolls; the "player to the left rolls" convention of the board game (`RULES.md` R-7.9, R-7.12) does not apply, and R-7.20 becomes moot. Combat results are unchanged: the enemy's dice still count as the defender's roll. Events and the interface name who rolled: the character and player for a player ("Ketsu Onyo (Player 1)"), the enemy followed by "(Game)" otherwise ("Hutt Patrol Lvl 2 (Game)", "TIE fighters (Game)").
 
-- **Trading (2026-11-06, T3.2; readings in `REVIEW.md`):** the table talk of R-9.6 and R-16.8 becomes two commands: giving credits (one-sided, any time in the current player's turn) and the trade action as an offer the partner accepts or refuses.
+- **Trading (2026-11-06, T3.2 and T3.2b; owner decisions):** a digital adaptation faithful to the rulebooks, not a house rule. The table talk of R-9.6, R-16.8 and R-16.15 becomes two flows, both answered by the other player:
+  - **Credit requests:** at any moment of the current player's turn (also while a decision, encounter or combat is pending, R-16.16), a player sends another an "Ask Credits" or "Send Credits" request; one of the two is the current player; not an action, no shared space. Accepted, the credits move at once, or nothing does if the payer is short (R-9.7). Promises stay non-binding. This replaces the one-sided gift of T3.2.
+  - **Trade action:** an offer of credits and cards to one player in the space, accepted or refused as a whole. A refused offer, or an accepted one that falls through (R-9.7), does not use the action; another offer may follow, to the same or another player. The first trade carried out uses the action. Cards received on either side are gained (R-14.2) and each side settles its slots (R-14.18).
+  - With the favors rule ([UB] [OPT]), credits between any two players (`RULES.md` R-20.16 [?], owner-confirmed reading), built with the expansion.
+  - Details the rules leave open (requests hold nothing up, one per pair, cancel, expiry at the end of the turn, amount held when asked) are readings in `REVIEW.md`.
 
 ## 5. Engine, tools and conventions (Decided)
 
@@ -143,7 +147,6 @@ Why the change: the old list (one card of each type, one contact, one encounter)
 - **Expansion card images:** [Mod 01]'s expansion scans have the highest resolution but look washed out with white speckles. Options: use (Mod 02)'s expansion cards where they look better despite lower resolution, or clean up [Mod 01]'s art (levels and denoise). Decide after a side-by-side review.
 - Render pipeline: URP by default *(Suggested)*.
 - Distribution: zip by link, with a version check when joining a room *(Suggested)*.
-- Offer/accept flow for credit trades between players (`RULES.md` R-9.6, R-9.7).
 
 Resolved: the effect inventory (`EFFECTS.md`, 2026-11-05). Resolved by `RULES.md`: skill tests and the character's role (R-6), movement (R-5), victory (R-18), starting ships (R-17.1; their values come from card data), expansion changes (`[UB]`), official solo mode (R-23).
 

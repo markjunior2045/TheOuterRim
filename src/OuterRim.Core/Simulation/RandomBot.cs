@@ -30,9 +30,13 @@ namespace OuterRim.Core.Simulation
 
         public GameRandom Random => _rng;
 
-        /// <summary>The player who must act now: the one a decision waits on, else the current player.</summary>
+        /// <summary>
+        /// The player who must act now: the one the oldest open credit request is for (the bot answers requests
+        /// before anything else), else the one a decision waits on, else the current player.
+        /// </summary>
         public static string Actor(GameState state)
         {
+            if (state.CreditRequests.Count > 0) return state.CreditRequests[0].ToId;
             return state.Pending != null ? state.Pending.PlayerId : state.CurrentPlayerId;
         }
 
@@ -42,6 +46,16 @@ namespace OuterRim.Core.Simulation
             var list = new List<Command>();
             var actor = Actor(state);
             var player = state.FindPlayer(actor)!;
+            if (state.CreditRequests.Count > 0)
+            {
+                // R-9.6: the player asked accepts or refuses; now and then the requester withdraws it first.
+                var open = state.CreditRequests[0];
+                list.Add(new AnswerCreditRequestCommand(open.ToId, open.Id, true));
+                list.Add(new AnswerCreditRequestCommand(open.ToId, open.Id, false));
+                if (_rng.NextInt(4) == 0) list.Add(new CancelCreditRequestCommand(open.FromId, open.Id));
+                _rng.Shuffle(list);
+                return list;
+            }
             if (state.Pending != null)
             {
                 Answers(state.Pending, list);
@@ -63,7 +77,7 @@ namespace OuterRim.Core.Simulation
                 }
                 Abilities(content, player, list);
             }
-            Gift(state, player, list);
+            CreditRequest(state, player, list);
             _rng.Shuffle(list);
             return list;
         }
@@ -155,17 +169,24 @@ namespace OuterRim.Core.Simulation
             }
         }
 
-        /// <summary>R-16.15: now and then, credits handed to or from the current player (rarely, so games still move on).</summary>
-        private void Gift(GameState state, PlayerState actor, List<Command> list)
+        /// <summary>
+        /// R-9.6, R-16.15: now and then (rarely, so games still move on), a credit request to or from the current
+        /// player, asking for credits or sending them, even while a decision is pending (R-16.16).
+        /// </summary>
+        private void CreditRequest(GameState state, PlayerState actor, List<Command> list)
         {
-            if (state.Players.Count < 2 || actor.Credits < 1000 || _rng.NextInt(20) != 0) return;
+            if (state.Players.Count < 2 || _rng.NextInt(20) != 0) return;
             string to = state.CurrentPlayerId;
             if (to == actor.Id)
             {
                 var others = state.Players.FindAll(p => p.Id != actor.Id);
                 to = others[_rng.NextInt(others.Count)].Id;
             }
-            list.Add(new GiveCreditsCommand(actor.Id, to, 1000 * (1 + _rng.NextInt(actor.Credits / 1000))));
+            bool ask = _rng.NextInt(2) == 0;
+            var payer = ask ? state.FindPlayer(to)! : actor;
+            if (payer.Credits < 1000) return;
+            list.Add(new RequestCreditsCommand(actor.Id, to, ask ? CreditRequestKind.Ask : CreditRequestKind.Send,
+                1000 * (1 + _rng.NextInt(payer.Credits / 1000))));
         }
 
         private int RandomCredits(PlayerState player)

@@ -126,6 +126,25 @@ namespace OuterRim.Core.Simulation
                 {
                     errors.Add("R-4.1: unknown current player '" + state.CurrentPlayerId + "'.");
                 }
+                // R-9.6, R-16.15: an open credit request is between two players, one of them the current player;
+                // requests expire with the turn, so none survives it.
+                var pairs = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var r in state.CreditRequests)
+                {
+                    if (state.FindPlayer(r.FromId) == null || state.FindPlayer(r.ToId) == null || r.FromId == r.ToId || r.Amount <= 0)
+                    {
+                        errors.Add("R-9.6: credit request " + r.Id + " is malformed.");
+                    }
+                    if (r.FromId != state.CurrentPlayerId && r.ToId != state.CurrentPlayerId)
+                    {
+                        errors.Add("R-16.15: credit request " + r.Id + " does not involve the current player " + state.CurrentPlayerId + ".");
+                    }
+                    var a = string.CompareOrdinal(r.FromId, r.ToId) < 0 ? r.FromId + "|" + r.ToId : r.ToId + "|" + r.FromId;
+                    if (!pairs.Add(a))
+                    {
+                        errors.Add("Two credit requests are open between " + a + ".");
+                    }
+                }
             }
             if (state.Phase == GamePhase.Ended)
             {
@@ -211,6 +230,7 @@ namespace OuterRim.Core.Simulation
         private int _deliveries;
         private int _buys;
         private int _discards;
+        private int _trades;
         private readonly HashSet<string> _actionAbilities = new HashSet<string>(StringComparer.Ordinal);
 
         /// <summary>Reads the events of the game's creation.</summary>
@@ -248,6 +268,16 @@ namespace OuterRim.Core.Simulation
                     case MarketDiscardCommand _:
                         if (++_discards > 2) errors.Add("R-16.19: a third market discard in one action step.");
                         break;
+                    case ChooseOptionCommand _:
+                        // R-4.9: at most one trade carried out per action step (a refused or failed offer does not count).
+                        bool carried = false;
+                        foreach (var e in result.Events)
+                        {
+                            if (e is TradeAnsweredEvent t && t.Accepted) carried = true;
+                            if (e is TradeFailedEvent) carried = false;
+                        }
+                        if (carried && ++_trades > 1) errors.Add("R-4.9: a second trade in one action step.");
+                        break;
                     case UseAbilityCommand use:
                         if (!_actionAbilities.Add(use.CardId + "#" + use.Path))
                         {
@@ -277,6 +307,7 @@ namespace OuterRim.Core.Simulation
                             _deliveries = 0;
                             _buys = 0;
                             _discards = 0;
+                            _trades = 0;
                             _actionAbilities.Clear();
                         }
                         break;

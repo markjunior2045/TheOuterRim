@@ -8,44 +8,131 @@ using OuterRim.Core.Rules;
 namespace OuterRim.Core.Engine
 {
     /// <summary>
-    /// Trading (RULES §16.2, R-9.6, R-9.7). Two digital forms of table talk (reading in docs/REVIEW.md):
-    /// giving credits, one-sided, at any moment of the current player's turn between them and another player
-    /// (R-16.15, R-16.16); and the trade action, an offer of credits and cards the partner accepts or refuses
-    /// (R-16.8 to R-16.14). Only what changes hands at once counts (R-9.7, R-16.11): there are no promises.
+    /// Trading (RULES §16.2, R-9.6, R-9.7; owner decisions of 2026-11-06, DECISIONS §4.2). Two digital forms of
+    /// table talk: credit requests ("Ask Credits" / "Send Credits") between the current player and another player
+    /// at any moment of the turn (R-16.15, R-16.16), which the other player accepts or refuses; and the trade
+    /// action, an offer of credits and cards the partner accepts or refuses as a whole (R-16.8 to R-16.14). Only
+    /// what changes hands at once counts (R-9.7, R-16.11): there are no promises.
     /// </summary>
     public static class Trades
     {
         public const string Handler = "rules.trade";
 
-        /// <summary>R-4.9: the trade action, once per action step.</summary>
+        /// <summary>R-4.9: the trade action, once per action step; marked used only by a trade carried out.</summary>
         public const string ActionKey = "action:trade";
 
         /// <summary>
-        /// R-16.15: credits change hands between the current player and another player at any point of the turn,
-        /// even in the middle of an ability, an encounter or a combat (R-16.16). Not an action.
+        /// R-9.6, R-16.15: a credit request between the current player and another player, at any point of the
+        /// turn, even in the middle of an ability, an encounter or a combat (R-16.16). Not an action; no shared
+        /// space. Reading in REVIEW.md: it holds nothing up, at most one is open between two players, and the payer
+        /// must have the amount when it is made.
         /// </summary>
-        internal static CommandResult GiveCredits(GameState state, PlayerState giver, GiveCreditsCommand command)
+        internal static CommandResult Request(GameState state, PlayerState player, RequestCreditsCommand command)
         {
-            var receiver = state.FindPlayer(command.ToPlayerId);
-            if (receiver == null || receiver.Id == giver.Id)
+            var other = state.FindPlayer(command.ToPlayerId);
+            if (other == null || other.Id == player.Id)
             {
-                return CommandResult.Rejected("Give credits to another player.");
+                return CommandResult.Rejected("Make a credit request to another player.");
             }
-            if (giver.Id != state.CurrentPlayerId && receiver.Id != state.CurrentPlayerId)
+            if (player.Id != state.CurrentPlayerId && other.Id != state.CurrentPlayerId)
             {
                 return CommandResult.Rejected("R-9.6, R-16.15: credits are exchanged with the current player.");
             }
+            if (command.Kind != CreditRequestKind.Ask && command.Kind != CreditRequestKind.Send)
+            {
+                return CommandResult.Rejected("Ask for credits or send them.");
+            }
             if (command.Amount <= 0)
             {
-                return CommandResult.Rejected("Give a positive amount.");
+                return CommandResult.Rejected("Request a positive amount.");
             }
-            if (giver.Credits < command.Amount)
+            var payer = command.Kind == CreditRequestKind.Ask ? other : player;
+            if (payer.Credits < command.Amount)
             {
-                return CommandResult.Rejected("R-9.8: you have " + giver.Credits + " credits.");
+                return CommandResult.Rejected("R-9.8: " + payer.Id + " has " + payer.Credits + " credits.");
             }
-            giver.Credits -= command.Amount;
-            receiver.Credits += command.Amount;
-            return CommandResult.Ok(new GameEvent[] { new CreditsGivenEvent(giver.Id, receiver.Id, command.Amount) });
+            foreach (var open in state.CreditRequests)
+            {
+                if ((open.FromId == player.Id && open.ToId == other.Id) || (open.FromId == other.Id && open.ToId == player.Id))
+                {
+                    return CommandResult.Rejected("A credit request between " + player.Id + " and " + other.Id + " is already open.");
+                }
+            }
+            var request = new CreditRequest
+            {
+                Id = state.NextCreditRequestId++,
+                FromId = player.Id,
+                ToId = other.Id,
+                Kind = command.Kind,
+                Amount = command.Amount,
+            };
+            state.CreditRequests.Add(request);
+            return CommandResult.Ok(new GameEvent[] { new CreditRequestedEvent(request.Id, request.FromId, request.ToId, request.Kind, request.Amount) });
+        }
+
+        /// <summary>
+        /// The other player accepts or refuses. On acceptance the credits move at once; if the payer no longer has
+        /// the full amount (spent or given away meanwhile), nothing changes hands (R-9.7).
+        /// </summary>
+        internal static CommandResult Answer(GameState state, PlayerState player, AnswerCreditRequestCommand command)
+        {
+            var request = state.CreditRequests.Find(r => r.Id == command.RequestId);
+            if (request == null)
+            {
+                return CommandResult.Rejected("No open credit request " + command.RequestId + ".");
+            }
+            if (request.ToId != player.Id)
+            {
+                return CommandResult.Rejected("Credit request " + request.Id + " is for " + request.ToId + " to answer.");
+            }
+            state.CreditRequests.Remove(request);
+            var events = new List<GameEvent>();
+            if (!command.Accept)
+            {
+                events.Add(new CreditRequestClosedEvent(request.Id, request.FromId, request.ToId, CreditRequestOutcome.Refused));
+                return CommandResult.Ok(events);
+            }
+            var payer = state.FindPlayer(request.PayerId)!;
+            var payee = state.FindPlayer(request.PayeeId)!;
+            if (payer.Credits < request.Amount)
+            {
+                events.Add(new CreditRequestClosedEvent(request.Id, request.FromId, request.ToId, CreditRequestOutcome.Failed));
+                return CommandResult.Ok(events);
+            }
+            payer.Credits -= request.Amount;
+            payee.Credits += request.Amount;
+            events.Add(new CreditRequestClosedEvent(request.Id, request.FromId, request.ToId, CreditRequestOutcome.Accepted));
+            events.Add(new CreditsGivenEvent(payer.Id, payee.Id, request.Amount));
+            return CommandResult.Ok(events);
+        }
+
+        /// <summary>The requester withdraws an unanswered request (reading in REVIEW.md).</summary>
+        internal static CommandResult Cancel(GameState state, PlayerState player, CancelCreditRequestCommand command)
+        {
+            var request = state.CreditRequests.Find(r => r.Id == command.RequestId);
+            if (request == null)
+            {
+                return CommandResult.Rejected("No open credit request " + command.RequestId + ".");
+            }
+            if (request.FromId != player.Id)
+            {
+                return CommandResult.Rejected("Only " + request.FromId + " may cancel credit request " + request.Id + ".");
+            }
+            state.CreditRequests.Remove(request);
+            return CommandResult.Ok(new GameEvent[] { new CreditRequestClosedEvent(request.Id, request.FromId, request.ToId, CreditRequestOutcome.Cancelled) });
+        }
+
+        /// <summary>
+        /// R-16.15: credits are exchanged during the current player's turn, so requests still open when it ends
+        /// expire (reading in REVIEW.md).
+        /// </summary>
+        internal static void ExpireRequests(GameState state, List<GameEvent> events)
+        {
+            foreach (var r in state.CreditRequests)
+            {
+                events.Add(new CreditRequestClosedEvent(r.Id, r.FromId, r.ToId, CreditRequestOutcome.Expired));
+            }
+            state.CreditRequests.Clear();
         }
 
         /// <summary>Checks an offer of the trade action (R-16.8 to R-16.14); null when it is valid.</summary>
@@ -103,7 +190,10 @@ namespace OuterRim.Core.Engine
             return null;
         }
 
-        /// <summary>Starts the offer: the trade action is used (R-4.9) and the partner is asked.</summary>
+        /// <summary>
+        /// Starts the offer and asks the partner. The trade action is not used yet: a refused offer may be followed
+        /// by another, to the same or another player in the space (R-16.8, R-4.9 reading in RULES §16.2).
+        /// </summary>
         internal static CommandResult Offer(GameContent content, GameState state, PlayerState player, OfferTradeCommand command)
         {
             var error = Validate(state, player, command.PartnerId, command.GiveCredits, command.GiveCards, command.TakeCredits, command.TakeCards);
@@ -111,7 +201,6 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected(error);
             }
-            state.UsedAbilities.Add(ActionKey);
             var frame = new Frame(Handler);
             frame.Set("player", player.Id);
             frame.Set("partner", command.PartnerId);
@@ -129,10 +218,12 @@ namespace OuterRim.Core.Engine
     }
 
     /// <summary>
-    /// The trade action as a frame: the partner accepts or refuses (R-16.10: trades need not be equal); on
-    /// acceptance credits and cards change hands at once, a captured contact going with its bounty card (R-16.13)
-    /// and a rotated asset keeping its orientation (R-14.11); then "when you gain" abilities of both sides. Slots
-    /// are settled once the command ends (R-14.18).
+    /// The trade action as a frame: the partner accepts or refuses the whole offer (R-16.10: trades need not be
+    /// equal); on acceptance credits and cards change hands at once, a captured contact going with its bounty card
+    /// (R-16.13) and a rotated asset keeping its orientation (R-14.11), and the trade action is used (R-4.9); then
+    /// "when you gain" abilities and goals of both sides see the received cards (R-14.2). Slots are settled once the
+    /// command ends, each side settling its own (R-14.18). A refusal or a trade that falls through (R-9.7) leaves the
+    /// action unused.
     /// </summary>
     internal sealed class TradeHandler : IResolutionHandler
     {
@@ -163,13 +254,15 @@ namespace OuterRim.Core.Engine
                         return StepResult.Done();
                     }
                     // R-9.7, R-16.11: only what can change hands now counts. Credits may have been given away
-                    // while the partner was deciding (R-16.16); a trade that cannot be paid in full falls through.
+                    // while the partner was deciding (R-16.16); a trade that cannot be paid in full falls through,
+                    // and the action stays unused.
                     if (player.Credits < frame.GetInt("give_credits") || partner.Credits < frame.GetInt("take_credits")
                         || !Holds(player, Trades.Split(frame.Get("give_cards"))) || !Holds(partner, Trades.Split(frame.Get("take_cards"))))
                     {
                         ctx.Events.Add(new TradeFailedEvent(player.Id, partner.Id));
                         return StepResult.Done();
                     }
+                    state.UsedAbilities.Add(Trades.ActionKey); // R-4.9: only a trade carried out uses the action
                     var gained = new List<string>();
                     Move(ctx, player, partner, frame.GetInt("give_credits"), Trades.Split(frame.Get("give_cards")), gained);
                     Move(ctx, partner, player, frame.GetInt("take_credits"), Trades.Split(frame.Get("take_cards")), gained);

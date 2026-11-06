@@ -356,9 +356,15 @@ namespace OuterRim.Core.Engine
             {
                 return CommandResult.Rejected("Unknown player " + command.PlayerId + ".");
             }
-            if (command is GiveCreditsCommand give)
+            // R-16.15, R-16.16: credit requests at any moment of the turn, even while a decision is pending.
+            switch (command)
             {
-                return Trades.GiveCredits(state, player, give); // R-16.15, R-16.16: at any moment of the turn
+                case RequestCreditsCommand request:
+                    return Trades.Request(state, player, request);
+                case AnswerCreditRequestCommand answerRequest:
+                    return Trades.Answer(state, player, answerRequest);
+                case CancelCreditRequestCommand cancel:
+                    return Trades.Cancel(state, player, cancel);
             }
             if (state.Pending != null)
             {
@@ -1035,6 +1041,7 @@ namespace OuterRim.Core.Engine
                 foreach (var a in p.Assets) a.GainedThisEncounter = false;
             }
             foreach (var t in state.Contacts) t.CapturedThisTurn = false;
+            Trades.ExpireRequests(state, events);
             events.Add(new TurnEndedEvent(state.CurrentPlayerId));
             if (state.AdditionalTurn)
             {

@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using OuterRim.Core.Model;
 
 namespace OuterRim.Core.Engine
 {
@@ -137,25 +138,55 @@ namespace OuterRim.Core.Engine
     }
 
     /// <summary>
-    /// R-9.6, R-16.15: gives credits to another player, one of the two being the current player. Not an action;
-    /// accepted at any moment of the turn, even while a decision is pending (R-16.16).
+    /// R-9.6, R-16.15: a credit request to another player, one of the two being the current player: "Ask Credits"
+    /// (<see cref="CreditRequestKind.Ask"/>) or "Send Credits" (<see cref="CreditRequestKind.Send"/>). Not an action
+    /// and no shared space needed; accepted at any moment of the turn, even while a decision is pending (R-16.16).
     /// </summary>
-    public sealed class GiveCreditsCommand : Command
+    public sealed class RequestCreditsCommand : Command
     {
-        public GiveCreditsCommand(string playerId, string toPlayerId, int amount) : base(playerId)
+        public RequestCreditsCommand(string playerId, string toPlayerId, CreditRequestKind kind, int amount) : base(playerId)
         {
             ToPlayerId = toPlayerId;
+            Kind = kind;
             Amount = amount;
         }
 
         public string ToPlayerId { get; }
 
+        public CreditRequestKind Kind { get; }
+
         public int Amount { get; }
+    }
+
+    /// <summary>The player a credit request was made to accepts or refuses it (R-9.6, R-9.7). Accepted at any moment of the turn.</summary>
+    public sealed class AnswerCreditRequestCommand : Command
+    {
+        public AnswerCreditRequestCommand(string playerId, int requestId, bool accept) : base(playerId)
+        {
+            RequestId = requestId;
+            Accept = accept;
+        }
+
+        public int RequestId { get; }
+
+        public bool Accept { get; }
+    }
+
+    /// <summary>The player who made a credit request withdraws it before it is answered.</summary>
+    public sealed class CancelCreditRequestCommand : Command
+    {
+        public CancelCreditRequestCommand(string playerId, int requestId) : base(playerId)
+        {
+            RequestId = requestId;
+        }
+
+        public int RequestId { get; }
     }
 
     /// <summary>
     /// The trade action (R-16.8): the current player offers credits and cards to a player in their space and asks
-    /// for credits and cards in return. The partner accepts or refuses; either way the action is used (R-4.9).
+    /// for credits and cards in return. The partner accepts or refuses the whole offer; the action is used only by
+    /// a trade carried out (R-4.9, R-16.8 reading in RULES §16.2).
     /// </summary>
     public sealed class OfferTradeCommand : Command
     {
