@@ -48,7 +48,12 @@ namespace OuterRim.Core.Rules
             return faction + " Patrol Lvl " + level.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        /// <summary>R-7.11: each hit deals 1 damage, each crit 2; focus and blank deal nothing.</summary>
+        /// <summary>Combat frame variable holding a player's "+N for that combat" bonus to a combat value.</summary>
+        public static string BonusVar(string playerId, string stat)
+        {
+            return "bonus." + playerId + "." + stat;
+        }
+
         /// <summary>
         /// Doctor Evazan (R-25.22): "both players may turn up to 2 of their blank dice to the chosen result". Turning a
         /// blank into a result is never worse, so up to 2 blanks of each player's roll are turned.

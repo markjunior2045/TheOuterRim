@@ -290,11 +290,16 @@ namespace OuterRim.Core.Engine
                     var ability = TriggersHandler.Find(ctx.Content, player, frame.Get("choice"));
                     return ability == null ? StepResult.Continue() : Run(frame, player, ability);
                 }
-                default:
+                case 2:
                     if (Combat.AtLimit(ctx.Content, ctx.State, player) && !player.Defeated)
                     {
                         PlayerRules.BecomeDefeated(ctx.Content, ctx.State, player, ctx.Events);
+                        // "When you become defeated, discard 1 of your crew" (Gift for Jabba).
+                        frame.Step = 3;
+                        return StepResult.Call(TriggersHandler.For("defeated", player.Id));
                     }
+                    return StepResult.Done();
+                default:
                     return StepResult.Done();
             }
         }

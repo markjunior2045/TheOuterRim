@@ -313,6 +313,16 @@ namespace OuterRim.Core.Engine
             {
                 return;
             }
+            // R-8.4, R-8.2, R-14.18: limits that hold at all times, settled once the operation is over.
+            if (state.Stack.Count == 0 && state.Pending == null && SettleHandler.Needed(content, state))
+            {
+                state.Stack.Add(new Frame(SettleHandler.HandlerId));
+                Resolver.Run(content, state, events);
+                if (Victory.Check(content, state, events))
+                {
+                    return;
+                }
+            }
             // "Have X" goals (Han Solo, Bossk, IG-88, Jyn Erso) complete as soon as their state holds.
             int guard = 0;
             while (state.Stack.Count == 0 && state.Pending == null && guard++ < 16
@@ -364,13 +374,13 @@ namespace OuterRim.Core.Engine
             switch (command)
             {
                 case GainCreditsCommand _:
-                    return GainCredits(state, player);
+                    return GainCredits(content, state, player);
                 case RecoverDamageCommand _:
                     return RecoverDamage(content, state, player);
                 case MoveCommand move:
                     return Move(content, state, player, move.Path);
                 case EndActionStepCommand _:
-                    return EndActionStep(state, player);
+                    return EndActionStep(content, state, player);
                 case EncounterCommand encounter:
                     return Encounter(content, state, player, encounter);
                 case UseAbilityCommand use:
@@ -495,7 +505,7 @@ namespace OuterRim.Core.Engine
         }
 
         /// <summary>R-4.6 planning option "gain 2,000 credits"; not allowed while defeated (R-4.8).</summary>
-        private static CommandResult GainCredits(GameState state, PlayerState player)
+        private static CommandResult GainCredits(GameContent content, GameState state, PlayerState player)
         {
             var check = CheckPlanningOption(state, player, "gaining credits");
             if (!check.Accepted)
@@ -509,6 +519,9 @@ namespace OuterRim.Core.Engine
             var events = new List<GameEvent>();
             PlayerRules.GainCredits(player, PlanningCredits, events);
             StartStep(state, TurnStep.Action, events);
+            // "When you choose to gain credits during the planning phase" (Lobot).
+            state.Stack.Add(TriggersHandler.For("planning_credits", player.Id));
+            Resolver.Run(content, state, events);
             return CommandResult.Ok(events);
         }
 
@@ -647,16 +660,19 @@ namespace OuterRim.Core.Engine
 
         // ---- Action and encounter steps ------------------------------------------
 
-        /// <summary>R-4.9: actions are optional; the player ends the action step when done.</summary>
-        private static CommandResult EndActionStep(GameState state, PlayerState player)
+        /// <summary>
+        /// R-4.9: actions are optional; the player ends the action step when done. "At the end of your action
+        /// step" abilities (Unrefined Coaxium) resolve before the encounter step begins.
+        /// </summary>
+        private static CommandResult EndActionStep(GameContent content, GameState state, PlayerState player)
         {
             if (state.Step != TurnStep.Action)
             {
                 return CommandResult.Rejected("R-4.2: the action step comes after the planning step.");
             }
-            var events = new List<GameEvent>();
-            StartStep(state, TurnStep.Encounter, events);
-            return CommandResult.Ok(events);
+            var frame = new Frame(TurnHandlers.EndActionStep);
+            frame.Set("player", player.Id);
+            return StartResolution(content, state, frame);
         }
 
         /// <summary>
@@ -1007,6 +1023,7 @@ namespace OuterRim.Core.Engine
         {
             state.TurnEndsAfterStep = false;
             state.UsedAbilities.Clear();
+            state.TurnModifiers.Clear();
             foreach (var p in state.Players)
             {
                 foreach (var a in p.Assets) a.GainedThisEncounter = false;

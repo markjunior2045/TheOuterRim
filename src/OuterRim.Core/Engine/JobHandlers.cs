@@ -393,7 +393,7 @@ namespace OuterRim.Core.Engine
                         PlayerRules.GainCredits(winner, (int)p["credits"]!, ctx.Events);
                         if (winner.Id == owner.Id && job != null)
                         {
-                            PlayerRules.GainFame(winner, (int?)p["active_player_fame"] ?? 0, ctx.Events);
+                            PlayerRules.GainFame(ctx.Content, ctx.State, winner, (int?)p["active_player_fame"] ?? 0, ctx.Events);
                             job.Set("claimed", "1");
                             job.Set("reward_given", "1");
                         }
@@ -647,7 +647,7 @@ namespace OuterRim.Core.Engine
                     frame.Step = 3;
                     if (frame.Get("ret.winner") != "attacker") return StepResult.Done();
                     PlayerRules.GainCredits(owner, 5000, ctx.Events);
-                    PlayerRules.GainFame(owner, frame.Get("more_fame") == "1" ? 2 : 1, ctx.Events);
+                    PlayerRules.GainFame(ctx.Content, ctx.State, owner, frame.Get("more_fame") == "1" ? 2 : 1, ctx.Events);
                     var job = Jobs.Nearest(ctx.State, Jobs.AttemptHandler);
                     job?.Set("claimed", "1");
                     job?.Set("reward_given", "1");

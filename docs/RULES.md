@@ -1141,6 +1141,8 @@ The engine must **pause** and ask for a decision in these cases, among others:
 - exactly one encounter resolved per turn (R-4.12);
 - each action performed at most once per action step (R-4.9).
 
+**Implementation note (T3.1):** `OuterRim.Core.Simulation.Invariants` and `InvariantMonitor` check these after every command of the V0 games (`tools/OuterRim.Terminal`). The damage and slot limits are checked once the operation in progress has finished (no decision pending), since a card may be choosing what to discard; the engine settles them at that point (R-8.4, R-14.18; reading in `REVIEW.md`). The encounter counted is the one chosen in the encounter step: an encounter a card resolves inside it is part of it. A turn may end before its encounter step (defeat, R-8.8; "end your turn" effects). The checker also verifies that a card is in one place only, that the resolution stack is empty unless a decision waits, and that the winner reached the fame requirement.
+
 ---
 
 ## 27. Gaps: what is **not** in these three files
@@ -1168,6 +1170,7 @@ Important for planning. The rulebooks give the rules system, not the content. Ev
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | §26.3: implementation note on how the V0 games check the invariants (T3.1). |
 | 2026-11-05 | Note after R-11.24: graph reading of patrol movement "toward the player" (T1.8), confirmed by the owner with the Learn to Play wording. |
 | 2026-11-05 | Note after R-7.20: the game rolls for patrols, contacts and card enemies (digital adaptation, owner decision). |
 | 2026-11-05 | §26.1: decision commands as built in T1.2 (`ChooseOption`, `ResolveTie`, `ChooseOrder`, keyed by decision id). |

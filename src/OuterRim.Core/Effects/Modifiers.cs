@@ -35,6 +35,29 @@ namespace OuterRim.Core.Effects
                     }
                 }
             }
+            foreach (var m in state.TurnModifiers)
+            {
+                if (m.PlayerId == player.Id && m.Stat == stat) total += m.By;
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// "When you gain fame, gain 1 additional fame" (Chromium Hull): extra fame added to every gain, read from
+        /// the player's "fame_gained" abilities. Applied by <see cref="Rules.PlayerRules.GainFame(GameContent, GameState, PlayerState, int, List{Engine.GameEvent})"/>.
+        /// </summary>
+        public static int FameGainBonus(GameContent content, GameState state, PlayerState player)
+        {
+            int total = 0;
+            foreach (var ability in AbilitySources.Of(content, player))
+            {
+                if (ability.TimingType != "trigger" || (string?)ability.Ability["timing"]!["event"] != "fame_gained") continue;
+                if (!Conditions.Eval(content, state, player, ability.Ability["condition"])) continue;
+                foreach (JObject effect in (JArray)ability.Ability["effects"]!)
+                {
+                    if ((string?)effect["op"] == "fame.gain") total += (int)effect["amount"]!;
+                }
+            }
             return total;
         }
 

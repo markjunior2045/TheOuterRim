@@ -191,7 +191,7 @@ namespace OuterRim.Core.Engine
                     foreach (var p in new[] { owner, state.FindPlayer(frame.Get("target"))! })
                     {
                         PlayerRules.GainCredits(p, 7000, ctx.Events);
-                        PlayerRules.GainFame(p, 1, ctx.Events);
+                        PlayerRules.GainFame(ctx.Content, state, p, 1, ctx.Events);
                     }
                     return StepResult.Done();
                 case "undercover_agent":

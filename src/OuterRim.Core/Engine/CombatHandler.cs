@@ -10,9 +10,8 @@ namespace OuterRim.Core.Engine
 {
     /// <summary>
     /// The five combat steps (R-7.10 to R-7.14) as a resolution frame. Variables are documented on
-    /// <see cref="Combat.Handler"/>. Steps marked "window" are where combat abilities plug in when the
-    /// effect engine is built (PLAN T2.3): start of combat (R-7.18), value changes and rerolls
-    /// (R-7.10, R-7.12), result changes (R-7.11).
+    /// <see cref="Combat.Handler"/>. Step order: 0, 10, 11 (start of combat R-7.18, then the values),
+    /// 1 to 8 (rolls with dice windows, winner, damage, "after you win"), 12 ("when you lose"), 9 (return).
     /// </summary>
     internal sealed class CombatHandler : IResolutionHandler
     {
@@ -38,16 +37,30 @@ namespace OuterRim.Core.Engine
                         ctx.Return("winner", "none");
                         return StepResult.Done();
                     }
-                    int attackerValue = Combat.Value(content, state, attacker, type);
+                    // R-7.18: "at the start of combat" abilities, the attacker's first, before the values are read
+                    // (Black Krrsantan, Doctor Evazan).
+                    frame.Step = 10;
+                    return StepResult.Call(TriggersHandler.For("combat_start", attacker.Id, StartContext(frame, "attacker")));
+                }
+                case 10:
+                    frame.Step = 11;
+                    if (defenderPlayer != null)
+                    {
+                        return StepResult.Call(TriggersHandler.For("combat_start", defenderPlayer.Id, StartContext(frame, "defender")));
+                    }
+                    return StepResult.Continue();
+                case 11:
+                {
+                    int attackerValue = Combat.Value(content, state, attacker, type) + Bonus(frame, attacker.Id, type);
                     string defenderValue = defenderPlayer != null
-                        ? Combat.Value(content, state, defenderPlayer, type).ToString(CultureInfo.InvariantCulture)
+                        ? (Combat.Value(content, state, defenderPlayer, type) + Bonus(frame, defenderPlayer.Id, type)).ToString(CultureInfo.InvariantCulture)
                         : frame.Get("defender_value");
                     frame.Set("attacker_value", attackerValue);
                     frame.Set("defender_value", defenderValue);
                     ctx.Events.Add(new CombatStartedEvent(frame.Get("type"), attacker.Id, defenderKind, frame.Get("defender"),
                         attackerValue, defenderValue));
                     frame.Step = 1;
-                    return StepResult.Continue(); // window: "at the start of combat" (R-7.18)
+                    return StepResult.Continue();
                 }
                 case 1:
                 {
@@ -176,12 +189,24 @@ namespace OuterRim.Core.Engine
                 case 8:
                 {
                     // "After you win a combat": triggers of the winning player, once the combat is over.
-                    frame.Step = 9;
+                    frame.Step = 12;
                     string winner = frame.Get("winner");
                     var winnerPlayer = winner == "attacker" ? attacker : winner == "defender" ? defenderPlayer : null;
                     if (winnerPlayer != null)
                     {
                         return StepResult.Call(TriggersHandler.For("combat_won", winnerPlayer.Id, Context(frame, winner)));
+                    }
+                    return StepResult.Continue();
+                }
+                case 12:
+                {
+                    // "When you lose a ship combat, discard this card" (Chromium Hull): the losing player's triggers.
+                    frame.Step = 9;
+                    string loser = frame.Get("winner") == "attacker" ? "defender" : "attacker";
+                    var loserPlayer = loser == "attacker" ? attacker : defenderPlayer;
+                    if (loserPlayer != null)
+                    {
+                        return StepResult.Call(TriggersHandler.For("combat_lost", loserPlayer.Id, Context(frame, loser)));
                     }
                     return StepResult.Continue();
                 }
@@ -214,6 +239,23 @@ namespace OuterRim.Core.Engine
                 }
             }
             return Combat.GameLabel(defender);
+        }
+
+        /// <summary>What a side's abilities see when the combat starts: its type and the opponent.</summary>
+        private static Dictionary<string, string> StartContext(Frame frame, string side)
+        {
+            return new Dictionary<string, string>
+            {
+                ["combat_type"] = frame.Get("type"),
+                ["opponent"] = side == "attacker" ? frame.Get("defender_kind") : "player",
+            };
+        }
+
+        /// <summary>"Gain +N for that combat" bonuses set on this frame by start-of-combat abilities (stat.modify, this_combat).</summary>
+        private static int Bonus(Frame frame, string playerId, CombatType type)
+        {
+            string key = Combat.BonusVar(playerId, type == CombatType.Ground ? "ground_combat" : "ship_combat");
+            return frame.Vars.ContainsKey(key) ? frame.GetInt(key) : 0;
         }
 
         /// <summary>What a side's abilities see about this combat: type, result for that side, opponent.</summary>

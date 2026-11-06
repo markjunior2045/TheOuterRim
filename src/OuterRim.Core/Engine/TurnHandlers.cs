@@ -5,6 +5,7 @@ namespace OuterRim.Core.Engine
     internal static class TurnHandlers
     {
         public const string EncounterStep = "turn.encounter_step";
+        public const string EndActionStep = "turn.end_action_step";
         public const string AbilityStep = "turn.ability_step";
         public const string ChooseStartingReputation = "setup.starting_reputation";
         public const string EncounterSpace = "encounter.space";
@@ -13,6 +14,8 @@ namespace OuterRim.Core.Engine
         public static void Register()
         {
             ResolutionHandlers.Register(new EncounterStepHandler());
+            ResolutionHandlers.Register(new EndActionStepHandler());
+            ResolutionHandlers.Register(new SettleHandler());
             ResolutionHandlers.Register(new AbilityStepHandler());
             ResolutionHandlers.Register(new StartingReputationHandler());
             ResolutionHandlers.Register(new MarketBuyHandler());
@@ -78,6 +81,29 @@ namespace OuterRim.Core.Engine
                         context.Events.Add(new EncounterResolvedEvent(context.State.CurrentPlayerId, "ability", frame.Get("card")));
                         GameEngine.EndTurn(context.State, context.Events);
                         break;
+                }
+                return StepResult.Done();
+            }
+        }
+
+        /// <summary>
+        /// The end of the action step: "at the end of your action step" triggers, then the encounter step (R-4.2).
+        /// A player defeated by them goes no further: their turn ends (R-8.8.4).
+        /// </summary>
+        private sealed class EndActionStepHandler : IResolutionHandler
+        {
+            public string Id => EndActionStep;
+
+            public StepResult Step(ResolutionContext context, Frame frame)
+            {
+                if (frame.Step == 0)
+                {
+                    frame.Step = 1;
+                    return StepResult.Call(TriggersHandler.For("action_step_end", frame.Get("player")));
+                }
+                if (!context.State.TurnEndsAfterStep)
+                {
+                    GameEngine.StartStep(context.State, Model.TurnStep.Encounter, context.Events);
                 }
                 return StepResult.Done();
             }

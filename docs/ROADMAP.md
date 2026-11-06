@@ -2,7 +2,7 @@
 
 Short view of where the project is going. Task details live in `PLAN.md`; decisions in `DECISIONS.md`. Order set by the owner on 2026-11-04.
 
-Last updated: 2026-11-05 (Phase 1 done; sub-steps added).
+Last updated: 2026-11-05 (V0 done).
 
 Status: `Done` · `Next` · `To do` · `Later`.
 
@@ -17,8 +17,8 @@ Status: `Done` · `Next` · `To do` · `Later`.
 | 5 | Data | card data format, validator, base pack; small sets encoded | Done (base) |
 | 6 | Core | rules engine in plain C#, tested with `dotnet test` | Done |
 | 7 | Effects and content | effect engine; market, encounters, databank and secrets playable in the core | Done (base) |
-| 8 | V0 | seeded bot games in a terminal, checking every rule invariant | **Next** |
-| 9 | Prototype (V1) | Unity project; map, movement and cards on screen with the Tabletop scans | To do |
+| 8 | V0 | seeded bot games in a terminal, checking every rule invariant | Done |
+| 9 | Prototype (V1) | Unity project; map, movement and cards on screen with the Tabletop scans | **Next** |
 | 10 | After V1 | solo mode, bots, online play, *Unfinished Business* | Later |
 | 11 | Polish | card templates, Portuguese, graphics, animation, Spanish, sound | Last |
 
@@ -66,10 +66,10 @@ Status: `Done` · `Next` · `To do` · `Later`.
 - T2.6 encounters, contacts, databank and secrets — Done: encounter decks, contact tokens on the map, databank procedures (cargo check, job steps, favors, sabacc) — encode the seven encounter decks and the databank
 - Remove the remaining stubs (encountering a space) — Done
 
-### 8. V0 · Next
-- T3.1 terminal game with a random bot; 1,000 seeded games without a crash or a broken invariant
+### 8. V0 · Done
+- T3.1 terminal game with a random bot; 1,000 seeded games without a crash or a broken invariant — Done (the games found 12 engine defects, all fixed)
 
-### 9. Prototype (V1) · To do
+### 9. Prototype (V1) · Next
 - T0.4 Unity project, core as a local package, Unity CLI wiring
 - T3.2 map and movement on screen
 - T3.3 first card object (data from the card file, full scan shown)

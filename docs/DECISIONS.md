@@ -1,6 +1,6 @@
 # DECISIONS.md — Outer Rim digital
 
-Last updated: 2026-11-04 (roadmap and prototype art exception)
+Last updated: 2026-11-05 (simulation in the core, T3.1)
 
 Personal, non-commercial project: a digital version of the *Star Wars: Outer Rim* board game, built in Unity with Claude Code, to play with friends on PC.
 
@@ -114,6 +114,7 @@ Details (full card lists, animations, screens) live in their own documents as th
 - **JSON library (2026-11-05):** Newtonsoft.Json in the core: Unity ships it as `com.unity.nuget.newtonsoft-json` (declared in the core's `package.json`, referenced by its `.asmdef`), and the test project uses the same library from NuGet. `System.Text.Json` is not available on Unity's .NET Standard 2.1.
 - **Random numbers (2026-11-05):** the core uses its own PCG32 generator, not `System.Random`, so the same seed gives the same game in .NET and in Unity; its state is part of the save.
 - **Game data (2026-11-05):** card data is a tree of effect primitives (`DATA_FORMAT.md`), checked against one registry (`data/schema/registry.json`) that the Python validator reads now and the C# loader reads later. Card ids are the image ids from the extraction. Card text lives only in localization files; the English file is generated from the transcriptions.
+- **Simulation (2026-11-05, T3.1):** the random bot, the game runner and the invariant checker live in the core (`OuterRim.Core.Simulation`, no `UnityEngine`), so the same code can fill bot seats and run debug checks in Unity later. The bot knows no rules: it proposes candidate commands and the engine accepts or rejects them, relying on "a rejected command changes nothing" (checked by the tests). It draws from its own seeded generator, so a game seed alone replays a game. The terminal runner is a console project in `tools/OuterRim.Terminal/` that compiles the core sources by glob, like the tests.
 - Before V1, define the **full inventory** of card types, effect types and components of the base game; implement one slice at a time.
 
 ### 7.1 Image extraction tooling (Adopted)
@@ -132,7 +133,7 @@ Decided:
 
 Suggested (not confirmed):
 - Save and load already in V1.
-- A screenless "V0": the core running in a terminal with automated test games.
+- ~~A screenless "V0": the core running in a terminal with automated test games.~~ Done in T3.1 (2026-11-05).
 - First end-to-end test: one Job card (data from the card file, full scan shown, three sample cards). The template version with English and Portuguese text comes after V1 (section 3).
 - Official solo mode before the general bot.
 - Online connection through Unity Relay (free at this scale), behind the network interface.

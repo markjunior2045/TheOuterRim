@@ -195,6 +195,7 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
   - Jobs: attempted at the destination as the encounter; step procedures; favors; sabacc; Wanted; reward bonuses and Sy Snootles (R-15.25 to R-15.39, R-15.92, R-25.10, R-25.11).
   - Crew and luxury rules: K-2SO, Ponda Baba, Doctor Evazan, Savvy Pilot, BoShek, Lobot; Stolen Jewels, Undercover Agent, Dejarik Holotable, Chromium Hull's encounter; extra market actions (Doctor Aphra, W1-LE); bounties against your own or another player's crew (R-15.56 to R-15.64).
   - Sweeps resolve every encounter section, contact card and job, accepting and declining. Save format 0.14. 322 tests.
+  - The V0 games (T3.1) later found effects and triggers this list counted as built but that never ran; fixed there.
 - **Pending:**
   - R-15.59: while fighting a crew for its bounty, its owner still has that crew's abilities (no rule of the base game cards depends on it yet).
   - `[UB]` rules wait for the expansion pack: R-12.14 (contacts matching a character), the reveal contact icon (R-16.26), multi-player and opposed jobs (R-15.40, R-15.41), bounties on characters (R-15.65 to R-15.71), the Core Worlds deck (R-15.80).
@@ -228,8 +229,24 @@ Verified with `dotnet test`. Uses real card and map data where it already exists
 
 ## Phase 3 — Playable
 
-### T3.1 — V0: terminal game with random bot · `TODO` (T2.5, T2.6)
+### T3.1 — V0: terminal game with random bot · `DONE` (2026-11-05)
 - **Done when:** 1,000 seeded games finish without crashing or breaking any invariant in `RULES.md` §26.3.
+- **Delivered:**
+  - `OuterRim.Core.Simulation` (in the core, `DECISIONS.md` §7): `RandomBot` (proposes shuffled candidate commands for whoever must act, the engine judges them; its own generator), `Invariants` (R-8.4, R-18.14, R-9.8, R-10.4, R-11.9, R-14.18, a card in one place only, stack empty unless a decision waits, winner's fame), `InvariantMonitor` (R-4.12 one chosen encounter per turn, R-4.9 and R-16.19 actions once per action step), `GameRunner` (one seeded game: 1 to 4 players and distinct characters from the seed, invariants after every command, save round trip every 50 commands, optional check that rejected commands change nothing).
+  - `PackLoader`: content built from the pack manifests; the tests and the terminal use it.
+  - `tools/OuterRim.Terminal`: `--games`, `--seed`, `--players`, `--rounds` (default 1,000), `--jobs` (parallel, same results), `--log` (every command and event of one game), `--check-rejections`. Exit code 0 when every game is sound.
+  - Result (seeds 1 to 1,000, Release, 16 cores, 446 s): every game sound; 998 ended with a winner (average 316 rounds, 25 to 992), 2 reached the 1,000-round limit; 3.8 million commands. Every character won games (93 to 169 wins each).
+  - Tests: `SimulationTests` (16 seeded games end with a winner, replay by seed, rejected commands change nothing, the checker and monitor catch each broken rule), `V0FindingTests` (one per defect below, plus a coverage test: every timing event in the card data is raised by the engine). Save format 0.15. 350 tests.
+- **Engine defects the games found, all fixed:**
+  1. Ketsu Onyo-0's "within 3 spaces": the patrol half crashed, the contact half only looked at her own planet.
+  2. Declining a databank card's crew for lack of a slot crashed (it looked for an encounter deck).
+  3. `stat.modify` with a duration was never built: "until the end of your turn" (Lothal-Mon Calamari-1 mod, new `TurnModifiers` in the state) and "for that combat" (Black Krrsantan).
+  4. to 9. Six timing events no rule raised: `combat_start` (Black Krrsantan, Doctor Evazan), `combat_lost` and `fame_gained` (Chromium Hull), `defeated` (Gift for Jabba), `action_step_end` (Unrefined Coaxium), `planning_credits` (Lobot). The T2.6 coverage test checked ops only.
+  10. `asset.take` "from your opponent" crashed, and combats against a chosen player did not name the opponent for their win and lose effects (Tatooine-Nal Hutta).
+  11. R-14.18 was only enforced when gaining: losing a slot-giving asset (bartering Smuggling Compartment) left assets without slots.
+  12. R-8.4: losing a health bonus with its card left more damage than health (Han Solo-4 losing Chewbacca).
+  - 11 and 12 are settled by the engine once the operation in progress has finished (`SettleHandler`, after every command); reading in `REVIEW.md`.
+- **Not done:** the random bot needs about 300 rounds to win; no strategy (bots come after V1). The runner is not tuned for speed (about 7.5 minutes for 1,000 games in Release on 16 cores).
 
 ### T3.2 — Unity: map and movement · `TODO` (T0.4, T1.4)
 - Show the map, pick a destination, animate the ship from start to end space.
@@ -270,6 +287,7 @@ Official solo mode → general bot → host and room code (relay behind the netw
 
 | Date | Change |
 |---|---|
+| 2026-11-05 | T3.1 done: V0 with random bots in the core and a terminal runner; 12 engine defects found and fixed; save format 0.15. |
 | 2026-11-05 | T2.6 done: encounter decks, contacts, databank procedures, jobs, crew rules; every base game effect built; save format 0.14. |
 | 2026-11-05 | T2.5 done: market decks and action, deliver action with databank #1, extra fame; four decks encoded; save format 0.11. |
 | 2026-11-05 | T2.9 added and done: character setup from the starting databank cards (R-3.15). |

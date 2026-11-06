@@ -1,0 +1,196 @@
+#nullable enable
+using System.Collections.Generic;
+using OuterRim.Core.Content;
+using OuterRim.Core.Effects;
+using OuterRim.Core.Engine;
+using OuterRim.Core.Model;
+using OuterRim.Core.Random;
+using OuterRim.Core.Rules;
+
+namespace OuterRim.Core.Simulation
+{
+    /// <summary>
+    /// A player with no strategy (PLAN T3.1). It lists plausible commands for whoever must act, in random
+    /// order; the caller tries them until the engine accepts one. The engine is the only judge of what is
+    /// legal, so the bot never needs to know the rules, and a rejected command changes nothing.
+    /// It draws from its own generator, so the game's random numbers depend only on the game seed and
+    /// the commands played.
+    /// </summary>
+    public sealed class RandomBot
+    {
+        /// <summary>Random walks offered as moves in each planning step.</summary>
+        private const int MoveCandidates = 3;
+
+        private readonly GameRandom _rng;
+
+        public RandomBot(ulong seed)
+        {
+            _rng = new GameRandom(seed, 0xB07UL);
+        }
+
+        public GameRandom Random => _rng;
+
+        /// <summary>The player who must act now: the one a decision waits on, else the current player.</summary>
+        public static string Actor(GameState state)
+        {
+            return state.Pending != null ? state.Pending.PlayerId : state.CurrentPlayerId;
+        }
+
+        /// <summary>Commands for <see cref="Actor"/>, shuffled. Some may be illegal; the engine rejects those.</summary>
+        public List<Command> Candidates(GameContent content, GameState state)
+        {
+            var list = new List<Command>();
+            var actor = Actor(state);
+            var player = state.FindPlayer(actor)!;
+            if (state.Pending != null)
+            {
+                Answers(state.Pending, list);
+            }
+            else
+            {
+                switch (state.Step)
+                {
+                    case TurnStep.Planning:
+                        Planning(content, state, player, list);
+                        break;
+                    case TurnStep.Action:
+                        Action(player, list);
+                        break;
+                    default:
+                        Encounter(state, player, list);
+                        break;
+                }
+                Abilities(content, player, list);
+            }
+            _rng.Shuffle(list);
+            return list;
+        }
+
+        private void Answers(PendingDecision d, List<Command> list)
+        {
+            switch (d.Kind)
+            {
+                case DecisionKind.ChooseOrder:
+                    var order = new List<string>();
+                    foreach (var o in d.Options) order.Add(o.Id);
+                    _rng.Shuffle(order);
+                    list.Add(new ChooseOrderCommand(d.PlayerId, d.Id, order));
+                    break;
+                case DecisionKind.ResolveTie:
+                    foreach (var o in d.Options) list.Add(new ResolveTieCommand(d.PlayerId, d.Id, o.Id));
+                    break;
+                default:
+                    foreach (var o in d.Options) list.Add(new ChooseOptionCommand(d.PlayerId, d.Id, o.Id));
+                    break;
+            }
+        }
+
+        /// <summary>R-4.6: gain credits, recover damage, or move along a random path within the hyperdrive.</summary>
+        private void Planning(GameContent content, GameState state, PlayerState player, List<Command> list)
+        {
+            list.Add(new GainCreditsCommand(player.Id));
+            list.Add(new RecoverDamageCommand(player.Id));
+            int hyperdrive = GameEngine.Hyperdrive(content, state, player);
+            for (int i = 0; i < MoveCandidates; i++)
+            {
+                list.Add(new MoveCommand(player.Id, RandomWalk(content, state, player, 1 + _rng.NextInt(System.Math.Max(1, hyperdrive)))));
+            }
+        }
+
+        /// <summary>A path of adjacent spaces that stops where movement must stop (R-5.11, R-5.18, R-5.20).</summary>
+        private List<string> RandomWalk(GameContent content, GameState state, PlayerState player, int length)
+        {
+            var path = new List<string>();
+            var at = player.SpaceId;
+            for (int i = 0; i < length; i++)
+            {
+                var next = new List<string>(content.Map.Neighbours(at));
+                next.Sort(System.StringComparer.Ordinal); // same walk on every runtime
+                if (next.Count == 0) break;
+                at = next[_rng.NextInt(next.Count)];
+                path.Add(at);
+                if (GameEngine.StopsMovement(state, player, at)) break;
+            }
+            return path;
+        }
+
+        /// <summary>R-4.9: market discards and purchases on every deck, deliveries, and ending the step.</summary>
+        private void Action(PlayerState player, List<Command> list)
+        {
+            list.Add(new EndActionStepCommand(player.Id));
+            foreach (var deck in Market.Decks)
+            {
+                list.Add(new MarketDiscardCommand(player.Id, deck));
+                list.Add(new MarketBuyCommand(player.Id, deck));
+                var barter = RandomSubset(player.Assets);
+                if (barter.Count > 0) list.Add(new MarketBuyCommand(player.Id, deck, barter));
+            }
+            // R-16.1, R-16.4: cargo and captured contacts (named by their bounty card).
+            var deliverable = new List<string>();
+            foreach (var a in player.Assets)
+            {
+                if (a.Kind == "cargo" || a.Kind == "bounty")
+                {
+                    deliverable.Add(a.CardId);
+                    list.Add(new DeliverCommand(player.Id, new[] { a.CardId }));
+                }
+            }
+            if (deliverable.Count > 1)
+            {
+                _rng.Shuffle(deliverable);
+                list.Add(new DeliverCommand(player.Id, deliverable));
+            }
+        }
+
+        /// <summary>R-4.13: the space, a patrol, a contact, a job, a bounty against crew, or another player.</summary>
+        private static void Encounter(GameState state, PlayerState player, List<Command> list)
+        {
+            list.Add(new EncounterCommand(player.Id, EncounterKind.Space));
+            foreach (var p in state.PatrolsIn(player.SpaceId))
+            {
+                list.Add(new EncounterCommand(player.Id, EncounterKind.Patrol, Patrols.Id(p.Faction)));
+            }
+            foreach (var t in state.Contacts)
+            {
+                if (t.OnMap && t.SpaceId == player.SpaceId)
+                {
+                    list.Add(new EncounterCommand(player.Id, EncounterKind.Contact, t.Id));
+                }
+            }
+            foreach (var a in player.Assets)
+            {
+                if (a.Kind == "job") list.Add(new EncounterCommand(player.Id, EncounterKind.Job, a.CardId));
+                if (a.Kind == "bounty") list.Add(new EncounterCommand(player.Id, EncounterKind.BountyCrew, a.CardId));
+            }
+            foreach (var other in state.Players)
+            {
+                if (other.Id != player.Id && other.SpaceId == player.SpaceId)
+                {
+                    list.Add(new EncounterCommand(player.Id, EncounterKind.Player, other.Id));
+                }
+            }
+        }
+
+        /// <summary>Every "Planning:", "Action:" and "Encounter:" ability the player has, including step goals (R-4.7, R-4.11, R-4.16).</summary>
+        private static void Abilities(GameContent content, PlayerState player, List<Command> list)
+        {
+            foreach (var a in AbilitySources.Of(content, player))
+            {
+                if (a.TimingType == "step" || Goals.StepOf(a) != null)
+                {
+                    list.Add(new UseAbilityCommand(player.Id, a.CardId, a.Path));
+                }
+            }
+        }
+
+        private List<string> RandomSubset(List<AssetState> assets)
+        {
+            var result = new List<string>();
+            foreach (var a in assets)
+            {
+                if (_rng.NextInt(2) == 0) result.Add(a.CardId);
+            }
+            return result;
+        }
+    }
+}

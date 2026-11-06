@@ -162,7 +162,8 @@ namespace OuterRim.Core.Engine
     /// <summary>
     /// Encountering a contact (R-12.15 to R-12.19): the player chooses a token on their planet before turning
     /// it faceup; with a matching bounty they may fight it instead of resolving its databank card (R-12.18).
-    /// Vars: "player" (default current), "target" (token id, or "" to choose).
+    /// Vars: "player" (default current), "target" (token id, or "" to choose), "within" (choose among tokens
+    /// up to that many spaces away instead of on the player's planet).
     /// </summary>
     internal sealed class ContactEncounterHandler : IResolutionHandler
     {
@@ -179,7 +180,19 @@ namespace OuterRim.Core.Engine
                     frame.Step = 1;
                     if (frame.Vars.TryGetValue("target", out var t) && t.Length > 0) return StepResult.Continue();
                     var options = new List<string>();
-                    foreach (var token in Contacts.OnPlanet(state, player.SpaceId)) options.Add(token.Id);
+                    if (frame.Vars.TryGetValue("within", out var within))
+                    {
+                        // R-12.10: a token counts as being on its planet; R-5.29: shortest distance.
+                        var near = new HashSet<string>(ctx.Content.Map.Within(player.SpaceId, int.Parse(within, System.Globalization.CultureInfo.InvariantCulture)));
+                        foreach (var token in state.Contacts)
+                        {
+                            if (token.OnMap && near.Contains(token.SpaceId)) options.Add(token.Id);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var token in Contacts.OnPlanet(state, player.SpaceId)) options.Add(token.Id);
+                    }
                     if (options.Count == 0)
                     {
                         ctx.Return("failed", "true");
@@ -431,6 +444,11 @@ namespace OuterRim.Core.Engine
                         var encounter = new Frame(Contacts.EncounterHandler);
                         encounter.Set("player", owner.Id);
                         encounter.Set("target", "");
+                        // Ketsu Onyo: "a ... contact token that is within 3 spaces of you".
+                        if (node["where"] is JObject where && where["within"] is JObject within)
+                        {
+                            encounter.Set("within", ((int)within["distance"]!).ToString(System.Globalization.CultureInfo.InvariantCulture));
+                        }
                         return StepResult.Call(encounter);
                     }
                     EffectHandlers.MarkFailedFromChild(frame);

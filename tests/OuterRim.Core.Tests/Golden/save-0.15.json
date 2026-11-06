@@ -1,5 +1,5 @@
 {
-  "format": "outer-rim-save/0.14",
+  "format": "outer-rim-save/0.15",
   "packs": [
     {
       "id": "base",
@@ -610,6 +610,7 @@
     ],
     "fameRequirement": 10,
     "planetMarkers": [],
+    "turnModifiers": [],
     "usedAbilities": [],
     "winnerId": "",
     "turnEndsAfterStep": false,

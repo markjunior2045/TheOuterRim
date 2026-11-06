@@ -1,0 +1,4 @@
+<Project>
+  <!-- Same settings as tests/: build output in <repo>/artifacts, C# 9 so the core compiles as under Unity. -->
+  <Import Project="..\tests\Directory.Build.props" />
+</Project>

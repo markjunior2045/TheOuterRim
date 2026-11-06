@@ -83,6 +83,17 @@ namespace OuterRim.Core.Rules
 
         // ---- fame (R-18) ------------------------------------------------------------------------
 
+        /// <summary>Gaining fame, with "gain 1 additional fame" abilities (Chromium Hull). Every rule and effect uses this one.</summary>
+        public static void GainFame(GameContent content, GameState state, PlayerState player, int amount, List<GameEvent> events)
+        {
+            if (amount <= 0)
+            {
+                return;
+            }
+            GainFame(player, amount + Effects.Modifiers.FameGainBonus(content, state, player), events);
+        }
+
+        /// <summary>Adds exactly <paramref name="amount"/> fame, with no ability applied.</summary>
         public static void GainFame(PlayerState player, int amount, List<GameEvent> events)
         {
             if (amount <= 0)

@@ -50,6 +50,23 @@ namespace OuterRim.Core.Engine
         public int Amount { get; }
     }
 
+    /// <summary>R-8.4: damage tokens above a health or hull that went down were removed.</summary>
+    public sealed class ExcessDamageRemovedEvent : GameEvent
+    {
+        public ExcessDamageRemovedEvent(string playerId, int character, int ship)
+        {
+            PlayerId = playerId;
+            Character = character;
+            Ship = ship;
+        }
+
+        public string PlayerId { get; }
+
+        public int Character { get; }
+
+        public int Ship { get; }
+    }
+
     public sealed class DamageRecoveredEvent : GameEvent
     {
         public DamageRecoveredEvent(string playerId, int character, int ship)

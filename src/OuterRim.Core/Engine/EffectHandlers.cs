@@ -45,7 +45,8 @@ namespace OuterRim.Core.Engine
             "slot.modify", "limit.trait", "rule.modify",
             // Replacement-only ops, applied by the damage frame.
             "damage.cap",
-            // Passive-only ops, read as queries by Modifiers or by the rules that check them.
+            // Passive ops, read as queries by Modifiers or by the rules that check them (stat.modify also runs
+            // as an effect with a duration).
             "stat.modify", "dice.opponent_fewer", "fame.extra",
         };
 
@@ -465,8 +466,32 @@ namespace OuterRim.Core.Engine
                     return lost > 0;
                 }
                 case "fame.gain":
-                    PlayerRules.GainFame(target, Amount(), events);
+                    PlayerRules.GainFame(content, state, target, Amount(), events);
                     return true;
+                case "stat.modify":
+                {
+                    // A passive "Gain +N" is read as a query (Modifiers.StatBonus); here it lasts for a while.
+                    string stat = (string)node["stat"]!;
+                    int by = Selectors.Amount(content, owner, node["by"]!);
+                    switch ((string?)node["duration"])
+                    {
+                        case "end_of_turn":
+                            // Lothal-Mon Calamari-1 mod: "+4 {HYPERDRIVE} until the end of your turn".
+                            state.TurnModifiers.Add(new StatModifier { PlayerId = target.Id, Stat = stat, By = by });
+                            return true;
+                        case "this_combat":
+                        {
+                            // Black Krrsantan: "+2 {GROUND_COMBAT} for that combat", read when the combat takes its values.
+                            var combat = Jobs.Nearest(state, Combat.Handler);
+                            if (combat == null) return false;
+                            string key = Combat.BonusVar(target.Id, stat);
+                            combat.Set(key, (combat.Vars.ContainsKey(key) ? combat.GetInt(key) : 0) + by);
+                            return true;
+                        }
+                        default:
+                            throw new NotSupportedException("stat.modify duration '" + (string?)node["duration"] + "' is not implemented yet.");
+                    }
+                }
                 case "fame.lose":
                     return PlayerRules.LoseFame(target, Amount(), events) == Amount();
                 case "rep.gain":
@@ -525,7 +550,7 @@ namespace OuterRim.Core.Engine
                     int credits = r.Context.TryGetValue("reward_credits", out var rc) ? int.Parse(rc, CultureInfo.InvariantCulture) : 0;
                     if (credits <= 0) return false;
                     PlayerRules.LoseCredits(owner, credits, events);
-                    PlayerRules.GainFame(owner, 1, events);
+                    PlayerRules.GainFame(content, state, owner, 1, events);
                     return true;
                 }
                 case "turn.additional":
@@ -887,6 +912,8 @@ namespace OuterRim.Core.Engine
                         combat.Set("defender_kind", "player");
                         combat.Set("defender", defender.Id);
                         combat.Set("defender_value", "0");
+                        // "Take ... from your opponent" in the win or lose effects (Tatooine-Nal Hutta).
+                        combat.Set("ctx.opponent", defender.Id);
                     }
                     else if (opponent["npc"] is JObject npc)
                     {

@@ -40,22 +40,10 @@ namespace OuterRim.Core.Tests
 
         public static readonly Content.GameContent Base = Build();
 
+        /// <summary>The base pack as its manifest lists it, through the same loader the terminal runner uses.</summary>
         private static Content.GameContent Build()
         {
-            var content = new Content.GameContent(
-                Repo.Maps().Build("standard"),
-                Content.GameContent.ReadShipSheets(Repo.Read("data/packs/base/cards/ship-sheets.json")),
-                Content.GameContent.ReadCharacters(Repo.Read("data/packs/base/cards/characters.json")));
-            content.AddNames(Repo.Read("data/packs/base/loc/en.json"));
-            content.AddPatrols(Content.GameContent.ReadPatrols(Repo.Read("data/packs/base/cards/patrols.json")));
-            content.SetBoardSlots(Repo.Read("data/packs/base/cards/player-boards.json"));
-            foreach (var file in new[] { "market-gear", "market-cargo", "market-job", "market-bounty", "market-luxury", "market-ship",
-                "characters", "ship-sheets", "databank-starting", "databank-cargo-check", "contacts", "databank-contacts", "databank-jobs",
-                "encounter-cantonica-ord-mantell", "encounter-kessel-maelstrom", "encounter-lothal-mon-calamari", "encounter-navpoint", "encounter-ring-of-kafrene-takodana", "encounter-ryloth-naboo", "encounter-tatooine-nal-hutta" })
-            {
-                content.AddCards(Repo.Read("data/packs/base/cards/" + file + ".json"));
-            }
-            return content;
+            return Content.PackLoader.Load(Repo.Read, new[] { "data/packs/base/pack.json" });
         }
     }
 

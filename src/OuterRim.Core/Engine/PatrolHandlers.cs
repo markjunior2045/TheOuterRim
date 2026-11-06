@@ -163,7 +163,7 @@ namespace OuterRim.Core.Engine
             {
                 var token = ctx.Content.PatrolToken(faction, patrol.Level);
                 PlayerRules.GainCredits(player, token.RewardCredits, ctx.Events);
-                PlayerRules.GainFame(player, token.RewardFame, ctx.Events);
+                PlayerRules.GainFame(ctx.Content, ctx.State, player, token.RewardFame, ctx.Events);
                 if (!Effects.Modifiers.HasRule(ctx.Content, ctx.State, player, "no_reputation_loss_on_patrol_win"))
                 {
                     PlayerRules.LoseReputation(player, faction, 1, ctx.Events); // R-11.8, unless IG-2000

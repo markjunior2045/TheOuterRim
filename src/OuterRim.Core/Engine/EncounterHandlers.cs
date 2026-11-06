@@ -227,9 +227,11 @@ namespace OuterRim.Core.Engine
                 gain.Set("traits", MarketBuyHandler.Traits(asset));
                 return StepResult.Call(gain);
             }
-            // Declined for lack of a slot (R-14.5): a card left by a secret goes back to its deck.
+            // Declined for lack of a slot (R-14.5): a card left by a secret goes back to its deck. A databank
+            // card's crew (contact cards, R-13) has no deck: the databank card is only read.
             var held = Assets.Find(owner, (string)ctx.Content.Card(cardId)["asset"]!) != null;
-            if (!held && !IsBeingDrawn(ctx, cardId))
+            bool encounterCard = (string?)ctx.Content.Card(cardId)["kind"] == "encounter";
+            if (!held && encounterCard && !IsBeingDrawn(ctx, cardId))
             {
                 Encounters.ToBottom(ctx.Content, ctx.State, cardId);
             }

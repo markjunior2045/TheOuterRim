@@ -20,7 +20,7 @@ Repository root: `C:\TheOuterRimProject\TheOuterRim` (this folder).
 | `src/OuterRim.Core/` | Rules core. The only copy of the core source. |
 | `tests/OuterRim.Core.Tests/` | xUnit project that compiles the core source files directly. |
 | `data/` | Game data (JSON). |
-| `tools/` | Scripts. |
+| `tools/` | Scripts, and the V0 terminal runner (`tools/OuterRim.Terminal/`, compiles the core sources like the tests). |
 | `unity/` | Unity project (created in T0.4). |
 | `artifacts/` | .NET build output. Git-ignored. |
 
@@ -42,6 +42,10 @@ Run from the repository root.
 - Run all tests: `dotnet test`
 - Regenerate the golden save after an intended save format change (bump `SaveSerializer.Format` first): set `OUTERRIM_UPDATE_GOLDEN=1` and run `dotnet test`
 - Build only: `dotnet build`
+- V0, seeded games between random bots with every invariant checked (T3.1). Exit code 0 when every game was sound:
+  `dotnet run --project tools/OuterRim.Terminal -c Release -- --games 1000 --seed 1`
+  One game with its full command and event log: `dotnet run --project tools/OuterRim.Terminal -- --seed 42`
+  (`--help` lists the options: players, round limit, parallel jobs, rejected-command check.)
 - Unity and Unity CLI commands: to be added in T0.4.
 - Install the Python tool dependencies: `pip install -r tools/requirements.txt`
 - Prepare reading copies of card images for a transcription batch (written to the git-ignored `artifacts/transcription-work/`; the source folder is never modified):

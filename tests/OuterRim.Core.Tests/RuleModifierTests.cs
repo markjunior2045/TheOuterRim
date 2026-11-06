@@ -70,9 +70,10 @@ namespace OuterRim.Core.Tests
         public void IG88_TakesADroidCrew_FromAPlayerInHisSpace()
         {
             var s = Game(Ig88, second: Ketsu);
+            GameEngine.Execute(C, s, new MoveCommand("p1", new string[0]));
+            // More crew than Ketsu's slots hold: the ability's command settles R-14.18 only after taking one.
             P(s, "p2").Assets.Add(new AssetState { CardId = "test-human-crew", Kind = "crew" });
             P(s, "p2").Assets.Add(new AssetState { CardId = "test-droid-crew", Kind = "crew" });
-            GameEngine.Execute(C, s, new MoveCommand("p1", new string[0]));
             Assert.True(GameEngine.Execute(C, s, new UseAbilityCommand("p1", Ig88, "sides[0].abilities[1]")).Accepted);
             Assert.Equal(new[] { "test-droid-crew" }, P(s, "p1").Assets.Select(a => a.CardId));
             Assert.Equal(new[] { "test-human-crew" }, P(s, "p2").Assets.Select(a => a.CardId));

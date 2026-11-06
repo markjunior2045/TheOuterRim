@@ -28,6 +28,19 @@ namespace OuterRim.Core.Engine
             {
                 case 0:
                 {
+                    if (node["from"]!.Type == JTokenType.String)
+                    {
+                        // "Take ... from your opponent" (Tatooine-Nal Hutta): a player named by the context.
+                        var named = Targeting.Player(ctx.State, owner, node["from"], FrameContext.Of(frame));
+                        if (named == null || named.Id == owner.Id || Matching(ctx, named, filter).Count == 0)
+                        {
+                            ctx.Return("failed", "true");
+                            return StepResult.Done();
+                        }
+                        frame.Set("victim", named.Id);
+                        frame.Step = 1;
+                        return StepResult.Continue();
+                    }
                     var choose = (JObject)node["from"]!["choose"]!;
                     var options = new List<DecisionOption>();
                     foreach (var p in ctx.State.Players)

@@ -70,6 +70,9 @@ namespace OuterRim.Core.Model
         /// <summary>Damage tokens placed on planets by Jyn Erso's ability; markers only (R-25.14).</summary>
         public List<PlanetMarker> PlanetMarkers { get; set; } = new List<PlanetMarker>();
 
+        /// <summary>"Gain +N until the end of the turn" bonuses (stat.modify with duration end_of_turn); cleared when the turn ends.</summary>
+        public List<StatModifier> TurnModifiers { get; set; } = new List<StatModifier>();
+
         /// <summary>Abilities used this turn, as "step:card#path" (R-4.11: each "Action" ability once per action step).</summary>
         public List<string> UsedAbilities { get; set; } = new List<string>();
 
@@ -181,6 +184,16 @@ namespace OuterRim.Core.Model
         public string Deck { get; set; } = "";
 
         public List<string> Cards { get; set; } = new List<string>();
+    }
+
+    /// <summary>A temporary bonus to one of a player's values (hyperdrive, ground_combat, ship_combat, hull, health).</summary>
+    public sealed class StatModifier
+    {
+        public string PlayerId { get; set; } = "";
+
+        public string Stat { get; set; } = "";
+
+        public int By { get; set; }
     }
 
     /// <summary>A damage token placed on a planet as a marker (R-25.14).</summary>

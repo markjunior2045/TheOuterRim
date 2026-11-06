@@ -98,8 +98,8 @@ namespace OuterRim.Core.Engine
             }
         }
 
-        /// <summary>The patrols a patrol selector allows ("any", "in_your_space", a faction).</summary>
-        public static List<Faction> Patrols_(GameState state, PlayerState you, JToken selector)
+        /// <summary>The patrols a patrol selector allows ("any", "in_your_space", a faction, "within N spaces of you").</summary>
+        public static List<Faction> Patrols_(GameContent content, GameState state, PlayerState you, JToken selector)
         {
             var list = new List<Faction>();
             if (selector.Type == JTokenType.String)
@@ -127,7 +127,23 @@ namespace OuterRim.Core.Engine
                 }
                 return list;
             }
+            if (selector is JObject w && w["within"] is JObject within)
+            {
+                // Ketsu Onyo: "a patrol ... that is within 3 spaces of you" (R-5.29: the shortest distance along paths).
+                var near = new HashSet<string>(content.Map.Within(you.SpaceId, (int)within["distance"]!));
+                foreach (var p in state.Patrols)
+                {
+                    if (near.Contains(p.SpaceId)) list.Add(p.Faction);
+                }
+                return list;
+            }
             throw new System.NotSupportedException("Patrol selector " + selector.ToString(Newtonsoft.Json.Formatting.None) + " is not implemented yet.");
+        }
+
+        /// <summary>True when a patrol selector reaches beyond the player's space ("within N spaces of you").</summary>
+        public static bool ReachesAway(JToken selector)
+        {
+            return selector is JObject o && o["within"] != null;
         }
 
         public static StepResult AskOrSet(ResolutionContext ctx, Frame frame, string playerId, string prompt, List<string> options, string var)
@@ -258,7 +274,7 @@ namespace OuterRim.Core.Engine
                     frame.Step = 1;
                     if (!patrol) return StepResult.Continue();
                     var options = new List<string>();
-                    foreach (var f in SpaceSelect.Patrols_(ctx.State, owner, node["patrol"]!)) options.Add(Patrols.Id(f));
+                    foreach (var f in SpaceSelect.Patrols_(ctx.Content, ctx.State, owner, node["patrol"]!)) options.Add(Patrols.Id(f));
                     if (options.Count == 0)
                     {
                         ctx.Return("failed", "true");
@@ -318,7 +334,7 @@ namespace OuterRim.Core.Engine
             if (frame.Step == 0)
             {
                 var list = new List<string>();
-                foreach (var f in SpaceSelect.Patrols_(ctx.State, owner, node["patrol"]!)) list.Add(Patrols.Id(f));
+                foreach (var f in SpaceSelect.Patrols_(ctx.Content, ctx.State, owner, node["patrol"]!)) list.Add(Patrols.Id(f));
                 frame.Set("queue", string.Join(",", list));
                 frame.Step = 1;
             }
@@ -353,9 +369,10 @@ namespace OuterRim.Core.Engine
                 {
                     frame.Step = 1;
                     var options = new List<string>();
-                    foreach (var f in SpaceSelect.Patrols_(ctx.State, owner, node["patrol"]!))
+                    bool away = SpaceSelect.ReachesAway(node["patrol"]!);
+                    foreach (var f in SpaceSelect.Patrols_(ctx.Content, ctx.State, owner, node["patrol"]!))
                     {
-                        if (Patrols.Of(ctx.State, f).SpaceId == owner.SpaceId) options.Add(Patrols.Id(f));
+                        if (away || Patrols.Of(ctx.State, f).SpaceId == owner.SpaceId) options.Add(Patrols.Id(f));
                     }
                     if (options.Count == 0)
                     {
